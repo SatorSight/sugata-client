@@ -15,6 +15,12 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable();
+            $table->text('html')->nullable();
+            $table->integer('page_number')->nullable();
+            $table->text('desktop_html')->nullable();
+            $table->string('desktop_bg')->nullable();
+
             $table->timestamps();
         });
     }

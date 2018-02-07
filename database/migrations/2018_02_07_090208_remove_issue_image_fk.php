@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBundlesTable extends Migration
+class RemoveIssueImageFk extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateBundlesTable extends Migration
      */
     public function up()
     {
-        Schema::create('bundles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name')->nullable();
-            $table->integer('realm_id')->nullable();
-            $table->timestamps();
+        Schema::table('issues', function (Blueprint $table) {
+            $table->dropForeign('issues_image_id_foreign');
         });
     }
 
@@ -28,6 +25,6 @@ class CreateBundlesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bundles');
+        //
     }
 }

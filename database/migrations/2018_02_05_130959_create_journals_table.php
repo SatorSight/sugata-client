@@ -15,6 +15,12 @@ class CreateJournalsTable extends Migration
     {
         Schema::create('journals', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+            $table->string('url_prefix')->nullable();
+            $table->integer('order')->nullable();
+            $table->boolean('archived')->nullable();
+
             $table->timestamps();
         });
     }

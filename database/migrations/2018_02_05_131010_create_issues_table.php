@@ -15,6 +15,12 @@ class CreateIssuesTable extends Migration
     {
         Schema::create('issues', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('number')->nullable();
+            $table->integer('listing_page')->nullable();
+            $table->boolean('double_number')->nullable();
+            $table->boolean('double_month')->nullable();
+            $table->date('content_date')->nullable();
+
             $table->timestamps();
         });
     }
