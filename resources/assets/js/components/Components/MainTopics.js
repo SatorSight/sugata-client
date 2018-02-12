@@ -128,9 +128,15 @@ class MainTopics extends React.Component {
         return (
             <div style={styles.root}>
                 <h1 style={styles.title}>главные темы</h1>
-                <SwipeableViews style={styles.swiper} index={index} enableMouseEvents onChangeIndex={this.handleChangeIndex}>
-                    {content}
-                </SwipeableViews>
+                {SUtils.any(articles)
+                    ? <SwipeableViews
+                        style={styles.swiper}
+                        index={index}
+                        enableMouseEvents
+                        onChangeIndex={this.handleChangeIndex}>
+                        {content}
+                    </SwipeableViews>
+                    : null }
                 <Pagination dots={4} index={index} onChangeIndex={this.handleChangeIndex} />
             </div>
         );

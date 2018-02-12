@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-// import fixtures from './fixtures';
+// import articles from './articles';
+import * as SUtils from './../Helpers/SUtils';
+
 
 const styles = {
     main: {
@@ -79,26 +81,34 @@ const styles = {
 };
 
 class PopularArticles extends Component {
+
+    constructor(props){
+        super(props);
+    }
+
     render() {
+
+        const articles = this.props.data.new_articles;
+
         return (
             <div>
                 <div style={styles.main}>
-                    {/*{fixtures.map(fixture =>*/}
-                        {/*<div style={styles.item} key={fixture.id}>*/}
-                            {/*<div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + fixture.cover_image + ')' })} />*/}
-                            {/*<div style={styles.inner}>*/}
-                                {/*<div style={styles.over}>*/}
-                                    {/*<p style={styles.title}>{fixture.title}</p>*/}
-                                {/*</div>*/}
-                                {/*<div>*/}
-                                    {/*<p style={styles.caption}>*/}
-                                        {/*<span>{fixture.name}, </span>*/}
-                                        {/*<span>{fixture.date}</span>*/}
-                                    {/*</p>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    )}
+                    {SUtils.any(articles) ? articles.map(article =>
+                        <div style={styles.item} key={article.id}>
+                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image + ')' })} />
+                            <div style={styles.inner}>
+                                <div style={styles.over}>
+                                    <p style={styles.title}>{article.title}</p>
+                                </div>
+                                <div>
+                                    <p style={styles.caption}>
+                                        <span>{article.name}, </span>
+                                        <span>{article.date}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null }
                     <div style={styles.fot}>
                         <a href="#look" style={styles.button}>Загрузить еще</a>
                     </div>

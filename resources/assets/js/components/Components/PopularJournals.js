@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PopularTop from './PopularTop';
 import PopularMain from './PopularMain';
+import * as SUtils from './../Helpers/SUtils';
+
 // import fixtures from './fixtures';
 const styles = {
     issuesSwiper: {
@@ -22,15 +24,15 @@ const styles = {
     },
 };
 class PopularJournals extends React.Component {
-
     constructor(props) {
         super(props);
 
-        // const first_fixture_id = Math.floor(fixtures.length/2);
-        const first_fixture_id = 1;
+        const journals = this.props.data.journals;
+        let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
+        // const first_fixture_id = 1;
 
         this.state = {
-            index: first_fixture_id,
+            index: index
         };
     }
 
@@ -39,13 +41,14 @@ class PopularJournals extends React.Component {
     };
 
     render() {
+        const journals = this.props.data.journals;
         return (
             <div style={styles.issuesSwiper}>
                 <h3 style={styles.title}>Популярные издания</h3>
-                <div style={styles.over}>
-                    <PopularTop key={PopularTop} active={this.state.index} /*fixtures={fixtures}*/ changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
-                    <PopularMain key={PopularMain} active={this.state.index} /*fixtures={fixtures}*/ changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
-                </div>
+                {SUtils.any(journals) ? <div style={styles.over}>
+                    <PopularTop key={PopularTop} active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
+                    <PopularMain key={PopularMain} active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
+                </div> : null }
             </div>
         );
     }

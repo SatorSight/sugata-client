@@ -69,15 +69,16 @@ export default class NewIssues extends Component {
         return (
             <div style={styles.main}>
                 <p style={styles.title}>новые выпуски</p>
-                <OwlCarousel autoWidth dots={false} >
-                    {SUtils.any(new_issues) ? new_issues.map((issue, currentIndex) =>
+                {SUtils.any(new_issues) ?
+                    <OwlCarousel autoWidth dots={false} >
+                    {new_issues.map((issue, currentIndex) =>
                         <div key={String(currentIndex)} style={styles.item} >
                             <a href={'#'}>
                                 <img src={issue.image} alt={issue.number} style={styles.imgOtherIssues} />
                             </a>
                         </div>
-                    ) : null }
-                </OwlCarousel>
+                    )}
+                </OwlCarousel> : null }
             </div>
         );
     }

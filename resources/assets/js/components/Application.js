@@ -12,10 +12,10 @@ export default class Application extends Component {
     render() {
         return (
             <div className="container">
-                {/*<Lines*/}
-                    {/*color={'#f7f7f7'}*/}
-                    {/*bgColor={'#222'}*/}
-                    {/*time={1400}/>*/}
+                <Lines
+                    color={'#f7f7f7'}
+                    bgColor={'#222'}
+                    time={1400}/>
                 <BrowserRouter>
                     <div>
                         <Route exact path="/" component={MainPage}/>

@@ -35,7 +35,10 @@ class MainPage extends Component {
 
         SUtils.updateStateWithApiRequestFor('bundles', _this);
         SUtils.updateStateWithApiRequestFor('new_issues', _this);
+        SUtils.updateStateWithApiRequestFor('new_articles', _this);
         SUtils.updateStateWithApiRequestFor('chosen_articles', _this);
+        SUtils.updateStateWithApiRequestFor('popular_articles', _this);
+        SUtils.updateStateWithApiRequestFor('journals', _this);
     }
 
     render() {
@@ -44,8 +47,8 @@ class MainPage extends Component {
                 <IndexHeader data={this.state.data}/>
                 <NewIssues data={this.state.data}/>
                 <MainTopics data={this.state.data}/>
-                {/*<MainTabs />*/}
-                {/*<PopularJournals />*/}
+                <MainTabs data={this.state.data}/>
+                <PopularJournals  data={this.state.data}/>
                 {/*<IndexFooter />*/}
             </div>
         );

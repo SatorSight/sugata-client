@@ -59,13 +59,13 @@ class PopularMain extends React.Component {
     render() {
         return (
             <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer} onSwitching={this.props.changer}>
-                {/*{this.props.fixtures.map((fixture, index) =>*/}
-                    {/*<div style={styles.item} key={index}>*/}
-                        {/*<div style={styles.mask} />*/}
-                        {/*<img style={styles.img} src={fixture.main_image} alt={fixture.title} />*/}
-                        {/*<div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + fixture.logo + ')' })} />*/}
-                    {/*</div>*/}
-                {/*)}*/}
+                {this.props.journals.map((journal, index) =>
+                    <div style={styles.item} key={index}>
+                        <div style={styles.mask} />
+                        <img style={styles.img} src={journal.main_image} alt={journal.title} />
+                        <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.image + ')' })} />
+                    </div>
+                )}
             </SwipeableViews>
         );
     }

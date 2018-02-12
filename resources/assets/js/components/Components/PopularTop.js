@@ -43,12 +43,12 @@ class PopularTop extends React.Component {
     render() {
         return (
             <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer} onSwitching={this.props.changer}>
-                {/*{this.props.fixtures.map(fixture =>*/}
-                    {/*<div style={styles.item} key={fixture.id}>*/}
-                        {/*<div style={styles.mask} />*/}
-                        {/*<img style={styles.bg} src={fixture.main_image} alt={fixture.title} />*/}
-                    {/*</div>*/}
-                {/*)}*/}
+                {this.props.journals.map(journal =>
+                    <div style={styles.item} key={journal.id}>
+                        <div style={styles.mask} />
+                        <img style={styles.bg} src={journal.image} alt={journal.title} />
+                    </div>
+                )}
             </SwipeableViews>
         );
     }

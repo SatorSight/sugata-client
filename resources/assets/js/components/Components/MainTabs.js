@@ -5,6 +5,7 @@ import SwipeableViews from 'react-swipeable-views';
 import NewArticles from './NewArticles';
 import PopularArticles from './PopularArticles';
 
+
 const fontWeightMedium = 400;
 
 const styles = {
@@ -67,10 +68,9 @@ class MainTabs extends Component {
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
                     </Tabs>
-
                     <SwipeableViews enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
-                        <NewArticles />
-                        <PopularArticles />
+                        <NewArticles data={this.props.data}/>
+                        <PopularArticles data={this.props.data}/>
                     </SwipeableViews>
                 </div>
             </MuiThemeProvider>
