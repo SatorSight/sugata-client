@@ -41,6 +41,14 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+
+\Illuminate\Database\Eloquent\Relations\Relation::morphMap([
+    'Bundle' => \App\Bundle::class,
+    'Journal' => \App\Journal::class,
+    'Issue' => \App\Issue::class
+]);
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

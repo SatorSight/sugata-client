@@ -42,13 +42,15 @@ class UploadMasterData extends Command
     {
         $mg = new MasterGateway();
 
-        $mg->downloadImages();
-
+        $json_data_url = MasterGateway::getMasterJsonDataUrl();
+        $json = file_get_contents($json_data_url);
+        $json = json_decode($json);
+        SUtils::dump_console($json->issues);
 
 
         die;
 
-
+        $mg->downloadImages();
         $mg->dropAllData();
 
         $json_data_url = MasterGateway::getMasterJsonDataUrl();

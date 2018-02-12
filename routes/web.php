@@ -11,9 +11,44 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+
+/*
+ *
+ *
+ * ->where('any', '.*')
+ *
+ *  public function getPopularArticles(){
+
+    }
+
+    public function getChosenArticles(){
+
+    }
+
+    public function getMoreNewArticles(){
+
+    }
+
+    public function getMorePopularArticles(){
+
+    }
+
+    public function getJournals(){
+
+    }
+
+
+ * */
+
+
+Route::get('/{any}', 'AppController@index')->where('any', '.*');
+
+//
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 
 //Route::get('products', function () {
