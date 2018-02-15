@@ -103,7 +103,7 @@ class PopularArticles extends Component {
                                 </div>
                                 <div>
                                     <p style={styles.caption}>
-                                        <span>{article.name}, </span>
+                                        <span>{article.title}, </span>
                                         <span>{article.date}</span>
                                     </p>
                                 </div>

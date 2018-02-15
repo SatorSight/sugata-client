@@ -37,6 +37,7 @@ class ApiController extends Controller
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
+        Article::injectJournalCovers($articles);
         return response()->json($articles);
     }
 

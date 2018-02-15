@@ -24,6 +24,13 @@ class Article extends Model
         ])->first();
     }
 
+//    public function getBigImage(){
+//        return Image::where([
+//            'parent_type' => 'Article',
+//            'parent_id' => $this->id
+//        ])->first();
+//    }
+
     public static function getChosen() : Collection{
         $articles = self::getLatest(4);
         $articles = $articles->map(function($article){
@@ -48,6 +55,15 @@ class Article extends Model
             //breaking eager loading to remove needless data
             $issue = Issue::find($article->issue_id);
             $article->journal_name = $issue->journal->name;
+            return $article;
+        });
+    }
+
+    public static function injectJournalCovers(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            //breaking eager loading to remove needless data
+            $issue = Issue::find($article->issue_id);
+            $article->issue_cover = $issue->image->path;
             return $article;
         });
     }

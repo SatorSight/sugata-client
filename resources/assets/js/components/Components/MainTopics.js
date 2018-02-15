@@ -113,7 +113,7 @@ class MainTopics extends React.Component {
                         : null
                     }
                     <div style={styles.infoSwiper}>
-                        <img style={styles.magSwiper} src={article.image_path} alt={article.title} />
+                        <img style={styles.magSwiper} src={article.issue_cover} alt={article.title} />
                         <p style={styles.textSwiper}>{article.title}</p>
                         <div>
                             <p style={styles.captionColorSwiper}>
