@@ -76,6 +76,8 @@ export function any(haystack) {
 }
 
 export function empty(haystack) {
+    if(haystack === undefined)
+        return false;
     return haystack.length === 0
 }
 
@@ -107,6 +109,20 @@ export function updateStateWithApiRequestFor(entity, _this) {
         .then(json => {
             let data = { ..._this.state.data };
             data[entity] = json;
+            _this.setState({ data });
+        })
+}
+
+export function appendStateWithApiRequestFor(entity, apiRoute, _this) {
+    const current_data = _this.state.data[entity];
+    console.log(current_data);
+    console.log(typeof current_data);
+    const last_id = empty(current_data) ? 0 : current_data[current_data.length - 1].id;
+    fetch('/api/' + apiRoute + '/' + last_id + '/')
+        .then(data => data.json())
+        .then(json => {
+            let data = { ..._this.state.data };
+            data[entity] = data[entity].concat(json);
             _this.setState({ data });
         })
 }

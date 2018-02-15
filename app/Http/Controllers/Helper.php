@@ -14,7 +14,7 @@ class Helper{
         return $object;
     }
 
-    public static function injectWithImages(Collection $collection){
+    public static function injectWithImages(Collection $collection) : Collection{
         return $collection->map(function($obj){
             return Helper::injectImagePath($obj);
         });

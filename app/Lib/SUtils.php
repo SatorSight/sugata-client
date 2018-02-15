@@ -237,4 +237,18 @@ class SUtils{
         shuffle($seed);
         return $seed[0];
     }
+
+    public static function getRuMonthDeclined(int $date){
+        $format = '%bg';
+        $months = explode("|", '|Января|Февраля|Марта|Апреля|Мая|Июня|Июля|Августа|Сентября|Октября|Ноября|Декабря');
+        $format = preg_replace("~\%bg~", $months[date('n', $date)], $format);
+        return strftime($format, $date);
+    }
+
+    public static function getRuMonth(int $date){
+        $format = '%bg';
+        $months = explode("|", '|Январь|Февраль|Март|Апрель|Май|Июнь|Июль|Август|Сентябрь|Октябрь|Ноябрь|Декабрь');
+        $format = preg_replace("~\%bg~", $months[date('n', $date)], $format);
+        return strftime($format, $date);
+    }
 }

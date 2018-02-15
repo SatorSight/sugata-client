@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import articles from './articles';
 import * as SUtils from './../Helpers/SUtils';
+import sKey from './../Helpers/sKey';
 
 
 const styles = {
@@ -85,19 +85,17 @@ class PopularArticles extends Component {
     constructor(props){
         super(props);
     }
-    
-    
-    
-    
-    render() {
 
+    loadMore = () => this.props.controls['more_popular_articles']();
+
+    render() {
         const articles = this.props.data.popular_articles;
 
         return (
             <div>
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
-                        <div style={styles.item} key={article.id}>
+                        <div style={styles.item} key={sKey('pa')}>
                             <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.cover_image + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>
@@ -113,7 +111,7 @@ class PopularArticles extends Component {
                         </div>
                     ) : null }
                     <div style={styles.fot}>
-                        <a href="#look" style={styles.button}>Загрузить еще</a>
+                        <a onClick={this.loadMore} style={styles.button}>Загрузить еще</a>
                     </div>
                 </div>
             </div>

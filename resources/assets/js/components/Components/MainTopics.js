@@ -117,8 +117,8 @@ class MainTopics extends React.Component {
                         <p style={styles.textSwiper}>{article.title}</p>
                         <div>
                             <p style={styles.captionColorSwiper}>
-                                <span>{article.title}, </span>
-                                <span>{article.content_date}</span>
+                                <span>{article.journal_name}, </span>
+                                <span>{article.date}</span>
                             </p>
                         </div>
                     </div>

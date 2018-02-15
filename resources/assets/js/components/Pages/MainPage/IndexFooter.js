@@ -30,6 +30,7 @@ const styles = {
         backgroundSize: 'cover',
         opacity: 0.4,
         overflow: 'hidden',
+        backgroundImage:'url("/images/header.jpg")'
     },
     shadow: {
         position: 'absolute',
@@ -122,6 +123,7 @@ class IndexFooter extends Component {
             <div style={styles.footer}>
                 <div style={styles.mask}>
                     {/*<div style={Object.assign({}, styles.bg, {backgroundImage:'url(' + fixtures[0].cover_image + ')' })} />*/}
+                    <div style={styles.bg} />
                     <div style={styles.colorOne} />
                     <div style={styles.colorTwo} />
                     <div style={styles.colorThree} />

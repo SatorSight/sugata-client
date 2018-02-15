@@ -17,6 +17,7 @@ class RemoveIssueImageFk extends Migration
             $table->dropForeign('issues_image_id_foreign');
         });
     }
+//select 'drop table if exists "' || tablename || '" cascade;' from pg_tables where tableowner='client_user';
 
     /**
      * Reverse the migrations.

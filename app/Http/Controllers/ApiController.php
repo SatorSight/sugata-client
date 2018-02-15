@@ -6,6 +6,7 @@ use App\Article;
 use App\Bundle;
 use App\Issue;
 use App\Journal;
+use App\Lib\SUtils;
 
 class ApiController extends Controller
 {
@@ -18,7 +19,11 @@ class ApiController extends Controller
     }
 
     public function getNewArticles(){
-        return response()->json(Article::getLatest(10));
+        $articles = Article::getLatestNonEmpty(10, 'title');
+        Article::clearFromHtml($articles);
+        Article::injectDates($articles);
+        Article::injectJournalNames($articles);
+        return response()->json($articles);
     }
 
     public function getPopularArticles(){
@@ -28,11 +33,19 @@ class ApiController extends Controller
 
     public function getChosenArticles(){
         //todo implement
-        return response()->json(Article::getChosen());
+        $articles = Article::getChosen();
+        Article::clearFromHtml($articles);
+        Article::injectDates($articles);
+        Article::injectJournalNames($articles);
+        return response()->json($articles);
     }
 
     public function getMoreNewArticles($from){
-        return response()->json(Article::getLatestAfter(10, $from));
+        $articles = Article::getLatestNonEmptyAfter(10, $from, 'title');
+        Article::clearFromHtml($articles);
+        Article::injectDates($articles);
+        Article::injectJournalNames($articles);
+        return response()->json($articles);
     }
 
     public function getMorePopularArticles($from){

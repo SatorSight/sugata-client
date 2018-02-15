@@ -14,13 +14,12 @@ class MainPage extends Component {
         super(props);
 
         this.state = {
-            data: {}
+            data: {},
+            _this: this
         }
     }
 
     componentWillMount(){
-        let _this = this;
-
         //getting resources, API list below:
         /*
          /bundles/
@@ -33,23 +32,45 @@ class MainPage extends Component {
          /more_popular_articles/{from}
         */
 
-        SUtils.updateStateWithApiRequestFor('bundles', _this);
-        SUtils.updateStateWithApiRequestFor('new_issues', _this);
-        SUtils.updateStateWithApiRequestFor('new_articles', _this);
-        SUtils.updateStateWithApiRequestFor('chosen_articles', _this);
-        SUtils.updateStateWithApiRequestFor('popular_articles', _this);
-        SUtils.updateStateWithApiRequestFor('journals', _this);
+        this.loadBundles();
+        this.loadNewIssues();
+        this.loadNewArticles();
+        this.loadChosenArticles();
+        this.loadPopularArticles();
+        this.loadJournals();
     }
 
+    loadBundles = () => SUtils.updateStateWithApiRequestFor('bundles', this.state._this);
+    loadNewIssues = () => SUtils.updateStateWithApiRequestFor('new_issues', this.state._this);
+    loadNewArticles = () => SUtils.updateStateWithApiRequestFor('new_articles', this.state._this);
+    loadChosenArticles = () => SUtils.updateStateWithApiRequestFor('chosen_articles', this.state._this);
+    loadPopularArticles = () => SUtils.updateStateWithApiRequestFor('popular_articles', this.state._this);
+    loadJournals = () => SUtils.updateStateWithApiRequestFor('journals', this.state._this);
+
+    // loadMoreNewArticles = function(){ SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this) };
+    // loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
+    loadMoreNewArticles = () => {
+        console.log('fired');
+        SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this)
+    };
+    loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
+
     render() {
+        const controls = {
+            'more_new_articles': this.loadMoreNewArticles,
+            'more_popular_articles': this.loadMorePopularArticles
+        };
+
         return (
             <div>
                 <IndexHeader data={this.state.data}/>
                 <NewIssues data={this.state.data}/>
                 <MainTopics data={this.state.data}/>
-                <MainTabs data={this.state.data}/>
+                <MainTabs
+                    controls={controls}
+                    data={this.state.data}/>
                 <PopularJournals  data={this.state.data}/>
-                {/*<IndexFooter />*/}
+                <IndexFooter />
             </div>
         );
     }

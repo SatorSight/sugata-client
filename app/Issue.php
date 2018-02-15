@@ -10,4 +10,8 @@ class Issue extends Model
 {
     use HasImage;
     use HasLatest;
+
+    public function journal(){
+        return $this->belongsTo('App\Journal');
+    }
 }
