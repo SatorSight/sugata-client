@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\Helper;
 use App\Http\Traits\HasLatest;
 use App\Lib\SUtils;
 use Carbon\Carbon;
@@ -26,7 +27,8 @@ class Article extends Model
     public static function getChosen() : Collection{
         $articles = self::getLatest(4);
         $articles = $articles->map(function($article){
-            $article->image = $article->getImage() ?? '';
+            $article->image_path = $article->getImage()->path ?? '';
+            unset($article->image);
             return $article;
         });
 

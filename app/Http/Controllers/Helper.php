@@ -14,6 +14,11 @@ class Helper{
         return $object;
     }
 
+    public static function removeImageObjectReference(&$object){
+        if(!empty($object->image))
+            unset($object->image);
+    }
+
     public static function injectWithImages(Collection $collection) : Collection{
         return $collection->map(function($obj){
             return Helper::injectImagePath($obj);
