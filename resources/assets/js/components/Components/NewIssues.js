@@ -74,7 +74,7 @@ export default class NewIssues extends Component {
                     {new_issues.map((issue, currentIndex) =>
                         <div key={String(currentIndex)} style={styles.item} >
                             <a href={'#'}>
-                                <img src={issue.image} alt={issue.number} style={styles.imgOtherIssues} />
+                                <img src={issue.image_path} alt={issue.number} style={styles.imgOtherIssues} />
                             </a>
                         </div>
                     )}

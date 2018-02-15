@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PopularTop from './PopularTop';
 import PopularMain from './PopularMain';
 import * as SUtils from './../Helpers/SUtils';
+import sKey from './../Helpers/sKey'
 
 // import fixtures from './fixtures';
 const styles = {
@@ -46,8 +47,8 @@ class PopularJournals extends React.Component {
             <div style={styles.issuesSwiper}>
                 <h3 style={styles.title}>Популярные издания</h3>
                 {SUtils.any(journals) ? <div style={styles.over}>
-                    <PopularTop key={PopularTop} active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
-                    <PopularMain key={PopularMain} active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
+                    <PopularTop active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
+                    <PopularMain active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
                 </div> : null }
             </div>
         );
