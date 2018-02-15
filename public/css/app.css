@@ -24,6 +24,7 @@
 
 body {
   font-size: 10px;
+  overflow: auto!important;
 }
 
 body > .inner {
