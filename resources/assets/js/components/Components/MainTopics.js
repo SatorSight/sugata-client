@@ -109,11 +109,11 @@ class MainTopics extends React.Component {
             articles.map(article => content.push(
                 <div style={styles.slideSwiper} key={article.id}>
                     {article.image !== ''
-                        ? <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image}')` })} />
+                        ? <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                         : null
                     }
                     <div style={styles.infoSwiper}>
-                        <img style={styles.magSwiper} src={article.image} alt={article.title} />
+                        <img style={styles.magSwiper} src={article.image_path} alt={article.title} />
                         <p style={styles.textSwiper}>{article.title}</p>
                         <div>
                             <p style={styles.captionColorSwiper}>

@@ -96,7 +96,7 @@ class PopularArticles extends Component {
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
                         <div style={styles.item} key={sKey('pa')}>
-                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.cover_image + ')' })} />
+                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>
                                     <p style={styles.title}>{article.title}</p>
