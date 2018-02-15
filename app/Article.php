@@ -17,12 +17,32 @@ class Article extends Model
         return $this->belongsTo('App\Issue');
     }
 
+//    public function image(){
+//        $t = new \stdClass();
+//        $t->path = '123';
+//        return $t;
+//    }
+
     public function getImage(){
-        return Image::where([
+        $images = Image::where([
             'parent_type' => 'Article',
             'parent_id' => $this->id
-        ])->first();
+        ])->get();
+
+        if(empty($images))
+            return null;
+
+        $return = null;
+        foreach($images as $image)
+            if(file_exists($image))
+                $return = $image;
+
+        return $return;
     }
+
+//    public function getExistingImages(){
+//
+//    }
 
 //    public function getBigImage(){
 //        return Image::where([
@@ -41,6 +61,31 @@ class Article extends Model
 
         self::clearFromHtml($articles);
         return $articles;
+    }
+
+    public static function injectWithImages(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+//
+//            if($article->id == 59243){
+//
+//                $images = $article->getImage();
+////
+//                SUtils::trace($images);
+//
+//
+//                SUtils::trace('hi');
+
+//            }
+
+//            SUtils::trace('end');
+
+            if(!empty($article->getImage())) {
+                $image = $article->getImage();
+                if(isset($image->path))
+                    $article->image_path = $image->path;
+            }
+            return $article;
+        });
     }
 
     public static function clearFromHtml(Collection &$articles) : void {

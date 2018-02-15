@@ -15,7 +15,7 @@ class ApiController extends Controller
     }
 
     public function getNewIssues(){
-        return response()->json(Issue::getLatest(10));
+        return response()->json(Issue::getLatest(20));
     }
 
     public function getNewArticles(){
@@ -23,6 +23,7 @@ class ApiController extends Controller
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
+        Article::injectWithImages($articles);
         return response()->json($articles);
     }
 

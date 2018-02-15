@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Helper{
     public static function injectImagePath($object){
-        if(!empty($object->image)){
+        if(isset($object->image)){
             $object->image_path = $object->image->path;
             unset($object->image);
 //            $object->image_path = $path ?? '';
