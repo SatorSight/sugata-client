@@ -10,7 +10,7 @@
     <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        /*@import "/css/font.css";*/
+        @import "/css/font.css";
         * {margin: 0; padding: 0; line-height: 1; font-family: 'HelveticaNeueCyr', arial, serif; outline: none;}
         body {font-size: 10px;overflow: auto!important;}
         body > .inner {max-width: 720px; margin: 0 auto;}

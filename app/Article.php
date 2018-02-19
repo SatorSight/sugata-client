@@ -33,12 +33,16 @@ class Article extends Model
             return null;
 
         $return = null;
-        foreach($images as $image)
-            if(file_exists($image))
+        foreach($images as $image){
+            if($image->imageFileExists())
                 $return = $image;
+            break;
+        }
 
         return $return;
     }
+
+
 
 //    public function getExistingImages(){
 //
@@ -52,35 +56,103 @@ class Article extends Model
 //    }
 
     public static function getChosen() : Collection{
-        $articles = self::getLatest(4);
+
+        $articles = collect([]);
+        //todo rewrite
+        $journals = Journal::where('id','>','0')->orderBy('order', 'desc')->take(4)->get();
+        foreach ($journals as $key => $journal) {
+            $issue = $journal->issues->sort()->reverse()->first();
+            // $ar = Article::where('id','>','0')->orderBy('id', 'desc')->take(1)->get();
+            $arr = $issue->articles;
+            $counter = 0;
+            $ar = null;
+            foreach ($arr as $key => $a) {
+                $counter++;
+
+                if(!empty($a->title) && $counter > 10){
+                    $ar = $a;
+                    break;
+                }
+            }
+
+
+
+            // SUtils::trace($ar->issue_id);
+
+            $ar->image_path = $ar->getImage()->path ?? '';
+            $ar->title = strtoupper($ar->title);
+            unset($ar->image);
+            unset($ar->html);
+
+
+            $articles->push($ar);
+        }
+
+        // SUtils::trace(get_class($articles[0]));
+        
+
+        // $articles = self::where('id', 'in' '2,3,4,5')->get();
+
+        // $articles = self::getLatest(4);
+        // $articles = $articles->map(function($article){
+        //     $article->image_path = $article->getImage()->path ?? '';
+        //     unset($article->image);
+        //     return $article;
+        // });
+
+
+
+        // self::clearFromHtml($articles);
+        return $articles;
+    }
+
+    public static function injectWithText(Collection &$articles) : void {
         $articles = $articles->map(function($article){
-            $article->image_path = $article->getImage()->path ?? '';
-            unset($article->image);
+            $text = $article->getClearText();
+            if(!empty($text))
+            $article->text = $text;
             return $article;
         });
+    }
 
-        self::clearFromHtml($articles);
-        return $articles;
+
+    public function getClearText(){
+        $s = $this->html;
+
+        $pattern = '/<p>.*?<\/p>/is';
+        preg_match_all($pattern, $s, $matches);
+
+        if(empty($matches))
+            return false;
+
+        $matches = array_shift($matches);
+
+        if(empty($matches))
+            return false;
+
+        $text = implode(' ', $matches);
+
+        if(mb_strlen($text) < 200)
+            return false;
+
+        $text = mb_substr($text, 0, 500);
+
+        $p2 = '/<\/p>.<p>/is';
+        $res = preg_replace($p2, ' ', $text);
+
+        if(empty($res))
+            return false;
+
+        $res = substr($res, 0, strrpos($res, '.') + 1);
+
+        return $res;
     }
 
     public static function injectWithImages(Collection &$articles) : void {
         $articles = $articles->map(function($article){
-//
-//            if($article->id == 59243){
-//
-//                $images = $article->getImage();
-////
-//                SUtils::trace($images);
-//
-//
-//                SUtils::trace('hi');
-
-//            }
-
-//            SUtils::trace('end');
-
             if(!empty($article->getImage())) {
                 $image = $article->getImage();
+                // SUtils::dump($image);
                 if(isset($image->path))
                     $article->image_path = $image->path;
             }
@@ -94,6 +166,21 @@ class Article extends Model
             return $article;
         });
     }
+
+    public static function removeWithBlankText(Collection &$articles) : void {
+
+        // foreach ($articles as $key => $value) {
+
+        //     // SUtils::trace('hello');
+        //     SUtils::trace($value->getClearText());
+        //     SUtils::trace($value->text);
+        // }
+
+        $articles = $articles->reject(function($article){
+            $article->text === false;
+        });
+    }
+
 
     public static function injectJournalNames(Collection &$articles) : void {
         $articles = $articles->map(function($article){

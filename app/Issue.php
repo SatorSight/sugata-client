@@ -14,4 +14,8 @@ class Issue extends Model
     public function journal(){
         return $this->belongsTo('App\Journal');
     }
+
+    public function articles(){
+        return $this->hasMany('App\Article');
+    }
 }

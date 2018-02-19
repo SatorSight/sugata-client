@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageParentReference extends Migration
+class RemoveImageConstraints extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,9 @@ class AddImageParentReference extends Migration
      */
     public function up()
     {
-        Schema::table('images', function (Blueprint $table) {
-            $table->integer('parent_id')->unsigned()->nullable();
-        });
-
-        // Schema::table('journals', function (Blueprint $table) {
-        //     $table->dropColumn('parent_id');
+        // Schema::table('issues', function (Blueprint $table) {
+        //     $table->dropForeign(['image_id']);
         // });
-
     }
 
     /**

@@ -274,10 +274,24 @@ class MasterGateway{
     }
 
     public function downloadImages() : void {
-        $url = self::getMasterImagesDataUrl();
-        $f = fopen($url, 'r');
-        Storage::put('images_archive.zip', $f);
-        fclose($f);
+
+        // var_dump(__DIR__);
+        // die;
+
+//         $url = self::getMasterImagesDataUrl();
+
+// $ch = curl_init();
+// curl_setopt($ch, CURLOPT_URL, 'http://'.$url);
+// curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// $f = curl_exec($ch);
+// curl_close($ch);
+
+
+//        $f = fopen($url, 'r');
+//        stream_set_timeout($f, 600);
+        // Storage::put('images_archive.zip', $f);
+//curl_close($ch)
+//        fclose($f);
 
         $zipper = new \Chumper\Zipper\Zipper;
         $zipper->make('storage/app/images_archive.zip')->folder('public')->extractTo('public');

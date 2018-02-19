@@ -10,4 +10,9 @@ class Journal extends Model
 {
     use HasImage;
     use ImageInjector;
+
+    public function issues(){
+        return $this->hasMany('App\Issue');
+    }
+
 }

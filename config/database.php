@@ -60,7 +60,7 @@ return [
             'port' => env('DB_PORT', '5432'),
             'database' => env('DB_DATABASE', 'sugata_client'),
             'username' => env('DB_USERNAME', 'client_user'),
-            'password' => env('DB_PASSWORD', '123'),
+            'password' => env('DB_PASSWORD', 'sNae3567a'),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',

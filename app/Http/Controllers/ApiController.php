@@ -19,7 +19,29 @@ class ApiController extends Controller
     }
 
     public function getNewArticles(){
-        $articles = Article::getLatestNonEmpty(10, 'title');
+
+        //todo $collection->forget
+
+        $articles = Article::getLatestNonEmpty(30, 'title');
+
+        // $articles = collect($articles->slice(10,20)->all());
+        // $counter = 0;
+
+        $a = collect([]);
+        $counter = 0;
+        foreach ($articles as $key => $ar) {
+            $counter++;
+            if($counter > 10 && $counter < 21){
+                $a->push($ar);
+            }
+
+            # code...
+        }
+        $articles = $a;
+        // $articles = $articles->shuffle();
+
+        // Article::injectWithText($articles);
+        // Article::removeWithBlankText($articles);
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
@@ -47,6 +69,8 @@ class ApiController extends Controller
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
+        Article::injectWithText($articles);
+
         return response()->json($articles);
     }
 
