@@ -74,6 +74,10 @@ class MasterGateway{
         $zip_file_url = $res->file;
         $zip_file_url = 'http://' . $zip_file_url;
 
+        SUtils::dump_console($json);
+        SUtils::dump_console($zip_file_url);
+
+
         $file = fopen($zip_file_url, 'r');
         Storage::disk('local')->put($zip_file_final_name, $file);
         fclose($file);
