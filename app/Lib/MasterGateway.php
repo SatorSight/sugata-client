@@ -38,15 +38,51 @@ class MasterGateway{
     }
 
     public static function getMasterJsonDataUrl() : string {
-        $json_data_url = config('client.json_data_load_route');
-        return self::getSchemaDomainUrlPart() . '/' . $json_data_url . '/' . self::getAuthUrlPostfix();
+        $url = config('client.json_data_load_route');
+        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
     }
 
     public static function getMasterImagesDataUrl() : string {
-        $images_data_url = config('client.images_archive_load_route');
-        return self::getSchemaDomainUrlPart() . '/' . $images_data_url . '/' . self::getAuthUrlPostfix();
+        $url = config('client.images_archive_load_route');
+        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
     }
 
+    public static function getChangedDataUrl() : string {
+        $url = config('client.changed_data_url');
+        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+    }
+
+    public static function getImagesSyncUrl(array $ids) : string {
+        $url = config('client.images_sync_url');
+        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix() . '/'
+            . json_encode($ids);
+    }
+
+    public static function downloadChangedData() : \stdClass{
+        $url = self::getChangedDataUrl();
+        $json = file_get_contents($url);
+        $data = json_decode($json);
+        return $data;
+    }
+
+    public static function downloadImagesArray(array $ids) : void{
+        $zip_file_final_name = time() . 'temp_images_archive.zip';
+
+        $url = self::getImagesSyncUrl($ids);
+        $json = file_get_contents($url);
+        $res = json_decode($json);
+        $zip_file_url = $res->file;
+        $zip_file_url = 'http://' . $zip_file_url;
+
+        $file = fopen($zip_file_url, 'r');
+        Storage::disk('local')->put($zip_file_final_name, $file);
+        fclose($file);
+
+        $zipper = new \Chumper\Zipper\Zipper;
+        $zipper->make('storage/app/' . $zip_file_final_name)->extractTo('public/uploaded_images');
+
+        Storage::delete($zip_file_final_name);
+    }
 
     public function downloadAndSavePeriods(array $periods) : void {
         foreach ($periods as $period){

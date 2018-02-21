@@ -20,6 +20,7 @@ class SUtils{
     }
 
     public static function dump_console($data) : void {
+        echo  "\n";
         print_r($data);
         echo  "\n";
     }

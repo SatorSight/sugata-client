@@ -5,7 +5,7 @@ namespace App;
 use App\Lib\ImageBasedClass;
 use Illuminate\Database\Eloquent\Model;
 
-class Image extends Model implements ImageBasedClass
+class Logo extends Model implements ImageBasedClass
 {
     public function parent()
     {
@@ -13,6 +13,6 @@ class Image extends Model implements ImageBasedClass
     }
 
     public function imageFileExists(){
-    	return true;
+        return true;
     }
 }
