@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Lib\ImageBasedClass;
 use Illuminate\Database\Eloquent\Model;
 
-class AdditionalImage extends Model
+class AdditionalImage extends Model implements ImageBasedClass
 {
     public function parent()
     {
