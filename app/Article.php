@@ -152,7 +152,6 @@ class Article extends Model
         $articles = $articles->map(function($article){
             if(!empty($article->getImage())) {
                 $image = $article->getImage();
-                // SUtils::dump($image);
                 if(isset($image->path))
                     $article->image_path = $image->path;
             }
@@ -177,7 +176,7 @@ class Article extends Model
         // }
 
         $articles = $articles->reject(function($article){
-            $article->text === false;
+            return $article->text === false;
         });
     }
 

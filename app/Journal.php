@@ -30,4 +30,13 @@ class Journal extends Model
         });
     }
 
+    public static function injectWithImages(Collection &$journals) : void {
+        $journals = $journals->map(function($journal){
+            if(!empty($journal->image))
+                $journal->image_path = $journal->image->path;
+            unset($journal->image);
+            return $journal;
+        });
+    }
+
 }
