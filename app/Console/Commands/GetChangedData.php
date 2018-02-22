@@ -90,6 +90,11 @@ class GetChangedData extends Command
                         $arrayed_object = (array)$object;
                         $klass = MasterClassAdapter::masterToSlave($master_class);
                         $obj = new $klass;
+
+                        if($obj instanceof ImageBasedClass)
+                            if(Schema::hasColumn($obj->getTable(), 'parent_id'))
+                                $klass::where('parent_id', $arrayed_object['parent_id'])->delete();
+
                         foreach ($arrayed_object as $field => $value){
                             if(Schema::hasColumn($obj->getTable(), $field)){
                                 if($field != 'updated_at' && $field != 'created_at')
