@@ -20,6 +20,7 @@ class MasterClassAdapter{
         'Comment' => 'Comment',
         'Image' => 'Image',
         'Logo' => 'Logo',
+        'AdditionalImage' => 'AdditionalImage'
     ];
 
     const IMAGE_CLASSES = ['Image', 'Logo'];
