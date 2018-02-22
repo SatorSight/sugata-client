@@ -81,6 +81,7 @@ class ApiController extends Controller
 
     public function getJournals(){
         $journals = Journal::all();
+        Journal::injectWithLogo($journals);
         Helper::removeFieldFromCollection($journals, 'description');
         return response()->json($journals);
     }

@@ -39,19 +39,9 @@ const styles = {
 class PopularTop extends React.Component {
     constructor(props) {
         super(props);
+
+        // console.log(props);
     }
-
-    getaasdkjlasdlaj = i => {
-        
-        if(i === 0)
-            return '/images/1.jpg';
-        if(i === 1)
-            return '/images/2.jpg';
-        if(i === 2)
-            return '/images/3.jpg';
-        return '/images/4.jpg';
-
-    };
 
     render() {
         return (
@@ -59,7 +49,7 @@ class PopularTop extends React.Component {
                 {this.props.journals.map((journal, i) =>
                     <div style={styles.item} key={journal.id}>
                         <div style={styles.mask} />
-                        <img style={styles.bg} src={this.getaasdkjlasdlaj(i)} alt={journal.title} />
+                        <img style={styles.bg} src={journal.logo_path} alt={journal.title} />
                     </div>
                 )}
             </SwipeableViews>
