@@ -82,6 +82,7 @@ class ApiController extends Controller
     public function getJournals(){
         $journals = Journal::orderBy('order', 'DESC')->get();
         Journal::injectWithLogo($journals);
+        Journal::injectWithAdditionalImages($journals);
         Journal::injectWithImages($journals);
         Helper::removeFieldFromCollection($journals, 'description');
         return response()->json($journals);

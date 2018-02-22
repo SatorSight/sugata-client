@@ -21,11 +21,24 @@ class Journal extends Model
         return $this->morphOne('App\Logo', 'parent');
     }
 
+    public function additional_image(){
+        return $this->morphOne('App\AdditionalImage', 'parent');
+    }
+
     public static function injectWithLogo(Collection &$journals) : void {
         $journals = $journals->map(function($journal){
             if(!empty($journal->logo))
                 $journal->logo_path = $journal->logo->path;
             unset($journal->logo);
+            return $journal;
+        });
+    }
+
+    public static function injectWithAdditionalImages(Collection &$journals) : void {
+        $journals = $journals->map(function($journal){
+            if(!empty($journal->additional_image))
+                $journal->additional_image_path = $journal->additional_image->path;
+            unset($journal->additional_image);
             return $journal;
         });
     }

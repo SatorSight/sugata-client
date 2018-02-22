@@ -49,7 +49,7 @@ class PopularTop extends React.Component {
                 {this.props.journals.map((journal, i) =>
                     <div style={styles.item} key={journal.id}>
                         <div style={styles.mask} />
-                        <img style={styles.bg} src={journal.logo_path} alt={journal.title} />
+                        <img style={styles.bg} src={journal.additional_image_path} alt={journal.title} />
                     </div>
                 )}
             </SwipeableViews>
