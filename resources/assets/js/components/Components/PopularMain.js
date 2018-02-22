@@ -62,7 +62,7 @@ class PopularMain extends React.Component {
                 {this.props.journals.map((journal, index) =>
                     <div style={styles.item} key={index}>
                         <div style={styles.mask} />
-                        <img style={styles.img} src={journal.main_image} alt={journal.title} />
+                        <img style={styles.img} src={journal.image_path} alt={journal.title} />
                         <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.image_path + ')' })} />
                     </div>
                 )}
