@@ -79,8 +79,11 @@ class GetChangedData extends Command
                                         if($existing_object->$field != $value) {
                                             $existing_object->$field = $value;
                                             if(new $klass instanceof ImageBasedClass){
-                                                if($field == 'id')
-                                                    $image_ids[] = $value;
+                                                if(!empty($arrayed_object['parent_id'])) {
+                                                    if ($field == 'id')
+                                                        $image_ids[] = $value;
+                                                }else
+                                                    continue;
                                             }
                                         }
                             }
@@ -92,8 +95,11 @@ class GetChangedData extends Command
                         $obj = new $klass;
 
                         if($obj instanceof ImageBasedClass)
-                            if(Schema::hasColumn($obj->getTable(), 'parent_id'))
-                                $klass::where('parent_id', $arrayed_object['parent_id'])->delete();
+                            if(Schema::hasColumn($obj->getTable(), 'parent_id')) {
+                                if(!empty($arrayed_object['parent_id']))
+                                    $klass::where('parent_id', $arrayed_object['parent_id'])->delete();
+                            }else
+                                continue;
 
                         foreach ($arrayed_object as $field => $value){
                             if(Schema::hasColumn($obj->getTable(), $field)){
