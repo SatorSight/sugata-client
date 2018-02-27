@@ -40,8 +40,9 @@ class ApiController extends Controller
         $articles = $a;
         // $articles = $articles->shuffle();
 
-        // Article::injectWithText($articles);
-        // Article::removeWithBlankText($articles);
+        Article::injectWithText($articles);
+        Article::removeWithBlankText($articles);
+
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
@@ -55,9 +56,9 @@ class ApiController extends Controller
     }
 
     public function getChosenArticles(){
-        //todo implement
         $articles = Article::getChosen();
         Article::clearFromHtml($articles);
+        Article::injectWithImages($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectJournalCovers($articles);

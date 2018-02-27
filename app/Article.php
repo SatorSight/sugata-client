@@ -57,36 +57,38 @@ class Article extends Model
 
     public static function getChosen() : Collection{
 
-        $articles = collect([]);
-        //todo rewrite
-        $journals = Journal::where('id','>','0')->orderBy('order', 'desc')->take(4)->get();
-        foreach ($journals as $key => $journal) {
-            $issue = $journal->issues->sort()->reverse()->first();
-            // $ar = Article::where('id','>','0')->orderBy('id', 'desc')->take(1)->get();
-            $arr = $issue->articles;
-            $counter = 0;
-            $ar = null;
-            foreach ($arr as $key => $a) {
-                $counter++;
+        $articles = Article::where('chosen', true)->orderBy('updated_at', 'desc')->take(4)->get();
 
-                if(!empty($a->title) && $counter > 10){
-                    $ar = $a;
-                    break;
-                }
-            }
-
-
-
-            // SUtils::trace($ar->issue_id);
-
-            $ar->image_path = $ar->getImage()->path ?? '';
-            $ar->title = strtoupper($ar->title);
-            unset($ar->image);
-            unset($ar->html);
-
-
-            $articles->push($ar);
-        }
+//        $articles = collect([]);
+//        //todo rewrite
+//        $journals = Journal::where('id','>','0')->orderBy('order', 'desc')->take(4)->get();
+//        foreach ($journals as $key => $journal) {
+//            $issue = $journal->issues->sort()->reverse()->first();
+//            // $ar = Article::where('id','>','0')->orderBy('id', 'desc')->take(1)->get();
+//            $arr = $issue->articles;
+//            $counter = 0;
+//            $ar = null;
+//            foreach ($arr as $key => $a) {
+//                $counter++;
+//
+//                if(!empty($a->title) && $counter > 10){
+//                    $ar = $a;
+//                    break;
+//                }
+//            }
+//
+//
+//
+//            // SUtils::trace($ar->issue_id);
+//
+//            $ar->image_path = $ar->getImage()->path ?? '';
+//            $ar->title = strtoupper($ar->title);
+//            unset($ar->image);
+//            unset($ar->html);
+//
+//
+//            $articles->push($ar);
+//        }
 
         // SUtils::trace(get_class($articles[0]));
         
@@ -135,7 +137,7 @@ class Article extends Model
         if(mb_strlen($text) < 200)
             return false;
 
-        $text = mb_substr($text, 0, 500);
+        $text = mb_substr($text, 0, 350);
 
         $p2 = '/<\/p>.<p>/is';
         $res = preg_replace($p2, ' ', $text);
