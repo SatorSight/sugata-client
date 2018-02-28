@@ -28,11 +28,13 @@ const styles = {
     },
     inner: {
         marginLeft: '8.5em',
-        height: '6.5em',
+        height: '8.5em',
     },
     over: {
         position: 'relative',
         overflow: 'hidden',
+        height: '6.2em',
+        marginBottom: '0.8em'
     },
     caption: {
         display: 'inline',
@@ -47,13 +49,31 @@ const styles = {
     title: {
         fontSize: '1.2em',
         lineHeight: 1.4,
-        marginBottom: '0.5em',
-        maxHeight: '4em',
+        marginBottom: '0.2em',
+        maxHeight: '3em',
         color: '#333',
         overflow: 'hidden',
         position: 'relative',
         width: '70%',
+        fontWeight: 600,
+    },
+    shortContent: {
+        fontSize: '1em',
+        lineHeight: 1.4,
+        color: '#333',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '90%',
         fontWeight: 400,
+    },
+    shadow: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: '50%',
+        background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%)',
+        zIndex: 20,
     },
     fot: {
         padding: '0.5em 0 2em',
@@ -100,10 +120,14 @@ class PopularArticles extends Component {
                             <div style={styles.inner}>
                                 <div style={styles.over}>
                                     <p style={styles.title}>{article.title}</p>
+                                    <p style={styles.shortContent}>
+                                        {article.text}
+                                    </p>
+                                    <div style={styles.shadow} />
                                 </div>
                                 <div>
                                     <p style={styles.caption}>
-                                        <span>{article.title}, </span>
+                                        <span>{article.journal_name}, </span>
                                         <span>{article.date}</span>
                                     </p>
                                 </div>

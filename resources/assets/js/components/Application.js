@@ -19,7 +19,7 @@ export default class Application extends Component {
                 <BrowserRouter>
                     <div>
                         <Route exact path="/" component={MainPage}/>
-                        {/*<Route path="/article" component={ArticlePage}/>*/}
+                        <Route path="/article" component={ArticlePage}/>
                     </div>
                 </BrowserRouter>
             </div>

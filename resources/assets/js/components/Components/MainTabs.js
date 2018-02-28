@@ -67,7 +67,7 @@ class MainTabs extends Component {
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
                     </Tabs>
-                    <SwipeableViews enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
+                    <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
                         <NewArticles controls={this.props.controls} data={this.props.data}/>
                         <PopularArticles controls={this.props.controls} data={this.props.data}/>
                     </SwipeableViews>
