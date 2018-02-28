@@ -146,6 +146,9 @@ class Article extends Model
             return false;
 
         $res = substr($res, 0, strrpos($res, '.') + 1);
+        $res = str_replace('<p>', '', $res);
+        $res = str_replace('</p>', '', $res);
+        $res = str_replace('</br>', '', $res);
 
         return $res;
     }
