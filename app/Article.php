@@ -149,6 +149,8 @@ class Article extends Model
         $res = str_replace('<p>', '', $res);
         $res = str_replace('</p>', '', $res);
         $res = str_replace('</br>', '', $res);
+        $res = str_replace('<br/>', '', $res);
+        $res = strip_tags($res);
 
         return $res;
     }
