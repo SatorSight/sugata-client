@@ -71,7 +71,7 @@ const styles = {
         opacity: 1,
     },
     captionColorSwiper: {
-        display: 'inline',
+        display: 'block',
         fontWeight: 300,
         letterSpacing: '0.1em',
         background: 'linear-gradient(to right, rgba(104,216,181,1) 0%, rgba(113,133,238,1) 100%)',
@@ -80,6 +80,11 @@ const styles = {
         padding: '0.3em 1em 0.1em',
         fontSize: '0.9em',
         textTransform: 'uppercase',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        float: 'left',
+        maxWidth: '98%',
     },
 };
 

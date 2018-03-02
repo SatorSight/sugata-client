@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import ArticleHeader from './ArticlePage/ArticleHeader';
+import MagazineHeader from './MagazinePage/MagazineHeader';
 import IssuesSwiper from './../Components/IssuesSwiper';
 import MainTabs from './../Components/MainTabs';
-import ThematicSwiper from "../Components/ThematicSwiper";
+import OtherIssues from './../Components/OtherIssues';
+import PopularJournals from './../Components/PopularJournals';
 import IndexFooter from './MainPage/IndexFooter';
 import * as SUtils from "../Helpers/SUtils";
 
@@ -47,11 +48,12 @@ export default class Application extends Component {
 
         return (
             <div>
-                <ArticleHeader data={this.state.data}/>
+                <MagazineHeader data={this.state.data}/>
                 <IssuesSwiper data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
-                <ThematicSwiper  data={this.state.data}/>
+                <OtherIssues  data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
+                <PopularJournals  data={this.state.data}/>
                 <IndexFooter />
             </div>
         );

@@ -79,7 +79,7 @@ export default class ThematicSwiper extends Component {
                         <div key={String(currentIndex)} style={styles.item} >
                             <a href={'#'}>
                                 <div style={styles.owlMask} />
-                                <img style={styles.img} src={issue.image_path} alt={issue.number} />
+                                <img style={styles.img} src={issue.image_path} alt={issue.name} />
                                 <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + issue.image_path + ')' })} />
                             </a>
                         </div>

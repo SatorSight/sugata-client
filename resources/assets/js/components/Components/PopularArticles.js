@@ -50,7 +50,7 @@ const styles = {
         fontSize: '1.2em',
         lineHeight: 1.4,
         marginBottom: '0.2em',
-        maxHeight: '3em',
+        maxHeight: '2.7em',
         color: '#333',
         overflow: 'hidden',
         position: 'relative',

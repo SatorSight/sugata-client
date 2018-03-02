@@ -17,6 +17,7 @@ const styles = {
         float: 'left',
         margin: '0 5% 0 0',
         width: '20%',
+        transition: '.5s',
     },
     next: {
         position: 'relative',
@@ -61,10 +62,8 @@ const styles = {
         width: '100%',
     },
     active: {
-        width: '100%',
         opacity: .8,
-        marginTop: '1em',
-        transition: '.5s',
+        paddingTop: '1em',
     },
 };
 
@@ -82,12 +81,12 @@ class SwiperTop extends React.Component {
                     {this.props.articles.map((article, i) => {
                         let show;
                         if (i === active) {
-                            show = styles.active;
+                            show = Object.assign({}, styles.slideSwiper, styles.active);
                         } else {
-                            show = styles.magSwiper;
+                            show = styles.slideSwiper;
                         }
-                         return <div style={styles.slideSwiper} key={article.id}>
-                                <img style={show} src={article.issue_cover} alt={article.title}/>
+                         return <div style={show} key={article.id}>
+                                <img style={styles.magSwiper} src={article.issue_cover} alt={article.title}/>
                             </div>
                         }
                     )}
