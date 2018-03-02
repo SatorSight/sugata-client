@@ -98,7 +98,7 @@ class MainTopics extends React.Component {
     constructor(props){
         super(props);
 
-        state = {
+        this.state = {
             index: 0,
         };
     }
@@ -142,7 +142,7 @@ class MainTopics extends React.Component {
                         {content}
                     </SwipeableViews>
                     : null }
-                <Pagination dots={4} index={index} onChangeIndex={this.handleChangeIndex} />
+                <Pagination dots={3} index={index} onChangeIndex={this.handleChangeIndex} />
             </div>
         );
     }

@@ -115,7 +115,7 @@ class SwiperMain extends React.Component {
                         </div>
                     )}
                 </SwipeableViews>
-                <Pagination dots={3} index={this.props.active} onChangeIndex={this.handleChangeIndex} />
+                <Pagination dots={3} index={this.props.active} onChangeIndex={this.props.changer} />
             </div>
         );
     }

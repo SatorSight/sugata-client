@@ -24,7 +24,7 @@ const styles = {
         borderRadius: '0.2em',
         boxShadow: '0.1em 0.1em 0.3em rgba(0,0,0,0.3)',
         overflow: 'hidden',
-        height: '10em',
+        height: '12em',
         width: 'auto',
     },
     fot: {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import IndexMenu from '../MainPage/IndexMenu';
+import * as SUtils from "../../Helpers/SUtils";
 
 
 const styles = {
@@ -85,7 +86,7 @@ const styles = {
         right: 0,
         bottom: 0,
         height: '0.1em',
-        background: 'url("../images/arrow-h.svg") no-repeat 50% 50%',
+        background: 'url("/images/arrow-h.svg") no-repeat 50% 50%',
         backgroundSize: 'contain',
         opacity: 0.6,
     },
@@ -94,76 +95,6 @@ const styles = {
         left: '0.5em',
         top: 0,
         zIndex: 50,
-    },
-    swiperTop: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: '-3em',
-        zIndex: 10,
-    },
-    title: {
-        fontSize: '1.2em',
-        textTransform: 'uppercase',
-        padding: '2.41em 0 1.3em',
-        fontWeight: 400,
-        letterSpacing: '0.15em',
-        textAlign: 'center',
-    },
-    main: {
-        backgroundColor: '#FFF',
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    over: {
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    swiper: {
-        zIndex: 20,
-        position: 'relative',
-        overflowX: 'none',
-        width: '100%',
-    },
-    item: {
-        margin: '0 0.7em 3em',
-        height: '12em',
-        position: 'relative',
-        width: '30em',
-        overflow: 'hidden',
-        borderRadius: '1em',
-        boxShadow: '0 1.5em 3em -1.5em rgba(0,0,0,0.8)',
-    },
-    img: {
-        width: '100%',
-        pointerEvents: 'none',
-        position: 'absolute',
-        textAlign: 'center',
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: 10,
-    },
-    logo: {
-        width: '50%',
-        height: '50%',
-        position: 'absolute',
-        left: '25%',
-        top: '25%',
-        zIndex: 50,
-        textAlign: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '50% 50%',
-        backgroundSize: 'contain',
-    },
-    owlMask: {
-        zIndex: 20,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.4)',
     },
     bigLogo: {
         position: 'absolute',
@@ -190,6 +121,7 @@ class MagazineHeader extends Component {
     }
 
     render() {
+        const journals = this.props.data.journals;
         return (
             <div style={styles.header}>
                 <div style={styles.header}>
@@ -203,11 +135,13 @@ class MagazineHeader extends Component {
                         <div style={styles.iconMenu}>
                             <IndexMenu data={this.props.data} />
                         </div>
-                        <h1 style={styles.h1}>технологии и игры<span style={styles.arrow} /></h1>
-                        <div style={styles.bigLogo}>
-                            <img style={styles.imgLogo} src='/uploaded_images/logo_mirf.png' />
-                            <h3 style={styles.h3}>52 выпуска</h3>
-                        </div>
+                        {SUtils.any(journals) ? <div>
+                            <h1 style={styles.h1}>{journals[8].name}<span style={styles.arrow} /></h1>
+                            <div style={styles.bigLogo}>
+                                <img src={journals[8].logo_path} style={styles.imgLogo} alt={journals[8].name} />
+                                <h3 style={styles.h3}>{journals.length} выпуска</h3>
+                            </div>
+                        </div> : null }
                     </div>
                 </div>
             </div>

@@ -51,9 +51,9 @@ export default class Application extends Component {
                 <MagazineHeader data={this.state.data}/>
                 <IssuesSwiper data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
-                <OtherIssues  data={this.state.data}/>
+                <OtherIssues data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
-                <PopularJournals  data={this.state.data}/>
+                <PopularJournals data={this.state.data}/>
                 <IndexFooter />
             </div>
         );
