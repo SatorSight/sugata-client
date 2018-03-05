@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ArticleMenu from './ArticleMenu';
+import BundleMenu from './BundleMenu';
 
 
 const styles = {
@@ -175,7 +175,7 @@ const styles = {
         backgroundColor: 'rgba(0,0,0,0.4)',
     },
 };
-class ArticleHeader extends Component {
+class BundleHeader extends Component {
 
     constructor(props){
         super(props);
@@ -193,7 +193,7 @@ class ArticleHeader extends Component {
                     </div>
                     <div style={styles.inner}>
                         <div style={styles.iconMenu}>
-                            <ArticleMenu data={this.props.data}/>
+                            <BundleMenu data={this.props.data}/>
                         </div>
                         <h2 style={styles.h2}>киоск плюс</h2>
                         <h1 style={styles.h1}>технологии и игры<span style={styles.arrow} /></h1>
@@ -204,4 +204,4 @@ class ArticleHeader extends Component {
     }
 }
 
-export default ArticleHeader;
+export default BundleHeader;

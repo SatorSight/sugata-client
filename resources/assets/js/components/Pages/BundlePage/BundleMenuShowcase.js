@@ -18,7 +18,7 @@ const styles = {
     },
 };
 
-class ArticleMenuShowcase extends Component {
+class BundleMenuShowcase extends Component {
 
     constructor(props){
         super(props);
@@ -39,4 +39,4 @@ class ArticleMenuShowcase extends Component {
     }
 }
 
-export default ArticleMenuShowcase;
+export default BundleMenuShowcase;

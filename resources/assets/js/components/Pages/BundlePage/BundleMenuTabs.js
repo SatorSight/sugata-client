@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import SwipeableViews from 'react-swipeable-views';
-import ArticleMenuShowcase from './ArticleMenuShowcase';
-import ArticleMenuSettings from './ArticleMenuSettings';
+import BundleMenuShowcase from './BundleMenuShowcase';
+import BundleMenuSettings from './BundleMenuSettings';
 
 const fontWeightMedium = 400;
 
@@ -58,7 +58,7 @@ const theme = createMuiTheme({
         },
     },
 });
-class ArticleMenuTabs extends Component {
+class BundleMenuTabs extends Component {
     constructor(props){
         super(props);
 
@@ -84,8 +84,8 @@ class ArticleMenuTabs extends Component {
                         <span style={styles.arrowBot} />
                     </Tabs>
                     <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
-                        <ArticleMenuShowcase data={this.props.data} />
-                        <ArticleMenuSettings />
+                        <BundleMenuShowcase data={this.props.data} />
+                        <BundleMenuSettings />
                     </SwipeableViews>
                 </div>
             </MuiThemeProvider>
@@ -93,4 +93,4 @@ class ArticleMenuTabs extends Component {
     }
 }
 
-export default withStyles(styles)(ArticleMenuTabs);
+export default withStyles(styles)(BundleMenuTabs);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ArticleHeader from './ArticlePage/ArticleHeader';
+import BundleHeader from './BundlePage/BundleHeader';
 import IssuesSwiper from './../Components/IssuesSwiper';
 import MainTabs from './../Components/MainTabs';
 import ThematicSwiper from "../Components/ThematicSwiper";
@@ -20,34 +20,34 @@ export default class Application extends Component {
     componentWillMount(){
         this.loadBundles();
         this.loadNewIssues();
-        this.loadNewArticles();
-        this.loadChosenArticles();
-        this.loadPopularArticles();
+        this.loadNewBundles();
+        this.loadChosenBundles();
+        this.loadPopularBundles();
         this.loadJournals();
     }
 
     loadBundles = () => SUtils.updateStateWithApiRequestFor('bundles', this.state._this);
     loadNewIssues = () => SUtils.updateStateWithApiRequestFor('new_issues', this.state._this);
-    loadNewArticles = () => SUtils.updateStateWithApiRequestFor('new_articles', this.state._this);
-    loadChosenArticles = () => SUtils.updateStateWithApiRequestFor('chosen_articles', this.state._this);
-    loadPopularArticles = () => SUtils.updateStateWithApiRequestFor('popular_articles', this.state._this);
+    loadNewBundles = () => SUtils.updateStateWithApiRequestFor('new_articles', this.state._this);
+    loadChosenBundles = () => SUtils.updateStateWithApiRequestFor('chosen_articles', this.state._this);
+    loadPopularBundles = () => SUtils.updateStateWithApiRequestFor('popular_articles', this.state._this);
     loadJournals = () => SUtils.updateStateWithApiRequestFor('journals', this.state._this);
 
-    loadMoreNewArticles = () => {
+    loadMoreNewBundles = () => {
         console.log('fired');
         SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this)
     };
-    loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
+    loadMorePopularBundles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
 
     render() {
         const controls = {
-            'more_new_articles': this.loadMoreNewArticles,
-            'more_popular_articles': this.loadMorePopularArticles
+            'more_new_articles': this.loadMoreNewBundles,
+            'more_popular_articles': this.loadMorePopularBundles
         };
 
         return (
             <div>
-                <ArticleHeader data={this.state.data}/>
+                <BundleHeader data={this.state.data}/>
                 <IssuesSwiper data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
                 <ThematicSwiper  data={this.state.data}/>

@@ -2,7 +2,7 @@ import React from 'react';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
-import ArticleMenuTabs from './ArticleMenuTabs';
+import BundleMenuTabs from './BundleMenuTabs';
 
 const theme = createMuiTheme({
     palette: {
@@ -107,7 +107,7 @@ const styles = {
     },
 };
 
-class ArticleMenu extends React.Component {
+class BundleMenu extends React.Component {
     constructor(props){
         super(props);
 
@@ -149,7 +149,7 @@ class ArticleMenu extends React.Component {
                                     <span />
                                 </div>
                             </div>
-                            <ArticleMenuTabs data={this.props.data} />
+                            <BundleMenuTabs data={this.props.data} />
                         </div>
                     </Drawer>
                 </div>
@@ -158,4 +158,4 @@ class ArticleMenu extends React.Component {
     }
 }
 
-export default withStyles(styles)(ArticleMenu);
+export default withStyles(styles)(BundleMenu);

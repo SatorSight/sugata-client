@@ -67,7 +67,7 @@ const styles = {
     },
 };
 
-class ArticleMenuSettings extends Component {
+class BundleMenuSettings extends Component {
     render() {
         return (
             <div>
@@ -79,4 +79,4 @@ class ArticleMenuSettings extends Component {
     }
 }
 
-export default ArticleMenuSettings;
+export default BundleMenuSettings;
