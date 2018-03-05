@@ -114,7 +114,7 @@ const styles = {
         letterSpacing: '0.15em',
     }
 };
-class MagazineHeader extends Component {
+class JournalHeader extends Component {
 
     constructor(props){
         super(props);
@@ -151,4 +151,4 @@ class MagazineHeader extends Component {
     }
 }
 
-export default MagazineHeader;
+export default JournalHeader;

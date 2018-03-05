@@ -13,11 +13,9 @@ export default class AuthPage extends Component {
             _this: this
         }
     }
-
     componentWillMount(){
         this.loadNewIssues();
     }
-
     loadNewIssues = () => SUtils.updateStateWithApiRequestFor('new_issues', this.state._this);
 
     render() {

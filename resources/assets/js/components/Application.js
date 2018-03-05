@@ -8,7 +8,7 @@ import Lines from 'react-preloaders/Preloaders/Lines';
 import MainPage from './Pages/MainPage'
 import BundlePage from './Pages/BundlePage'
 import AuthPage from './Pages/AuthPage'
-import MagazinePage from './Pages/MagazinePage'
+import JournalPage from './Pages/JournalPage'
 
 export default class Application extends Component {
     render() {
@@ -23,7 +23,7 @@ export default class Application extends Component {
                         <Route exact path="/" component={MainPage}/>
                         <Route path="/bundle" component={BundlePage}/>
                         <Route path="/auth" component={AuthPage}/>
-                        <Route path="/magazine" component={MagazinePage}/>
+                        <Route path="/journal" component={JournalPage}/>
                     </div>
                 </BrowserRouter>
             </div>
