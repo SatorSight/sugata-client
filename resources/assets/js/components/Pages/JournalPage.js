@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MagazineHeader from './MagazinePage/MagazineHeader';
+import JournaleHeader from './JournalePage/JournaleHeader';
 import IssuesSwiper from './../Components/IssuesSwiper';
 import MainTabs from './../Components/MainTabs';
 import OtherIssues from './../Components/OtherIssues';
@@ -48,7 +48,7 @@ export default class Application extends Component {
 
         return (
             <div>
-                <MagazineHeader data={this.state.data}/>
+                <JournaleHeader data={this.state.data}/>
                 <IssuesSwiper data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
                 <OtherIssues data={this.state.data}/>
