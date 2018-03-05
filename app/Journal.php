@@ -21,10 +21,6 @@ class Journal extends Model
         return $this->morphOne('App\Logo', 'parent');
     }
 
-    public function bundle(){
-        return $this->belongsTo('App\Bundle');
-    }
-
     public function additional_image(){
         return $this->morphOne('App\AdditionalImage', 'parent');
     }
@@ -52,13 +48,6 @@ class Journal extends Model
             if(!empty($journal->image))
                 $journal->image_path = $journal->image->path;
             unset($journal->image);
-            return $journal;
-        });
-    }
-
-    public static function injectWithBundle(Collection &$journals) : void {
-        $journals = $journals->map(function($journal){
-            $journal->bundle;
             return $journal;
         });
     }

@@ -85,7 +85,6 @@ class ApiController extends Controller
         Journal::injectWithLogo($journals);
         Journal::injectWithAdditionalImages($journals);
         Journal::injectWithImages($journals);
-        Journal::injectWithBundle($journals);
         Helper::removeFieldFromCollection($journals, 'description');
         return response()->json($journals);
     }
