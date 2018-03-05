@@ -122,6 +122,8 @@ class MagazineHeader extends Component {
 
     render() {
         const journals = this.props.data.journals;
+        let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
+
         return (
             <div style={styles.header}>
                 <div style={styles.header}>
@@ -136,9 +138,9 @@ class MagazineHeader extends Component {
                             <IndexMenu data={this.props.data} />
                         </div>
                         {SUtils.any(journals) ? <div>
-                            <h1 style={styles.h1}>{journals[8].name}<span style={styles.arrow} /></h1>
+                            <h1 style={styles.h1}>{journals[index].bundle.name}<span style={styles.arrow} /></h1>
                             <div style={styles.bigLogo}>
-                                <img src={journals[8].logo_path} style={styles.imgLogo} alt={journals[8].name} />
+                                <img src={journals[index].logo_path} style={styles.imgLogo} alt={journals[index].name} />
                                 <h3 style={styles.h3}>{journals.length} выпуска</h3>
                             </div>
                         </div> : null }
