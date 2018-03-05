@@ -6,8 +6,13 @@ import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import Lines from 'react-preloaders/Preloaders/Lines';
 
 import MainPage from './Pages/MainPage'
+<<<<<<< HEAD
 import ArticlePage from './Pages/ArticlePage'
 import LoginPage from './Pages/LoginPage'
+=======
+import AuthPage from './Pages/AuthPage'
+import ArticlePage from './Pages/ArticlePage'
+>>>>>>> d322e0707874bfc429dd85045c4213ef36654981
 import MagazinePage from './Pages/MagazinePage'
 
 export default class Application extends Component {
@@ -21,8 +26,13 @@ export default class Application extends Component {
                 <BrowserRouter>
                     <div>
                         <Route exact path="/" component={MainPage}/>
+<<<<<<< HEAD
                         <Route path="/article" component={ArticlePage}/>
                         <Route path="/login" component={LoginPage}/>
+=======
+                        <Route path="/auth" component={AuthPage}/>
+                        <Route path="/article" component={ArticlePage}/>
+>>>>>>> d322e0707874bfc429dd85045c4213ef36654981
                         <Route path="/magazine" component={MagazinePage}/>
                     </div>
                 </BrowserRouter>
