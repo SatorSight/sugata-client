@@ -24,7 +24,7 @@ export default class AuthPage extends Component {
         return (
             <div>
                 <AuthHeader data={this.state.data} />
-                {/*<IndexFooter />*/}
+                <IndexFooter />
             </div>
         );
     }

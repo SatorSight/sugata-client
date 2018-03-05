@@ -370,51 +370,51 @@ class AuthHeader extends Component {
                 <div style={styles.fot}>
                     <p style={styles.text}>вход</p>
                 </div>
-                    {SUtils.any(new_issues) ?
-                        <div style={styles.content}>
-                            <div style={Object.assign({}, styles.mag, styles.magOne)} >
-                                <img src={new_issues[0].image_path} style={styles.imgMag} alt='' />
+                {SUtils.any(new_issues) ?
+                    <div style={styles.content}>
+                        <div style={Object.assign({}, styles.mag, styles.magOne)} >
+                            <img src={new_issues[0].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magTwo)} >
+                            <img src={new_issues[1].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magThree)} >
+                            <img src={new_issues[2].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magFour)} >
+                            <img src={new_issues[3].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magFive)} >
+                            <img src={new_issues[4].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magSix)} >
+                            <img src={new_issues[5].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magSeven)} >
+                            <img src={new_issues[6].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magEight)} >
+                            <img src={new_issues[7].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magNine)} >
+                            <img src={new_issues[8].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magTen)} >
+                            <img src={new_issues[9].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magEleven)} >
+                            <img src={new_issues[10].image_path} style={styles.imgMag} alt='' />
+                        </div>
+                        <h2 style={styles.h2}>Добро пожаловать<br />в Киоск!</h2>
+                        <div style={styles.divInput}>
+                            <span style={styles.spanInput}>Ваш номер телефона</span>
+                            <InputMask style={styles.inputMask} {...this.props} mask="+7 (999) 999-99-99" placeholder="+7 (   )    -  -  " maskChar=" " />
+                            <div style={styles.divButton}>
+                                <button style={styles.button}>Войти</button>
+                                <div  style={styles.shadowButton} />
                             </div>
-                            <div style={Object.assign({}, styles.mag, styles.magTwo)} >
-                                <img src={new_issues[1].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magThree)} >
-                                <img src={new_issues[2].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magFour)} >
-                                <img src={new_issues[3].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magFive)} >
-                                <img src={new_issues[4].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magSix)} >
-                                <img src={new_issues[5].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magSeven)} >
-                                <img src={new_issues[6].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magEight)} >
-                                <img src={new_issues[7].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magNine)} >
-                                <img src={new_issues[8].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magTen)} >
-                                <img src={new_issues[9].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <div style={Object.assign({}, styles.mag, styles.magEleven)} >
-                                <img src={new_issues[10].image_path} style={styles.imgMag} alt='' />
-                            </div>
-                            <h2 style={styles.h2}>Добро пожаловать<br />в Киоск!</h2>
-                            <div style={styles.divInput}>
-                                <span style={styles.spanInput}>Ваш номер телефона</span>
-                                <InputMask style={styles.inputMask} {...this.props} mask="+7 (999) 999-99-99" placeholder="+7 (   )    -  -  " maskChar=" " />
-                                <div style={styles.divButton}>
-                                    <button style={styles.button}>Войти</button>
-                                    <div  style={styles.shadowButton} />
-                                </div>
-                            </div>
-                        </div> : null }
+                        </div>
+                    </div> : null }
             </div>
         );
     }
