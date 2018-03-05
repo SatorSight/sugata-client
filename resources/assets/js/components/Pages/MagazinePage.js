@@ -7,7 +7,7 @@ import PopularJournals from './../Components/PopularJournals';
 import IndexFooter from './MainPage/IndexFooter';
 import * as SUtils from "../Helpers/SUtils";
 
-export default class Application extends Component {
+export default class MagazinePage extends Component {
 
     constructor(props){
         super(props);

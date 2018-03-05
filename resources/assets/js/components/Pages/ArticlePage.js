@@ -6,7 +6,7 @@ import ThematicSwiper from "../Components/ThematicSwiper";
 import IndexFooter from './MainPage/IndexFooter';
 import * as SUtils from "../Helpers/SUtils";
 
-export default class Application extends Component {
+export default class ArticlePage extends Component {
 
     constructor(props){
         super(props);
