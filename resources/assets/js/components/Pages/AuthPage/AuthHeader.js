@@ -7,7 +7,7 @@ import * as SUtils from "../../Helpers/SUtils";
 const styles = {
     header: {
         width: '100%',
-        minHeight: '100vh',
+        height: '100%',
         position: 'relative',
         background: '#000',
         overflow: 'hidden',
@@ -68,6 +68,7 @@ const styles = {
     inner: {
         position: 'relative',
         maxWidth: '40em',
+        height: '100%',
         margin: '0 auto',
         textAlign: 'center',
         zIndex: 30,
@@ -82,7 +83,6 @@ const styles = {
         color: '#FFF',
         display: 'inline-block',
         padding: '0.7em 1.5em 0.68em',
-        margin: '4em auto',
         position: 'relative',
         zIndex: 30,
     },
@@ -96,14 +96,32 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
+    top: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        height: '40%',
+        display: 'table',
+        width: '100%',
+        verticalAlign: 'middle',
+    },
     content: {
         backgroundColor: '#FFF',
-        margin: '0 0.3em 1em',
         padding: '4em 1.4em 6em',
         borderRadius: '0.5em',
-        position: 'relative',
+        position: 'absolute',
+        left: '0.3em',
+        right: '0.3em',
+        top: '40%',
+        bottom: '5%',
         overflow: 'hidden',
         zIndex: 60,
+    },
+    innerTop: {
+        overflow: 'hidden',
+        display: 'table-cell',
+        width: '100%',
+        verticalAlign: 'middle',
     },
     h2: {
         fontSize: '1.7em',
@@ -211,8 +229,8 @@ const styles = {
     iconMenu:{
         position: 'absolute',
         left: 0,
-        top: '8em',
-        // marginTop: '-2.4em',
+        top: '50%',
+        transform: 'translate(0, -50%)',
         zIndex: 50,
         opacity: .6,
     },
@@ -221,11 +239,26 @@ class AuthHeader extends Component {
 
     constructor(props){
         super(props);
+        this.state = { width: '0', height: '0' };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
     render() {
         return (
-            <div style={styles.header}>
+            <div style={Object.assign({}, styles.header, {width: this.state.width+'px', height: this.state.height+'px'})}>
                 <div style={styles.mask}>
                     <div style={styles.bg} />
                     <div style={styles.colorOne} />
@@ -233,10 +266,14 @@ class AuthHeader extends Component {
                     <div style={styles.colorThree} />
                 </div>
                 <div style={styles.inner}>
-                    <div style={styles.iconMenu}>
-                        <IndexMenu data={this.props.data} />
+                    <div style={styles.top}>
+                        <div style={styles.innerTop}>
+                            <div style={styles.iconMenu}>
+                                <IndexMenu data={this.props.data} />
+                            </div>
+                            <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                        </div>
                     </div>
-                    <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
                     <div style={styles.content}>
                         <div style={Object.assign({}, styles.mag, styles.magOne)} />
                         <div style={Object.assign({}, styles.mag, styles.magTwo)} />
