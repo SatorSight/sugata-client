@@ -40,8 +40,11 @@
         @media (min-height: 500px) and (max-height: 600px) {
             body {font-size: 12px;}
         }
-        @media (min-height: 600px) and (max-height: 900px) {
-            body {font-size: 14px;}
+        @media (min-height: 600px) and (max-height: 900px) and (min-width: 370px) {
+            body {font-size: 12px;}
+        }
+        @media (min-height: 600px) and (max-height: 900px) and (max-width: 370px) {
+            body {font-size: 11px;}
         }
         @media (min-height: 900px) {
             body {font-size: 15px;}

@@ -234,6 +234,17 @@ const styles = {
         zIndex: 50,
         opacity: .6,
     },
+    textFot: {
+        zIndex: 20,
+        lineHeight: 1.2,
+        color: '#939393',
+        fontSize: '1em',
+        fontWeight: 300,
+        letterSpacing: '0.04em',
+        textAlign: 'center',
+        maxWidth: '80%',
+        margin: '0 auto',
+    }
 };
 class AuthHeader extends Component {
 
@@ -245,7 +256,6 @@ class AuthHeader extends Component {
 
     componentDidMount() {
         this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
     }
 
     componentWillUnmount() {
@@ -258,7 +268,7 @@ class AuthHeader extends Component {
 
     render() {
         return (
-            <div style={Object.assign({}, styles.header, {width: this.state.width+'px', height: this.state.height+'px'})}>
+            <div style={Object.assign({}, styles.header, {height: this.state.height+'px'})}>
                 <div style={styles.mask}>
                     <div style={styles.bg} />
                     <div style={styles.colorOne} />
@@ -282,11 +292,12 @@ class AuthHeader extends Component {
                         <h2 style={styles.h2}>Вход и регистрация</h2>
                         <div style={styles.divInput}>
                             <span style={styles.spanInput}>Ваш номер телефона</span>
-                            <InputMask style={styles.inputMask} {...this.props} mask="+7 (999) 999-99-99" placeholder="+7 (   )    -  -  " maskChar=" " />
+                            <InputMask style={styles.inputMask} {...this.props} type="tel" mask="+7 (999) 999-99-99" placeholder="+7 (   )    -  -  " maskChar=" " />
                             <div style={styles.divButton}>
-                                <button style={styles.button}>Проверить номер</button>
+                                <button style={styles.button}>Продолжить</button>
                                 <div style={styles.shadowButton} />
                             </div>
+                            <p style={styles.textFot}>Если у вас еще нет учетной записи, мы&nbsp;создадим ее автоматически</p>
                         </div>
                     </div>
                 </div>

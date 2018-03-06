@@ -13,10 +13,17 @@ export default class AuthPage extends Component {
             _this: this
         }
     }
+
     componentWillMount(){
-        this.loadNewIssues();
+        //getting resources, API list below:
+        /*
+         /bundles/
+        */
+
+        this.loadBundles();
     }
-    loadNewIssues = () => SUtils.updateStateWithApiRequestFor('new_issues', this.state._this);
+
+    loadBundles = () => SUtils.updateStateWithApiRequestFor('bundles', this.state._this);
 
     render() {
         return (
