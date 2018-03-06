@@ -27,18 +27,38 @@
         }
         .content li:nth-child(odd) {background: #BEBBE2;}
         .content li:nth-child(even) {background: white;}
-        @media (min-width: 400px) {body {font-size: 9px;}}
-        @media (min-width: 400px) and (max-width: 500px) {body {font-size: 10px;}}
-        @media (min-width: 500px) and (max-width: 600px) {body {font-size: 11px;}}
-        @media (min-width: 600px) and (max-width: 700px) {body {font-size: 12px;}}
-        @media (min-width: 700px) and (max-width: 800px) {body {font-size: 13px;}}
-        @media (min-width: 800px) and (max-width: 900px) {body {font-size: 14px;}}
-        @media (min-width: 900px) and (max-width: 1000px) {body {font-size: 15px;}}
-        @media (min-width: 1000px){body {font-size: 16px;}}
+
+        @media (max-height: 280px) {
+            body {font-size: 8px;}
+        }
+        @media (min-height: 280px) and (max-height: 400px) {
+            body {font-size: 9px;}
+        }
+        @media (min-height: 400px) and (max-height: 500px) {
+            body {font-size: 10px;}
+        }
+        @media (min-height: 500px) and (max-height: 600px) {
+            body {font-size: 11px;}
+        }
+        @media (min-height: 600px) and (max-height: 650px) {
+            body {font-size: 11px;}
+        }
+        @media (min-height: 650px) and (max-height: 700px) {
+            body {font-size: 12px;}
+        }
+        @media (min-height: 700px) and (max-height: 800px) {
+            body {font-size: 13px;}
+        }
+        @media (min-height: 800px) and (max-height: 900px) {
+            body {font-size: 14px;}
+        }
+        @media (min-height: 900px) {
+            body {font-size: 15px;}
+        }
     </style>
 </head>
 <body>
 <div id="root"></div>
-<script src="{{asset('/js/app.js')}}" ></script>
+<script src="{{asset('http://localhost:8080/js/app.js')}}" ></script>
 </body>
 </html>

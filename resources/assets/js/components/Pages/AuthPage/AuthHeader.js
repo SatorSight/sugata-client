@@ -63,26 +63,26 @@ const styles = {
     },
     inner: {
         position: 'relative',
-        overflow: 'hidden',
         maxWidth: '720px',
         margin: '0 auto',
         textAlign: 'center',
         zIndex: 30,
     },
     h1: {
+        fontFamily: 'Montserrat',
+        fontWeight: 200,
         fontSize: '2.6em',
-        letterSpacing: '0.46em',
+        letterSpacing: '0.35em',
         textIndent: '0.54em',
         textTransform: 'uppercase',
         color: '#FFF',
-        fontWeight: 200,
         display: 'inline-block',
-        padding: '0.6em 0 1.2em',
+        padding: '0.48em 0 1.2em',
         margin: '1em auto 0.3em',
         position: 'relative',
         zIndex: 30,
     },
-    arrow:{
+    arrow: {
         position: 'absolute',
         left: '14%',
         right: '14%',
@@ -91,82 +91,6 @@ const styles = {
         background: 'url("../images/arrow-h.svg") no-repeat 50% 50%',
         backgroundSize: '100% 100%',
         opacity: 0.6,
-    },
-    iconMenu:{
-        position: 'absolute',
-        left: 0,
-        top: '2em',
-        zIndex: 50,
-    },
-    swiperTop: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: '-3em',
-        zIndex: 10,
-    },
-    title: {
-        fontSize: '1.2em',
-        textTransform: 'uppercase',
-        fontWeight: 400,
-        padding: '2.41em 0 1.3em',
-        letterSpacing: '0.15em',
-        textAlign: 'center',
-    },
-    main: {
-        backgroundColor: '#FFF',
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    over: {
-        overflow: 'hidden',
-        position: 'relative',
-    },
-    swiper: {
-        zIndex: 20,
-        position: 'relative',
-        overflowX: 'none',
-        width: '100%',
-    },
-    item: {
-        margin: '0 0.7em 3em',
-        height: '12em',
-        position: 'relative',
-        width: '30em',
-        overflow: 'hidden',
-        borderRadius: '1em',
-        boxShadow: '0 1.5em 3em -1.5em rgba(0,0,0,0.8)',
-    },
-    img: {
-        width: '100%',
-        pointerEvents: 'none',
-        position: 'absolute',
-        textAlign: 'center',
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        zIndex: 10,
-    },
-    logo: {
-        width: '50%',
-        height: '50%',
-        position: 'absolute',
-        left: '25%',
-        top: '25%',
-        zIndex: 50,
-        textAlign: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '50% 50%',
-        backgroundSize: 'contain',
-    },
-    owlMask: {
-        zIndex: 20,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.4)',
     },
     fot: {
         position: 'relative',
@@ -177,12 +101,13 @@ const styles = {
     text: {
         textTransform: 'uppercase',
         textAlign: 'left',
-        letterSpacing: '0.4em',
+        letterSpacing: '0.2em',
         fontStretch: 'ultra-condensed',
         margin: '0.8em 0 1.6em',
         fontSize: '1.1em',
+        fontFamily: 'Montserrat',
+        fontWeight: 200,
         color: '#FFF',
-        fontWeight: '200',
     },
     content: {
         backgroundColor: '#FFF',
@@ -194,16 +119,19 @@ const styles = {
         zIndex: 60,
     },
     h2: {
-        fontSize: '2.3em',
+        fontSize: '2.2em',
         fontWeight: '600',
         textAlign: 'center',
         lineHeight: 1.05,
+        position: 'relative',
+        zIndex: 60,
     },
     divInput: {
         overflow: 'hidden',
         width: '100%',
         position: 'relative',
-        marginTop: '3.1em',
+        maxWidth: '30em',
+        margin: '3.1em auto 0',
     },
     inputMask: {
         width: '90%',
@@ -232,7 +160,7 @@ const styles = {
         overflow: 'hidden',
     },
     button: {
-        background: ' linear-gradient(to bottom, rgba(44,65,113,1) 0%, rgba(54,60,106,1) 100%)',
+        background: 'linear-gradient(to bottom, rgba(44,65,113,1) 0%, rgba(47,53,101,1) 100%)',
         color: '#FFF',
         border: 0,
         borderRadius: '4em',
@@ -261,89 +189,33 @@ const styles = {
     mag: {
         position: 'absolute',
         overflow: 'hidden',
-        height: '7em',
+        height: '8em',
+        width: '8em',
+        zIndex: '2',
     },
     magOne: {
-        transform: 'rotate(160deg)',
-        left: '0.8em',
-        top: '-4.8em',
-        zIndex: '2',
-        backgroundColor: '#DDD',
+        right: 0,
+        top: 0,
+        background: 'url(mag1.png) no-repeat 0 100%',
+        backgroundSize: 'contain',
     },
     magTwo: {
-        transform: 'rotate(30deg)',
-        left: '-3em',
-        top: '0.8em',
-        zIndex: '1',
-        backgroundColor: '#999',
+        right: 0,
+        bottom: 0,
+        background: 'url(mag2.png) no-repeat 100% 100%',
+        backgroundSize: 'contain',
     },
     magThree: {
-        transform: 'rotate(60deg)',
-        left: '-3em',
-        bottom: '0.8em',
-        zIndex: '1',
-        backgroundColor: '#888',
+        left: 0,
+        bottom: 0,
+        background: 'url(mag3.png) no-repeat 0 100%',
+        backgroundSize: 'contain',
     },
     magFour: {
-        transform: 'rotate(27deg)',
-        left: '-1.8em',
-        bottom: '-1em',
-        zIndex: '3',
-        backgroundColor: '#777',
-    },
-    magFive: {
-        transform: 'rotate(11deg)',
-        left: '1.2em',
-        bottom: '-4.8em',
-        zIndex: '2',
-        backgroundColor: '#666',
-    },
-    magSix: {
-        transform: 'rotate(-30deg)',
-        left: '4em',
-        bottom: '-3.5em',
-        zIndex: '1',
-        backgroundColor: '#555',
-    },
-    magSeven: {
-        transform: 'rotate(10deg)',
-        right: '1.5em',
-        bottom: '-6em',
-        zIndex: '2',
-        backgroundColor: '#444',
-    },
-    magEight: {
-        transform: 'rotate(20deg)',
-        right: '-0.5em',
-        bottom: '-4.5em',
-        zIndex: '1',
-        backgroundColor: '#333',
-    },
-    magNine: {
-        transform: 'rotate(-12deg)',
-        right: '-2.6em',
-        bottom: '0.5em',
-        zIndex: '3',
-        backgroundColor: '#222',
-    },
-    magTen: {
-        transform: 'rotate(-77deg)',
-        right: '-4em',
-        top: '0.6em',
-        zIndex: '2',
-        backgroundColor: '#111',
-    },
-    magEleven: {
-        transform: 'rotate(-150deg)',
-        right: '-0.5em',
-        top: '-5.5em',
-        zIndex: '1',
-        backgroundColor: '#000',
-    },
-    imgMag: {
-        float: 'left',
-        width: 'auto',
-        height: '7em',
+        left: 0,
+        top: 0,
+        background: 'url(mag4.png) no-repeat 0 0',
+        backgroundSize: 'contain',
     },
 };
 class AuthHeader extends Component {
@@ -353,68 +225,35 @@ class AuthHeader extends Component {
     }
 
     render() {
-        const new_issues = this.props.data.new_issues;
         return (
             <div style={styles.header}>
                 <div style={styles.mask}>
                     <div style={styles.bg} />
-                    <div style={styles.colorOne} />
                     <div style={styles.colorTwo} />
                     <div style={styles.colorThree} />
                 </div>
                 <div style={styles.inner}>
-                    <div style={styles.iconMenu}>
-                    </div>
+                    <div style={styles.colorOne} />
                     <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
-                </div>
-                <div style={styles.fot}>
-                    <p style={styles.text}>вход</p>
-                </div>
-                {SUtils.any(new_issues) ?
+                    <div style={styles.fot}>
+                        <p style={styles.text}>вход</p>
+                    </div>
                     <div style={styles.content}>
-                        <div style={Object.assign({}, styles.mag, styles.magOne)} >
-                            <img src={new_issues[0].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magTwo)} >
-                            <img src={new_issues[1].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magThree)} >
-                            <img src={new_issues[2].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magFour)} >
-                            <img src={new_issues[3].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magFive)} >
-                            <img src={new_issues[4].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magSix)} >
-                            <img src={new_issues[5].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magSeven)} >
-                            <img src={new_issues[6].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magEight)} >
-                            <img src={new_issues[7].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magNine)} >
-                            <img src={new_issues[8].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magTen)} >
-                            <img src={new_issues[9].image_path} style={styles.imgMag} alt='' />
-                        </div>
-                        <div style={Object.assign({}, styles.mag, styles.magEleven)} >
-                            <img src={new_issues[10].image_path} style={styles.imgMag} alt='' />
-                        </div>
+                        <div style={Object.assign({}, styles.mag, styles.magOne)} />
+                        <div style={Object.assign({}, styles.mag, styles.magTwo)} />
+                        <div style={Object.assign({}, styles.mag, styles.magThree)} />
+                        <div style={Object.assign({}, styles.mag, styles.magFour)} />
                         <h2 style={styles.h2}>Добро пожаловать<br />в Киоск!</h2>
                         <div style={styles.divInput}>
                             <span style={styles.spanInput}>Ваш номер телефона</span>
                             <InputMask style={styles.inputMask} {...this.props} mask="+7 (999) 999-99-99" placeholder="+7 (   )    -  -  " maskChar=" " />
                             <div style={styles.divButton}>
                                 <button style={styles.button}>Войти</button>
-                                <div  style={styles.shadowButton} />
+                                <div style={styles.shadowButton} />
                             </div>
                         </div>
-                    </div> : null }
+                    </div>
+                </div>
             </div>
         );
     }
