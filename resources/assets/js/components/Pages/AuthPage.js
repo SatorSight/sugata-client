@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AuthHeader from './AuthPage/AuthHeader';
-import IndexFooter from './MainPage/IndexFooter';
+
 import * as SUtils from "../Helpers/SUtils";
 
 export default class AuthPage extends Component {
@@ -22,7 +22,6 @@ export default class AuthPage extends Component {
         return (
             <div>
                 <AuthHeader data={this.state.data} />
-                <IndexFooter />
             </div>
         );
     }
