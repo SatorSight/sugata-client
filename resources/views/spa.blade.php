@@ -38,15 +38,9 @@
             body {font-size: 10px;}
         }
         @media (min-height: 500px) and (max-height: 600px) {
-            body {font-size: 11px;}
-        }
-        @media (min-height: 600px) and (max-height: 650px) {
             body {font-size: 12px;}
         }
-        @media (min-height: 650px) and (max-height: 800px) {
-            body {font-size: 13px;}
-        }
-        @media (min-height: 800px) and (max-height: 900px) {
+        @media (min-height: 600px) and (max-height: 900px) {
             body {font-size: 14px;}
         }
         @media (min-height: 900px) {
