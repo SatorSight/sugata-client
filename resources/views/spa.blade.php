@@ -59,6 +59,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="{{asset('http://localhost:8080/js/app.js')}}" ></script>
+<script src="{{asset('/js/app.js')}}" ></script>
 </body>
 </html>
