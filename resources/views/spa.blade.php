@@ -41,12 +41,9 @@
             body {font-size: 11px;}
         }
         @media (min-height: 600px) and (max-height: 650px) {
-            body {font-size: 11px;}
-        }
-        @media (min-height: 650px) and (max-height: 700px) {
             body {font-size: 12px;}
         }
-        @media (min-height: 700px) and (max-height: 800px) {
+        @media (min-height: 650px) and (max-height: 800px) {
             body {font-size: 13px;}
         }
         @media (min-height: 800px) and (max-height: 900px) {
