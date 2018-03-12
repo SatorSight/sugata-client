@@ -10,11 +10,12 @@ const fontWeightMedium = 400;
 const styles = {
     main: {
         background: '#fff',
-        paddingTop: 20,
+        paddingTop: '1em',
     },
     tabs: {
         background: '#fff',
         color: '#000',
+        margin: '0em 0 -1.2em 0.6em',
     },
     tabsItem: {
         height: '30px',

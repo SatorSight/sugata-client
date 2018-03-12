@@ -4,7 +4,7 @@ import * as SUtils from "../Helpers/SUtils";
 
 const styles = {
     item: {
-        marginLeft: '2.5em',
+        marginLeft: '1.7em',
         paddingBottom: '1em',
     },
     otherIssues: {
@@ -13,16 +13,16 @@ const styles = {
         overflow: 'hidden',
     },
     title: {
-        fontSize: '1.5em',
+        fontSize: '1.2em',
         textTransform: 'uppercase',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
         fontWeight: 400,
-        padding: '3.8em 3em 1.3em 1.6em',
-        letterSpacing: 3.5,
+        padding: '2em 3em 1em 1.4em',
+        letterSpacing: 3.2,
     },
     imgOtherIssues: {
         borderRadius: '0.2em',
-        boxShadow: '0.1em 0.1em 0.3em rgba(0,0,0,0.3)',
+        boxShadow: '0.2em 0.2em 0.4em -0.2em rgba(0,0,0,0.2)',
         overflow: 'hidden',
         height: '12em',
         width: 'auto',

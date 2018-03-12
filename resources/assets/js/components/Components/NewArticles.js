@@ -5,7 +5,7 @@ import sKey from './../Helpers/sKey';
 
 const styles = {
     main: {
-        padding: '0 1em',
+        padding: '0 1.6em',
     },
     tabs: {
         background: '#fff',
@@ -24,7 +24,7 @@ const styles = {
         overflow: 'hidden',
         backgroundPosition: '50% 50%',
         backgroundSize: 'cover',
-        boxShadow: '0.2em 0.2em 0.8em rgba(0,0,0,0.3)',
+        boxShadow: '0.8em 0.8em 1em -0.6em rgba(0,0,0,0.2)',
     },
     inner: {
         marginLeft: '8.5em',
