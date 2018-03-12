@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import AuthHeader from './AuthPage/AuthHeader';
+import IndexFooter from './MainPage/IndexFooter';
 
-import * as SUtils from "../Helpers/SUtils";
-
-export default class AuthPage extends Component {
+export default class Application extends Component {
 
     constructor(props){
         super(props);
@@ -13,22 +12,11 @@ export default class AuthPage extends Component {
             _this: this
         }
     }
-
-    componentWillMount(){
-        //getting resources, API list below:
-        /*
-         /bundles/
-        */
-
-        this.loadBundles();
-    }
-
-    loadBundles = () => SUtils.updateStateWithApiRequestFor('bundles', this.state._this);
-
     render() {
         return (
             <div>
-                <AuthHeader data={this.state.data} />
+                <AuthHeader data={this.state.data}/>
+                <IndexFooter />
             </div>
         );
     }

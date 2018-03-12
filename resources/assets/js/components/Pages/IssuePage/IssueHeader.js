@@ -63,10 +63,13 @@ const styles = {
     inner: {
         position: 'relative',
         overflow: 'hidden',
-        maxWidth: '720px',
         margin: '0 auto',
         textAlign: 'center',
         zIndex: 30,
+    },
+    pc: {
+        overflowY: 'hidden',
+        overflowX: 'auto',
     },
     h1: {
         fontSize: '1.3em',
@@ -190,41 +193,40 @@ class IssueHeader extends Component {
         super(props);
     }
 
+
     render() {
         const journals = this.props.data.journals;
         let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
 
         return (
             <div style={styles.header}>
-                <div style={styles.header}>
-                    <div style={styles.mask}>
-                        <div style={styles.bg} />
-                        <div style={styles.colorOne} />
-                        <div style={styles.colorTwo} />
-                        <div style={styles.colorThree} />
+                <div style={styles.mask}>
+                    <div style={styles.bg} />
+                    <div style={styles.colorOne} />
+                    <div style={styles.colorTwo} />
+                    <div style={styles.colorThree} />
+                </div>
+                <div style={styles.inner}>
+                    <div style={styles.iconMenu}>
+                        <IndexMenu data={this.props.data} />
                     </div>
-                    <div style={styles.inner}>
-                        <div style={styles.iconMenu}>
-                            <IndexMenu data={this.props.data} />
+                    {SUtils.any(journals) ? <div>
+                        <h1 style={styles.h1}>{journals[index].bundle.name}<span style={styles.arrow} /></h1>
+                        <p style={styles.date}>{journals[index].updated_at}</p>
+                        <div style={styles.leftMag}>
+                            <img style={styles.butMag} src={journals[index-1].image_path} alt={journals[index].name} />
+                            <img style={styles.butMagMask} src={journals[index-1].image_path} alt={journals[index].name} />
                         </div>
-                        {SUtils.any(journals) ? <div>
-                            <h1 style={styles.h1}>{journals[index].bundle.name}<span style={styles.arrow} /></h1>
-                            <p style={styles.date}>{journals[index].updated_at}</p>
-                            <div style={styles.leftMag}>
-                                <img style={styles.butMag} src={journals[index-1].image_path} alt={journals[index].name} />
-                                <img style={styles.butMagMask} src={journals[index-1].image_path} alt={journals[index].name} />
-                            </div>
-                            <div style={styles.bigMag}>
-                                <img style={styles.imgMag} src={journals[index].image_path} alt={journals[index].name} />
-                                <img style={styles.imgMagMask} src={journals[index].image_path} alt={journals[index].name} />
-                            </div>
-                            <div style={styles.rightMag}>
-                                <img style={styles.butMag} src={journals[index+1].image_path} alt={journals[index].name} />
-                                <img style={styles.butMagMask} src={journals[index+1].image_path} alt={journals[index].name} />
-                            </div>
-                            <a style={styles.button} href="#">открыть и читать</a>
-                        </div> : null }
-                    </div>
+                        <div style={styles.bigMag}>
+                            <img style={styles.imgMag} src={journals[index].image_path} alt={journals[index].name} />
+                            <img style={styles.imgMagMask} src={journals[index].image_path} alt={journals[index].name} />
+                        </div>
+                        <div style={styles.rightMag}>
+                            <img style={styles.butMag} src={journals[index+1].image_path} alt={journals[index].name} />
+                            <img style={styles.butMagMask} src={journals[index+1].image_path} alt={journals[index].name} />
+                        </div>
+                        <a style={styles.button} href="#">открыть и читать</a>
+                    </div> : null }
                 </div>
             </div>
         );

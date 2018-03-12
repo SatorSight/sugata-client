@@ -15,6 +15,7 @@ const styles = {
         borderRadius: '0.5em',
         overflow: 'hidden',
         width: '89vw',
+        maxWidth: '40em',
         height: '17em',
     },
     imgSwiper: {
