@@ -90,17 +90,24 @@ export function clone_array(haystack) {
 }
 
 export function makeQuery(payload, method, query, callback) {
-    let data = new FormData();
-    data.append("json", JSON.stringify(payload));
+    if(method === 'GET' || method === 'get'){
+        const query_string = `/${query}/${JSON.stringify({data: payload})}/`;
+        fetch(query_string, {method: method, credentials: 'include'})
+            .then(res => res.json())
+            .then(data => callback());
+    }else {
+        let data = new FormData();
+        data.append("json", JSON.stringify(payload));
 
-    fetch(`/${query}/`,
-        {
-            method: method,
-            body: data,
-            credentials: 'include'
-        })
-        .then(res => res.json())
-        .then(data => callback())
+        fetch(`/${query}/`,
+            {
+                method: method,
+                body: data,
+                credentials: 'include'
+            })
+            .then(res => res.json())
+            .then(data => callback(data))
+    }
 }
 
 export function updateStateWithApiRequestFor(entity, _this) {
@@ -110,6 +117,16 @@ export function updateStateWithApiRequestFor(entity, _this) {
             let data = { ..._this.state.data };
             data[entity] = json;
             _this.setState({ data });
+        })
+}
+
+export function loadAuthorizationToState(_this){
+    fetch('/api/user_authorized/', {credentials: 'include'})
+        .then(data => data.json())
+        .then(json => {
+            if(json['result'] === 'ok'){
+                _this.setState({authorized: true});
+            }
         })
 }
 

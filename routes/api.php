@@ -22,6 +22,8 @@ Route::get('/journals/', 'ApiController@getJournals');
 Route::get('/more_new_articles/{from}', 'ApiController@getMoreNewArticles')->where(['id' => '[0-9]+']);
 Route::get('/more_popular_articles/{from}', 'ApiController@getMorePopularArticles')->where(['id' => '[0-9]+']);
 //
+Route::get('/check_msisdn/{data}/', 'ApiController@checkMsisdn');
+Route::get('/user_authorized/', 'ApiController@userAuthorized');
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

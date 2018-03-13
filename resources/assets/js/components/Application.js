@@ -10,8 +10,24 @@ import AuthPage from './Pages/AuthPage'
 import BundlePage from './Pages/BundlePage'
 import IssuePage from './Pages/IssuePage'
 import JournalPage from './Pages/JournalPage'
+import * as SUtils from "./Helpers/SUtils";
 
 export default class Application extends Component {
+
+    constructor(props){
+        super(props);
+
+        this.state = {
+            authorized: false
+        }
+    }
+
+    componentWillMount(){
+        const _this = this;
+        SUtils.loadAuthorizationToState(_this);
+    }
+
+
     render() {
         return (
             <div className="container">

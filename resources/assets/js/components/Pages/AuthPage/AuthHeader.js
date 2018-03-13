@@ -250,8 +250,12 @@ class AuthHeader extends Component {
 
     constructor(props){
         super(props);
-        this.state = { width: '0', height: '0' };
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+        this.state = {
+            width: '0',
+            height: '0',
+            value: ''
+        };
+        // this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     componentDidMount() {
@@ -265,6 +269,19 @@ class AuthHeader extends Component {
     updateWindowDimensions() {
         this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
+
+    onChange = event => {
+        this.setState({
+            value: event.target.value
+        });
+        console.log(event.target.value);
+    };
+
+    buttonClicked = () => {
+        console.log('b c');
+        const value = this.state.value;
+        SUtils.makeQuery(value, 'GET', 'api/check_msisdn');
+    };
 
     render() {
         return (
@@ -292,9 +309,16 @@ class AuthHeader extends Component {
                         <h2 style={styles.h2}>Вход и регистрация</h2>
                         <div style={styles.divInput}>
                             <span style={styles.spanInput}>Ваш номер телефона</span>
-                            <InputMask style={styles.inputMask} {...this.props} type="tel" mask="+7 (999) 999-99-99" placeholder="+7 (   )    -  -  " maskChar=" " />
+                            <InputMask
+                                onChange={this.onChange}
+                                value={this.state.value}
+                                style={styles.inputMask} {...this.props}
+                                type="tel"
+                                mask="+7 (999) 999-99-99"
+                                placeholder="+7 (   )    -  -  "
+                                maskChar=" " />
                             <div style={styles.divButton}>
-                                <button style={styles.button}>Продолжить</button>
+                                <button onClick={this.buttonClicked} style={styles.button}>Продолжить</button>
                                 <div style={styles.shadowButton} />
                             </div>
                             <p style={styles.textFot}>Если у вас еще нет учетной записи, мы&nbsp;создадим ее автоматически</p>
