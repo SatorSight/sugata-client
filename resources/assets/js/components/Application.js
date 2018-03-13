@@ -39,9 +39,9 @@ export default class Application extends Component {
                     <div>
                         <Route exact path="/" component={MainPage}/>
                         <Route path="/auth" component={AuthPage}/>
-                        <Route path="/bundle" component={BundlePage}/>
-                        <Route path="/issue" component={IssuePage}/>
-                        <Route path="/journal" component={JournalPage}/>
+                        <Route path="/bundle/:id" component={BundlePage}/>
+                        <Route path="/issue/:id" component={IssuePage}/>
+                        <Route path="/journal/:id" component={JournalPage}/>
                     </div>
                 </BrowserRouter>
             </div>

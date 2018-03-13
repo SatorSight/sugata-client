@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import OwlCarousel from 'react-owl-carousel';
 import * as SUtils from "../Helpers/SUtils";
+import { Link } from 'react-router-dom'
 
 const styles = {
     item: {
@@ -68,9 +69,9 @@ export default class OtherIssues extends Component {
                     <OwlCarousel autoWidth dots={false} >
                         {new_issues.map((issue, currentIndex) =>
                             <div key={String(currentIndex)} style={styles.item} >
-                                <a href={'#'}>
+                                <Link key={issue.id} to={`/issue/${issue.id}`}>
                                     <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />
-                                </a>
+                                </Link>
                             </div>
                         )}
                     </OwlCarousel> : null }

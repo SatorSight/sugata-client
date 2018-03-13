@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SwipeableViews from 'react-swipeable-views';
+import { Link } from 'react-router-dom'
 
 const styles = {
     swiper: {
@@ -60,11 +61,13 @@ class PopularMain extends React.Component {
         return (
             <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer} onSwitching={this.props.changer}>
                 {this.props.journals.map((journal, index) =>
-                    <div style={styles.item} key={index}>
-                        <div style={styles.mask} />
-                        <img style={styles.img} src={journal.additional_image_path} alt={journal.title} />
-                        <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.logo_path + ')' })} />
-                    </div>
+                    <Link key={index} to={`/journal/${journal.id}`}>
+                        <div style={styles.item}>
+                            <div style={styles.mask} />
+                            <img style={styles.img} src={journal.additional_image_path} alt={journal.title} />
+                            <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.logo_path + ')' })} />
+                        </div>
+                    </Link>
                 )}
             </SwipeableViews>
         );

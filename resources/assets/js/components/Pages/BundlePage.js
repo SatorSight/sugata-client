@@ -5,6 +5,8 @@ import MainTabs from './../Components/MainTabs';
 import ThematicSwiper from "../Components/ThematicSwiper";
 import IndexFooter from './MainPage/IndexFooter';
 import * as SUtils from "../Helpers/SUtils";
+import * as ResourceRoutes from "../Helpers/ResourceRoutes";
+import Lines from 'react-preloaders/Preloaders/Lines';
 
 export default class Application extends Component {
 
@@ -13,30 +15,23 @@ export default class Application extends Component {
 
         this.state = {
             data: {},
-            _this: this
+            _this: this,
+            loading: true
         }
     }
 
+    load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
+
     componentWillMount(){
-        this.loadBundles();
-        this.loadNewIssues();
-        this.loadNewBundles();
-        this.loadChosenBundles();
-        this.loadPopularBundles();
-        this.loadJournals();
+        this.setState({loading: true}, () => {
+            const promises = ResourceRoutes.BUNDLE_RESOURCES.map(resource => this.load(resource));
+            Promise.all(promises).then(() => {
+                this.setState({loading: false});
+            });
+        });
     }
 
-    loadBundles = () => SUtils.updateStateWithApiRequestFor('bundles', this.state._this);
-    loadNewIssues = () => SUtils.updateStateWithApiRequestFor('new_issues', this.state._this);
-    loadNewBundles = () => SUtils.updateStateWithApiRequestFor('new_articles', this.state._this);
-    loadChosenBundles = () => SUtils.updateStateWithApiRequestFor('chosen_articles', this.state._this);
-    loadPopularBundles = () => SUtils.updateStateWithApiRequestFor('popular_articles', this.state._this);
-    loadJournals = () => SUtils.updateStateWithApiRequestFor('journals', this.state._this);
-
-    loadMoreNewBundles = () => {
-        console.log('fired');
-        SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this)
-    };
+    loadMoreNewBundles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
     loadMorePopularBundles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
 
     render() {
@@ -47,6 +42,12 @@ export default class Application extends Component {
 
         return (
             <div>
+                {this.state.loading
+                    ? <Lines
+                        color={'#f7f7f7'}
+                        bgColor={'#222'}
+                        time={1400}/>
+                    : null}
                 <BundleHeader data={this.state.data}/>
                 <IssuesSwiper data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>

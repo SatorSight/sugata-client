@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as SUtils from './../../Helpers/SUtils';
 import OwlCarousel from 'react-owl-carousel';
+import { Link } from 'react-router-dom'
 
 const styles = {
     main: {
@@ -49,7 +50,9 @@ class IndexMenuSet extends Component {
                     </div>
                     {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
                         <div style={styles.item} key={String(currentIndex)}>
-                            <a style={styles.url} href={'#'}><span style={styles.text}>{bundle.name}</span></a>
+                            <Link style={styles.url} to={`/bundle/${bundle.id}`}>
+                                <span style={styles.text}>{bundle.name}</span>
+                            </Link>
                         </div>
                     ) : null}
                 </OwlCarousel>

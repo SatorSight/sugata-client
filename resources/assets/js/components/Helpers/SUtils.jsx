@@ -111,7 +111,7 @@ export function makeQuery(payload, method, query, callback) {
 }
 
 export function updateStateWithApiRequestFor(entity, _this) {
-    fetch('/api/' + entity)
+    return fetch('/api/' + entity)
         .then(data => data.json())
         .then(json => {
             let data = { ..._this.state.data };

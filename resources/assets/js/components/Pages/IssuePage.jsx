@@ -5,6 +5,9 @@ import MainTabs from './../Components/MainTabs';
 import OtherIssues from './../Components/OtherIssues';
 import PreviousIssue from "../Components/PreviousIssue";
 import * as SUtils from './../Helpers/SUtils';
+import * as ResourceRoutes from "../Helpers/ResourceRoutes";
+import Lines from 'react-preloaders/Preloaders/Lines';
+
 
 
 class IssuePage extends Component {
@@ -14,44 +17,23 @@ class IssuePage extends Component {
 
         this.state = {
             data: {},
-            _this: this
+            _this: this,
+            loading: true
         }
     }
 
-    componentWillMount(){
-        //getting resources, API list below:
-        /*
-         /bundles/
-         /new_issues/
-         /new_articles/
-         /popular_articles/
-         /chosen_articles/
-         /journals/
-         /more_new_articles/{from}
-         /more_popular_articles/{from}
-        */
+    load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
 
-        this.loadBundles();
-        this.loadNewIssues();
-        this.loadNewArticles();
-        this.loadChosenArticles();
-        this.loadPopularArticles();
-        this.loadJournals();
+    componentWillMount(){
+        this.setState({loading: true}, () => {
+            const promises = ResourceRoutes.ISSUE_RESOURCES.map(resource => this.load(resource));
+            Promise.all(promises).then(() => {
+                this.setState({loading: false});
+            });
+        });
     }
 
-    loadBundles = () => SUtils.updateStateWithApiRequestFor('bundles', this.state._this);
-    loadNewIssues = () => SUtils.updateStateWithApiRequestFor('new_issues', this.state._this);
-    loadNewArticles = () => SUtils.updateStateWithApiRequestFor('new_articles', this.state._this);
-    loadChosenArticles = () => SUtils.updateStateWithApiRequestFor('chosen_articles', this.state._this);
-    loadPopularArticles = () => SUtils.updateStateWithApiRequestFor('popular_articles', this.state._this);
-    loadJournals = () => SUtils.updateStateWithApiRequestFor('journals', this.state._this);
-
-    // loadMoreNewArticles = function(){ SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this) };
-    // loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
-    loadMoreNewArticles = () => {
-        console.log('fired');
-        SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this)
-    };
+    loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
     loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
 
     render() {
@@ -62,6 +44,12 @@ class IssuePage extends Component {
 
         return (
             <div>
+                {this.state.loading
+                    ? <Lines
+                        color={'#f7f7f7'}
+                        bgColor={'#222'}
+                        time={1400}/>
+                    : null}
                 <IssueHeader data={this.state.data}/>
                 <IssuesTheme data={this.state.data}/>
                 <MainTabs
@@ -69,7 +57,6 @@ class IssuePage extends Component {
                     data={this.state.data}/>
                 <OtherIssues data={this.state.data}/>
                 <PreviousIssue data={this.state.data}/>
-
             </div>
         );
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 const styles = {
     main: {
@@ -30,7 +31,9 @@ class BundleMenuShowcase extends Component {
                 <div style={styles.main}>
                     {this.props.data.bundles.map(bundle =>
                         <div style={styles.item} key={bundle.id}>
-                            <a href={'#'} style={styles.name}>{bundle.name}</a>
+                            <Link key={bundle.id} style={styles.name} to={`/bundle/${bundle.id}`}>
+                                {bundle.name}
+                            </Link>
                         </div>
                     )}
                 </div>
