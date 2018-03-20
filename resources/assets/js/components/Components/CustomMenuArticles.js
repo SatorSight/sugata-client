@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import fixtures from './fixtures';
+import * as SUtils from "../Helpers/SUtils";
+// import articles from './articles';
 
 const styles = {
     main: {
@@ -14,7 +15,7 @@ const styles = {
         position: 'absolute',
         left: 0,
         top: '0.5em',
-        borderRadius: '0.5em',
+        borderRadius: '0.2em',
         width: '6.5em',
         height: '8.5em',
         overflow: 'hidden',
@@ -28,7 +29,7 @@ const styles = {
     over: {
         position: 'relative',
         overflow: 'hidden',
-        height: '7.5em',
+        height: '9em',
     },
     caption: {
         display: 'inline',
@@ -42,7 +43,7 @@ const styles = {
         fontWeight: 300,
     },
     title: {
-        fontSize: '1.4em',
+        fontSize: '1.2em',
         lineHeight: 1.2,
         fontWeight: 500,
         marginBottom: '0.3em',
@@ -67,32 +68,37 @@ const styles = {
     },
 };
 
-class IndexMenuBalance extends Component {
+class CustomMenuArticles extends Component {
+
+    constructor(props){
+        super(props);
+    }
     render() {
+        let articles = this.props.data.new_articles;
         return (
             <div>
                 <div style={styles.main}>
-                    {/*{fixtures.map(fixture =>*/}
-                        {/*<div style={styles.item} key={fixture.id}>*/}
-                            {/*<div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + fixture.cover_image + ')' })} />*/}
-                            {/*<div style={styles.inner}>*/}
-                                {/*<div style={styles.over}>*/}
-                                    {/*<h3 style={styles.title}>{fixture.title}</h3>*/}
-                                    {/*<p style={styles.text}>{fixture.text}</p>*/}
-                                {/*</div>*/}
-                                {/*<div>*/}
-                                    {/*<p style={styles.caption}>*/}
-                                        {/*<span>{fixture.name}, </span>*/}
-                                        {/*<span>{fixture.date}</span>*/}
-                                    {/*</p>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                    {/*)}*/}
+                    {SUtils.any(articles) ? articles.map((article, currentIndex) =>
+                        <div style={styles.item} key={String(currentIndex)}>
+                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
+                            <div style={styles.inner}>
+                                <div style={styles.over}>
+                                    <h3 style={styles.title}>{article.title}</h3>
+                                    <p style={styles.text}>{article.text}</p>
+                                </div>
+                                <div>
+                                    <p style={styles.caption}>
+                                        <span>{article.journal_name}, </span>
+                                        <span>{article.date}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         );
     }
 }
 
-export default IndexMenuBalance;
+export default CustomMenuArticles;

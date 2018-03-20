@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import IndexMenu from '../MainPage/IndexMenu';
+import IndexMenu from '../../Components/IndexMenu';
+import CustomMenu from '../../Components/CustomMenu';
 import OwlCarousel from 'react-owl-carousel';
 import * as SUtils from "../../Helpers/SUtils";
 import { Link } from 'react-router-dom'
@@ -103,9 +104,15 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
-    iconMenu:{
+    indexMenu:{
         position: 'absolute',
         left: '0.6em',
+        top: '0.8em',
+        zIndex: 50,
+    },
+    customMenu:{
+        position: 'absolute',
+        right: '0.6em',
         top: '0.8em',
         zIndex: 50,
     },
@@ -161,8 +168,11 @@ class TagHeader extends Component {
                     <div style={styles.colorThree} />
                 </div>
                 <div style={styles.inner}>
-                    <div style={styles.iconMenu}>
+                    <div style={styles.indexMenu}>
                         <IndexMenu data={this.props.data} />
+                    </div>
+                    <div style={styles.customMenu}>
+                        <CustomMenu data={this.props.data}/>
                     </div>
                     {SUtils.any(journals) ? <div>
                         <h1 style={styles.h1}>&laquo;{journals[index].bundle.name}&raquo;</h1>

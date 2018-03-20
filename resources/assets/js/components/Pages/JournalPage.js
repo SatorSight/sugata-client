@@ -4,7 +4,7 @@ import IssuesSwiper from './../Components/IssuesSwiper';
 import MainTabs from './../Components/MainTabs';
 import OtherIssues from './../Components/OtherIssues';
 import PopularJournals from './../Components/PopularJournals';
-import IndexFooter from './MainPage/IndexFooter';
+import IndexFooter from '../Components/IndexFooter';
 import * as SUtils from "../Helpers/SUtils";
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import Lines from 'react-preloaders/Preloaders/Lines';

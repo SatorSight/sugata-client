@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import * as SUtils from "../Helpers/SUtils";
+
 
 const styles = {
     main: {
-        padding: '0 2em',
-    },
-    tabs: {
-        background: '#fff',
+        padding: '1.5em',
     },
     item: {
         padding: '0.5em 0 1.3em',
@@ -16,7 +15,7 @@ const styles = {
         position: 'absolute',
         left: 0,
         top: '0.5em',
-        borderRadius: '0.5em',
+        borderRadius: '0.2em',
         width: '6.5em',
         height: '8.5em',
         overflow: 'hidden',
@@ -25,12 +24,13 @@ const styles = {
         boxShadow: '0.5em 0.5em 1em rgba(0,0,0,0.2)',
     },
     inner: {
-        marginLeft: '9em',
+        marginLeft: '8em',
+        minHeight: '8em',
     },
     over: {
         position: 'relative',
         overflow: 'hidden',
-        height: '7.5em',
+        // height: '9em',
     },
     caption: {
         display: 'inline',
@@ -44,10 +44,12 @@ const styles = {
         fontWeight: 300,
     },
     title: {
-        fontSize: '1.5em',
-        lineHeight: 1.1,
+        fontSize: '1.2em',
+        lineHeight: 1.2,
+        fontWeight: 500,
         marginBottom: '0.3em',
-        maxHeight: '2em',
+        maxHeight: '2.2em',
+        letterSpacing: 1,
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         width: '75%',
@@ -67,16 +69,36 @@ const styles = {
     },
 };
 
-class BundleMenuSettings extends Component {
+class CustomMenuJournals extends Component {
+
+    constructor(props){
+        super(props);
+    }
     render() {
+        let journals = this.props.data.journals;
         return (
             <div>
                 <div style={styles.main}>
-
+                    {SUtils.any(journals) ? journals.map((journal, currentIndex) =>
+                        <div style={styles.item} key={String(currentIndex)}>
+                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + journal.image_path + ')' })} />
+                            <div style={styles.inner}>
+                                <div style={styles.over}>
+                                    <h3 style={styles.title}>{journal.name}</h3>
+                                    {/*<p style={styles.text}>{journal.text}</p>*/}
+                                </div>
+                                <div>
+                                    <p style={styles.caption}>
+                                        <span>{journal.bundle.name} </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ) : null}
                 </div>
             </div>
         );
     }
 }
 
-export default BundleMenuSettings;
+export default CustomMenuJournals;

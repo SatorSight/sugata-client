@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import IndexMenu from '../MainPage/IndexMenu';
+import IndexMenu from '../../Components/IndexMenu';
+import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
 
 
@@ -90,10 +91,16 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
-    iconMenu:{
+    indexMenu:{
         position: 'absolute',
         left: '0.5em',
         top: 0,
+        zIndex: 50,
+    },
+    customMenu:{
+        position: 'absolute',
+        right: '0.2em',
+        top: '0.3em',
         zIndex: 50,
     },
     bigLogo: {
@@ -134,8 +141,11 @@ class JournalHeader extends Component {
                         <div style={styles.colorThree} />
                     </div>
                     <div style={styles.inner}>
-                        <div style={styles.iconMenu}>
+                        <div style={styles.indexMenu}>
                             <IndexMenu data={this.props.data} />
+                        </div>
+                        <div style={styles.customMenu}>
+                            <CustomMenu data={this.props.data} />
                         </div>
                         {SUtils.any(journals) ? <div>
                             <h1 style={styles.h1}>{journals[index].bundle.name}<span style={styles.arrow} /></h1>

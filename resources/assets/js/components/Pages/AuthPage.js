@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import AuthHeader from './AuthPage/AuthHeader';
-import IndexFooter from './MainPage/IndexFooter';
+import IndexFooter from '../Components/IndexFooter';
 
 export default class Application extends Component {
 

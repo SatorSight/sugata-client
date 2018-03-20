@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import InputMask from 'react-input-mask';
-import IndexMenu from '../MainPage/IndexMenu';
+import IndexMenu from '../../Components/IndexMenu';
 import * as SUtils from "../../Helpers/SUtils";
 
 

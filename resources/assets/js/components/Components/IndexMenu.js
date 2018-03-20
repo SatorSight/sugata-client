@@ -49,14 +49,14 @@ const styles = {
         width: '100%',
     },
     topText: {
-        fontSize: '1.6em',
-        letterSpacing: '0.3em',
+        fontSize: '1.55em',
+        letterSpacing: '0.25em',
         textTransform: 'uppercase',
         color: '#FFF',
-        fontWeight: 200,
+        fontWeight: 300,
         display: 'inline-block',
-        lineHeight: 3.2,
-        marginTop: '0.5em'
+        lineHeight: 2.7,
+        marginTop: '0.8em'
     },
     closet: {
         position: 'absolute',

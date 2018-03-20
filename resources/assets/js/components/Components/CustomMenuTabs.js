@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import SwipeableViews from 'react-swipeable-views';
-import BundleMenuShowcase from './BundleMenuShowcase';
-import BundleMenuSettings from './BundleMenuSettings';
+import CustomMenuJournals from './CustomMenuJournals';
+import CustomMenuArticles from './CustomMenuArticles';
+import CustomMenuDiscussions from './CustomMenuDiscussions';
 
 const fontWeightMedium = 400;
 
@@ -16,10 +17,11 @@ const styles = {
     },
     tabsItem: {
         fontWeight: 200,
+        fontSize: '1.2em',
         color: '#FFF',
-        letterSpacing: '0.3em',
-        padding: '2em 0',
-        height: '6.6em',
+        letterSpacing: '0.25em',
+        height: '4.9em',
+        padding: '0.3em 0 0 0',
     },
     activeItem: {
         color: '#999',
@@ -58,7 +60,7 @@ const theme = createMuiTheme({
         },
     },
 });
-class BundleMenuTabs extends Component {
+class IndexMenuTabs extends Component {
     constructor(props){
         super(props);
 
@@ -76,16 +78,17 @@ class BundleMenuTabs extends Component {
         return (
             <MuiThemeProvider theme={theme}>
                 <div style={styles.main}>
-                    <Tabs indicatorColor="none" fullWidth value={index} onChange={this.handleChange} style={styles.tabs}>
-                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="витрина" style={styles.tabsItem} />
-                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="баланс" style={styles.tabsItem} />
-                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="настройки" style={styles.tabsItem} />
+                    <Tabs indicatorColor="none" value={index} onChange={this.handleChange} style={styles.tabs}>
+                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="журналы" style={styles.tabsItem} />
+                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="статьи" style={styles.tabsItem} />
+                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="обсуждения" style={styles.tabsItem} />
                         <span style={styles.arrowTop} />
                         <span style={styles.arrowBot} />
                     </Tabs>
                     <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
-                        <BundleMenuShowcase data={this.props.data} />
-                        <BundleMenuSettings />
+                        <CustomMenuJournals data={this.props.data} />
+                        <CustomMenuArticles data={this.props.data} />
+                        <CustomMenuDiscussions data={this.props.data} />
                     </SwipeableViews>
                 </div>
             </MuiThemeProvider>
@@ -93,4 +96,4 @@ class BundleMenuTabs extends Component {
     }
 }
 
-export default withStyles(styles)(BundleMenuTabs);
+export default withStyles(styles)(IndexMenuTabs);

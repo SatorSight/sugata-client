@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import IndexMenu from '../MainPage/IndexMenu';
+import IndexMenu from '../../Components/IndexMenu';
 import * as SUtils from "../../Helpers/SUtils";
 
 

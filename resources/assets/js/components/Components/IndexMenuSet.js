@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import * as SUtils from './../../Helpers/SUtils';
+import * as SUtils from '../Helpers/SUtils';
 import OwlCarousel from 'react-owl-carousel';
 import { Link } from 'react-router-dom'
 

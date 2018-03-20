@@ -11,5 +11,6 @@ npm-debug.log
 yarn-error.log
 .env
 /public/uploaded_images/*
+/public/uploaded_images
 /public/mix-manifest.json
 /config/database.php

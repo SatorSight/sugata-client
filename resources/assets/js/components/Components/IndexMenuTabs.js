@@ -17,10 +17,11 @@ const styles = {
     },
     tabsItem: {
         fontWeight: 200,
+        fontSize: '1.2em',
         color: '#FFF',
-        letterSpacing: '0.3em',
-        padding: '2em 0',
-        height: '6.6em',
+        letterSpacing: '0.25em',
+        height: '4.9em',
+        padding: '0.3em 0 0 0',
     },
     activeItem: {
         color: '#999',
@@ -86,7 +87,7 @@ class IndexMenuTabs extends Component {
                     </Tabs>
                     <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
                         <IndexMenuShowcase data={this.props.data} />
-                        <IndexMenuBalance />
+                        <IndexMenuBalance data={this.props.data} />
                         <IndexMenuSettings />
                     </SwipeableViews>
                 </div>

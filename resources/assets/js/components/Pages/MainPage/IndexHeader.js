@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import IndexMenu from './IndexMenu';
-import IndexMenuSet from './IndexMenuSet';
+import IndexMenu from '../../Components/IndexMenu';
+import CustomMenu from '../../Components/CustomMenu';
+import IndexMenuSet from '../../Components/IndexMenuSet';
 
 const styles = {
     header: {
@@ -99,11 +100,18 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
-    iconMenu:{
+    indexMenu:{
         position: 'absolute',
         left: 0,
         top: '50%',
-        marginTop: '-2.4em',
+        transform: 'translate(0, -50%)',
+        zIndex: 50,
+    },
+    customMenu:{
+        position: 'absolute',
+        right: 0,
+        top: '50%',
+        transform: 'translate(0, -50%)',
         zIndex: 50,
     },
 };
@@ -124,8 +132,11 @@ class IndexHeader extends Component {
                     <div style={styles.shadow} />
                 </div>
                 <div style={styles.inner}>
-                    <div style={styles.iconMenu}>
+                    <div style={styles.indexMenu}>
                         <IndexMenu data={this.props.data} />
+                    </div>
+                    <div style={styles.customMenu}>
+                        <CustomMenu data={this.props.data} />
                     </div>
                     <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
                 </div>

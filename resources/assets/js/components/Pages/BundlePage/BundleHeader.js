@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import BundleMenu from './BundleMenu';
+import IndexMenu from '../../Components/IndexMenu';
+import CustomMenu from '../../Components/CustomMenu';
 
 
 const styles = {
@@ -98,9 +99,15 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
-    iconMenu:{
+    indexMenu:{
         position: 'absolute',
         left: 0,
+        top: '2em',
+        zIndex: 50,
+    },
+    customMenu:{
+        position: 'absolute',
+        right: 0,
         top: '2em',
         zIndex: 50,
     },
@@ -192,8 +199,11 @@ class BundleHeader extends Component {
                         <div style={styles.colorThree} />
                     </div>
                     <div style={styles.inner}>
-                        <div style={styles.iconMenu}>
-                            <BundleMenu data={this.props.data}/>
+                        <div style={styles.indexMenu}>
+                            <IndexMenu data={this.props.data}/>
+                        </div>
+                        <div style={styles.customMenu}>
+                            <CustomMenu data={this.props.data}/>
                         </div>
                         <h2 style={styles.h2}>киоск плюс</h2>
                         <h1 style={styles.h1}>технологии и игры<span style={styles.arrow} /></h1>

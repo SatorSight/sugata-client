@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import IssueArticlesHeader from './IssueArticlesPage/IssueArticlesHeader';
-import IssuesTheme from "../Components/IssuesTheme";
-import MainTabs from './../Components/MainTabs';
-import OtherIssues from './../Components/OtherIssues';
 import NextIssueArticle from "../Components/NextIssueArticle";
 import * as SUtils from './../Helpers/SUtils';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
