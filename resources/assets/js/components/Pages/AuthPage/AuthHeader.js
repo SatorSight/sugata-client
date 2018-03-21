@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import InputMask from 'react-input-mask';
 import IndexMenu from '../../Components/IndexMenu';
+import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
 
 
@@ -226,13 +227,20 @@ const styles = {
         background: 'url(mag4.png) no-repeat 0 0',
         backgroundSize: 'contain',
     },
-    iconMenu:{
+    indexMenu:{
         position: 'absolute',
         left: 0,
         top: '50%',
         transform: 'translate(0, -50%)',
         zIndex: 50,
         opacity: .6,
+    },
+    customMenu:{
+        position: 'absolute',
+        right: 0,
+        top: '50%',
+        transform: 'translate(0, -50%)',
+        zIndex: 50,
     },
     textFot: {
         zIndex: 20,
@@ -255,7 +263,6 @@ class AuthHeader extends Component {
             height: '0',
             value: ''
         };
-        // this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     componentDidMount() {
@@ -274,7 +281,6 @@ class AuthHeader extends Component {
         this.setState({
             value: event.target.value
         });
-        console.log(event.target.value);
     };
 
     buttonClicked = () => {
@@ -295,8 +301,11 @@ class AuthHeader extends Component {
                 <div style={styles.inner}>
                     <div style={styles.top}>
                         <div style={styles.innerTop}>
-                            <div style={styles.iconMenu}>
-                                <IndexMenu data={this.props.data} />
+                            <div style={styles.indexMenu}>
+                                <IndexMenu data={this.props.data}/>
+                            </div>
+                            <div style={styles.customMenu}>
+                                <CustomMenu data={this.props.data}/>
                             </div>
                             <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
                         </div>

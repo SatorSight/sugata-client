@@ -13,7 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         @import "/css/font.css";
-        * {margin: 0; padding: 0; line-height: 1; font-family: 'HelveticaNeueCyr', arial, serif; outline: none;}
+        * {margin: 0; padding: 0; line-height: 1; font-family: 'HelveticaNeueCyr', arial, serif; outline: none !important; -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-tap-highlight-color: transparent; }
         body {font-size: 10px;overflow: auto!important;}
         body > .inner {max-width: 720px; margin: 0 auto;}
         a, a:active, a:hover { outline: none; }
@@ -55,6 +55,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="{{asset('/js/app.js')}}" ></script>
+<script src="/js/app.js" ></script>
 </body>
 </html>

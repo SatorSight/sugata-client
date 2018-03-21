@@ -78,7 +78,7 @@ class IndexMenuTabs extends Component {
         return (
             <MuiThemeProvider theme={theme}>
                 <div style={styles.main}>
-                    <Tabs indicatorColor="none" value={index} onChange={this.handleChange} style={styles.tabs}>
+                    <Tabs indicatorColor="none" fullWidth value={index} onChange={this.handleChange} style={styles.tabs}>
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="журналы" style={styles.tabsItem} />
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="статьи" style={styles.tabsItem} />
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="обсуждения" style={styles.tabsItem} />
