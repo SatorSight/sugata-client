@@ -60,6 +60,7 @@ const styles = {
         textOverflow: 'ellipsis',
         fontWeight: 600,
         width: '60%',
+        paddingTop: '0.1em',
     },
     textSwiper: {
         fontSize: '1em',
