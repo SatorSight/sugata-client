@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
-import BundleMenu from './BundleMenu';
 import { Link } from 'react-router-dom'
 
 
