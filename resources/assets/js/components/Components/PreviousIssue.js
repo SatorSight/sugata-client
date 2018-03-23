@@ -49,7 +49,8 @@ const styles = {
         borderRadius: '0.2em',
         float: 'left',
         maxWidth: '24%',
-        margin: '-2em 2em 0',
+        margin: '-1em 2em 0',
+        height: '10.8em',
     },
     magLeft: {
         width: '100%',
