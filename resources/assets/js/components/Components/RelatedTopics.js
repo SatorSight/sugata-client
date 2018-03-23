@@ -27,7 +27,7 @@ const styles = {
     name: {
         color: '#FFF',
         textTransform: 'uppercase',
-        padding: '0.8em 30% 0.6em 1.5em',
+        padding: '0.8em 4.5em 0.6em 1.5em',
         zIndex: 20,
         position: 'relative',
         fontWeight: 300,
