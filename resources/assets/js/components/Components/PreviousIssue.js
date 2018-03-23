@@ -95,29 +95,32 @@ const styles = {
 };
 
 class PreviousIssue extends Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
-        let journal = this.props.data.journals;
-        let index = 6;
+        const issue = this.props.data.issue;
         return (
             <div>
-                {SUtils.any(journal) ?
-                    <div style={styles.item} key={journal[index].id}>
+                {issue ?
+                    <div style={styles.item} key={issue.id}>
                         <div style={styles.inner}>
                             <div style={styles.left}>
-                                <a style={styles.url} href={journal[index].url_prefix}>
-                                    <img style={styles.magLeft} src={journal[index].image_path} alt={journal[index].name} />
+                                <a style={styles.url} href={issue.url_prefix}>
+                                    <img style={styles.magLeft} src={issue.image_path} alt={issue.journal_name} />
                                 </a>
                             </div>
                             <div style={styles.right}>
-                                <a style={styles.url} href={journal[index].url_prefix}>
+                                <a style={styles.url} href={issue.url_prefix}>
                                     <h3 style={styles.title}>предыдущий выпуск</h3>
-                                    <img style={styles.logo} src={journal[index].logo_path} alt={journal[index].name} />
-                                    <p style={styles.date}>{journal[index].created_at}</p>
+                                    <img style={styles.logo} src={issue.logo_path} alt={issue.name} />
+                                    <p style={styles.date}>{issue.created_at}</p>
                                 </a>
                             </div>
                         </div>
                         <div style={styles.bg}>
-                            <img style={styles.imgBg} src={journal[index].image_path} alt={journal[index].title} />
+                            <img style={styles.imgBg} src={issue.image_path} alt={issue.journal_name} />
                             <div style={styles.mask} />
                         </div>
                     </div> : null }

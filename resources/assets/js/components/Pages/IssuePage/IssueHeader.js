@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -203,9 +204,80 @@ class IssueHeader extends Component {
     }
 
 
+    prev = issues => {
+        let prev = null;
+        issues.map((issue, i) => {
+            if(parseInt(issue.id) === parseInt(this.props.self_id))
+                if(i > 0)
+                    prev = issues[i - 1];
+        });
+
+        // console.log('prev asdddddddddddddddddddddddd');
+        // console.log(prev);
+
+
+        return prev ? <div style={styles.leftMag}>
+            <Link to={`/issue/${prev.id}`}>
+                <img style={styles.butMag} src={prev.image_path} alt={prev.journal_name} />
+                <img style={styles.butMagMask} src={prev.image_path} alt={prev.journal_name} />
+            </Link>
+        </div> : null;
+    };
+
+    next = issues => {
+        let next = null;
+        issues.map((issue, i) => {
+            if(parseInt(issue.id) === parseInt(this.props.self_id))
+                if(i < issues.length - 1)
+                    next = issues[i + 1];
+        });
+
+        // console.log('next asdddddddddddddddddddddddd');
+        // console.log(next);
+
+
+        return next ? <div style={styles.bigMag}>
+            <Link to={`/issue/${next.id}`}>
+                <img style={styles.imgMag} src={next.image_path} alt={next.journal_name} />
+                <img style={styles.imgMagMask} src={next.image_path} alt={next.journal_name} />
+            </Link>
+        </div> : null;
+    };
+
+    cur = issues => {
+        let cur = null;
+        issues.map((issue, i) => {
+            if(parseInt(issue.id) === parseInt(this.props.self_id))
+                cur = issue;
+        });
+
+        // console.log('cur asdddddddddddddddddddddddd');
+        // console.log(cur);
+
+
+        return cur ? <div style={styles.rightMag}>
+            <Link to={`/issue/${cur.id}`}>
+                <img style={styles.butMag} src={cur.image_path} alt={cur.journal_name} />
+                <img style={styles.butMagMask} src={cur.image_path} alt={cur.journal_name} />
+            </Link>
+        </div> : null;
+    };
+
+    index = issues => {
+        let index = 0;
+        if(SUtils.any(issues)) {
+            issues.map((issue, i) => {
+                if(parseInt(issue.id) === parseInt(this.props.self_id))
+                    index = i;
+            });
+        }
+        return index;
+    };
+
     render() {
-        const journals = this.props.data.journals;
-        let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
+        const bundle = this.props.data.bundle ? this.props.data.bundle : null;
+        const issues = this.props.data.all_issues;
+        const index = issues ? this.index(issues) : null;
 
         return (
             <div style={styles.header}>
@@ -222,22 +294,20 @@ class IssueHeader extends Component {
                     <div style={styles.customMenu}>
                         <CustomMenu data={this.props.data} />
                     </div>
-                    {SUtils.any(journals) ? <div>
-                        <h1 style={styles.h1}>{journals[index].bundle.name}<span style={styles.arrow} /></h1>
-                        <p style={styles.date}>{journals[index].updated_at}</p>
-                        <div style={styles.leftMag}>
-                            <img style={styles.butMag} src={journals[index-1].image_path} alt={journals[index].name} />
-                            <img style={styles.butMagMask} src={journals[index-1].image_path} alt={journals[index].name} />
-                        </div>
-                        <div style={styles.bigMag}>
-                            <img style={styles.imgMag} src={journals[index].image_path} alt={journals[index].name} />
-                            <img style={styles.imgMagMask} src={journals[index].image_path} alt={journals[index].name} />
-                        </div>
-                        <div style={styles.rightMag}>
-                            <img style={styles.butMag} src={journals[index+1].image_path} alt={journals[index].name} />
-                            <img style={styles.butMagMask} src={journals[index+1].image_path} alt={journals[index].name} />
-                        </div>
-                        <a style={styles.button} href="#">открыть и читать</a>
+                    {SUtils.any(issues) ? <div>
+                        <h1 style={styles.h1}>
+                            {bundle ?
+                                <Link to={`/bundle/${bundle.id}`}>
+                                    {bundle.name}<span style={styles.arrow}/>
+                                </Link> : null}
+                        </h1>
+                        <p style={styles.date}>{index ? issues[index].updated_at : ''}</p>
+                        {this.prev(issues)}
+                        {this.cur(issues)}
+                        {this.next(issues)}
+                        {issues[index] ?  <Link style={styles.button} key={issues[index].id} to={`/issue/${issues[index].id}`}>
+                            открыть и читать
+                        </Link> : null}
                     </div> : null }
                 </div>
             </div>

@@ -42,7 +42,7 @@ class MainTabs extends Component {
         super(props);
 
         this.state = {
-            index: 0,
+            index: this.props.initialIndex ? this.props.initialIndex : 0,
         };
     }
 
@@ -58,20 +58,52 @@ class MainTabs extends Component {
         });
     };
 
-    render() {
-        const { index } = this.state;
+    //todo rewrite render methods below
 
+    renderTabs = () => {
+        if(this.props.onlyFirst)
+            return <Tabs indicatorColor="none" value={this.state.index} onChange={this.handleChange} style={styles.tabs}>
+                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
+                    </Tabs>;
+        if(this.props.onlySecond)
+            return <Tabs indicatorColor="none" value={this.state.index} onChange={this.handleChange} style={styles.tabs}>
+                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
+                   </Tabs>;
+        return <Tabs indicatorColor="none" value={this.state.index} onChange={this.handleChange} style={styles.tabs}>
+                    <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
+                    <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
+               </Tabs>
+    };
+
+    renderViews = () => {
+        if(this.props.onlyFirst)
+            return <SwipeableViews animateHeight enableMouseEvents index={this.state.index} onChangeIndex={this.handleChangeIndex}>
+                        <NewArticles controls={this.props.controls} data={this.props.data}/>
+                   </SwipeableViews>;
+        if(this.props.onlySecond)
+            return <SwipeableViews animateHeight enableMouseEvents index={this.state.index} onChangeIndex={this.handleChangeIndex}>
+                        <PopularArticles controls={this.props.controls} data={this.props.data}/>
+                   </SwipeableViews>;
+        return <SwipeableViews animateHeight enableMouseEvents index={this.state.index} onChangeIndex={this.handleChangeIndex}>
+                    <NewArticles controls={this.props.controls} data={this.props.data}/>
+                    <PopularArticles controls={this.props.controls} data={this.props.data}/>
+               </SwipeableViews>
+    };
+
+    render() {
         return (
             <MuiThemeProvider theme={theme}>
                 <div style={styles.main}>
-                    <Tabs indicatorColor="none" value={index} onChange={this.handleChange} style={styles.tabs}>
-                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
-                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
-                    </Tabs>
-                    <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
-                        <NewArticles controls={this.props.controls} data={this.props.data}/>
-                        <PopularArticles controls={this.props.controls} data={this.props.data}/>
-                    </SwipeableViews>
+                    {this.renderTabs()}
+                    {/*<Tabs indicatorColor="none" value={index} onChange={this.handleChange} style={styles.tabs}>*/}
+                        {/*{this.props.onlySecond ? null : }*/}
+                        {/*{this.props.onlyFirst ? null : }*/}
+                    {/*</Tabs>*/}
+                    {this.renderViews()}
+                    {/*<SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>*/}
+                        {/*{this.props.onlySecond ? null : <NewArticles controls={this.props.controls} data={this.props.data}/>}*/}
+                        {/*{this.props.onlyFirst ? null : <PopularArticles controls={this.props.controls} data={this.props.data}/>}*/}
+                    {/*</SwipeableViews>*/}
                 </div>
             </MuiThemeProvider>
         );

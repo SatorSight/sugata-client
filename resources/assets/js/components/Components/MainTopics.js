@@ -109,20 +109,24 @@ class MainTopics extends React.Component {
     render() {
         const { index } = this.state;
         let content = [];
-        let articles = this.props.data.chosen_articles;
+        let articles = this.props.data.main_topics;
 
         if(SUtils.any(articles))
             articles.map(article => content.push(
                 <div style={styles.slideSwiper} key={article.id}>
                     {article.image !== ''
-                        ? <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
+                        ?   <Link to={`/article/${article.id}`}>
+                                <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
+                            </Link>
                         : null
                     }
                     <div style={styles.infoSwiper}>
                         <Link to={`/issue/${article.issue_id}`}>
                             <img style={styles.magSwiper} src={article.issue_cover} alt={article.title} />
                         </Link>
-                        <p style={styles.textSwiper}>{article.title}</p>
+                        <Link to={`/article/${article.id}`}>
+                            <p style={styles.textSwiper}>{article.title}</p>
+                        </Link>
                         <div>
                             <p style={styles.captionColorSwiper}>
                                 <span>{article.journal_name}, </span>

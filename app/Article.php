@@ -57,7 +57,7 @@ class Article extends Model
 
     public static function getChosen() : Collection{
 
-        $articles = Article::where('chosen', true)->orderBy('updated_at', 'desc')->take(4)->get();
+        $articles = Article::where('chosen', true)->orderBy('page_number', 'desc')->take(4)->get();
 
 //        $articles = collect([]);
 //        //todo rewrite
@@ -110,9 +110,11 @@ class Article extends Model
 
     public static function injectWithText(Collection &$articles) : void {
         $articles = $articles->map(function($article){
-            $text = $article->getClearText();
-            if(!empty($text))
-            $article->text = $text;
+            if($article) {
+                $text = $article->getClearText();
+                if (!empty($text))
+                    $article->text = $text;
+            }
             return $article;
         });
     }
@@ -157,10 +159,12 @@ class Article extends Model
 
     public static function injectWithImages(Collection &$articles) : void {
         $articles = $articles->map(function($article){
-            if(!empty($article->getImage())) {
-                $image = $article->getImage();
-                if(isset($image->path))
-                    $article->image_path = $image->path;
+            if(!empty($article)) {
+                if (!empty($article->getImage())) {
+                    $image = $article->getImage();
+                    if (isset($image->path))
+                        $article->image_path = $image->path;
+                }
             }
             return $article;
         });
@@ -174,25 +178,20 @@ class Article extends Model
     }
 
     public static function removeWithBlankText(Collection &$articles) : void {
-
-        // foreach ($articles as $key => $value) {
-
-        //     // SUtils::trace('hello');
-        //     SUtils::trace($value->getClearText());
-        //     SUtils::trace($value->text);
-        // }
-
         $articles = $articles->reject(function($article){
-            return $article->text === false;
+            if($article)
+                return $article->text === false;
+            return false;
         });
     }
 
-
     public static function injectJournalNames(Collection &$articles) : void {
         $articles = $articles->map(function($article){
-            //breaking eager loading to remove needless data
-            $issue = Issue::find($article->issue_id);
-            $article->journal_name = $issue->journal->name;
+            if($article) {
+                //breaking eager loading to remove needless data
+                $issue = Issue::find($article->issue_id);
+                $article->journal_name = $issue->journal->name;
+            }
             return $article;
         });
     }
@@ -217,4 +216,30 @@ class Article extends Model
             }
         });
     }
+
+    public function isArticleCorrect(){
+        if($this->page_number < 2)
+            return false;
+
+        if(empty($this->title))
+            return false;
+        if(empty($this->html))
+            return false;
+
+        /** @var Image $image */
+        $image = $this->getImage();
+        if(empty($image))
+            return false;
+
+        $public_path = public_path();
+
+
+//        SUtils::dump_console($image->path);
+
+        if(!file_exists($public_path . $image->path))
+            return false;
+
+        return true;
+    }
+
 }

@@ -12,29 +12,28 @@ import Lines from 'react-preloaders/Preloaders/Lines';
 
 export default class Application extends Component {
 
+    self_id = null;
+
     constructor(props){
         super(props);
 
+        this.self_id = this.props.match.params.id;
+
         this.state = {
             data: {},
-            _this: this,
             loading: true
         }
     }
 
-    load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
-
-    componentWillMount(){
-        this.setState({loading: true}, () => {
-            const promises = ResourceRoutes.JOURNAL_RESOURCES.map(resource => this.load(resource));
-            Promise.all(promises).then(() => {
-                this.setState({loading: false});
-            });
-        });
+    componentDidMount(){
+        SUtils.load(ResourceRoutes.JOURNAL_RESOURCES, this);
+    }
+    componentWillReceiveProps(){
+        SUtils.load(ResourceRoutes.JOURNAL_RESOURCES, this);
     }
 
-    loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
-    loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
+    loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'journal', 'more_new_articles', this, this.self_id);
+    loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'journal', 'more_popular_articles', this, this.self_id);
 
     render() {
         const controls = {
@@ -51,11 +50,11 @@ export default class Application extends Component {
                         time={1400}/>
                     : null}
                 <JournalHeader data={this.state.data}/>
-                <IssuesSwiper data={this.state.data}/>
-                <MainTabs controls={controls} data={this.state.data}/>
-                <OtherIssues data={this.state.data}/>
-                <MainTabs controls={controls} data={this.state.data}/>
-                <PopularJournals data={this.state.data}/>
+                <IssuesSwiper issues={this.state.data.last_issues} articles={this.state.data.issues_cover_articles}/>
+                <MainTabs onlyFirst controls={controls} data={this.state.data}/>
+                <OtherIssues issues={this.state.data.rest_issues} data={this.state.data}/>
+                <MainTabs onlySecond controls={controls} data={this.state.data}/>
+                <PopularJournals journals={this.state.data.same_bundle_journals}/>
                 <IndexFooter />
             </div>
         );

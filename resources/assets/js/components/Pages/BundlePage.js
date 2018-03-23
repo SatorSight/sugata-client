@@ -10,29 +10,29 @@ import Lines from 'react-preloaders/Preloaders/Lines';
 
 export default class Application extends Component {
 
+    self_id = null;
+
     constructor(props){
         super(props);
 
+        this.self_id = this.props.match.params.id;
+
         this.state = {
             data: {},
-            _this: this,
-            loading: true
-        }
+            loading: true,
+        };
     }
 
-    load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
 
-    componentWillMount(){
-        this.setState({loading: true}, () => {
-            const promises = ResourceRoutes.BUNDLE_RESOURCES.map(resource => this.load(resource));
-            Promise.all(promises).then(() => {
-                this.setState({loading: false});
-            });
-        });
+    componentDidMount(){
+        SUtils.load(ResourceRoutes.BUNDLE_RESOURCES, this);
+    }
+    componentWillReceiveProps(){
+        SUtils.load(ResourceRoutes.BUNDLE_RESOURCES, this);
     }
 
-    loadMoreNewBundles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
-    loadMorePopularBundles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
+    loadMoreNewBundles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'bundle', 'more_new_articles', this, this.self_id);
+    loadMorePopularBundles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'bundle', 'more_popular_articles', this, this.self_id);
 
     render() {
         const controls = {
@@ -49,10 +49,10 @@ export default class Application extends Component {
                         time={1400}/>
                     : null}
                 <BundleHeader data={this.state.data}/>
-                <IssuesSwiper data={this.state.data}/>
-                <MainTabs controls={controls} data={this.state.data}/>
-                <ThematicSwiper  data={this.state.data}/>
-                <MainTabs controls={controls} data={this.state.data}/>
+                <IssuesSwiper issues={this.state.data.last_issues} articles={this.state.data.last_cover_articles}/>
+                <MainTabs initialIndex={0} controls={controls} data={this.state.data}/>
+                {/*<ThematicSwiper  data={this.state.data}/>*/}
+                <MainTabs initialIndex={1} controls={controls} data={this.state.data}/>
                 <IndexFooter />
             </div>
         );

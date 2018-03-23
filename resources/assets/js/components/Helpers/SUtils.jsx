@@ -70,7 +70,11 @@ export function single(haystack) {
 }
 
 export function any(haystack) {
+    // console.log('any');
+    // console.log(haystack);
     if(haystack === undefined)
+        return false;
+    if(haystack.length === 1 && (first(haystack) === 'null' || first(haystack) === null))
         return false;
     return haystack.length > 0
 }
@@ -110,18 +114,18 @@ export function makeQuery(payload, method, query, callback) {
     }
 }
 
-export function updateStateWithApiRequestFor(entity, _this) {
-    return fetch('/api/' + entity)
-        .then(data => data.json())
-        .then(json => {
-            let data = { ..._this.state.data };
-            data[entity] = json;
-            _this.setState({ data });
-        })
+
+export function buildParamStringFromObject(object){
+    let params_array = [];
+    Object.keys(object).map(key => params_array.push(`${key}=${object}`));
+    let param_string = params_array.join('&');
+    if(param_string.length > 0)
+        param_string = `/?${param_string}`;
+    return param_string;
 }
 
 export function loadAuthorizationToState(_this){
-    fetch('/api/user_authorized/', {credentials: 'include'})
+    fetch('/api/auth/user_authorized/', {credentials: 'include'})
         .then(data => data.json())
         .then(json => {
             if(json['result'] === 'ok'){
@@ -130,16 +134,56 @@ export function loadAuthorizationToState(_this){
         })
 }
 
-export function appendStateWithApiRequestFor(entity, apiRoute, _this) {
+
+export function updateStateWithApiRequestFor(entity, page_prefix, _this, params = {}, self_id = null) {
+    const params_string = buildParamStringFromObject(params);
+    return fetch('/api/' + page_prefix + '/' + entity + (self_id ? `/${self_id}` : '') + params_string + '')
+        .then(data => data.json())
+        .then(json => {
+            let data = { ..._this.state.data };
+            data[entity] = json;
+            _this.setState({ data });
+        })
+}
+
+
+export function appendStateWithApiRequestFor(entity, page_prefix, api_route, _this, self_id = null, additional_params = []) {
     const current_data = _this.state.data[entity];
-    console.log(current_data);
-    console.log(typeof current_data);
-    const last_id = empty(current_data) ? 0 : current_data[current_data.length - 1].id;
-    fetch('/api/' + apiRoute + '/' + last_id + '/')
+    const count = current_data.length;
+    fetch('/api/' + page_prefix + '/' + api_route + '/' + (self_id ? (self_id + '/') : '') + count + '')
         .then(data => data.json())
         .then(json => {
             let data = { ..._this.state.data };
             data[entity] = data[entity].concat(json);
             _this.setState({ data });
         })
+}
+//
+// export function load(resource, page_prefix, self_id) {
+//     updateStateWithApiRequestFor(resource, this.page_prefix, this.state._this);
+// }
+
+//loads all given routes from ResourceRoutes
+export function loadAll(routes, callback, _this, self_id = null){
+
+    let promises = [];
+
+    if(routes.hasOwnProperty('static'))
+        promises = promises.concat(routes.static.map(resource =>
+            updateStateWithApiRequestFor(resource, routes.page_prefix, _this)));
+
+    // if(routes.hasOwnProperty('with_from'))
+    //     promises = promises.concat(routes.with_from.map(resource => appendStateWithApiRequestFor(resource, routes.page_prefix, _this)));
+
+    if(routes.hasOwnProperty('with_self_id'))
+        promises = promises.concat(routes.with_self_id.map(resource =>
+            updateStateWithApiRequestFor(resource, routes.page_prefix, _this, {}, self_id)));
+
+    Promise.all(promises).then(() => callback());
+}
+
+export function load(route, _this){
+    _this.setState({loading: true}, () => {
+        loadAll(route, () => _this.setState({loading: false}), _this, _this.self_id);
+    });
 }

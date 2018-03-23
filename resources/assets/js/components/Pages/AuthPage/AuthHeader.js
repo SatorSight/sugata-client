@@ -3,6 +3,7 @@ import InputMask from 'react-input-mask';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -284,7 +285,6 @@ class AuthHeader extends Component {
     };
 
     buttonClicked = () => {
-        console.log('b c');
         const value = this.state.value;
         SUtils.makeQuery(value, 'GET', 'api/check_msisdn');
     };
@@ -307,7 +307,9 @@ class AuthHeader extends Component {
                             <div style={styles.customMenu}>
                                 <CustomMenu data={this.props.data}/>
                             </div>
-                            <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                            <Link to="/">
+                                <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                            </Link>
                         </div>
                     </div>
                     <div style={styles.content}>

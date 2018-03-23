@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 
 const styles = {
     root: {
@@ -78,21 +79,24 @@ class SwiperTop extends React.Component {
         return (
             <div style={styles.root}>
                 <div style={styles.swiper}>
-                    {this.props.articles.map((article, i) => {
+                    {this.props.issues.map((issue, i) => {
                         let show;
-                        if (i === active) {
+                        if (i === active)
                             show = Object.assign({}, styles.slideSwiper, styles.active);
-                        } else {
+                        else
                             show = styles.slideSwiper;
-                        }
-                         return <div style={show} key={article.id}>
-                                <img style={styles.magSwiper} src={article.issue_cover} alt={article.title}/>
+                        return <div style={show} key={issue.id}>
+                                <Link to={`/issue/${issue.id}`}>
+                                    <img style={styles.magSwiper} src={issue.image_path} alt={issue.title}/>
+                                </Link>
                             </div>
                         }
                     )}
                 </div>
                 <div>
-                    <a href='#next' style={styles.link}> <span style={Object.assign({}, styles.top, styles.arrow)} /> <span style={Object.assign({}, styles.fot, styles.arrow)} /> </a>
+                    {/*<Link to={`/bundle/${issue.id}`}>*/}
+                        <a href='#next' style={styles.link}> <span style={Object.assign({}, styles.top, styles.arrow)} /> <span style={Object.assign({}, styles.fot, styles.arrow)} /> </a>
+                    {/*</Link>*/}
                 </div>
             </div>
         );

@@ -13,6 +13,7 @@ class Image extends Model implements ImageBasedClass
     }
 
     public function imageFileExists(){
+        //todo implement
     	return true;
     }
 }

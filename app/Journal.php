@@ -38,6 +38,14 @@ class Journal extends Model
         });
     }
 
+    public static function injectWithIssuesCount(Collection &$journals) : void {
+        $journals = $journals->map(function($journal){
+            $journal->issues_count = $journal->issues->count();
+            unset($journal->issues);
+            return $journal;
+        });
+    }
+
     public static function injectWithAdditionalImages(Collection &$journals) : void {
         $journals = $journals->map(function($journal){
             if(!empty($journal->additional_image))
@@ -61,6 +69,20 @@ class Journal extends Model
             $journal->bundle;
             return $journal;
         });
+    }
+
+    public function getLastIssue() : Issue {
+        return $this->issues()->get()->last();
+    }
+
+    public function getLastIssues($limit = 4){
+        return $this->issues->take($limit);
+    }
+
+    public function getLastCoverArticles($limit = 4){
+        $last_issues = $this->getLastIssues($limit);
+        $cover_articles = Issue::getCoverArticles($last_issues);
+        return $cover_articles;
     }
 
 }

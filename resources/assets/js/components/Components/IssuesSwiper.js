@@ -24,12 +24,12 @@ const styles = {
         opacity: 0.4,
     },
 };
-class IssuesSwiper extends React.Component {
+class IssuesSwiper extends Component {
     constructor(props) {
         super(props);
         let index = 0;
         this.state = {
-            index: index
+            index: index,
         };
     }
 
@@ -38,15 +38,17 @@ class IssuesSwiper extends React.Component {
     };
 
     render() {
-        let articles = this.props.data.chosen_articles;
+        let issues = this.props.issues;
+        let articles = this.props.articles;
+
         return (
             <div style={styles.issuesSwiper}>
-                {SUtils.any(articles) ? <div style={styles.over}>
+                {SUtils.any(issues) && SUtils.any(articles) ? <div style={styles.over}>
                     <div style={styles.inner}>
-                        <SwiperTop active={this.state.index} articles={articles} changer={this.handleChangeIndex} />
+                        <SwiperTop active={this.state.index} issues={issues} changer={this.handleChangeIndex} />
                         <div style={styles.shadow} />
                     </div>
-                    <SwiperMain active={this.state.index} articles={articles} changer={this.handleChangeIndex} />
+                    <SwiperMain active={this.state.index} issues={issues} articles={articles} changer={this.handleChangeIndex} />
                 </div> : null }
             </div>
         );

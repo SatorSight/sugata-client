@@ -24,17 +24,19 @@ const styles = {
         textAlign: 'center',
     },
 };
-class PopularJournals extends React.Component {
+class PopularJournals extends Component {
     constructor(props) {
         super(props);
 
-        const journals = this.props.data.journals;
-        let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
-        // const first_fixture_id = 1;
-
         this.state = {
-            index: index
+            index: 0
         };
+    }
+
+    componentWillReceiveProps(nextProps){
+        const journals = nextProps.journals;
+        const index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
+        this.setState({ index });
     }
 
     handleChangeIndex = index => {
@@ -42,7 +44,8 @@ class PopularJournals extends React.Component {
     };
 
     render() {
-        const journals = this.props.data.journals;
+        const journals = this.props.journals;
+        // let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
         return (
             <div style={styles.issuesSwiper}>
                 <h3 style={styles.title}>Популярные издания</h3>

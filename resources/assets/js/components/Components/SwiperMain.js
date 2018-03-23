@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
+import { Link } from 'react-router-dom'
 
 const styles = {
     root: {
@@ -94,26 +95,44 @@ class SwiperMain extends React.Component {
         super(props);
     }
 
-    render() {
+    renderSlide = () => {
+        let slides = [];
+        {this.props.articles.map((article, i) => {
+            if(article) {
+                slides.push(
+                    <div style={styles.slideSwiper} key={article.id}>
+                        <Link to={`/article/${article.id}`}>
+                            <div style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})}/>
+                        </Link>
+                        <div style={styles.infoSwiper}>
+                            <Link to={`/issue/${this.props.issues[i].id}`}>
+                                <img style={styles.magSwiper} src={this.props.issues[i].image_path} alt={article.title}/>
+                            </Link>
+                            <Link to={`/article/${article.id}`}>
+                                <p style={styles.textSwiper}>{article.title}</p>
+                            </Link>
+                            <div>
+                                <p style={styles.captionColorSwiper}>
+                                    <Link to={`/article/${article.id}`}>
+                                        <span>{article.journal_name}, </span>
+                                    </Link>
+                                    <span>{article.date}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        })}
 
+        return slides;
+    };
+
+    render() {
         return (
             <div style={styles.root}>
                 <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer}>
-                    {this.props.articles.map((article, i) =>
-                        <div style={styles.slideSwiper} key={article.id}>
-                            <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
-                            <div style={styles.infoSwiper}>
-                                <img style={styles.magSwiper} src={article.issue_cover} alt={article.title} />
-                                <p style={styles.textSwiper}>{article.title}</p>
-                                <div>
-                                    <p style={styles.captionColorSwiper}>
-                                        <span>{article.journal_name}, </span>
-                                        <span>{article.date}</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                    {this.renderSlide()}
                 </SwipeableViews>
                 <Pagination dots={3} index={this.props.active} onChangeIndex={this.props.changer} />
             </div>

@@ -15,6 +15,10 @@ class AppController extends Controller
         return view('spa');
     }
 
+    public function getCurrentBundle(){
+
+    }
+
     public function tryToAuthorizeByBridge(){
         if(!empty($_GET['bridge_token'])){
             $bridge_token = $_GET['bridge_token'];
@@ -27,8 +31,6 @@ class AppController extends Controller
             if($as->userSubscribed())
                 $as->writeUserSessionAndCookies();
         }
-
-
     }
 
 }

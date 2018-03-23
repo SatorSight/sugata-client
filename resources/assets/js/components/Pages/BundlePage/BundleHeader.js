@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
+import BundleMenu from './BundleMenu';
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -99,7 +101,7 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
-    indexMenu:{
+    iconMenu:{
         position: 'absolute',
         left: 0,
         top: '2em',
@@ -189,6 +191,8 @@ class BundleHeader extends Component {
     }
 
     render() {
+        const bundle_name = this.props.data.bundle ? this.props.data.bundle.name : '';
+
         return (
             <div style={styles.header}>
                 <div style={styles.header}>
@@ -205,8 +209,10 @@ class BundleHeader extends Component {
                         <div style={styles.customMenu}>
                             <CustomMenu data={this.props.data}/>
                         </div>
-                        <h2 style={styles.h2}>киоск плюс</h2>
-                        <h1 style={styles.h1}>технологии и игры<span style={styles.arrow} /></h1>
+                        <Link to="/">
+                            <h2 style={styles.h2}>киоск плюс</h2>
+                        </Link>
+                        <h1 style={styles.h1}>{bundle_name}<span style={styles.arrow} /></h1>
                     </div>
                 </div>
             </div>

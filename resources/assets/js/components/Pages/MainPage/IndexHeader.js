@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
 import IndexMenuSet from '../../Components/IndexMenuSet';
+import { Link } from 'react-router-dom'
 
 const styles = {
     header: {
@@ -138,7 +139,9 @@ class IndexHeader extends Component {
                     <div style={styles.customMenu}>
                         <CustomMenu data={this.props.data} />
                     </div>
-                    <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                    <Link to="/">
+                        <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                    </Link>
                 </div>
                 <IndexMenuSet data={this.props.data} />
             </div>

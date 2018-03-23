@@ -128,8 +128,8 @@ class JournalHeader extends Component {
     }
 
     render() {
-        const journals = this.props.data.journals;
-        let index = SUtils.any(journals) ? Math.floor(journals.length/2) : 1;
+        const journal = this.props.data.journal;
+        const bundle = this.props.data.bundle;
 
         return (
             <div style={styles.header}>
@@ -147,11 +147,11 @@ class JournalHeader extends Component {
                         <div style={styles.customMenu}>
                             <CustomMenu data={this.props.data} />
                         </div>
-                        {SUtils.any(journals) ? <div>
-                            <h1 style={styles.h1}>{journals[index].bundle.name}<span style={styles.arrow} /></h1>
+                        {journal ? <div>
+                            <h1 style={styles.h1}>{bundle ? bundle.name : ''}<span style={styles.arrow} /></h1>
                             <div style={styles.bigLogo}>
-                                <img src={journals[index].logo_path} style={styles.imgLogo} alt={journals[index].name} />
-                                <h3 style={styles.h3}>{journals.length} выпуска</h3>
+                                <img src={journal.logo_path} style={styles.imgLogo} alt={journal.name} />
+                                <h3 style={styles.h3}>{journal.issues_count} выпуска</h3>
                             </div>
                         </div> : null }
                     </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as SUtils from './../Helpers/SUtils';
 import sKey from './../Helpers/sKey';
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -109,17 +110,22 @@ class PopularArticles extends Component {
     loadMore = () => this.props.controls['more_popular_articles']();
 
     render() {
-        const articles = this.props.data.popular_articles;
+        const articles =  this.props.data.hasOwnProperty('popular_articles') ? this.props.data.popular_articles : [];
+        // const articles = this.props.data.popular_articles;
 
         return (
             <div>
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
                         <div style={styles.item} key={sKey('pa')}>
-                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
+                            <Link to={`/article/${article.id}`}>
+                                <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
+                            </Link>
                             <div style={styles.inner}>
                                 <div style={styles.over}>
-                                    <p style={styles.title}>{article.title}</p>
+                                    <Link to={`/article/${article.id}`}>
+                                        <p style={styles.title}>{article.title}</p>
+                                    </Link>
                                     <p style={styles.shortContent}>
                                         {article.text}
                                     </p>

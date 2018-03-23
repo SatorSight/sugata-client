@@ -10,4 +10,9 @@ class Bundle extends Model
 {
     use HasImage;
     use ImageInjector;
+
+    public function journals(){
+        return $this->hasMany('App\Journal');
+    }
+
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as SUtils from './../Helpers/SUtils';
 import sKey from './../Helpers/sKey';
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -78,29 +79,44 @@ const styles = {
         lineHeight: '3em',
         border: '1px solid #E0E0E0',
     },
+    shortContent: {
+        fontSize: '1em',
+        lineHeight: 1.4,
+        color: '#333',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '90%',
+        fontWeight: 400,
+    },
 };
 
-class PopularArticles extends Component {
+class NewArticles extends Component {
 
     constructor(props){
         super(props);
     }
 
-    loadMore = () => {console.log('clicked'); console.log(this.props.controls); this.props.controls['more_new_articles'].call(this)};
+    loadMore = () => {this.props.controls['more_new_articles'].call()};
 
     render() {
-
-        const articles = this.props.data.new_articles;
+        const articles =  this.props.data.new_articles;
 
         return (
             <div>
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
                         <div style={styles.item} key={sKey('ar')}>
-                            <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
+                            <Link to={`/article/${article.id}`}>
+                                <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
+                            </Link>
                             <div style={styles.inner}>
                                 <div style={styles.over}>
-                                    <p style={styles.title}>{article.title}</p>
+                                    <Link to={`/article/${article.id}`}>
+                                        <p style={styles.title}>{article.title}</p>
+                                    </Link>
+                                    <p style={styles.shortContent}>
+                                        {article.text}
+                                    </p>
                                 </div>
                                 <div>
                                     <p style={styles.caption}>
@@ -120,4 +136,4 @@ class PopularArticles extends Component {
     }
 }
 
-export default PopularArticles;
+export default NewArticles;

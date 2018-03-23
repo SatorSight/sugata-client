@@ -61,13 +61,14 @@ export default class OtherIssues extends Component {
     }
 
     render() {
-        let new_issues = this.props.data.new_issues;
+        const issues = this.props.issues;
+
         return (
             <div style={styles.otherIssues}>
                 <p style={styles.title}>Другие выпуски</p>
-                {SUtils.any(new_issues) ?
-                    <OwlCarousel autoWidth dots={false} >
-                        {new_issues.map((issue, currentIndex) =>
+                {SUtils.any(issues) ?
+                    <OwlCarousel autoWidth dots={false}>
+                        {issues.map((issue, currentIndex) =>
                             <div key={String(currentIndex)} style={styles.item} >
                                 <Link key={issue.id} to={`/issue/${issue.id}`}>
                                     <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />

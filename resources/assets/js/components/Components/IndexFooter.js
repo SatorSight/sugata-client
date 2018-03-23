@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-// import fixtures from "./fixtures";
+import { Link } from 'react-router-dom'
 import IndexMenu from './IndexMenu';
 import IndexMenuSet from './IndexMenuSet';
 
@@ -130,7 +130,9 @@ class IndexFooter extends Component {
                     <div style={styles.shadow} />
                 </div>
                 <div style={styles.inner}>
-                    <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                    <Link to="/">
+                        <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                    </Link>
                     <p style={styles.span}>@Киоск плюс</p>
                 </div>
             </div>

@@ -135,7 +135,8 @@ export default class IssuesTheme extends Component {
     }
 
     render() {
-        let articles = this.props.data.new_articles;
+        let articles = this.props.data.main_topics;
+        let articles_count = this.props.data.new_articles ? this.props.data.new_articles.length : 0;
 
         return (
             <div>
@@ -154,7 +155,7 @@ export default class IssuesTheme extends Component {
                                     <div style={styles.page}>
                                         <p style={styles.captionColorSwiper}>
                                             <span>{article.page_number} / </span>
-                                            <span>24</span>
+                                            <span>{articles_count}</span>
                                         </p>
                                     </div>
                                 </div>
