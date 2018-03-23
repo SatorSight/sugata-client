@@ -144,12 +144,14 @@ const styles = {
         left: 0,
         top: '50%',
         transform: 'translate(-30%, -50%)',
+        opacity: '.6',
     },
     rightMag: {
         position: 'absolute',
         right: 0,
         top: '50%',
         transform: 'translate(30%, -50%)',
+        opacity: '.6',
     },
     butMag: {
         position: 'relative',
