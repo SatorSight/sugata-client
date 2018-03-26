@@ -226,20 +226,29 @@ class Article extends Model
         if(empty($this->html))
             return false;
 
+        if(!self::isHTMLCorrect($this->html))
+            return false;
+
         /** @var Image $image */
         $image = $this->getImage();
         if(empty($image))
             return false;
 
-        $public_path = public_path();
-
-
-//        SUtils::dump_console($image->path);
-
-        if(!file_exists($public_path . $image->path))
+        if(!file_exists(public_path() . $image->path))
             return false;
 
         return true;
+    }
+
+    public static function isHTMLCorrect(string $html) : bool {
+        preg_match('/<p>(.*?)<\/p>/', $html, $matches);
+        if(empty($matches))
+            return false;
+
+        $p_contents = $matches[1];
+        if(strlen($p_contents) > 100)
+            return true;
+        return false;
     }
 
 }

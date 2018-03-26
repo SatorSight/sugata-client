@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 // import {Router, Route} from 'react-router';
 
-import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import Lines from 'react-preloaders/Preloaders/Lines';
 
@@ -25,10 +24,8 @@ export default class Application extends Component {
     }
 
     componentWillMount(){
-        const _this = this;
-        SUtils.loadAuthorizationToState(_this);
+        SUtils.loadAuthorizationToState(this);
     }
-
 
     render() {
         return (

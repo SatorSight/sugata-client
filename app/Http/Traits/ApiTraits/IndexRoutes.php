@@ -29,6 +29,7 @@ trait IndexRoutes{
 
         $last_issues = new Collection();
         $journals->map(function($journal) use (&$last_issues){
+            /** @var Journal $journal */
             $last_issue = $journal->getLastIssue();
             $last_issue->image;
             $last_issues->push($last_issue);
@@ -64,11 +65,7 @@ trait IndexRoutes{
     public function indexGetNewArticles(){
         $last_issues = Issue::getLastFromEachJournal(null);
         /** @var Collection $articles */
-        $articles = Issue::getFirstBasicArticles($last_issues)
-            ->take(5);
-
-//        $ids = $articles->map(function($article){ return $article->id; });
-//        $articles->take(5);
+        $articles = Issue::getFirstBasicArticles($last_issues)->take(5);
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -76,10 +73,6 @@ trait IndexRoutes{
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
     }
@@ -91,10 +84,7 @@ trait IndexRoutes{
     public function indexGetPopularArticles(){
         $last_issues = Issue::getLastFromEachJournal(null);
         /** @var Collection $articles */
-        $articles = Issue::getNotFirstBasicArticles($last_issues)->take(5);;
-
-//        $ids = $articles->map(function($article){ return $article->id; });
-        $articles->take(5);
+        $articles = Issue::getRandomBasicArticles($last_issues)->take(5);;
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -102,10 +92,6 @@ trait IndexRoutes{
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
     }
@@ -118,11 +104,9 @@ trait IndexRoutes{
     public function indexGetMoreNewArticles($from){
         $last_issues = Issue::getLastFromEachJournal(null);
         /** @var Collection $articles */
-        $articles = Issue::getFirstBasicArticles($last_issues)
+        $articles = Issue::getRandomBasicArticles($last_issues)
             ->slice($from)
             ->take(5);
-
-//        $ids = $articles->map(function($article){ return $article->id; });
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -130,10 +114,6 @@ trait IndexRoutes{
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
     }
@@ -145,15 +125,10 @@ trait IndexRoutes{
      */
     public function indexGetMorePopularArticles($from){
         $last_issues = Issue::getLastFromEachJournal(null);
-
         /** @var Collection $articles */
         $articles = Issue::getNotFirstBasicArticles($last_issues)
             ->slice($from)
             ->take(5);
-
-//        $ids = $articles->map(function($article){ return $article->id; });
-//        $articles
-
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -161,10 +136,6 @@ trait IndexRoutes{
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
     }
@@ -174,8 +145,6 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetPopularEditions(){
-
-//        $journals = Journal::where('archived', false)->get()->shuffle();
         $journals = Journal::where(function($query){
             $query->where('archived', false)
                 ->orWhereNull('archived');

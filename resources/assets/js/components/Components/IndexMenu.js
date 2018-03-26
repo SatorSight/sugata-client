@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
@@ -107,7 +107,7 @@ const styles = {
     },
 };
 
-class IndexMenu extends React.Component {
+class IndexMenu extends Component {
     constructor(props){
         super(props);
 
@@ -124,6 +124,10 @@ class IndexMenu extends React.Component {
             [side]: open,
         });
     };
+
+    shouldComponentUpdate(nextProps, nextState){
+        return nextProps === this.props;
+    }
 
     render() {
         const { classes } = this.props;

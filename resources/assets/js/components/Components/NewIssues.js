@@ -64,6 +64,12 @@ export default class NewIssues extends Component {
         super(props);
     }
 
+    // shouldComponentUpdate(nextProps, nextState){
+    //     return nextProps === this.props;
+    // }
+
+
+
     render() {
         let new_issues = this.props.data.new_issues;
 
@@ -71,15 +77,15 @@ export default class NewIssues extends Component {
             <div style={styles.main}>
                 <p style={styles.title}>новые выпуски</p>
                 {SUtils.any(new_issues) ?
-                    <OwlCarousel autoWidth dots={false} >
-                    {new_issues.map((issue, currentIndex) =>
-                        <div key={String(currentIndex)} style={styles.item} >
-                            <Link to={`/issue/${issue.id}`}>
-                                <img src={issue.image_path} alt={issue.number} style={styles.imgOtherIssues} />
-                            </Link>
-                        </div>
-                    )}
-                </OwlCarousel> : null }
+                    <OwlCarousel autoWidth dots={false}>
+                        {new_issues.map((issue, currentIndex) =>
+                            <div key={String(currentIndex)} style={styles.item} >
+                                <Link to={`/issue/${issue.id}`}>
+                                    <img src={issue.image_path} alt={issue.number} style={styles.imgOtherIssues} />
+                                </Link>
+                            </div>
+                        )}
+                    </OwlCarousel> : null }
             </div>
         );
     }

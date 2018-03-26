@@ -49,6 +49,7 @@ class Issue extends Model
                 $query->where('chosen', false)
                     ->orWhereNull('chosen');
             })
+            ->orderBy('page_number')
             ->limit(1)
             ->get()
             ->first();
@@ -68,6 +69,7 @@ class Issue extends Model
                 $query->where('chosen', false)
                     ->orWhereNull('chosen');
             })
+            ->orderBy('page_number')
             ->offset($n)
             ->limit(1)
             ->get()
@@ -107,13 +109,9 @@ class Issue extends Model
                 $query->where('chosen', false)
                     ->orWhereNull('chosen');
             })
-
-//            ->limit(2)
-//            ->get()
-//            ->last();
-
-//            ->limit(5)
+            ->orderBy('page_number')
             ->get()
+            ->slice(1)
             ->shuffle()
             ->first();
         ;
@@ -133,17 +131,13 @@ class Issue extends Model
                 $query->where('chosen', false)
                     ->orWhereNull('chosen');
             })
+            ->orderBy('page_number')
 
             //not last!
 
             ->limit(2)
             ->get()
             ->last();
-
-//            ->limit(1)
-//            ->get()
-//            ->first();
-
         ;
         return $basic_article;
     }
@@ -200,6 +194,14 @@ class Issue extends Model
     public static function getFirstBasicArticles(Collection $issues){
         $basic_articles = $issues
             ->map   (function($issue){ /** @var Issue $issue */ return $issue->getFirstBasicArticle(); })
+            ->reject(function($article){ return empty($article); });
+
+        return $basic_articles;
+    }
+
+    public static function getRandomBasicArticles(Collection $issues){
+        $basic_articles = $issues
+            ->map   (function($issue){ /** @var Issue $issue */ return $issue->getNotFirstRandomBasicArticle(); })
             ->reject(function($article){ return empty($article); });
 
         return $basic_articles;
