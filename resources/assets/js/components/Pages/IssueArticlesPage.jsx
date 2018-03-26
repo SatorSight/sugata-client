@@ -4,6 +4,7 @@ import NextIssueArticle from "../Components/NextIssueArticle";
 import * as SUtils from './../Helpers/SUtils';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import Lines from 'react-preloaders/Preloaders/Lines';
+import Waiter from '../Helpers/Waiter2';
 
 const styles = {
     item: {
@@ -44,10 +45,7 @@ class IssueArticlesPage extends Component {
         return (
             <div style={styles.item}>
                 {this.state.loading
-                    ? <Lines
-                        color={'#f7f7f7'}
-                        bgColor={'#222'}
-                        time={1400}/>
+                    ? <Waiter/>
                     : null}
                 <IssueArticlesHeader data={this.state.data} id={this.props.match.params.id}/>
 

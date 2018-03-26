@@ -13,6 +13,8 @@ import JournalPage from './Pages/JournalPage'
 import TagPage from './Pages/TagPage'
 import * as SUtils from "./Helpers/SUtils";
 
+import Waiter from './Helpers/Waiter2';
+
 export default class Application extends Component {
 
     constructor(props){
@@ -30,10 +32,11 @@ export default class Application extends Component {
     render() {
         return (
             <div className="container">
-                <Lines
-                    color={'#f7f7f7'}
-                    bgColor={'#222'}
-                    time={1400}/>
+                {/*<Waiter/>*/}
+                {/*<Lines*/}
+                    {/*color={'#f7f7f7'}*/}
+                    {/*bgColor={'#222'}*/}
+                    {/*time={1400}/>*/}
                 <BrowserRouter>
                     <div>
                         <Route exact path="/" component={MainPage}/>

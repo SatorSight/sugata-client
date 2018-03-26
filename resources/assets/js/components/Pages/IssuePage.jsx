@@ -7,6 +7,7 @@ import PreviousIssue from "../Components/PreviousIssue";
 import * as SUtils from './../Helpers/SUtils';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import Lines from 'react-preloaders/Preloaders/Lines';
+import Waiter from '../Helpers/Waiter2';
 
 class IssuePage extends Component {
 
@@ -57,10 +58,7 @@ class IssuePage extends Component {
         return (
             <div>
                 {this.state.loading
-                    ? <Lines
-                        color={'#f7f7f7'}
-                        bgColor={'#222'}
-                        time={1400}/>
+                    ? <Waiter/>
                     : null}
                 <IssueHeader self_id={this.self_id} data={this.state.data}/>
                 <IssuesTheme data={this.state.data}/>
