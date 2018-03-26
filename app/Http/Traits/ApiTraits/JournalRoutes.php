@@ -4,6 +4,7 @@ namespace App\Http\Traits\ApiTraits;
 
 use App\Article;
 use App\Bundle;
+use App\Http\Controllers\Helper;
 use App\Issue;
 use App\Journal;
 use App\Lib\SUtils;
@@ -48,8 +49,6 @@ trait JournalRoutes{
      */
     public function journalGetIssuesCoverArticles($journal_id){
         $last_issues = Journal::find($journal_id)->issues->sortByDesc('id')->take(4);
-//        $ids = json_decode($issues_ids);
-//        $issues = Issue::find($ids);
         $cover_articles = $last_issues->map(function($issue){
             return $issue->getCoverArticle();
         });
@@ -70,11 +69,12 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetBasicArticlesForLastIssue($journal_id){
+        /** @var Journal $journal */
         /** @var Issue $last_issue */
-        $last_issue = Journal::find($journal_id)->getLastIssue();
         /** @var Collection $basic_articles */
+        $journal = Journal::find($journal_id);
+        $last_issue = $journal->getLastIssue();
         $basic_articles = $last_issue->getBasicArticles(5);
-
 
         Article::injectWithText($basic_articles);
         Article::removeWithBlankText($basic_articles);
@@ -82,9 +82,6 @@ trait JournalRoutes{
         Article::injectDates($basic_articles);
         Article::injectJournalNames($basic_articles);
         Article::injectWithImages($basic_articles);
-
-
-//        $basic_articles->dd();
 
         return response()->json($basic_articles);
     }
@@ -101,13 +98,10 @@ trait JournalRoutes{
             ->take(5)
         ;
 
-
         $articles = $non_last_issues->map(function($issue){
             /** @var Issue $issue */
             return $issue->getNotFirstRandomBasicArticle();
         });
-
-//        $articles->dd();
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -116,12 +110,8 @@ trait JournalRoutes{
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
 
-
         return response()->json(array_values($articles->toArray()));
     }
-
-
-
 
     public function journalGetMoreMoreNewArticles($journal_id, $from){
         /** @var Issue $last_issue */
@@ -129,16 +119,12 @@ trait JournalRoutes{
         /** @var Collection $basic_articles */
         $basic_articles = $last_issue->getBasicArticles(5, $from);
 
-
         Article::injectWithText($basic_articles);
         Article::removeWithBlankText($basic_articles);
         Article::clearFromHtml($basic_articles);
         Article::injectDates($basic_articles);
         Article::injectJournalNames($basic_articles);
         Article::injectWithImages($basic_articles);
-
-
-//        $basic_articles->dd();
 
         return response()->json(array_values($basic_articles->toArray()));
     }
@@ -151,13 +137,10 @@ trait JournalRoutes{
             ->take(5)
         ;
 
-
         $articles = $non_last_issues->map(function($issue){
             /** @var Issue $issue */
             return $issue->getNotFirstRandomBasicArticle();
         });
-
-//        $articles->dd();
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -167,7 +150,6 @@ trait JournalRoutes{
         Article::injectWithImages($articles);
 
         return response()->json(array_values($articles->toArray()));
-
     }
 
     /**
@@ -197,18 +179,14 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetRestIssues($journal_id){
-
         $issues = Journal::find($journal_id)
             ->issues
+            ->sortByDesc('number')
             ->slice(1)
+//            ->reject(function($issue) use ($journal_id){ return $issue->journal_id == $journal_id; })
         ;
 
         Issue::injectWithImages($issues);
-//        $journal = Issue::find($issue_id)->journal;
-//        $issues = $journal->issues
-//            ->reject(function($issue) use ($issue_id){
-//                return $issue->id == $issue_id;
-//            });
 
         return response()->json(array_values($issues->toArray()));
     }
@@ -228,7 +206,11 @@ trait JournalRoutes{
             ->shuffle();
         ;
 
+        Journal::injectWithLogo($journals);
+        Journal::injectWithAdditionalImages($journals);
         Journal::injectWithImages($journals);
+        Journal::injectWithBundle($journals);
+        Helper::removeFieldFromCollection($journals, 'description');
 
         return response()->json($journals);
     }

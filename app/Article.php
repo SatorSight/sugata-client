@@ -119,6 +119,14 @@ class Article extends Model
         });
     }
 
+    public static function injectWithCustomData(Collection &$articles, $key, $value) : void {
+        $articles = $articles->map(function($article) use ($key, $value){
+            if($article)
+                $article->$key = $value;
+            return $article;
+        });
+    }
+
 
     public function getClearText(){
         $s = $this->html;
@@ -246,7 +254,7 @@ class Article extends Model
             return false;
 
         $p_contents = $matches[1];
-        if(strlen($p_contents) > 100)
+        if(strlen($p_contents) > 200)
             return true;
         return false;
     }

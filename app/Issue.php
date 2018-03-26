@@ -218,8 +218,18 @@ class Issue extends Model
 
     public function getBasicArticles($limit, $from = 0){
         return $this->articles()
+            ->where('show_in_lists', true)
+            ->where(function($query){
+                $query->where('cover', false)
+                    ->orWhereNull('cover');
+            })
+            ->where(function($query){
+                $query->where('chosen', false)
+                    ->orWhereNull('chosen');
+            })
+            ->orderByDesc('page_number')
             ->get()
-            ->reject(function($article){ return $article->cover || $article->chosen; })
+            ->reject(function($article){ return empty($article); })
             ->slice($from)
             ->take($limit);
     }

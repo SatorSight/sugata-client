@@ -30,17 +30,20 @@ class IssuePage extends Component {
         SUtils.load(ResourceRoutes.ISSUE_RESOURCES, this);
     }
 
-
-
-    // componentWillMount(){
-    //     SUtils.reload(ResourceRoutes.ISSUE_RESOURCES, this);
-
-        //     SUtils.reload(ResourceRoutes.ISSUE_RESOURCES, this);
-        // this.setState({loading: true}, () => {
-        //     SUtils.loadAll(ResourceRoutes.ISSUE_RESOURCES,
-        //         () => this.setState({loading: false}), this, this.self_id);
-        // });
-    // }
+    //todo refactor maybe
+    getPrevIssue = () => {
+        let prev_issue = null;
+        if(SUtils.any(this.state.data.all_issues) && !SUtils.empty(this.state.data.issue)){
+            const issue = this.state.data.issue;
+            this.state.data.all_issues.map((iss, i) => {
+                if(iss.id === issue.id) {
+                    if (!SUtils.empty(this.state.data.all_issues[i - 1]))
+                        prev_issue = this.state.data.all_issues[i - 1];
+                }
+            });
+        }
+        return prev_issue;
+    };
 
     loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'issue', 'more_new_articles', this, this.self_id);
     // loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
@@ -66,7 +69,7 @@ class IssuePage extends Component {
                     controls={controls}
                     data={this.state.data}/>
                 <OtherIssues issues={this.state.data.all_issues}/>
-                <PreviousIssue data={this.state.data}/>
+                <PreviousIssue issue={this.getPrevIssue()}/>
             </div>
         );
     }

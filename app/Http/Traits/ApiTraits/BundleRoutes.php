@@ -51,8 +51,6 @@ trait BundleRoutes{
         $bundle = Bundle::find($bundle_id);
         $last_issues = Issue::getLastFromEachJournal(4, $bundle);
 
-//        $last_issues->dd();
-
         $last_cover_articles = $last_issues->map(function($issue){
             /** @var Issue $issue */
             return $issue->getCoverArticle();
@@ -60,12 +58,10 @@ trait BundleRoutes{
             ->reject(function($article){ return empty($article); })
         ;
 
-//        $last_cover_articles->dd();
-
-
         Article::injectWithImages($last_cover_articles);
         Article::injectDates($last_cover_articles);
         Article::clearFromHtml($last_cover_articles);
+        Article::injectJournalNames($last_cover_articles);
 
         return response()->json(array_values($last_cover_articles->toArray()));
     }
@@ -81,19 +77,12 @@ trait BundleRoutes{
         /** @var Collection $articles */
         $articles = Issue::getFirstBasicArticles($last_issues)->take(5);
 
-//        $ids = $articles->map(function($article){ return $article->id; });
-//        $articles->take(5);
-
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-//
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
     }
@@ -107,10 +96,7 @@ trait BundleRoutes{
         $bundle = Bundle::find($bundle_id);
         $last_issues = Issue::getLastFromEachJournal(null, $bundle);
         /** @var Collection $articles */
-        $articles = Issue::getNotFirstBasicArticles($last_issues)->take(5);
-
-//        $ids = $articles->map(function($article){ return $article->id; });
-//        $articles->take(5);
+        $articles = Issue::getRandomBasicArticles($last_issues)->take(5);
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -119,12 +105,7 @@ trait BundleRoutes{
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
 
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
-
         return response()->json(array_values($articles->toArray()));
-
     }
 
     /**
@@ -141,24 +122,14 @@ trait BundleRoutes{
             ->slice($from)
             ->take(5);;
 
-//        $ids = $articles->map(function($article){ return $article->id; });
-//        $articles
-//            ->slice($from)
-//            ->take(5);
-
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
         Article::clearFromHtml($articles);
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-//
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
-
     }
 
     /**
@@ -171,14 +142,9 @@ trait BundleRoutes{
         $bundle = Bundle::find($bundle_id);
         $last_issues = Issue::getLastFromEachJournal(null, $bundle);
         /** @var Collection $articles */
-        $articles = Issue::getNotFirstBasicArticles($last_issues)
+        $articles = Issue::getRandomBasicArticles($last_issues)
             ->slice($from)
             ->take(5);;
-
-//        $ids = $articles->map(function($article){ return $article->id; });
-//        $articles
-//            ->slice($from)
-//            ->take(5);
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -186,13 +152,8 @@ trait BundleRoutes{
         Article::injectDates($articles);
         Article::injectJournalNames($articles);
         Article::injectWithImages($articles);
-//
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
 
         return response()->json(array_values($articles->toArray()));
-
     }
 
     /**
@@ -205,7 +166,8 @@ trait BundleRoutes{
                 $query->where('archived', false)
                     ->orWhereNull('archived');
             })
-            ->get()->shuffle();
+            ->get()
+            ->shuffle();
 
         Journal::injectWithLogo($journals);
         Journal::injectWithAdditionalImages($journals);

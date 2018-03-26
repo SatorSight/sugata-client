@@ -49,6 +49,26 @@ trait IssueRoutes{
     }
 
     /**
+     * @desc get prev issue data
+     * @param $issue_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function issueGetPreviousIssue($issue_id){
+        $issue = Issue::find($issue_id);
+
+        $issue_collection = new Collection();
+        $issue_collection->push($issue);
+
+        Issue::injectWithImages($issue_collection);
+        Issue::injectWithJournalLogo($issue_collection);
+        Issue::injectWithJournalNames($issue_collection);
+
+        $issue = $issue_collection->first();
+
+        return response()->json($issue);
+    }
+
+    /**
      * @desc get all issues
      * @param $issue_id
      * @return \Illuminate\Http\JsonResponse
@@ -112,11 +132,15 @@ trait IssueRoutes{
         ;
 
         $main_topics = new Collection();
-        $main_topics->push($cover_article);
-        $main_topics->concat($chosen_articles);
+        $main_topics = $main_topics
+            ->push($cover_article)
+            ->concat($chosen_articles);
 
+        $issue = Issue::find($issue_id);
+        $pages_count = $issue->articles->count();
+
+        Article::injectWithCustomData($main_topics, 'pages_count', $pages_count);
         Article::injectWithText($main_topics);
-        Article::removeWithBlankText($main_topics);
         Article::clearFromHtml($main_topics);
         Article::injectDates($main_topics);
         Article::injectJournalNames($main_topics);
@@ -131,28 +155,40 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetNewArticles($issue_id){
-        $articles = Article::where('issue_id', $issue_id)
-            ->where(function($query){
-                $query->where('cover', false)
-                    ->orWhereNull('cover');
-            })
-            ->where(function($query){
-                $query->where('chosen', false)
-                    ->orWhereNull('chosen');
-            })
-            ->orderBy('page_number', 'desc')
-            ->limit(10)
-            ->get()
-        ;
 
-        Article::injectWithText($articles);
-        Article::removeWithBlankText($articles);
-        Article::clearFromHtml($articles);
-        Article::injectDates($articles);
-        Article::injectJournalNames($articles);
-        Article::injectWithImages($articles);
+        $issue = Issue::find($issue_id);
+        $basic_articles = $issue->getBasicArticles(5);
 
-        return response()->json($articles);
+        Article::injectWithText($basic_articles);
+        Article::removeWithBlankText($basic_articles);
+        Article::clearFromHtml($basic_articles);
+        Article::injectDates($basic_articles);
+        Article::injectJournalNames($basic_articles);
+        Article::injectWithImages($basic_articles);
+
+//
+//        $articles = Article::where('issue_id', $issue_id)
+//            ->where(function($query){
+//                $query->where('cover', false)
+//                    ->orWhereNull('cover');
+//            })
+//            ->where(function($query){
+//                $query->where('chosen', false)
+//                    ->orWhereNull('chosen');
+//            })
+//            ->orderBy('page_number', 'desc')
+//            ->limit(10)
+//            ->get()
+//        ;
+//
+//        Article::injectWithText($articles);
+//        Article::removeWithBlankText($articles);
+//        Article::clearFromHtml($articles);
+//        Article::injectDates($articles);
+//        Article::injectJournalNames($articles);
+//        Article::injectWithImages($articles);
+
+        return response()->json(array_values($basic_articles->toArray()));
     }
 
     /**
@@ -162,29 +198,45 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetMoreNewArticles($issue_id, $from){
-        $articles = Article::where('issue_id', $issue_id)
-            ->where(function($query){
-                $query->where('cover', false)
-                    ->orWhereNull('cover');
-            })
-            ->where(function($query){
-                $query->where('chosen', false)
-                    ->orWhereNull('chosen');
-            })
-            ->orderBy('page_number', 'desc')
-            ->get()
-            ->slice($from)
-            ->take(10);
-        ;
 
-        Article::injectWithText($articles);
-        Article::removeWithBlankText($articles);
-        Article::clearFromHtml($articles);
-        Article::injectDates($articles);
-        Article::injectJournalNames($articles);
-        Article::injectWithImages($articles);
 
-        return response()->json(array_values($articles->toArray()));
+        /** @var Issue $issue */
+        $issue = Issue::find($issue_id);
+        /** @var Collection $basic_articles */
+        $basic_articles = $issue->getBasicArticles(5, $from);
+
+        Article::injectWithText($basic_articles);
+        Article::removeWithBlankText($basic_articles);
+        Article::clearFromHtml($basic_articles);
+        Article::injectDates($basic_articles);
+        Article::injectJournalNames($basic_articles);
+        Article::injectWithImages($basic_articles);
+
+        return response()->json(array_values($basic_articles->toArray()));
+//
+//        $articles = Article::where('issue_id', $issue_id)
+//            ->where(function($query){
+//                $query->where('cover', false)
+//                    ->orWhereNull('cover');
+//            })
+//            ->where(function($query){
+//                $query->where('chosen', false)
+//                    ->orWhereNull('chosen');
+//            })
+//            ->orderBy('page_number', 'desc')
+//            ->get()
+//            ->slice($from)
+//            ->take(10);
+//        ;
+//
+//        Article::injectWithText($articles);
+//        Article::removeWithBlankText($articles);
+//        Article::clearFromHtml($articles);
+//        Article::injectDates($articles);
+//        Article::injectJournalNames($articles);
+//        Article::injectWithImages($articles);
+//
+//        return response()->json(array_values($articles->toArray()));
 
 //
 //        $response = new \stdClass();
@@ -199,7 +251,7 @@ trait IssueRoutes{
      */
     public function issueGetOtherIssues($issue_id){
         $issues = Issue::find($issue_id)->journal->issues
-            ->sortByDesc('id')
+            ->sortByDesc('number')
             ->reject(function($i) use ($issue_id){
                 return $issue_id == $i->id;
             });

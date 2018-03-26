@@ -1,11 +1,4 @@
 export function in_array(needle, haystack) {
-    // let result = false;
-    // haystack.map((element) => {
-    //     if (needle === element)
-    //         result = true;
-    // });
-    // return result;
-
     return haystack.indexOf(needle) !== -1;
 }
 
@@ -70,8 +63,6 @@ export function single(haystack) {
 }
 
 export function any(haystack) {
-    // console.log('any');
-    // console.log(haystack);
     if(haystack === undefined)
         return false;
     if(haystack.length === 1 && (first(haystack) === 'null' || first(haystack) === null))
@@ -81,7 +72,7 @@ export function any(haystack) {
 
 export function empty(haystack) {
     if(haystack === undefined)
-        return false;
+        return true;
     return haystack.length === 0
 }
 

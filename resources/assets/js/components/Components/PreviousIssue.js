@@ -100,7 +100,7 @@ class PreviousIssue extends Component {
     }
 
     render() {
-        const issue = this.props.data.issue;
+        const issue = this.props.issue;
         return (
             <div>
                 {issue ?

@@ -50,9 +50,9 @@ export default class Application extends Component {
                     : null}
                 <BundleHeader data={this.state.data}/>
                 <IssuesSwiper issues={this.state.data.last_issues} articles={this.state.data.last_cover_articles}/>
-                <MainTabs initialIndex={0} controls={controls} data={this.state.data}/>
+                <MainTabs onlyFirst controls={controls} data={this.state.data}/>
                 {/*<ThematicSwiper  data={this.state.data}/>*/}
-                <MainTabs initialIndex={1} controls={controls} data={this.state.data}/>
+                <MainTabs onlySecond controls={controls} data={this.state.data}/>
                 <IndexFooter />
             </div>
         );
