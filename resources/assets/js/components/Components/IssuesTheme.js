@@ -146,7 +146,7 @@ export default class IssuesTheme extends Component {
                                 <div style={styles.mask} />
                                 <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                                 <div style={styles.infoSwiper}>
-                                    <h3 style={styles.titleSwiper}>тема номера</h3>
+                                    {article.cover ? <h3 style={styles.titleSwiper}>тема номера</h3> : null}
                                     <div style={styles.foot}>
                                         <h3 style={styles.title}>{article.title}</h3>
                                         <p style={styles.textSwiper}>{article.text}</p>
