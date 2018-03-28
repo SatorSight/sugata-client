@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom'
-import IndexMenu from './IndexMenu';
-import IndexMenuSet from './IndexMenuSet';
 
 const styles = {
     footer: {
@@ -130,8 +128,8 @@ class IndexFooter extends Component {
                     <div style={styles.shadow} />
                 </div>
                 <div style={styles.inner}>
-                    <Link to="/">
-                        <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                    <Link to="/" style={styles.h1}>
+                        киоск плюс<span style={styles.arrow} />
                     </Link>
                     <p style={styles.span}>@Киоск плюс</p>
                 </div>

@@ -37,19 +37,15 @@ const styles = {
     imgSwiper: {
         width: 'auto',
         borderRadius: '0.5em',
-        pointerEvents: 'none',
         height: '20em',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '50% 50%',
         backgroundSize: 'cover',
+        display: 'block',
     },
     magSwiper: {
-        width: '7em',
-        boxShadow: '0 0 1em rgba(0,0,0,0.2)',
-        borderRadius: '0.2em',
-        position: 'absolute',
-        left: '1em',
-        bottom: '3em',
+        width: '100%',
+        float: 'left',
     },
     infoSwiper: {
         position: 'relative',
@@ -63,6 +59,8 @@ const styles = {
         marginBottom: '1em',
         overflow: 'hidden',
         position: 'relative',
+        display: 'block',
+        color: '#000',
     },
     ulSwiper: {
         overflowX: 'hidden'
@@ -72,9 +70,6 @@ const styles = {
         width: '100%',
         margin: '1em 0',
         opacity: 0,
-    },
-    captionSwiperactive: {
-        opacity: 1,
     },
     captionColorSwiper: {
         display: 'block',
@@ -92,6 +87,19 @@ const styles = {
         float: 'left',
         maxWidth: '98%',
     },
+    captionLinkSwiper: {
+        color: '#FFF',
+    },
+    link: {
+        display: 'block',
+        width: '7em',
+        boxShadow: '0 0 1em rgba(0,0,0,0.2)',
+        borderRadius: '0.2em',
+        position: 'absolute',
+        left: '1em',
+        bottom: '3em',
+        overflow: 'hidden',
+    }
 };
 
 class MainTopics extends React.Component {
@@ -115,21 +123,21 @@ class MainTopics extends React.Component {
             articles.map(article => content.push(
                 <div style={styles.slideSwiper} key={article.id}>
                     {article.image !== ''
-                        ?   <Link to={`/article/${article.id}`}>
-                                <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
-                            </Link>
+                        ?   <Link to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                         : null
                     }
                     <div style={styles.infoSwiper}>
-                        <Link to={`/issue/${article.issue_id}`}>
+                        <Link to={`/issue/${article.issue_id}`} style={styles.link}>
                             <img style={styles.magSwiper} src={article.issue_cover} alt={article.title} />
                         </Link>
-                        <Link to={`/article/${article.id}`}>
-                            <p style={styles.textSwiper}>{article.title}</p>
+                        <Link to={`/article/${article.id}`} style={styles.textSwiper}>
+                            {article.title}
                         </Link>
                         <div>
                             <p style={styles.captionColorSwiper}>
-                                <span>{article.journal_name}, </span>
+                                <Link to={`/article/${article.id}`} style={styles.captionLinkSwiper}>
+                                    {article.journal_name}
+                                    </Link>,&nbsp;
                                 <span>{article.date}</span>
                             </p>
                         </div>

@@ -14,6 +14,7 @@ const styles = {
         marginLeft: '5%',
     },
     slideSwiper: {
+        display: 'block',
         paddingRight: '0.5em',
         float: 'left',
         margin: '0 5% 0 0',
@@ -35,7 +36,6 @@ const styles = {
         right: 0,
         height: '6em',
         width: '6em',
-        textDecoration: 'none',
         textAlign: 'center',
         borderTop: '0.1em solid rgba(255,255,255,0.5)',
         borderLeft: '0.1em solid rgba(255,255,255,0.5)',
@@ -85,17 +85,18 @@ class SwiperTop extends React.Component {
                             show = Object.assign({}, styles.slideSwiper, styles.active);
                         else
                             show = styles.slideSwiper;
-                        return <div style={show} key={issue.id}>
-                                <Link to={`/issue/${issue.id}`}>
+                        return  <Link to={`/issue/${issue.id}`} key={issue.id} style={show}>
                                     <img style={styles.magSwiper} src={issue.image_path} alt={issue.title}/>
                                 </Link>
-                            </div>
                         }
                     )}
                 </div>
                 <div>
-                    {/*<Link to={`/bundle/${issue.id}`}>*/}
-                        <a href='#next' style={styles.link}> <span style={Object.assign({}, styles.top, styles.arrow)} /> <span style={Object.assign({}, styles.fot, styles.arrow)} /> </a>
+                    {/*<Link to={`/bundle/${issue.id}`} style={styles.link}>*/}
+                    <a href="#" style={styles.link}>
+                        <span style={Object.assign({}, styles.top, styles.arrow)} />
+                        <span style={Object.assign({}, styles.fot, styles.arrow)} />
+                    </a>
                     {/*</Link>*/}
                 </div>
             </div>

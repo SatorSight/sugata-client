@@ -5,54 +5,28 @@ import { Link } from 'react-router-dom'
 
 const styles = {
     item: {
-        margin: '0 1em',
-        paddingBottom: '1em',
+        margin: '0 1em 1em',
+        display: 'block',
     },
-    main: {
+    otherIssues: {
         position: 'relative',
-        backgroundColor: '#FFF',
         overflow: 'hidden',
-        height: '15.65em',
-        paddingBottom: '1.4em',
     },
     title: {
         fontSize: '1.2em',
         textTransform: 'uppercase',
+        fontFamily: 'HelveticaNeueCyr, sans-serif',
         fontWeight: 400,
         padding: '2.41em 0 1.3em',
-        letterSpacing: '0.15em',
+        letterSpacing: 3.2,
         textAlign: 'center',
     },
     imgOtherIssues: {
-        boxShadow: '0.2em 0.2em 0.2em rgba(0,0,0,0.3)',
+        borderRadius: '0.2em',
+        boxShadow: '0.2em 0.2em 0.4em -0.2em rgba(0,0,0,0.2)',
         overflow: 'hidden',
-        height: '9em',
+        height: '12em',
         width: 'auto',
-    },
-    fot: {
-        padding: '0.5em 2.5em 2em',
-        textAlign: 'center',
-        backgroundColor: '#F5F5F5',
-        position: 'relative',
-        zIndex: 20,
-        clear: 'both',
-    },
-    button: {
-        fontSize: '1.2em',
-        paddingTop: '0.2em',
-        letterSpacing: 1,
-        textTransform: 'uppercase',
-        textDecoration: 'none',
-        color: '#000',
-        fontFamily: 'HelveticaNeueCyr, sans-serif',
-        display: 'block',
-        fontWeight: 400,
-        maxWidth: 400,
-        margin: '0 auto',
-        borderRadius: '2em',
-        lineHeight: '3em',
-        border: '1px solid #E0E0E0',
-        backgroundColor: '#F5F5F5',
     },
 };
 
@@ -74,16 +48,14 @@ export default class NewIssues extends Component {
         let new_issues = this.props.data.new_issues;
 
         return (
-            <div style={styles.main}>
+            <div style={styles.otherIssues}>
                 <p style={styles.title}>новые выпуски</p>
                 {SUtils.any(new_issues) ?
                     <OwlCarousel autoWidth dots={false}>
                         {new_issues.map((issue, currentIndex) =>
-                            <div key={String(currentIndex)} style={styles.item} >
-                                <Link to={`/issue/${issue.id}`}>
-                                    <img src={issue.image_path} alt={issue.number} style={styles.imgOtherIssues} />
-                                </Link>
-                            </div>
+                            <Link key={issue.id} to={`/issue/${issue.id}`} style={styles.item}>
+                                <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />
+                            </Link>
                         )}
                     </OwlCarousel> : null }
             </div>

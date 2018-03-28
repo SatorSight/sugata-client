@@ -31,20 +31,12 @@ const styles = {
     },
     imgSwiper: {
         width: 'auto',
+        display: 'block',
         borderRadius: '0.5em',
-        pointerEvents: 'none',
         height: '20em',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: '50% 50%',
         backgroundSize: 'cover',
-    },
-    magSwiper: {
-        width: '7em',
-        boxShadow: '0 0 1em rgba(0,0,0,0.4)',
-        borderRadius: '0.2em',
-        position: 'absolute',
-        left: '1em',
-        bottom: '3.6em',
     },
     infoSwiper: {
         position: 'relative',
@@ -54,6 +46,8 @@ const styles = {
     textSwiper: {
         fontSize: '1.2em',
         lineHeight: 1.4,
+        color: '#000',
+        display: 'block',
         maxHeight: '4em',
         marginBottom: '1em',
         overflow: 'hidden',
@@ -67,9 +61,6 @@ const styles = {
         width: '100%',
         margin: '1em 0',
         opacity: 0,
-    },
-    captionSwiperactive: {
-        opacity: 1,
     },
     captionColorSwiper: {
         display: 'block',
@@ -87,6 +78,23 @@ const styles = {
         float: 'left',
         maxWidth: '98%',
     },
+    captionLinkSwiper: {
+        color: '#FFF',
+    },
+    link: {
+        display: 'block',
+        width: '7em',
+        boxShadow: '0 0 1em rgba(0,0,0,0.4)',
+        borderRadius: '0.2em',
+        position: 'absolute',
+        left: '1em',
+        bottom: '3.6em',
+        overflow: 'hidden',
+    },
+    magSwiper: {
+        width: '100%',
+        float: 'left',
+    },
 };
 
 class SwiperMain extends React.Component {
@@ -101,21 +109,19 @@ class SwiperMain extends React.Component {
             if(article) {
                 slides.push(
                     <div style={styles.slideSwiper} key={article.id}>
-                        <Link to={`/article/${article.id}`}>
-                            <div style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})}/>
-                        </Link>
+                        <Link to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})} />
                         <div style={styles.infoSwiper}>
-                            <Link to={`/issue/${this.props.issues[i].id}`}>
+                            <Link to={`/issue/${this.props.issues[i].id}`} style={styles.link}>
                                 <img style={styles.magSwiper} src={this.props.issues[i].image_path} alt={article.title}/>
                             </Link>
-                            <Link to={`/article/${article.id}`}>
-                                <p style={styles.textSwiper}>{article.title}</p>
+                            <Link to={`/article/${article.id}`} style={styles.textSwiper}>
+                                {article.title}
                             </Link>
                             <div>
                                 <p style={styles.captionColorSwiper}>
-                                    <Link to={`/article/${article.id}`}>
-                                        <span>{article.journal_name}, </span>
-                                    </Link>
+                                    <Link to={`/article/${article.id}`} style={styles.captionLinkSwiper}>
+                                        {article.journal_name}
+                                    </Link>,&nbsp;
                                     <span>{article.date}</span>
                                 </p>
                             </div>

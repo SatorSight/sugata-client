@@ -7,14 +7,12 @@ const styles = {
     },
     item: {
         padding: '0 3.2em',
-    },
-    name: {
+        display: 'block',
         color: '#999',
         fontSize: '1.2em',
         lineHeight: 4,
         fontWeight: 300,
         letterSpacing: '0.3em',
-        textDecoration: 'none',
         textTransform: 'uppercase',
     },
 };
@@ -30,11 +28,9 @@ class IndexMenuShowcase extends Component {
             <div>
                 <div style={styles.main}>
                     {this.props.data.bundles.map(bundle =>
-                        <div style={styles.item} key={bundle.id}>
-                            <Link key={bundle.id} style={styles.name} to={`/bundle/${bundle.id}`}>
-                                {bundle.name}
-                            </Link>
-                        </div>
+                        <Link key={bundle.item} style={styles.item} to={`/bundle/${bundle.id}`}>
+                            {bundle.name}
+                        </Link>
                     )}
                 </div>
             </div>

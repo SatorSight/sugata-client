@@ -18,37 +18,41 @@ const styles = {
 };
 class IssueArticlesPage extends Component {
 
+    self_id = null;
+
     constructor(props){
         super(props);
 
+        this.self_id = this.props.match.params.id;
+
         this.state = {
             data: {},
-            _this: this,
             loading: true
         }
     }
 
-    load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
-
-    componentWillMount(){
-        this.setState({loading: true}, () => {
-            const promises = ResourceRoutes.ISSUE_RESOURCES.map(resource => this.load(resource));
-            Promise.all(promises).then(() => {
-                this.setState({loading: false});
-            });
-        });
+    componentDidMount(){
+        SUtils.load(ResourceRoutes.ISSUE_RESOURCES, this);
+    }
+    componentWillReceiveProps(nextProps){
+        SUtils.load(ResourceRoutes.ISSUE_RESOURCES, this);
     }
 
-    render() {
+    loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'issue', 'more_new_articles', this, this.self_id);
+    // loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
 
-        console.log(this.props);
+    render() {
+        const controls = {
+            'more_new_articles': this.loadMoreNewArticles,
+            // 'more_popular_articles': this.loadMorePopularArticles
+        };
+
         return (
-            <div style={styles.item}>
+            <div>
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <IssueArticlesHeader data={this.state.data} id={this.props.match.params.id}/>
-
+                <IssueArticlesHeader self_id={this.self_id} data={this.state.data}/>
                 <NextIssueArticle data={this.state.data}/>
             </div>
         );
@@ -56,3 +60,39 @@ class IssueArticlesPage extends Component {
 }
 
 export default IssueArticlesPage;
+
+// constructor(props){
+//     super(props);
+//
+//     this.state = {
+//         data: {},
+//         _this: this,
+//         loading: true
+//     }
+// }
+//
+// load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
+//
+// componentWillMount(){
+//     this.setState({loading: true}, () => {
+//         const promises = ResourceRoutes.ISSUE_RESOURCES.map(resource => this.load(resource));
+//         Promise.all(promises).then(() => {
+//             this.setState({loading: false});
+//         });
+//     });
+// }
+//
+// render() {
+//
+//     console.log(this.props);
+//     return (
+//         <div style={styles.item}>
+//             {this.state.loading
+//                 ? <Waiter/>
+//                 : null}
+//             <IssueArticlesHeader data={this.state.data} id={this.props.match.params.id}/>
+//
+//             <NextIssueArticle data={this.state.data}/>
+//         </div>
+//     );
+// }

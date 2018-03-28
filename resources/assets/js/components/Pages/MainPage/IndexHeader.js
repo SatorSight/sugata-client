@@ -139,8 +139,8 @@ class IndexHeader extends Component {
                     <div style={styles.customMenu}>
                         <CustomMenu data={this.props.data} />
                     </div>
-                    <Link to="/">
-                        <h1 style={styles.h1}>киоск плюс<span style={styles.arrow} /></h1>
+                    <Link to="/" style={styles.h1}>
+                        киоск плюс<span style={styles.arrow} />
                     </Link>
                 </div>
                 <IndexMenuSet data={this.props.data} />

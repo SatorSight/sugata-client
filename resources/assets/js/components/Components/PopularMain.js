@@ -13,6 +13,7 @@ const styles = {
     },
     item: {
         margin: '2em 0.7em 6em',
+        display: 'block',
         height: '12em',
         position: 'relative',
         overflow: 'hidden',
@@ -61,12 +62,10 @@ class PopularMain extends React.Component {
         return (
             <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer} onSwitching={this.props.changer}>
                 {this.props.journals.map((journal, index) =>
-                    <Link key={index} to={`/journal/${journal.id}`}>
-                        <div style={styles.item}>
+                    <Link key={index} to={`/journal/${journal.id}`} style={styles.item}>
                             <div style={styles.mask} />
                             <img style={styles.img} src={journal.additional_image_path} alt={journal.title} />
                             <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.logo_path + ')' })} />
-                        </div>
                     </Link>
                 )}
             </SwipeableViews>

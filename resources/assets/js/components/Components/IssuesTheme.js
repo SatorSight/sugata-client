@@ -163,7 +163,7 @@ export default class IssuesTheme extends Component {
                                 </div>
                                 <div style={styles.page}>
                                     <p style={styles.captionColorSwiper}>
-                                        <span>{article.page_number} / </span>
+                                        <span>{article.page_number}</span>&nbsp;/&nbsp;
                                         <span>{article.pages_count}</span>
                                     </p>
                                 </div>

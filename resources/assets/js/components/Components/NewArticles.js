@@ -29,11 +29,13 @@ const styles = {
     },
     inner: {
         marginLeft: '8.5em',
-        height: '6.5em',
+        height: '8.5em',
     },
     over: {
         position: 'relative',
         overflow: 'hidden',
+        height: '6.2em',
+        marginBottom: '0.8em'
     },
     caption: {
         display: 'inline',
@@ -48,13 +50,32 @@ const styles = {
     title: {
         fontSize: '1.2em',
         lineHeight: 1.4,
-        marginBottom: '0.5em',
-        maxHeight: '4em',
+        marginBottom: '0.2em',
+        maxHeight: '2.7em',
         color: '#333',
         overflow: 'hidden',
         position: 'relative',
         width: '70%',
+        fontWeight: 600,
+        display: 'block',
+    },
+    shortContent: {
+        fontSize: '1em',
+        lineHeight: 1.4,
+        color: '#333',
+        overflow: 'hidden',
+        position: 'relative',
+        width: '90%',
         fontWeight: 400,
+    },
+    shadow: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: '50%',
+        background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%)',
+        zIndex: 20,
     },
     fot: {
         padding: '0.5em 0 2em',
@@ -68,25 +89,18 @@ const styles = {
         paddingTop: '0.2em',
         letterSpacing: 1,
         textTransform: 'uppercase',
-        textDecoration: 'none',
         color: '#000',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
-        display: 'block',
         fontWeight: 400,
+        width: '100%',
         maxWidth: 400,
         margin: '0 auto',
         borderRadius: '2em',
         lineHeight: '3em',
         border: '1px solid #E0E0E0',
-    },
-    shortContent: {
-        fontSize: '1em',
-        lineHeight: 1.4,
-        color: '#333',
-        overflow: 'hidden',
-        position: 'relative',
-        width: '90%',
-        fontWeight: 400,
+        cursor: 'pointer',
+        display: 'block',
+        backgroundColor: '#FFF',
     },
 };
 
@@ -97,6 +111,18 @@ class NewArticles extends Component {
     }
 
     loadMore = () => {this.props.controls['more_new_articles'].call()};
+    // loadMore = () => {
+    //     //start preloader
+    //     this.props.controls['more_new_articles'].call()
+    //         .then(() => {
+    //             //stop preloader
+    //         });
+    //
+    // };
+    //
+    // showPreloader = () => {
+    //     return <div>preloader</div>
+    // };
 
     render() {
         const articles =  this.props.data.new_articles;
@@ -104,19 +130,19 @@ class NewArticles extends Component {
         return (
             <div>
                 <div style={styles.main}>
+                    {/*{this.showPreloader}*/}
                     {SUtils.any(articles) ? articles.map(article =>
                         <div style={styles.item} key={sKey('ar')}>
-                            <Link to={`/article/${article.id}`}>
-                                <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
-                            </Link>
+                            <Link to={`/article/${article.id}`}  style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>
-                                    <Link to={`/article/${article.id}`}>
-                                        <p style={styles.title}>{article.title}</p>
+                                    <Link to={`/article/${article.id}`} style={styles.title}>
+                                        {article.title}
                                     </Link>
                                     <p style={styles.shortContent}>
                                         {article.text}
                                     </p>
+                                    <div style={styles.shadow} />
                                 </div>
                                 <div>
                                     <p style={styles.caption}>
@@ -128,10 +154,11 @@ class NewArticles extends Component {
                         </div>
                     ) : null }
                     <div style={styles.fot}>
-                        <a onClick={this.loadMore} style={styles.button}>Загрузить еще</a>
+                        <button onClick={this.loadMore} style={styles.button}>Загрузить еще</button>
                     </div>
                 </div>
             </div>
+
         );
     }
 }

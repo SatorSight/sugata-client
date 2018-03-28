@@ -141,7 +141,7 @@ export function updateStateWithApiRequestFor(entity, page_prefix, _this, params 
 export function appendStateWithApiRequestFor(entity, page_prefix, api_route, _this, self_id = null, additional_params = []) {
     const current_data = _this.state.data[entity];
     const count = current_data.length;
-    fetch('/api/' + page_prefix + '/' + api_route + '/' + (self_id ? (self_id + '/') : '') + count + '')
+    return fetch('/api/' + page_prefix + '/' + api_route + '/' + (self_id ? (self_id + '/') : '') + count + '')
         .then(data => data.json())
         .then(json => {
             let data = { ..._this.state.data };

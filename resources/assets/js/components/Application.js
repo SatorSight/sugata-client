@@ -9,7 +9,7 @@ import AuthPage from './Pages/AuthPage'
 import BundlePage from './Pages/BundlePage'
 import IssuePage from './Pages/IssuePage'
 import JournalPage from './Pages/JournalPage'
-// import IssueArticlesPage from './Pages/IssueArticlesPage'
+import IssueArticlesPage from './Pages/IssueArticlesPage'
 import TagPage from './Pages/TagPage'
 import * as SUtils from "./Helpers/SUtils";
 
@@ -44,7 +44,7 @@ export default class Application extends Component {
                         <Route path="/bundle/:id" component={BundlePage}/>
                         <Route path="/issue/:id" component={IssuePage}/>
                         <Route path="/journal/:id" component={JournalPage}/>
-                        {/*<Route path="/issue_articles/:id" component={IssueArticlesPage}/>*/}
+                        <Route path="/issue_articles/:id" component={IssueArticlesPage}/>
                         <Route path="/tag/:id" component={TagPage}/>
                     </div>
                 </BrowserRouter>

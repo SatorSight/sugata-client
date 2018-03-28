@@ -75,7 +75,7 @@ const styles = {
         textTransform: 'uppercase',
         color: '#FFF',
         fontWeight: 200,
-        display: 'inline-block',
+        display: 'block',
         padding: '0.6em 1.4em 1.5em',
         margin: '0 auto 7em',
         position: 'relative',
@@ -88,6 +88,7 @@ const styles = {
         textTransform: 'uppercase',
         color: '#FFF',
         fontWeight: 200,
+        display: 'inline-block',
         opacity: 0.5,
     },
     arrow:{
@@ -208,8 +209,8 @@ class BundleHeader extends Component {
                         <div style={styles.customMenu}>
                             <CustomMenu data={this.props.data}/>
                         </div>
-                        <Link to="/">
-                            <h2 style={styles.h2}>киоск плюс</h2>
+                        <Link to="/" style={styles.h2}>
+                            киоск плюс
                         </Link>
                         <h1 style={styles.h1}>{bundle_name}<span style={styles.arrow} /></h1>
                     </div>

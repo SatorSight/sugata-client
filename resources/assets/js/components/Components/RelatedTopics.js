@@ -45,9 +45,6 @@ const styles = {
         pointerEvents: 'none',
         // opacity: .8,
     },
-    link: {
-        textDecoration: 'none',
-    }
 };
 
 

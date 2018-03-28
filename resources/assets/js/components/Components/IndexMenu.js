@@ -125,9 +125,9 @@ class IndexMenu extends Component {
         });
     };
 
-    shouldComponentUpdate(nextProps, nextState){
-        return nextProps === this.props;
-    }
+    // shouldComponentUpdate(nextProps, nextState){
+    //     return nextProps !== this.props;
+    // }
 
     render() {
         const { classes } = this.props;

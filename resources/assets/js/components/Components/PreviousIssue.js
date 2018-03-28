@@ -59,7 +59,6 @@ const styles = {
     url: {
         display: 'block',
         overflow: 'hidden',
-        textDecoration: 'none',
     },
     right: {
         overflow: 'hidden',

@@ -57,6 +57,7 @@ const styles = {
         position: 'relative',
         width: '70%',
         fontWeight: 600,
+        display: 'block',
     },
     shortContent: {
         fontSize: '1em',
@@ -88,16 +89,18 @@ const styles = {
         paddingTop: '0.2em',
         letterSpacing: 1,
         textTransform: 'uppercase',
-        textDecoration: 'none',
         color: '#000',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
-        display: 'block',
         fontWeight: 400,
+        width: '100%',
         maxWidth: 400,
         margin: '0 auto',
         borderRadius: '2em',
         lineHeight: '3em',
         border: '1px solid #E0E0E0',
+        cursor: 'pointer',
+        display: 'block',
+        backgroundColor: '#FFF',
     },
 };
 
@@ -118,13 +121,11 @@ class PopularArticles extends Component {
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
                         <div style={styles.item} key={sKey('pa')}>
-                            <Link to={`/article/${article.id}`}>
-                                <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
-                            </Link>
+                            <Link to={`/article/${article.id}`} style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>
-                                    <Link to={`/article/${article.id}`}>
-                                        <p style={styles.title}>{article.title}</p>
+                                    <Link to={`/article/${article.id}`} style={styles.title}>
+                                        {article.title}
                                     </Link>
                                     <p style={styles.shortContent}>
                                         {article.text}
@@ -141,7 +142,7 @@ class PopularArticles extends Component {
                         </div>
                     ) : null }
                     <div style={styles.fot}>
-                        <a onClick={this.loadMore} style={styles.button}>Загрузить еще</a>
+                        <button onClick={this.loadMore} style={styles.button}>Загрузить еще</button>
                     </div>
                 </div>
             </div>

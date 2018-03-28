@@ -117,6 +117,7 @@ const styles = {
     },
     bigMag: {
         position: 'relative',
+        display: 'inline-block',
     },
     imgMag: {
         position: 'relative',
@@ -141,6 +142,7 @@ const styles = {
         opacity: 0.6,
     },
     leftMag: {
+        display: 'block',
         position: 'absolute',
         left: 0,
         top: '50%',
@@ -148,6 +150,7 @@ const styles = {
         opacity: '.6',
     },
     rightMag: {
+        display: 'block',
         position: 'absolute',
         right: 0,
         top: '50%',
@@ -216,12 +219,10 @@ class IssueHeader extends Component {
         // console.log(prev);
 
 
-        return prev ? <div style={styles.leftMag}>
-            <Link to={`/issue/${prev.id}`}>
-                <img style={styles.butMag} src={prev.image_path} alt={prev.journal_name} />
-                <img style={styles.butMagMask} src={prev.image_path} alt={prev.journal_name} />
-            </Link>
-        </div> : null;
+        return prev ?   <Link to={`/issue/${prev.id}`} style={styles.leftMag}>
+                            <img style={styles.butMag} src={prev.image_path} alt={prev.journal_name} />
+                            <img style={styles.butMagMask} src={prev.image_path} alt={prev.journal_name} />
+                        </Link> : null;
     };
 
     next = issues => {
@@ -236,12 +237,10 @@ class IssueHeader extends Component {
         // console.log(next);
 
 
-        return next ? <div style={styles.bigMag}>
-            <Link to={`/issue/${next.id}`}>
-                <img style={styles.imgMag} src={next.image_path} alt={next.journal_name} />
-                <img style={styles.imgMagMask} src={next.image_path} alt={next.journal_name} />
-            </Link>
-        </div> : null;
+        return next ?   <Link to={`/issue/${next.id}`} style={styles.rightMag}>
+                            <img style={styles.butMag} src={next.image_path} alt={next.journal_name} />
+                            <img style={styles.butMagMask} src={next.image_path} alt={next.journal_name} />
+                        </Link> : null;
     };
 
     cur = issues => {
@@ -255,12 +254,10 @@ class IssueHeader extends Component {
         // console.log(cur);
 
 
-        return cur ? <div style={styles.rightMag}>
-            <Link to={`/issue/${cur.id}`}>
-                <img style={styles.butMag} src={cur.image_path} alt={cur.journal_name} />
-                <img style={styles.butMagMask} src={cur.image_path} alt={cur.journal_name} />
-            </Link>
-        </div> : null;
+        return cur ? <Link to={`/issue/${cur.id}`} style={styles.bigMag}>
+                        <img style={styles.imgMag} src={cur.image_path} alt={cur.journal_name} />
+                        <img style={styles.imgMagMask} src={cur.image_path} alt={cur.journal_name} />
+                    </Link> : null;
     };
 
     index = issues => {
@@ -295,12 +292,10 @@ class IssueHeader extends Component {
                         <CustomMenu data={this.props.data} />
                     </div>
                     {SUtils.any(issues) ? <div>
-                        <h1 style={styles.h1}>
-                            {bundle ?
-                                <Link to={`/bundle/${bundle.id}`}>
-                                    {bundle.name}<span style={styles.arrow}/>
-                                </Link> : null}
-                        </h1>
+                        {bundle ?
+                            <Link to={`/bundle/${bundle.id}`} style={styles.h1}>
+                                {bundle.name}<span style={styles.arrow}/>
+                            </Link> : null}
                         <p style={styles.date}>{index ? issues[index].updated_at : ''}</p>
                         {this.prev(issues)}
                         {this.cur(issues)}

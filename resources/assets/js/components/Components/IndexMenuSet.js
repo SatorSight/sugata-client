@@ -16,7 +16,6 @@ const styles = {
         overflow: 'hidden',
     },
     url: {
-        textDecoration: 'none',
         fontSize: '1.3em',
         fontWeight: 300,
         color: '#FFF',

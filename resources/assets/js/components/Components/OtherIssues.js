@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 
 const styles = {
     item: {
-        marginLeft: '1.7em',
-        paddingBottom: '1em',
+        margin: '0 0 1em 1.7em',
+        display: 'block',
     },
     otherIssues: {
         position: 'relative',
@@ -41,7 +41,6 @@ const styles = {
         paddingTop: '0.2em',
         letterSpacing: 1,
         textTransform: 'uppercase',
-        textDecoration: 'none',
         color: '#000',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
         display: 'block',
@@ -69,11 +68,9 @@ export default class OtherIssues extends Component {
                 {SUtils.any(issues) ?
                     <OwlCarousel autoWidth dots={false}>
                         {issues.map((issue, currentIndex) =>
-                            <div key={String(currentIndex)} style={styles.item} >
-                                <Link key={issue.id} to={`/issue/${issue.id}`}>
-                                    <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />
-                                </Link>
-                            </div>
+                            <Link key={issue.id} to={`/issue/${issue.id}`} style={styles.item}>
+                                <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />
+                            </Link>
                         )}
                     </OwlCarousel> : null }
                 <div style={styles.fot}>
