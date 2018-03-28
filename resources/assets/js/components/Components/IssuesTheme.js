@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import OwlCarousel from 'react-owl-carousel';
 import * as SUtils from "../Helpers/SUtils";
+import { Link } from 'react-router-dom'
 
 const styles = {
     swiper: {
@@ -126,6 +127,15 @@ const styles = {
         backgroundSize: 'cover',
         zIndex: 10,
     },
+    link: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
+        zIndex: 30,
+        display: 'block',
+    }
 };
 
 
@@ -143,22 +153,23 @@ export default class IssuesTheme extends Component {
                 <OwlCarousel autoWidth dots={false} style={styles.swiper} >
                     {articles.map((article, currentIndex) =>
                         <div key={String(currentIndex)} style={styles.item} >
-                                <div style={styles.mask} />
-                                <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
-                                <div style={styles.infoSwiper}>
-                                    <h3 style={styles.titleSwiper}>тема номера</h3>
-                                    <div style={styles.foot}>
-                                        <h3 style={styles.title}>{article.title}</h3>
-                                        <p style={styles.textSwiper}>{article.text}</p>
-                                    </div>
-                                    <div style={styles.page}>
-                                        <p style={styles.captionColorSwiper}>
-                                            <span>{article.page_number} / </span>
-                                            <span>{article.pages_count}</span>
-                                        </p>
-                                    </div>
+                            <div style={styles.mask} />
+                            <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
+                            <div style={styles.infoSwiper}>
+                                <h3 style={styles.titleSwiper}>тема номера</h3>
+                                <div style={styles.foot}>
+                                    <h3 style={styles.title}>{article.title}</h3>
+                                    <p style={styles.textSwiper}>{article.text}</p>
                                 </div>
+                                <div style={styles.page}>
+                                    <p style={styles.captionColorSwiper}>
+                                        <span>{article.page_number} / </span>
+                                        <span>{article.pages_count}</span>
+                                    </p>
+                                </div>
+                                <Link to={`/article/${article.id}`} style={styles.link} />
                             </div>
+                        </div>
                     )}
                 </OwlCarousel> : null }
             </div>
