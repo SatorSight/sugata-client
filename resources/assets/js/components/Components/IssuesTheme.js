@@ -153,23 +153,23 @@ export default class IssuesTheme extends Component {
                 <OwlCarousel autoWidth dots={false} style={styles.swiper} >
                     {articles.map((article, currentIndex) =>
                         <div key={String(currentIndex)} style={styles.item} >
-                                <div style={styles.mask} />
-                                <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
-                                <div style={styles.infoSwiper}>
-                                    {article.cover ? <h3 style={styles.titleSwiper}>тема номера</h3> : null}
-                                    <div style={styles.foot}>
-                                        <h3 style={styles.title}>{article.title}</h3>
-                                        <p style={styles.textSwiper}>{article.text}</p>
-                                    </div>
-                                    <div style={styles.page}>
-                                        <p style={styles.captionColorSwiper}>
-                                            <span>{article.page_number} / </span>
-                                            <span>{article.pages_count}</span>
-                                        </p>
-                                    </div>
-                                    <Link to={`/article/${article.id}`} style={styles.link} />
+                            <div style={styles.mask} />
+                            <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
+                            <div style={styles.infoSwiper}>
+                                {article.cover ? <h3 style={styles.titleSwiper}>тема номера</h3> : null}
+                                <div style={styles.foot}>
+                                    <h3 style={styles.title}>{article.title}</h3>
+                                    <p style={styles.textSwiper}>{article.text}</p>
                                 </div>
+                                <div style={styles.page}>
+                                    <p style={styles.captionColorSwiper}>
+                                        <span>{article.page_number} / </span>
+                                        <span>{article.pages_count}</span>
+                                    </p>
+                                </div>
+                                <Link to={`/article/${article.id}`} style={styles.link} />
                             </div>
+                        </div>
                     )}
                 </OwlCarousel> : null }
             </div>
