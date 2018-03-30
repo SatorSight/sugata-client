@@ -4,6 +4,10 @@ import * as SUtils from "../Helpers/SUtils";
 import { Link } from 'react-router-dom'
 
 const styles = {
+    root: {
+        position: 'relative',
+        zIndex: 50,
+    },
     swiper: {
         backgroundColor: '#FFF',
         color: '#FFF',
@@ -45,6 +49,7 @@ const styles = {
     },
     titleSwiper: {
         fontSize: '0.85em',
+        color: '#FFF',
         whiteSpace: 'nowrap',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
@@ -104,27 +109,20 @@ const styles = {
         opacity: 0.6,
     },
     foot: {
-        position: 'absolute',
-        left: '1.2em',
-        right: '1.2em',
-        bottom: '3.5em',
+        margin: '1.2em',
         maxHeight: '4.5em',
         overflow: 'hidden',
     },
     page: {
-        position: 'absolute',
-        left: '1.1em',
-        right: '1.2em',
-        bottom: '1.2em',
+        margin: '1.2em',
     },
     mask: {
         position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 0,
-        top: 0,
-        background: 'url("images/mask.png") no-repeat 50% 50%',
-        backgroundSize: 'cover',
+        left: '-40%',
+        top: '-3em',
+        width: '100%',
+        height: '6em',
+        background: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%, rgba(0,0,0,0) 100%)',
         zIndex: 10,
     },
     link: {
@@ -135,6 +133,14 @@ const styles = {
         top: 0,
         zIndex: 30,
         display: 'block',
+    },
+    shadow: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 30,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%)',
     }
 };
 
@@ -148,7 +154,7 @@ export default class IssuesTheme extends Component {
         let articles = this.props.data.main_topics;
 
         return (
-            <div>
+            <div style={styles.root}>
                 {SUtils.any(articles) ?
                 <OwlCarousel autoWidth dots={false} style={styles.swiper} >
                     {articles.map((article, currentIndex) =>
@@ -157,15 +163,17 @@ export default class IssuesTheme extends Component {
                             <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                             <div style={styles.infoSwiper}>
                                 {article.cover ? <h3 style={styles.titleSwiper}>тема номера</h3> : null}
-                                <div style={styles.foot}>
-                                    <h3 style={styles.title}>{article.title}</h3>
-                                    <p style={styles.textSwiper}>{article.text}</p>
-                                </div>
-                                <div style={styles.page}>
-                                    <p style={styles.captionColorSwiper}>
-                                        <span>{article.page_number}</span>&nbsp;/&nbsp;
-                                        <span>{article.pages_count}</span>
-                                    </p>
+                                <div style={styles.shadow}>
+                                    <div style={styles.foot}>
+                                        <h3 style={styles.title}>{article.title}</h3>
+                                        <p style={styles.textSwiper}>{article.text}</p>
+                                    </div>
+                                    <div style={styles.page}>
+                                        <p style={styles.captionColorSwiper}>
+                                            <span>{article.page_number}</span>&nbsp;/&nbsp;
+                                            <span>{article.pages_count}</span>
+                                        </p>
+                                    </div>
                                 </div>
                                 <Link to={`/article/${article.id}`} style={styles.link} />
                             </div>
