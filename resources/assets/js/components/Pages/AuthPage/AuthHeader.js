@@ -143,7 +143,7 @@ const styles = {
     inputMask: {
         width: '90%',
         position: 'relative',
-        padding: '0.08em 5% 2.22em',
+        padding: '0 5% 2.22em',
         border: 0,
         backgroundColor: '#FFF',
         wordSpacing: '0,2em',
@@ -151,6 +151,7 @@ const styles = {
         fontSize: '1.55em',
         color: '#000',
         textAlign: 'center',
+        lineHeight: '1.8',
     },
     spanInput: {
         zIndex: 20,
