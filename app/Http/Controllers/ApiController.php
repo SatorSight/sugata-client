@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Bundle;
+use App\Http\Traits\ApiTraits\ArticleRoutes;
 use App\Http\Traits\ApiTraits\AuthRoutes;
 use App\Http\Traits\ApiTraits\BundleRoutes;
 use App\Http\Traits\ApiTraits\IndexRoutes;
@@ -23,4 +24,5 @@ class ApiController extends Controller
     use JournalRoutes;
     use IssueRoutes;
     use BundleRoutes;
+    use ArticleRoutes;
 }

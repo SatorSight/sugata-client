@@ -233,4 +233,13 @@ class Issue extends Model
             ->slice($from)
             ->take($limit);
     }
+
+    public static function injectWithPagesCount(Collection &$issues){
+        return $issues->map(function($issue){
+            $pages_count = Article::where('issue_id', $issue->id)->count();
+            $issue->pages_count = $pages_count;
+            return $issue;
+        });
+
+    }
 }

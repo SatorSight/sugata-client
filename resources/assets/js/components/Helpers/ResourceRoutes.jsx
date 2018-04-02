@@ -81,4 +81,12 @@ export const ISSUE_RESOURCES = Object.freeze({
     ],
 });
 
-
+export const ARTICLE_RESOURCES = Object.freeze({
+    page_prefix: 'article',
+    with_self_id: [
+        'journal',
+        'issue',
+        'article',
+        'next_article',
+    ],
+});
