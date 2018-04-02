@@ -3,6 +3,7 @@ import AuthHeader from './AuthPage/AuthHeader';
 import IndexFooter from '../Components/IndexFooter';
 import * as SUtils from "../Helpers/SUtils";
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
+import Waiter from '../Helpers/Waiter2';
 
 export default class Application extends Component {
 
@@ -11,32 +12,32 @@ export default class Application extends Component {
 
         this.state = {
             data: {},
-            _this: this,
-            loading: true
+            loading: true,
         }
     }
 
-    load = resource => SUtils.updateStateWithApiRequestFor(resource, this.state._this);
 
-    componentWillMount(){
-        this.setState({loading: true}, () => {
-            const promises = ResourceRoutes.BUNDLE_RESOURCES.map(resource => this.load(resource));
-            Promise.all(promises).then(() => {
-                this.setState({loading: false});
-            });
-        });
+    componentDidMount(){
+        SUtils.load(ResourceRoutes.MAIN_RESOURCES, this);
+    }
+    componentWillReceiveProps(){
+        SUtils.load(ResourceRoutes.MAIN_RESOURCES, this);
     }
 
-    loadMoreNewBundles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'more_new_articles', this.state._this);
-    loadMorePopularBundles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'more_popular_articles', this.state._this);
+    loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'index', 'more_new_articles', this);
+    loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'index', 'more_popular_articles', this);
 
     render() {
         const controls = {
-            'more_new_articles': this.loadMoreNewBundles,
-            'more_popular_articles': this.loadMorePopularBundles
+            'more_new_articles': this.loadMoreNewArticles,
+            'more_popular_articles': this.loadMorePopularArticles
         };
+
         return (
             <div>
+                {this.state.loading
+                    ? <Waiter/>
+                    : null}
                 <AuthHeader data={this.state.data}/>
                 <IndexFooter />
             </div>

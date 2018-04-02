@@ -32,7 +32,6 @@ const styles = {
     },
     top: {
         textAlign: 'center',
-        overflow: 'hidden',
         position: 'relative',
     },
     innerMain: {
@@ -54,9 +53,16 @@ const styles = {
     closet: {
         position: 'absolute',
         left: 0,
-        top: 0,
-        bottom: 0,
-        width: '4.2em',
+        top: '50%',
+        height: '1.8em',
+        width: '1.8em',
+        padding: '1em',
+        transform: 'translate(0px, -50%)',
+        cursor: 'pointer',
+        background: '#333',
+        boxShadow: '0 0 2em 2em #333, inset 0 0 1em 1em #333',
+        border: '0.1em solid #333',
+        borderRadius: '50%',
     },
     closetLineOne: {
         width: '2em',
@@ -81,16 +87,6 @@ const styles = {
         borderRadius: '0.1em',
         transform: 'rotate(-45deg)',
         zIndex: 20,
-    },
-    colorTwo: {
-        position: 'absolute',
-        top: '-5em',
-        left: '-5.5em',
-        width: '15em',
-        height: '15em',
-        background: 'radial-gradient(ellipse at center, rgba(172,168,165,1) 0%, rgba(115,112,110,1) 20%, rgba(0,0,0,0.2) 60%, rgba(0,0,0,0) 70%)',
-        opacity: 0.4,
-        zIndex: '-1',
     },
     drawerPaper: {
         position: 'relative',
@@ -265,7 +261,7 @@ class IndexMenu extends Component {
                         <span className={classes.line} />
                         <span className={classes.line} />
                     </Button>
-                    <Drawer classes={{ paper: classes.drawerPaper, }} open={this.state.left} onClose={this.toggleDrawer('left', false)}>
+                    <Drawer anchor="left" classes={{ paper: classes.drawerPaper, }} open={this.state.left} onClose={this.toggleDrawer('left', false)}>
                         <div className={classes.innerMain} >
                             <div className={classes.colorTwo} />
                             <div className={classes.top}>
@@ -317,6 +313,10 @@ class IndexMenu extends Component {
                                             {SUtils.any(issues) ? issues.map((issue, currentIndex) =>
                                                 <div style={styles.item} key={String(currentIndex)}>
                                                     <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + issue.image_path + ')' })} />
+                                                    <div style={styles.inner}>
+                                                        <div style={styles.over}>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             ) : null}
                                         </div>
