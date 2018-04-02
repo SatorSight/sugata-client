@@ -52,6 +52,12 @@ trait ArticleRoutes{
     public function articleGetArticle($article_id){
         $article = Article::find($article_id);
 
+        $article_collection = new Collection();
+        $article_collection->push($article);
+        Article::injectOtherArticlesIdList($article_collection);
+
+        $article = $article_collection->first();
+
         return response()->json($article);
     }
 
@@ -67,7 +73,7 @@ trait ArticleRoutes{
 
         Article::injectWithImages($next_article);
 
-        return response()->json($next_article);
+        return response()->json($next_article->first());
     }
 
 }

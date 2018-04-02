@@ -178,6 +178,20 @@ class Article extends Model
         });
     }
 
+    public static function injectOtherArticlesIdList(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            if(!empty($article)) {
+                /** @var Collection $ids */
+                $ids = Article::select('id')->where('issue_id', $article->issue_id)->get();
+                $article->other_articles_ids = $ids->reduce(function($carry, $item){
+                    $carry[] = $item->id;
+                    return $carry;
+                }, []);
+            }
+            return $article;
+        });
+    }
+
     public static function clearFromHtml(Collection &$articles) : void {
         $articles = $articles->map(function($article){
             unset($article->html);
