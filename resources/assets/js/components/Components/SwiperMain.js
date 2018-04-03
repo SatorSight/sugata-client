@@ -103,16 +103,19 @@ class SwiperMain extends React.Component {
         super(props);
     }
 
+    getArticleIssue = article => this.props.issues.find(issue => issue.id === article.issue_id);
+
     renderSlide = () => {
         let slides = [];
         {this.props.articles.map((article, i) => {
             if(article) {
+                const issue = this.getArticleIssue(article);
                 slides.push(
                     <div style={styles.slideSwiper} key={article.id}>
                         <Link to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})} />
                         <div style={styles.infoSwiper}>
-                            <Link to={`/issue/${this.props.issues[i].id}`} style={styles.link}>
-                                <img style={styles.magSwiper} src={this.props.issues[i].image_path} alt={article.title}/>
+                            <Link to={`/issue/${issue.id}`} style={styles.link}>
+                                <img style={styles.magSwiper} src={issue.image_path} alt={article.title}/>
                             </Link>
                             <Link to={`/article/${article.id}`} style={styles.textSwiper}>
                                 {article.title}
