@@ -53,16 +53,36 @@ const styles = {
     },
 };
 
+let links_clickable = false;
+
 class PopularMain extends React.Component {
     constructor(props) {
         super(props);
     }
 
+    linkClickHandler = (e) => {
+        if(!links_clickable)
+            e.preventDefault();
+    };
+
+    proxyChanger = (index, type) => {
+        this.disableClicking();
+        this.props.changer(index, type);
+    };
+
+    restoreClicking = () => links_clickable = true;
+    disableClicking = () => links_clickable = false;
+
     render() {
         return (
-            <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer} onSwitching={this.props.changer}>
+            <SwipeableViews onTransitionEnd={this.restoreClicking}
+                            style={styles.swiper}
+                            enableMouseEvents
+                            index={this.props.active}
+                            // onChangeIndex={this.props.changer}
+                            onSwitching={this.proxyChanger}>
                 {this.props.journals.map((journal, index) =>
-                    <Link key={index} to={`/journal/${journal.id}`} style={styles.item}>
+                    <Link onClick={this.linkClickHandler} key={index} to={`/journal/${journal.id}`} style={styles.item}>
                             <div style={styles.mask} />
                             <img style={styles.img} src={journal.additional_image_path} alt={journal.title} />
                             <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.logo_path + ')' })} />
