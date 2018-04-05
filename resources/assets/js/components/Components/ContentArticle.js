@@ -32,7 +32,6 @@ class ContentArticle extends Component {
         const document = iframe.contentDocument;
         let iframeHeight = document.documentElement.scrollHeight;
         let iframeWidth = document.documentElement.scrollWidth;
-        iframe.style.height=iframeHeight+'px';
         const article_html = this.props.data.article ? this.props.data.article.html : '';
         const article_desktop_html = this.props.data.article ? this.props.data.article.desktop_html : '';
         let styles = '<style></style>';
@@ -41,11 +40,13 @@ class ContentArticle extends Component {
             styles = '<style>body {margin: 20px;} body p {margin: 0 0 20px; padding: 0; line-height: 1.5;} body div.imagec {margin: 15px auto 20px;} img {width: 100%; max-width: 640px; margin: 0 auto;}</style>';
             html = (article_html!==null) ? article_html : article_desktop_html;
             iframe.style.width='100%';
+            iframe.style.height=iframeHeight+'px';
             document.body.innerHTML = styles + html;
         }
         else {
             iframeWidth = (iframeWidth > 900) ? iframeWidth : 900;
             iframe.style.width=iframeWidth+'px';
+            iframe.style.height=iframeHeight+'px';
             html = (article_desktop_html!==null) ? article_desktop_html : article_html;
             document.body.innerHTML = styles + html;
         }
