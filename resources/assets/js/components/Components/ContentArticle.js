@@ -53,7 +53,7 @@ class ContentArticle extends Component {
     render() {
         return (
             <div style={styles.root}>
-                <iframe ref="iframe" style={styles.iframe} />
+                <iframe ref="iframe" style={styles.iframe} scrolling='no' />
             </div>
         )
 
