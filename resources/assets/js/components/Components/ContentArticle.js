@@ -35,9 +35,10 @@ class ContentArticle extends Component {
         iframe.style.height=iframeHeight+'px';
         const article_html = this.props.data.article ? this.props.data.article.html : '';
         const article_desktop_html = this.props.data.article ? this.props.data.article.desktop_html : '';
-        const styles = '<style></style>';
+        let styles = '<style></style>';
         let html;
         if (SUtils.isMobile(true)) {
+            styles = '<style>body {margin: 10px 20px;} body p {margin: 0 0 20px; padding: 0; line-height: 1.5;} body div.imagec {margin: 15px auto 20px;}</style>';
             html = (article_html!==null) ? article_html : article_desktop_html;
             iframe.style.width='100%';
             document.body.innerHTML = styles + html;
