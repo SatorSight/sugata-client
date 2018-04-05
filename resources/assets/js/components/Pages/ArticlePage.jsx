@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import * as SUtils from "../Helpers/SUtils";
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
+import ArticlePageHeader from './ArticlePage/ArticlePageHeader';
+import NextArticle from "../Components/NextArticle";
+import ContentArticle from "../Components/ContentArticle";
 
+const styles = {
+    root: {
+        width: '100%',
+        overflow: 'hidden',
+    },
+}
 export default class ArticlePage extends Component {
 
     self_id = null;
@@ -25,6 +34,10 @@ export default class ArticlePage extends Component {
     }
 
     render() {
-        return <div>{JSON.stringify(this.state.data)}</div>;
+        return <div style={styles.root}>
+                    <ArticlePageHeader self_id={this.self_id} data={this.state.data}/>
+                    <ContentArticle self_id={this.self_id} data={this.state.data}/>
+                    <NextArticle self_id={this.self_id} data={this.state.data}/>
+                </div>;
     }
 }

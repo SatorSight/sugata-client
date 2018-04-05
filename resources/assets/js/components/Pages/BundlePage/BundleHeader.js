@@ -101,7 +101,7 @@ const styles = {
         backgroundSize: 'contain',
         opacity: 0.6,
     },
-    iconMenu:{
+    indexMenu:{
         position: 'absolute',
         left: 0,
         top: '2em',

@@ -10,7 +10,6 @@ import BundlePage from './Pages/BundlePage'
 import IssuePage from './Pages/IssuePage'
 import ArticlePage from './Pages/ArticlePage'
 import JournalPage from './Pages/JournalPage'
-import IssueArticlesPage from './Pages/IssueArticlesPage'
 import TagPage from './Pages/TagPage'
 import * as SUtils from "./Helpers/SUtils";
 
@@ -41,7 +40,6 @@ export default class Application extends Component {
                         <Route path="/issue/:id" component={IssuePage}/>
                         <Route path="/article/:id" component={ArticlePage}/>
                         <Route path="/journal/:id" component={JournalPage}/>
-                        <Route path="/issue_articles/:id" component={IssueArticlesPage}/>
                         <Route path="/tag/:id" component={TagPage}/>
                     </div>
                 </BrowserRouter>
