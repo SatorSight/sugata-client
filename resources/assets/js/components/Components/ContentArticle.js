@@ -38,7 +38,7 @@ class ContentArticle extends Component {
         let styles = '<style></style>';
         let html;
         if (SUtils.isMobile(true)) {
-            styles = '<style>body {margin: 10px 20px;} body p {margin: 0 0 20px; padding: 0; line-height: 1.5;} body div.imagec {margin: 15px auto 20px;} img {width: 100%; max-width: 640px; margin: 0 auto;}</style>';
+            styles = '<style>body {margin: 20px;} body p {margin: 0 0 20px; padding: 0; line-height: 1.5;} body div.imagec {margin: 15px auto 20px;} img {width: 100%; max-width: 640px; margin: 0 auto;}</style>';
             html = (article_html!==null) ? article_html : article_desktop_html;
             iframe.style.width='100%';
             document.body.innerHTML = styles + html;
