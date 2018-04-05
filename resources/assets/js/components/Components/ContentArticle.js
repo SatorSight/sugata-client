@@ -40,12 +40,14 @@ class ContentArticle extends Component {
             styles = '<style>body {margin: 20px;} body p {margin: 0 0 20px; padding: 0; line-height: 1.5;} body div.imagec {margin: 15px auto 20px;} img {width: 100%; max-width: 640px; margin: 0 auto;}</style>';
             html = (article_html!==null) ? article_html : article_desktop_html;
             iframe.style.width='100%';
+            iframeHeight = document.documentElement.scrollHeight;
             iframe.style.height=iframeHeight+'px';
             document.body.innerHTML = styles + html;
         }
         else {
             iframeWidth = (iframeWidth > 900) ? iframeWidth : 900;
             iframe.style.width=iframeWidth+'px';
+            iframeHeight = document.documentElement.scrollHeight;
             iframe.style.height=iframeHeight+'px';
             html = (article_desktop_html!==null) ? article_desktop_html : article_html;
             document.body.innerHTML = styles + html;
