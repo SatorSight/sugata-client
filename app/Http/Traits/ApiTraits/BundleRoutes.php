@@ -16,7 +16,8 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetAllBundles(){
-        return response()->json(Bundle::all());
+        $bundles = Bundle::orderBy('order', 'ASC')->get();
+        return response()->json($bundles);
     }
 
     /**

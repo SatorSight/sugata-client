@@ -16,7 +16,8 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetBundles(){
-        return response()->json(Bundle::all());
+        $bundles = Bundle::orderBy('order', 'ASC')->get();
+        return response()->json($bundles);
     }
 
     /**
