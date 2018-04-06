@@ -3,7 +3,8 @@ import * as SUtils from "../Helpers/SUtils";
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import ArticlePageHeader from './ArticlePage/ArticlePageHeader';
 import NextArticle from "../Components/NextArticle";
-import ContentArticle from "../Components/ContentArticle";
+import ContentArticleDesktop from "../Components/ContentArticleDesktop";
+import ContentArticleMobile from "../Components/ContentArticleMobile";
 
 const styles = {
     root: {
@@ -34,9 +35,28 @@ export default class ArticlePage extends Component {
     }
 
     render() {
+        let content = [];
+        const article_desktop_html = this.state.data.article ? this.state.data.article.desktop_html : '';
+        if(!article_desktop_html || SUtils.isMobile(true)) {
+            content.push(
+                <div key='mobile'>
+                    <p>mobile</p>
+                    <ContentArticleMobile self_id={this.self_id} data={this.state.data}/>
+                </div>
+            );
+        }
+        else {
+            content.push(
+                <div key='desktop'>
+                    <p>desktop</p>
+                    <ContentArticleDesktop self_id={this.self_id} data={this.state.data}/>
+                </div>
+            );
+        }
+
         return <div style={styles.root}>
                     <ArticlePageHeader self_id={this.self_id} data={this.state.data}/>
-                    <ContentArticle self_id={this.self_id} data={this.state.data}/>
+                    {content}
                     <NextArticle self_id={this.self_id} data={this.state.data}/>
                 </div>;
     }

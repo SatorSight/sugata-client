@@ -106,14 +106,17 @@ const styles = {
     },
     indexMenu:{
         position: 'absolute',
-        left: '0.6em',
-        top: '0.8em',
+        left: '1em',
+        top: '50%',
+        transform: 'translate(0, -50%)',
         zIndex: 50,
+        opacity: .6,
     },
     customMenu:{
         position: 'absolute',
-        right: '0.6em',
-        top: '0.8em',
+        right: '1em',
+        top: '50%',
+        transform: 'translate(0, -50%)',
         zIndex: 50,
     },
     h3: {

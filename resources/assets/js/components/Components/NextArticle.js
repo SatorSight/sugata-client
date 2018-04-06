@@ -75,7 +75,7 @@ const styles = {
         color: '#fff',
         lineHeight: 1.2,
         opacity: 0.8,
-        marginBottom: '0.8em',
+        margin: '0 0 0.8em',
     },
     text: {
         fontSize: '1.2em',
@@ -86,7 +86,8 @@ const styles = {
         color: '#fff',
         maxHeight: '4em',
         overflow: 'hidden',
-        marginBottom: '1em',
+        margin: '0 0 1em',
+        padding: 0,
     },
     captionColorSwiper: {
         display: 'inline',
@@ -94,6 +95,7 @@ const styles = {
         color: '#FFF',
         borderRadius: '1em',
         padding: '0.4em 0.6em 0.2em 0.8em',
+        margin: 0,
         fontSize: '0.9em',
         fontWeight: 200,
         letterSpacing: '0.2em',

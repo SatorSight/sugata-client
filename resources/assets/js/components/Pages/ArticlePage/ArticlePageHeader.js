@@ -152,6 +152,7 @@ class ArticlePageHeader extends Component {
         const page_number = this.props.data.article ? this.props.data.article.page_number : '';
         const pages_count = this.props.data.issue ? this.props.data.issue.pages_count : '';
         const image_path = this.props.data.issue ? this.props.data.issue.image_path : '';
+        const other_articles_ids = this.props.data.article ? this.props.data.article.other_articles_ids : '';
 
         return (
             <div style={styles.header}>
