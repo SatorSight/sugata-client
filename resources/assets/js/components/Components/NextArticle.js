@@ -122,31 +122,29 @@ class NextArticle extends Component {
         const image_path = this.props.data.next_article ? this.props.data.next_article.image_path : '';
 
         return (
-            <div>
-                <div style={styles.item} key={title}>
-                    <div style={styles.inner}>
-                        <div style={styles.left}>
-                            <div style={styles.url}>
-                                <img style={styles.magLeft} src={image_path} alt={title} />
-                            </div>
+            <div style={styles.item} key={title}>
+                <div style={styles.inner}>
+                    <div style={styles.left}>
+                        <div style={styles.url}>
+                            <img style={styles.magLeft} src={image_path} alt={title} />
                         </div>
-                        <div style={styles.right}>
-                            <div style={styles.url}>
-                                <h3 style={styles.title}>Следующая статья</h3>
-                                <p style={styles.text}>{title}</p>
-                                <div>
-                                    <p style={styles.captionColorSwiper}>
-                                        <span>{page_number}/</span>
-                                        <span>{pages_count}</span>
-                                    </p>
-                                </div>
+                    </div>
+                    <div style={styles.right}>
+                        <div style={styles.url}>
+                            <h3 style={styles.title}>Следующая статья</h3>
+                            <p style={styles.text}>{title}</p>
+                            <div>
+                                <p style={styles.captionColorSwiper}>
+                                    <span>{page_number}/</span>
+                                    <span>{pages_count}</span>
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <div style={styles.bg}>
-                        <img style={styles.imgBg} src="/images/header.jpg" alt={title} />
-                        <div style={styles.mask} />
-                    </div>
+                </div>
+                <div style={styles.bg}>
+                    <img style={styles.imgBg} src="/images/header.jpg" alt={title} />
+                    <div style={styles.mask} />
                 </div>
             </div>
         );

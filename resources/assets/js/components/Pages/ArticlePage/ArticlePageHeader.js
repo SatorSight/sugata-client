@@ -3,7 +3,6 @@ import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
 
-
 const styles = {
     header: {
         width: '100%',

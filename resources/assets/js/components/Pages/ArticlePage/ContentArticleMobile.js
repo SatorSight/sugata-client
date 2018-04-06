@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as SUtils from "../Helpers/SUtils";
+import * as SUtils from "../../Helpers/SUtils";
 
 const styles = {
     root: {
