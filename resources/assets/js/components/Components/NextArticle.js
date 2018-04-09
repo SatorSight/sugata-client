@@ -75,7 +75,7 @@ const styles = {
         color: '#fff',
         lineHeight: 1.2,
         opacity: 0.8,
-        marginBottom: '0.8em',
+        margin: '0 0 0.8em',
     },
     text: {
         fontSize: '1.2em',
@@ -86,7 +86,8 @@ const styles = {
         color: '#fff',
         maxHeight: '4em',
         overflow: 'hidden',
-        marginBottom: '1em',
+        margin: '0 0 1em',
+        padding: 0,
     },
     captionColorSwiper: {
         display: 'inline',
@@ -94,6 +95,7 @@ const styles = {
         color: '#FFF',
         borderRadius: '1em',
         padding: '0.4em 0.6em 0.2em 0.8em',
+        margin: 0,
         fontSize: '0.9em',
         fontWeight: 200,
         letterSpacing: '0.2em',
@@ -120,31 +122,29 @@ class NextArticle extends Component {
         const image_path = this.props.data.next_article ? this.props.data.next_article.image_path : '';
 
         return (
-            <div>
-                <div style={styles.item} key={title}>
-                    <div style={styles.inner}>
-                        <div style={styles.left}>
-                            <div style={styles.url}>
-                                <img style={styles.magLeft} src={image_path} alt={title} />
-                            </div>
+            <div style={styles.item} key={title}>
+                <div style={styles.inner}>
+                    <div style={styles.left}>
+                        <div style={styles.url}>
+                            <img style={styles.magLeft} src={image_path} alt={title} />
                         </div>
-                        <div style={styles.right}>
-                            <div style={styles.url}>
-                                <h3 style={styles.title}>Следующая статья</h3>
-                                <p style={styles.text}>{title}</p>
-                                <div>
-                                    <p style={styles.captionColorSwiper}>
-                                        <span>{page_number}/</span>
-                                        <span>{pages_count}</span>
-                                    </p>
-                                </div>
+                    </div>
+                    <div style={styles.right}>
+                        <div style={styles.url}>
+                            <h3 style={styles.title}>Следующая статья</h3>
+                            <p style={styles.text}>{title}</p>
+                            <div>
+                                <p style={styles.captionColorSwiper}>
+                                    <span>{page_number}/</span>
+                                    <span>{pages_count}</span>
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <div style={styles.bg}>
-                        <img style={styles.imgBg} src="/images/header.jpg" alt={title} />
-                        <div style={styles.mask} />
-                    </div>
+                </div>
+                <div style={styles.bg}>
+                    <img style={styles.imgBg} src="/images/header.jpg" alt={title} />
+                    <div style={styles.mask} />
                 </div>
             </div>
         );
