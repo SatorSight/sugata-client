@@ -149,7 +149,7 @@ class AuthService extends GatewayService {
             $this->getSchemaDomainUrlPart(),
             $url,
             $this->bundle->id,
-            $this->operator,
+            $this->getOperator()->id,
             $this->getAuthUrlPostfix()
         ]);
         return $url;
