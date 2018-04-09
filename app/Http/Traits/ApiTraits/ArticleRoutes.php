@@ -13,6 +13,16 @@ use Illuminate\Database\Eloquent\Collection;
 trait ArticleRoutes{
 
     /**
+     * @desc current bundle info
+     * @param $bundle_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function articleGetCurrentBundle($article_id){
+        $bundle = Article::find($article_id)->issue->journal->bundle;
+        return response()->json($bundle);
+    }
+
+    /**
      * @desc journal data
      * @param $journal_id
      * @return \Illuminate\Http\JsonResponse

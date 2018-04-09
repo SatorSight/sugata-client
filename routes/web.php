@@ -11,67 +11,10 @@
 |
 */
 
+//its here because session not working in api middleware group propely
 
-
-
-/*
- *
- *
- * ->where('any', '.*')
- *
- *  public function getPopularArticles(){
-
-    }
-
-    public function getChosenArticles(){
-
-    }
-
-    public function getMoreNewArticles(){
-
-    }
-
-    public function getMorePopularArticles(){
-
-    }
-
-    public function getJournals(){
-
-    }
-
-
- * */
-
+Route::get('/api/auth/check_msisdn/{data}', 'ApiController@checkMsisdn');
+Route::get('/api/auth/user_authorized/', 'ApiController@userAuthorized');
+Route::get('/api/auth/get_sub_link/{bundle_id}/', 'ApiController@getSubLink');
 
 Route::get('/{any}', 'AppController@index')->where('any', '.*');
-
-//
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
-
-//Route::get('products', function () {
-//    return response(['Product 1', 'Product 2', 'Product 3'],200);
-//});
-//
-//Route::get('products/{product}', function ($productId) {
-//    return response()->json(['productId' => "{$productId}"], 200);
-//});
-//
-//
-//Route::post('products', function() {
-//    return  response()->json([
-//        'message' => 'Create success'
-//    ], 201);
-//});
-//
-//Route::put('products/{product}', function() {
-//    return  response()->json([
-//        'message' => 'Update success'
-//    ], 200);
-//});
-//
-//Route::delete('products/{product}',function() {
-//    return  response()->json(null, 204);
-//});

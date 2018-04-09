@@ -36,9 +36,6 @@ export const BUNDLE_RESOURCES = Object.freeze({
         'more_new_articles',
         'more_popular_articles'
     ],
-    // with_other_data: [
-    //     'last_cover_articles',
-    // ]
 });
 
 export const JOURNAL_RESOURCES = Object.freeze({
@@ -58,10 +55,6 @@ export const JOURNAL_RESOURCES = Object.freeze({
         'more_new_articles',
         'more_popular_articles'
     ],
-
-    // with_other_data: [
-    // ]
-
 });
 
 export const ISSUE_RESOURCES = Object.freeze({
@@ -84,6 +77,7 @@ export const ISSUE_RESOURCES = Object.freeze({
 export const ARTICLE_RESOURCES = Object.freeze({
     page_prefix: 'article',
     with_self_id: [
+        'bundle',
         'journal',
         'issue',
         'article',

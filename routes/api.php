@@ -32,6 +32,7 @@ Route::get('/bundle/more_new_articles/{bundle_id}/{from}/', 'ApiController@bundl
 Route::get('/bundle/more_popular_articles/{bundle_id}/{from}/', 'ApiController@bundleGetMorePopularArticles')->where(['id' => '[0-9]+']);
 Route::get('/bundle/popular_editions/{bundle_id}/', 'ApiController@bundleGetPopularEditions');
 
+Route::get('/article/bundle/{article_id}/', 'ApiController@articleGetCurrentBundle');
 Route::get('/article/journal/{article_id}/', 'ApiController@articleGetJournal');
 Route::get('/article/issue/{article_id}/', 'ApiController@articleGetIssue');
 Route::get('/article/article/{article_id}/', 'ApiController@articleGetArticle');
@@ -59,21 +60,3 @@ Route::get('/issue/main_topics/{issue_id}/', 'ApiController@issueGetMainTopics')
 Route::get('/issue/new_articles/{issue_id}/', 'ApiController@issueGetNewArticles');
 Route::get('/issue/more_new_articles/{issue_id}/{from}/', 'ApiController@issueGetMoreNewArticles')->where(['id' => '[0-9]+']);
 Route::get('/issue/other_issues/{issue_id}/', 'ApiController@issueGetOtherIssues');
-
-Route::get('/auth/check_msisdn/{data}/', 'ApiController@checkMsisdn');
-Route::get('/auth/user_authorized/', 'ApiController@userAuthorized');
-
-//
-//Route::get('/bundles/', 'ApiController@indexGetBundles');
-//Route::get('/new_issues/', 'ApiController@indexGetNewIssues');
-//Route::get('/main_topics/', 'ApiController@indexGetMainTopics');
-//Route::get('/new_articles/', 'ApiController@indexGetNewArticles');
-//Route::get('/popular_articles/', 'ApiController@indexGetPopularArticles');
-//Route::get('/journals/', 'ApiController@indexGetPopularEditions');
-//Route::get('/more_new_articles/{from}', 'ApiController@indexGetMoreNewArticles')->where(['id' => '[0-9]+']);
-//Route::get('/more_popular_articles/{from}', 'ApiController@indexGetMorePopularArticles')->where(['id' => '[0-9]+']);
-
-
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});

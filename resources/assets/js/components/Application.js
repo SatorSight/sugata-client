@@ -16,17 +16,8 @@ import * as SUtils from "./Helpers/SUtils";
 import Waiter from './Helpers/Waiter2';
 
 export default class Application extends Component {
-
     constructor(props){
         super(props);
-
-        this.state = {
-            authorized: false
-        }
-    }
-
-    componentWillMount(){
-        SUtils.loadAuthorizationToState(this);
     }
 
     render() {

@@ -12,26 +12,25 @@ export default class Application extends Component {
 
         this.state = {
             data: {},
-            loading: true,
+            loading: false,
         }
     }
-
-
-    componentDidMount(){
-        SUtils.load(ResourceRoutes.MAIN_RESOURCES, this);
-    }
-    componentWillReceiveProps(){
-        SUtils.load(ResourceRoutes.MAIN_RESOURCES, this);
-    }
-
-    loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'index', 'more_new_articles', this);
-    loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'index', 'more_popular_articles', this);
+    //
+    // componentDidMount(){
+    //     SUtils.load(ResourceRoutes.MAIN_RESOURCES, this);
+    // }
+    // componentWillReceiveProps(){
+    //     SUtils.load(ResourceRoutes.MAIN_RESOURCES, this);
+    // }
+    //
+    // loadMoreNewArticles = () => SUtils.appendStateWithApiRequestFor('new_articles', 'index', 'more_new_articles', this);
+    // loadMorePopularArticles = () => SUtils.appendStateWithApiRequestFor('popular_articles', 'index', 'more_popular_articles', this);
 
     render() {
-        const controls = {
-            'more_new_articles': this.loadMoreNewArticles,
-            'more_popular_articles': this.loadMorePopularArticles
-        };
+        // const controls = {
+        //     'more_new_articles': this.loadMoreNewArticles,
+        //     'more_popular_articles': this.loadMorePopularArticles
+        // };
 
         return (
             <div>

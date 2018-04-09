@@ -5,13 +5,16 @@ import ArticlePageHeader from './ArticlePage/ArticlePageHeader';
 import NextArticle from "../Components/NextArticle";
 import ContentArticle from "../Components/ContentArticle";
 
+import AuthorizableComponent from '../Helpers/AuthorizableComponent';
+
 const styles = {
     root: {
         width: '100%',
         overflow: 'hidden',
     },
-}
-export default class ArticlePage extends Component {
+};
+
+export default class ArticlePage extends AuthorizableComponent {
 
     self_id = null;
 
@@ -35,6 +38,7 @@ export default class ArticlePage extends Component {
 
     render() {
         return <div style={styles.root}>
+                    <button onClick={this.paymentTrigger}>try paid content</button>
                     <ArticlePageHeader self_id={this.self_id} data={this.state.data}/>
                     <ContentArticle self_id={this.self_id} data={this.state.data}/>
                     <NextArticle self_id={this.self_id} data={this.state.data}/>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import InputMask from 'react-input-mask';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
-import * as SUtils from "../../Helpers/SUtils";
+import AuthHelper from '../../Helpers/AuthHelper';
 import { Link } from 'react-router-dom'
 
 
@@ -264,7 +264,7 @@ class AuthHeader extends Component {
         this.state = {
             width: '0',
             height: '0',
-            value: ''
+            msisdn: ''
         };
     }
 
@@ -282,14 +282,11 @@ class AuthHeader extends Component {
 
     onChange = event => {
         this.setState({
-            value: event.target.value
+            msisdn: event.target.value
         });
     };
 
-    buttonClicked = () => {
-        const value = this.state.value;
-        SUtils.makeQuery(value, 'GET', 'api/check_msisdn');
-    };
+    buttonClicked = () => AuthHelper.checkMsisdn(this.state.msisdn);
 
     render() {
         return (
@@ -324,7 +321,7 @@ class AuthHeader extends Component {
                             <span style={styles.spanInput}>Ваш номер телефона</span>
                             <InputMask
                                 onChange={this.onChange}
-                                value={this.state.value}
+                                value={this.state.msisdn}
                                 style={styles.inputMask} {...this.props}
                                 type="tel"
                                 mask="+7 (999) 999-99-99"

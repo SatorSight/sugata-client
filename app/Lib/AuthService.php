@@ -53,6 +53,12 @@ class AuthService extends GatewayService {
         return $resp->operator;
     }
 
+    public function getOperator(){
+        $tech_name = $this->getOperatorTech();
+        $operator =  Operator::where('tech_name', $tech_name)->get()->first();
+        return $operator;
+    }
+
     public function createUser() : void {
         $msisdn = $this->userMsisdn();
         $operator_name = $this->subscriptionInfo->operator;
