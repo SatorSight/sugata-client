@@ -138,11 +138,6 @@ const styles = {
 class ArticlePageHeader extends Component {
     constructor(props){
         super(props);
-
-        this.state = {
-            data: {},
-            loading: true,
-        };
     }
 
 
