@@ -182,9 +182,9 @@ class Issue extends Model
 
 
 
-    public static function getNthBasicArticles(Collection $issues){
+    public static function getNthBasicArticles(Collection $issues, $n){
         $basic_articles = $issues
-            ->map   (function($issue){ /** @var Issue $issue */ return $issue->getFirstBasicArticle(); })
+            ->map   (function($issue) use ($n) { /** @var Issue $issue */ return $issue->getNthBasicArticle($n); })
             ->reject(function($article){ return empty($article); });
 
         return $basic_articles;
@@ -208,7 +208,6 @@ class Issue extends Model
     }
 
     public static function getNotFirstBasicArticles(Collection $issues){
-
         $basic_articles = $issues
             ->map   (function($issue){ /** @var Issue $issue */ return $issue->getNotFirstBasicArticle(); })
             ->reject(function($article){ return empty($article); });

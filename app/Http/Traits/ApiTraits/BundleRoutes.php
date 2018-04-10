@@ -7,6 +7,7 @@ use App\Bundle;
 use App\Http\Controllers\Helper;
 use App\Issue;
 use App\Journal;
+use App\Lib\SUtils;
 use Illuminate\Database\Eloquent\Collection;
 
 trait BundleRoutes{
@@ -78,6 +79,19 @@ trait BundleRoutes{
         /** @var Collection $articles */
         $articles = Issue::getFirstBasicArticles($last_issues)->take(5);
 
+//        SUtils::trace($articles->count());
+
+        if($articles->count() < 5){
+            $more_articles = Issue::getNotFirstBasicArticles($last_issues)->take(5 - $articles->count());
+            $articles = $articles->concat($more_articles);
+        }
+
+        if($articles->count() < 5){
+            $more_articles = Issue::getRandomBasicArticles($last_issues)->take(5 - $articles->count());
+            $articles = $articles->concat($more_articles);
+        }
+
+
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
         Article::clearFromHtml($articles);
@@ -98,6 +112,15 @@ trait BundleRoutes{
         $last_issues = Issue::getLastFromEachJournal(null, $bundle);
         /** @var Collection $articles */
         $articles = Issue::getRandomBasicArticles($last_issues)->take(5);
+
+        $safe_counter = 0;
+        while($articles->count() < 5){
+            if(++$safe_counter > 10)
+                break;
+
+            $more_articles = Issue::getRandomBasicArticles($last_issues)->take(5 - $articles->count());
+            $articles = $articles->concat($more_articles);
+        }
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -121,7 +144,17 @@ trait BundleRoutes{
         /** @var Collection $articles */
         $articles = Issue::getFirstBasicArticles($last_issues)
             ->slice($from)
-            ->take(5);;
+            ->take(5);
+
+        $safe_counter = 0;
+        while($articles->count() < 5){
+            if(++$safe_counter > 10)
+                break;
+
+            $more_articles = Issue::getRandomBasicArticles($last_issues)->take(5 - $articles->count());
+            $articles = $articles->concat($more_articles);
+        }
+
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);
@@ -145,7 +178,16 @@ trait BundleRoutes{
         /** @var Collection $articles */
         $articles = Issue::getRandomBasicArticles($last_issues)
             ->slice($from)
-            ->take(5);;
+            ->take(5);
+
+        $safe_counter = 0;
+        while($articles->count() < 5){
+            if(++$safe_counter > 10)
+                break;
+
+            $more_articles = Issue::getRandomBasicArticles($last_issues)->take(5 - $articles->count());
+            $articles = $articles->concat($more_articles);
+        }
 
         Article::injectWithText($articles);
         Article::removeWithBlankText($articles);

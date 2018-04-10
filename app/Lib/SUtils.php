@@ -252,4 +252,21 @@ class SUtils{
         $format = preg_replace("~\%bg~", $months[date('n', $date)], $format);
         return strftime($format, $date);
     }
+
+    //with dots and slashes
+    public static function full_url_encode($string){
+        $string = str_replace('.', '~', $string);
+        $string = str_replace('/', '^', $string);
+        $string = urlencode($string);
+        return $string;
+    }
+
+    public static function full_url_decode($string){
+        $string = str_replace('~', '.', $string);
+        $string = str_replace('^', '/', $string);
+
+        $string = urldecode($string);
+        return $string;
+    }
+
 }

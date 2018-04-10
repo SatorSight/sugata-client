@@ -19,6 +19,13 @@ use Illuminate\Support\Facades\Session;
 
 class ApiController extends Controller
 {
+    private $expiration;
+
+    public function __construct(){
+        $this->expiration = now()->addMinutes(10);
+    }
+
+
     use AuthRoutes;
     use IndexRoutes;
     use JournalRoutes;
