@@ -29,6 +29,14 @@ class Journal extends Model
         return $this->morphOne('App\AdditionalImage', 'parent');
     }
 
+    public static function boot(){
+        parent::boot();
+        static::deleting(function($journal){
+            foreach ($journal->issues()->get() as $issue)
+                $issue->delete();
+        });
+    }
+
     public static function injectWithLogo(Collection &$journals) : void {
         $journals = $journals->map(function($journal){
             if(!empty($journal->logo))

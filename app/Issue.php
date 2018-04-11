@@ -15,12 +15,21 @@ class Issue extends Model
     use HasLatest;
 
     public function journal(){
-        return $this->belongsTo('App\Journal');
+        return $this->belongsTo(Journal::class);
     }
 
     public function articles(){
-        return $this->hasMany('App\Article');
+        return $this->hasMany(Article::class);
     }
+
+    public static function boot(){
+        parent::boot();
+        static::deleting(function($issue){
+            foreach ($issue->articles()->get() as $article)
+                $article->delete();
+        });
+    }
+
 
     public function getCoverArticle(){
 

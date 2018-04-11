@@ -15,4 +15,12 @@ class Bundle extends Model
         return $this->hasMany('App\Journal');
     }
 
+    public static function boot(){
+        parent::boot();
+        static::deleting(function($bundle){
+            foreach ($bundle->journals()->get() as $journal)
+                $journal->delete();
+        });
+    }
+
 }

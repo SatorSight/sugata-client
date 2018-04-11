@@ -54,6 +54,11 @@ class MasterGateway{
         return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
     }
 
+    public static function getAllIdsUrl() : string {
+        $url = config('client.all_ids_url');
+        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+    }
+
     public static function getImagesSyncUrl(array $ids) : string {
         $url = config('client.images_sync_url');
         return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix() . '/'
@@ -62,6 +67,13 @@ class MasterGateway{
 
     public static function downloadChangedData() : \stdClass{
         $url = self::getChangedDataUrl();
+        $json = file_get_contents($url);
+        $data = json_decode($json);
+        return $data;
+    }
+
+    public static function downloadAllIds() : \stdClass{
+        $url = self::getAllIdsUrl();
         $json = file_get_contents($url);
         $data = json_decode($json);
         return $data;
