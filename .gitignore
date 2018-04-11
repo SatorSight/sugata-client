@@ -16,3 +16,4 @@ yarn-error.log
 /public/mix-manifest.json
 /config/database.php
 resources/views/spa.blade.php
+/public/uploaded_images_resized/

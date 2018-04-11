@@ -7,6 +7,7 @@ use App\Bundle;
 use App\Http\Controllers\Helper;
 use App\Issue;
 use App\Journal;
+use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -42,6 +43,9 @@ trait IndexRoutes{
             });
 
             Issue::injectWithImages($last_issues);
+
+            ImageProxyService::resize($last_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
+
             return $last_issues;
         });
 
@@ -63,6 +67,8 @@ trait IndexRoutes{
             Article::injectDates($cover_articles);
             Article::injectJournalNames($cover_articles);
             Article::injectJournalCovers($cover_articles);
+
+            ImageProxyService::resize($cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
 
             return $cover_articles;
         });
@@ -87,6 +93,8 @@ trait IndexRoutes{
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
 
+            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
+
             return $articles;
         });
 
@@ -109,6 +117,8 @@ trait IndexRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+
+            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
             return $articles;
         });
@@ -136,6 +146,8 @@ trait IndexRoutes{
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
 
+            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
+
             return $articles;
         });
 
@@ -161,6 +173,8 @@ trait IndexRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+
+            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
             return $articles;
         });

@@ -2,8 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Article;
 use App\Bundle;
 use App\Lib\AuthService;
+use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
 use Illuminate\Console\Command;
 
@@ -40,15 +42,24 @@ class test extends Command
      */
     public function handle()
     {
-        $b_t = 'JPw38NefrTtSlT2FyQfc_NHgPpnNLqrlCsnPTfA6QODkpWfi64Fmj4G886_3dQOXqZ17G2wuaYvbH-AKZrsdcslFrhWxXM_Q7TxBXMxX4aF1M9MorpN42UTFRsDXB0sYnXLIVXZSusT12sLApFa9DCMb9bsdhD7-jWR6a78Uiz6c6QY36N8jtA';
-        $msisdn = '+79663785583';
+        $articles = Article::find([39595, 39548]);
 
-        $bundle = Bundle::first();
-        $as = new AuthService();
-//        $data = $as->askInfoForBundleByBridgeToken($b_t, $bundle);
-        $data = $as->askInfoForBundleByMsisdn($msisdn, $bundle);
-        SUtils::dump_console($data);
+        Article::injectWithImages($articles);
 
-        return 'ok';
+        ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_200);
+
+//        foreach ($articles as $article){
+//            SUtils::dump_console($article->image_path);
+//        }
+
+        foreach ($articles as $article){
+            SUtils::dump($article->image_path);
+        }
+
+
+
+
+        SUtils::dump_console('Done');
+        return 1;
     }
 }
