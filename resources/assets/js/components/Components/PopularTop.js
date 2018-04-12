@@ -39,13 +39,11 @@ const styles = {
 class PopularTop extends React.Component {
     constructor(props) {
         super(props);
-
-        // console.log(props);
     }
 
     render() {
         return (
-            <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer} onSwitching={this.props.changer}>
+            <SwipeableViews style={styles.swiper} index={this.props.active}>
                 {this.props.journals.map((journal, i) =>
                     <div style={styles.item} key={journal.id}>
                         <div style={styles.mask} />

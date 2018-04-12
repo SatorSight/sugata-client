@@ -75,14 +75,16 @@ class PopularMain extends React.Component {
 
     render() {
         return (
-            <SwipeableViews onTransitionEnd={this.restoreClicking}
+            <SwipeableViews
+                            onTransitionEnd={this.restoreClicking}
                             style={styles.swiper}
                             enableMouseEvents
                             index={this.props.active}
                             // onChangeIndex={this.props.changer}
-                            onSwitching={this.proxyChanger}>
+                            onSwitching={this.proxyChanger}
+            >
                 {this.props.journals.map((journal, index) =>
-                    <Link onClick={this.linkClickHandler} key={index} to={`/journal/${journal.id}`} style={styles.item}>
+                    <Link draggable={false} onClick={this.linkClickHandler} key={index} to={`/journal/${journal.id}`} style={styles.item}>
                             <div style={styles.mask} />
                             <img style={styles.img} src={journal.additional_image_path} alt={journal.title} />
                             <div style={Object.assign({}, styles.logo, {backgroundImage:'url(' + journal.logo_path + ')' })} />

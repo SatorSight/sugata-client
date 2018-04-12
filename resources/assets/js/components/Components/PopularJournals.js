@@ -50,8 +50,8 @@ class PopularJournals extends Component {
             <div style={styles.issuesSwiper}>
                 <h3 style={styles.title}>Популярные издания</h3>
                 {SUtils.any(journals) ? <div style={styles.over}>
-                    <PopularTop active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
-                    <PopularMain active={this.state.index} journals={journals} changer={this.handleChangeIndex} onSwitching={this.handleChangeIndex} />
+                    <PopularTop active={this.state.index} journals={journals}/>
+                    <PopularMain active={this.state.index} journals={journals} changer={this.handleChangeIndex}/>
                 </div> : null }
             </div>
         );
