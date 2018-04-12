@@ -76,6 +76,7 @@ export const ISSUE_RESOURCES = Object.freeze({
 
 export const ARTICLE_RESOURCES = Object.freeze({
     page_prefix: 'article',
+    static: ['bundles'],
     with_self_id: [
         'bundle',
         'journal',

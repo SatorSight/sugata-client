@@ -135,6 +135,10 @@ trait IssueRoutes{
                 ->push($cover_article)
                 ->concat($chosen_articles);
 
+            $main_topics = $main_topics->reject(function($article){
+                return empty($article);
+            });
+
             $issue = Issue::find($issue_id);
             $pages_count = $issue->articles->count();
 

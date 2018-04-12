@@ -157,8 +157,9 @@ export default class IssuesTheme extends Component {
             <div style={styles.root}>
                 {SUtils.any(articles) ?
                 <OwlCarousel autoWidth dots={false} style={styles.swiper} >
-                    {articles.map((article, currentIndex) =>
-                        <div key={String(currentIndex)} style={styles.item} >
+                    {articles.map((article, currentIndex) => {
+                        return !SUtils.empty(article)
+                        ? <div key={String(currentIndex)} style={styles.item} >
                             <div style={styles.mask} />
                             <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                             <div style={styles.infoSwiper}>
@@ -177,7 +178,7 @@ export default class IssuesTheme extends Component {
                                 </div>
                                 <Link to={`/article/${article.id}`} style={styles.link} />
                             </div>
-                        </div>
+                        </div> : null}
                     )}
                 </OwlCarousel> : null }
             </div>

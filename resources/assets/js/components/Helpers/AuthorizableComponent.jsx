@@ -1,7 +1,12 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
+import PageComponent from '../Helpers/PageComponent'
 import AuthHelper from '../Helpers/AuthHelper'
 
-export default class AuthorizableComponent extends Component {
+export default class AuthorizableComponent extends PageComponent {
+    constructor(props){
+        super(props)
+    }
+
     auth_helper = new AuthHelper();
 
     paymentTrigger = () => {

@@ -32,6 +32,7 @@ Route::get('/bundle/more_new_articles/{bundle_id}/{from}/', 'ApiController@bundl
 Route::get('/bundle/more_popular_articles/{bundle_id}/{from}/', 'ApiController@bundleGetMorePopularArticles')->where(['id' => '[0-9]+']);
 Route::get('/bundle/popular_editions/{bundle_id}/', 'ApiController@bundleGetPopularEditions');
 
+Route::get('/article/bundles/', 'ApiController@articleGetAllBundles');
 Route::get('/article/bundle/{article_id}/', 'ApiController@articleGetCurrentBundle');
 Route::get('/article/journal/{article_id}/', 'ApiController@articleGetJournal');
 Route::get('/article/issue/{article_id}/', 'ApiController@articleGetIssue');

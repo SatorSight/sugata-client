@@ -14,6 +14,18 @@ use Illuminate\Support\Facades\Cache;
 trait ArticleRoutes{
 
     /**
+     * @desc all bundles
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function articleGetAllBundles(){
+        $bundles = Cache::remember('bundles', $this->expiration, function(){
+            return Bundle::orderBy('order', 'ASC')->get();
+        });
+
+        return response()->json($bundles);
+    }
+
+    /**
      * @desc current bundle info
      * @param $bundle_id
      * @return \Illuminate\Http\JsonResponse

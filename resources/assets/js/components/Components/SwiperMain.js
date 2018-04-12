@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import * as SUtils from "../Helpers/SUtils";
+
 
 const styles = {
     root: {
@@ -114,9 +116,11 @@ class SwiperMain extends React.Component {
                     <div style={styles.slideSwiper} key={article.id}>
                         <Link to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})} />
                         <div style={styles.infoSwiper}>
-                            <Link to={`/issue/${issue.id}`} style={styles.link}>
-                                <img style={styles.magSwiper} src={issue.image_path} alt={article.title}/>
-                            </Link>
+                            {!SUtils.empty(issue)
+                                ? <Link to={`/issue/${issue.id}`} style={styles.link}>
+                                      <img style={styles.magSwiper} src={issue.image_path} alt={article.title}/>
+                                  </Link>
+                                : null}
                             <Link to={`/article/${article.id}`} style={styles.textSwiper}>
                                 {article.title}
                             </Link>
