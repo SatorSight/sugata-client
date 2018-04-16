@@ -7,6 +7,7 @@ use App\Bundle;
 use App\Http\Controllers\Helper;
 use App\Issue;
 use App\Journal;
+use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -36,6 +37,48 @@ trait ArticleRoutes{
         });
 
         return response()->json($bundle);
+    }
+
+    /**
+     * @desc current issue listing
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function articleGetListing($article_id){
+        $listing = Cache::remember('article_listing_' . $article_id, $this->expiration, function() use($article_id) {
+            $issue = Article::find($article_id)->issue;
+            $listing = $issue->articles
+                ->map(function($article){
+                    /** @var Article $article */
+                    if(!empty($article->title)){
+                        $l = new \stdClass();
+                        $l->id = $article->id;
+                        $l->page_number = $article->page_number;
+                        $l->title = $article->title;
+
+                        $article_collection = new Collection();
+                        $article_collection->push($article);
+
+                        Article::injectWithImages($article_collection);
+                        ImageProxyService::resize($article_collection, 'image_path', ImageProxyService::LISTING_ARTICLE_200);
+
+                        $l->image = $article->image_path;
+
+                        return $l;
+                    }
+                    return null;
+                })
+                ->reject(function($article){ return empty($article); });
+
+            $listing = array_values($listing->toArray());
+            usort($listing, function($a, $b){
+                return $a->page_number - $b->page_number;
+            });
+
+            return $listing;
+        });
+
+        return response()->json($listing);
     }
 
     /**

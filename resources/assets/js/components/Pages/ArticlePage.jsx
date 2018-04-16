@@ -18,25 +18,17 @@ const styles = {
 
 export default class ArticlePage extends AuthorizableComponent {
 
-    self_id = null;
-
     constructor(props){
         super(props);
 
-        this.self_id = this.props.match.params.id;
-
-        this.state = {
-            data: {},
-            loading: true,
-        };
+        console.log(this.authorized());
     }
 
-    componentDidMount(){
-        SUtils.load(ResourceRoutes.ARTICLE_RESOURCES, this);
-    }
-    componentWillReceiveProps(){
-        SUtils.load(ResourceRoutes.ARTICLE_RESOURCES, this);
-    }
+    someAction = () => {
+        console.log('some action');
+        console.log(this.authorized());
+        this.paymentTrigger();
+    };
 
     render() {
         let content = [];
@@ -73,7 +65,7 @@ export default class ArticlePage extends AuthorizableComponent {
         }
 
         return <div style={styles.root}>
-                    <button onClick={this.paymentTrigger}>try paid content</button>
+                    <button onClick={this.someAction}>try paid content</button>
                     <ArticlePageHeader self_id={this.self_id} data={this.state.data}/>
                     {content}
                     {nextArticle}

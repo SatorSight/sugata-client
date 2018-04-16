@@ -9,6 +9,7 @@ class ImageProxyService{
     const ISSUE_STANDARD_500 = 500;
     const ARTICLE_PREVIEW_150 = 150;
     const COVER_ARTICLE_800 = 800;
+    const LISTING_ARTICLE_200 = 200;
 
     const BASE_DIR = 'uploaded_images_resized';
 

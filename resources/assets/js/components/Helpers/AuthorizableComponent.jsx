@@ -9,6 +9,8 @@ export default class AuthorizableComponent extends PageComponent {
 
     auth_helper = new AuthHelper();
 
+
+
     paymentTrigger = () => {
         let bundle_id = null;
 
@@ -21,4 +23,6 @@ export default class AuthorizableComponent extends PageComponent {
         }else
             console.log('authorized');
     };
+
+    authorized = () => this.auth_helper.authorized;
 }
