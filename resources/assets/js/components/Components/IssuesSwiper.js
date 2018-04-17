@@ -45,7 +45,12 @@ class IssuesSwiper extends Component {
             <div style={styles.issuesSwiper}>
                 {SUtils.any(issues) && SUtils.any(articles) ? <div style={styles.over}>
                     <div style={styles.inner}>
-                        <SwiperTop active={this.state.index} issues={issues} changer={this.handleChangeIndex} />
+                        <SwiperTop
+                            bundle_id={this.props.bundle_id}
+                            parent_type={this.props.parent_type}
+                            active={this.state.index}
+                            issues={issues}
+                            changer={this.handleChangeIndex} />
                         <div style={styles.shadow} />
                     </div>
                     <SwiperMain active={this.state.index} issues={issues} articles={articles} changer={this.handleChangeIndex} />

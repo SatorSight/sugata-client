@@ -43,6 +43,8 @@ export default class PageComponent extends Component {
             return ResourceRoutes.ISSUE_RESOURCES;
         if(entity === 'article')
             return ResourceRoutes.ARTICLE_RESOURCES;
+        if(entity === 'all_issues')
+            return ResourceRoutes.ALL_ISSUES_RESOURCES;
         if(SUtils.empty(entity))
             return ResourceRoutes.MAIN_RESOURCES;
     };

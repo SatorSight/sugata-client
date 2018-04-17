@@ -23,7 +23,11 @@ export default class Application extends PageComponent {
                     ? <Waiter/>
                     : null}
                 <BundleHeader data={this.state.data}/>
-                <IssuesSwiper issues={this.state.data.last_issues} articles={this.state.data.last_cover_articles}/>
+                <IssuesSwiper
+                    parent_type={'bundle'}
+                    bundle_id={this.self_id}
+                    issues={this.state.data.last_issues}
+                    articles={this.state.data.last_cover_articles}/>
                 <MainTabs onlyFirst controls={controls} data={this.state.data}/>
                 {/*<ThematicSwiper  data={this.state.data}/>*/}
                 <MainTabs onlySecond controls={controls} data={this.state.data}/>

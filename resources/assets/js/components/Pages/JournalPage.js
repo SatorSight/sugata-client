@@ -25,7 +25,10 @@ export default class Application extends PageComponent {
                     ? <Waiter/>
                     : null}
                 <JournalHeader data={this.state.data}/>
-                <IssuesSwiper issues={this.state.data.last_issues} articles={this.state.data.issues_cover_articles}/>
+                <IssuesSwiper
+                    parent_type={'journal'}
+                    issues={this.state.data.last_issues}
+                    articles={this.state.data.issues_cover_articles}/>
                 <MainTabs onlyFirst controls={controls} data={this.state.data}/>
                 <OtherIssues issues={this.state.data.rest_issues} data={this.state.data}/>
                 <MainTabs onlySecond controls={controls} data={this.state.data}/>

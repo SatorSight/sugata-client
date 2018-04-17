@@ -53,7 +53,7 @@ const styles = {
     },
 };
 
-let links_clickable = false;
+let links_clickable = true;
 
 class PopularMain extends React.Component {
     constructor(props) {

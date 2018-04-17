@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom'
+import * as SUtils from '../Helpers/SUtils'
 
 const styles = {
     root: {
@@ -73,6 +74,16 @@ class SwiperTop extends React.Component {
         super(props);
     }
 
+    getAllIssuesLink = () => {
+        let id = 0;
+        if(this.props.parent_type === 'bundle')
+            id = this.props.bundle_id;
+        else
+            id = SUtils.first(this.props.issues).journal_id;
+
+        return `/all_issues/${this.props.parent_type}/${id}`;
+    };
+
     render() {
         const { active } = this.props;
 
@@ -92,12 +103,10 @@ class SwiperTop extends React.Component {
                     )}
                 </div>
                 <div>
-                    {/*<Link to={`/bundle/${issue.id}`} style={styles.link}>*/}
-                    <a href="#" style={styles.link}>
+                    <Link to={this.getAllIssuesLink()} style={styles.link}>
                         <span style={Object.assign({}, styles.top, styles.arrow)} />
                         <span style={Object.assign({}, styles.fot, styles.arrow)} />
-                    </a>
-                    {/*</Link>*/}
+                    </Link>
                 </div>
             </div>
         );

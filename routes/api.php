@@ -54,6 +54,11 @@ Route::get('/journal/more_popular_articles/{journal_id}/{from}/', 'ApiController
 Route::get('/journal/rest_issues/{journal_id}/', 'ApiController@journalGetRestIssues');
 Route::get('/journal/same_bundle_journals/{journal_id}/', 'ApiController@journalGetSameBundleJournals');
 
+Route::get('/all_issues_journal/bundles/', 'ApiController@allIssuesGetAllBundles');
+Route::get('/all_issues_bundle/bundles/', 'ApiController@allIssuesGetAllBundles');
+Route::get('/all_issues_journal/issues/{journal_id}/', 'ApiController@allIssuesJournalGetIssues');
+Route::get('/all_issues_bundle/issues/{bundle_id}/', 'ApiController@allIssuesBundleGetIssues');
+
 Route::get('/issue/bundles/', 'ApiController@issueGetBundles');
 Route::get('/issue/bundle/{issue_id}/', 'ApiController@issueGetCurrentBundle');
 Route::get('/issue/issue/{issue_id}/', 'ApiController@issueGetIssue');

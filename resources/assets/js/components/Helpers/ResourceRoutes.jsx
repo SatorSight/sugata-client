@@ -74,6 +74,22 @@ export const ISSUE_RESOURCES = Object.freeze({
     ],
 });
 
+export const ALL_ISSUES_JOURNAL_RESOURCES = Object.freeze({
+    page_prefix: 'all_issues_journal',
+    static: ['bundles'],
+    with_self_id: [
+        'issues',
+    ],
+});
+
+export const ALL_ISSUES_BUNDLE_RESOURCES = Object.freeze({
+    page_prefix: 'all_issues_bundle',
+    static: ['bundles'],
+    with_self_id: [
+        'issues',
+    ],
+});
+
 export const ARTICLE_RESOURCES = Object.freeze({
     page_prefix: 'article',
     static: ['bundles'],

@@ -11,6 +11,8 @@ import IssuePage from './Pages/IssuePage'
 import ArticlePage from './Pages/ArticlePage'
 import JournalPage from './Pages/JournalPage'
 import TagPage from './Pages/TagPage'
+import AllIssuesJournal from './Pages/AllIssuesJournalPage'
+import AllIssuesBundle from './Pages/AllIssuesBundlePage'
 import * as SUtils from "./Helpers/SUtils";
 
 import Waiter from './Helpers/Waiter2';
@@ -32,6 +34,8 @@ export default class Application extends Component {
                         <Route path="/article/:id" component={ArticlePage}/>
                         <Route path="/journal/:id" component={JournalPage}/>
                         <Route path="/tag/:id" component={TagPage}/>
+                        <Route path="/all_issues/journal/:id" component={AllIssuesJournal}/>
+                        <Route path="/all_issues/bundle/:id" component={AllIssuesBundle}/>
                     </div>
                 </BrowserRouter>
             </div>

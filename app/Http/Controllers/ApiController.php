@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Bundle;
+use App\Http\Traits\ApiTraits\AllIssuesRoutes;
 use App\Http\Traits\ApiTraits\ArticleRoutes;
 use App\Http\Traits\ApiTraits\AuthRoutes;
 use App\Http\Traits\ApiTraits\BundleRoutes;
@@ -22,7 +23,8 @@ class ApiController extends Controller
     private $expiration;
 
     public function __construct(){
-        $this->expiration = now()->addMinutes(10);
+        //todo unleash power of redis on release
+        $this->expiration = now()->addMinutes(0);
     }
 
 
@@ -32,4 +34,5 @@ class ApiController extends Controller
     use IssueRoutes;
     use BundleRoutes;
     use ArticleRoutes;
+    use AllIssuesRoutes;
 }
