@@ -3,6 +3,7 @@ import Waiter from '../Helpers/Waiter2';
 import PageComponent from '../Helpers/PageComponent';
 import AllIssuesView from '../Pages/AllIssuesPage/AllIssuesView';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
+import * as SUtils from '../Helpers/SUtils';
 
 export default class AllIssuesBundlePage extends PageComponent {
     constructor(props){
@@ -13,6 +14,7 @@ export default class AllIssuesBundlePage extends PageComponent {
     }
 
     getRoutesObjectOverride = () => ResourceRoutes.ALL_ISSUES_BUNDLE_RESOURCES;
+    loadMore = () => SUtils.appendStateWithApiRequestFor('issues', 'all_issues_bundle', 'more_issues', this, this.self_id);
 
     render() {
         return (
@@ -20,7 +22,7 @@ export default class AllIssuesBundlePage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <AllIssuesView issues={this.state.data.issues}/>
+                <AllIssuesView load_more={this.loadMore} title={this.state.data.title} issues={this.state.data.issues}/>
             </div>
         );
     }

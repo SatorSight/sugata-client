@@ -169,6 +169,7 @@ class Issue extends Model
 
         $last_issues_id_objects = $last_issues_id_objects
             ->groupBy('journal_id')
+            ->orderByDesc('id')
             ->get();
 
         $last_issues_ids = $last_issues_id_objects

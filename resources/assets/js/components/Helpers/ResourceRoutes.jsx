@@ -79,6 +79,10 @@ export const ALL_ISSUES_JOURNAL_RESOURCES = Object.freeze({
     static: ['bundles'],
     with_self_id: [
         'issues',
+        'title'
+    ],
+    with_from: [
+        'more_issues'
     ],
 });
 
@@ -87,6 +91,10 @@ export const ALL_ISSUES_BUNDLE_RESOURCES = Object.freeze({
     static: ['bundles'],
     with_self_id: [
         'issues',
+        'title'
+    ],
+    with_from: [
+        'more_issues'
     ],
 });
 

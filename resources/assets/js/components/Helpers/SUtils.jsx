@@ -184,7 +184,12 @@ export function load(route, _this){
 export function getUrlPath(){
     const path = window.location.pathname;
     return path.split('/');
+}
 
+export function orNull($obj){
+    if(!empty($obj))
+        return $obj;
+    return null;
 }
 
 export function isMobile() {

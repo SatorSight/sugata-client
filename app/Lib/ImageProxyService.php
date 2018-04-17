@@ -31,7 +31,7 @@ class ImageProxyService{
             $image_resized_path = $resized_dir_path . '/' . $file_name;
             $image_public_path = '/' . self::BASE_DIR . '/' . $size . '/' . $file_name;
 
-            if(!file_exists($image_resized_path)){
+            if(!file_exists($image_resized_path) && file_exists($image_absolute_path)){
                 $img = new \imagick($image_absolute_path);
                 $img->scaleImage($size, 0);
                 $img->setImageCompression(\imagick::COMPRESSION_JPEG);

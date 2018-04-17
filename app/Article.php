@@ -199,6 +199,13 @@ class Article extends Model
         });
     }
 
+    public static function clearFromDesktopHtml(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            unset($article->desktop_html);
+            return $article;
+        });
+    }
+
     public static function removeWithBlankText(Collection &$articles) : void {
         $articles = $articles->reject(function($article){
             if($article)

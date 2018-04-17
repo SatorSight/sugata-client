@@ -63,6 +63,7 @@ trait IndexRoutes{
             $cover_articles = Issue::getCoverArticles($last_issues);
 
             Article::clearFromHtml($cover_articles);
+            Article::clearFromDesktopHtml($cover_articles);
             Article::injectWithImages($cover_articles);
             Article::injectDates($cover_articles);
             Article::injectJournalNames($cover_articles);
@@ -73,7 +74,7 @@ trait IndexRoutes{
             return $cover_articles;
         });
 
-        return response()->json($cover_articles);
+        return response()->json(array_values($cover_articles->toArray()));
     }
 
     /**
