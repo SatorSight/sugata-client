@@ -126,6 +126,9 @@ const styles = {
     main: {
         padding: '1.5em',
     },
+    overMain: {
+        padding: '0 1.5em 1.5em',
+    },
     mainBundle: {
         padding: '1em 0',
     },
@@ -198,6 +201,66 @@ const styles = {
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
     },
+    settings: {
+        position: 'relative',
+        paddingBottom: '1px',
+    },
+    itemSettings: {
+        position: 'relative',
+        fontFamily: 'HelveticaNeueCyr, arial, serif',
+        display: 'block',
+        fontSize: '1.2em',
+        letterSpacing: 0.3,
+        padding: '1.6em 0 0',
+        color: '#FFF',
+        overflow: 'hidden',
+        fontWeight: 300,
+        ':hover': {
+            background: 'red',
+        }
+    },
+    leftSettings: {
+        display: 'block',
+        float: 'left',
+        lineHeight: 2.4,
+    },
+    rightSettings: {
+        display: 'block',
+        width: '50%',
+        float: 'right',
+        overflow: 'hidden',
+        textAlign: 'right',
+        lineHeight: 2.4,
+    },
+    arrowSettings: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        left: 0,
+        height: 1,
+        backgroundColor: 'rgba(255,255,255,0.4)'
+    },
+    lineSettings: {
+        position: 'absolute',
+        maxWidth: '50%',
+        textAlign: 'right',
+        fontSize: '1em',
+        background: 'none',
+        border: 'none',
+        lineHeight: 2.4,
+        color: '#FFF',
+        right: 0,
+        bottom: 0,
+        borderBottom: '1px solid rgba(255,255,255,0.6)',
+        WebkitAppearance: 'none',
+        WebkitBorderRadius: 0,
+        ':hover': {
+            background: 'red',
+        },
+    },
+    optionSettings: {
+        textAlign: 'right',
+    },
 };
 const theme = createMuiTheme({
     palette: {
@@ -230,6 +293,7 @@ class IndexMenu extends Component {
             bottom: false,
             right: false,
             index: 0,
+            option: 'true',
         };
     }
 
@@ -244,6 +308,7 @@ class IndexMenu extends Component {
     // }
 
     handleChange = (event, value) =>  this.setState({ index: value });
+    handleChangeOption = (event) =>  this.setState({ option: event.target.value });
     handleChangeIndex = index => this.setState({ index });
 
 
@@ -275,7 +340,7 @@ class IndexMenu extends Component {
                                 </div>
                             </div>
                             <MuiThemeProvider theme={theme}>
-                                <div style={styles.main}>
+                                <div style={styles.overMain}>
                                     <span style={styles.arrowTop} />
                                     <Tabs indicatorColor="none" fullWidth value={index} onChange={this.handleChange} style={styles.tabs}>
                                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="витрина" style={styles.tabsItem} className={classes.tabsItem} />
@@ -309,16 +374,27 @@ class IndexMenu extends Component {
                                                 </div>
                                             ) : null}
                                         </div>
-                                        <div style={styles.main}>
-                                            {SUtils.any(issues) ? issues.map((issue, currentIndex) =>
-                                                <div style={styles.item} key={String(currentIndex)}>
-                                                    <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + issue.image_path + ')' })} />
-                                                    <div style={styles.inner}>
-                                                        <div style={styles.over}>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ) : null}
+                                        <div style={styles.settings}>
+                                            <div style={styles.itemSettings}>
+                                                <label style={styles.leftSettings}>Номер телефона
+                                                    <input style={styles.lineSettings} type="text" placeholder="+7 (909) 999-99-99" disabled />
+                                                </label>
+                                                <span style={styles.arrowSettings} />
+                                            </div>
+                                            <div style={styles.itemSettings}>
+                                                <label style={styles.leftSettings}>Имя (для комментариев)
+                                                    <input style={styles.lineSettings} type="text" placeholder="Константин" />
+                                                </label>
+                                                <span style={styles.arrowSettings} />
+                                            </div>
+                                            <div style={styles.itemSettings}>
+                                                <label style={styles.leftSettings}>Присылать оповещения</label>
+                                                <select style={styles.lineSettings} value={this.state.option} onChange={this.handleChangeOption}>
+                                                    <option style={styles.optionSettings} value="true">&nbsp;Да</option>
+                                                    <option style={styles.optionSettings} value="false">Нет</option>
+                                                </select>
+                                                <span style={styles.arrowSettings} />
+                                            </div>
                                         </div>
                                     </SwipeableViews>
                                 </div>

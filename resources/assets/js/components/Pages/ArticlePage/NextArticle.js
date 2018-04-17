@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as SUtils from "../Helpers/SUtils";
 
 const styles = {
     item: {
@@ -7,6 +6,8 @@ const styles = {
         backgroundColor: '#000',
         position: 'relative',
         minHeight: '9.8em',
+        zIndex: 50,
+        cursor: 'pointer',
     },
     inner: {
         width: '100%',

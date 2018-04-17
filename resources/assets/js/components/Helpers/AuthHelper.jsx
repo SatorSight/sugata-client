@@ -4,7 +4,7 @@ export default class AuthHelper{
     authorized = false;
 
     constructor(){
-        console.log('constructed');
+        // console.log('constructed');
 
         this.checkAuthorization();
     }
@@ -13,8 +13,7 @@ export default class AuthHelper{
         fetch('/api/auth/user_authorized', {credentials: 'include'})
             .then(data => data.json())
             .then(json => {
-                console.log(json);
-                console.log('asdasdasd');
+                // console.log(json)
                 if(json['result'] === 'ok')
                     this.authorized = true;
             })

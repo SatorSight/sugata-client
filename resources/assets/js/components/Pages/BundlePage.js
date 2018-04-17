@@ -6,7 +6,7 @@ import IndexFooter from '../Components/IndexFooter';
 import Waiter from '../Helpers/Waiter2';
 import PageComponent from '../Helpers/PageComponent';
 
-export default class Application extends PageComponent {
+export default class BundlePage extends PageComponent {
     constructor(props){
         super(props);
     }

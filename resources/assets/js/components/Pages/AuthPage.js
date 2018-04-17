@@ -5,7 +5,7 @@ import * as SUtils from "../Helpers/SUtils";
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import Waiter from '../Helpers/Waiter2';
 
-export default class Application extends Component {
+export default class AuthPage extends Component {
 
     constructor(props){
         super(props);
