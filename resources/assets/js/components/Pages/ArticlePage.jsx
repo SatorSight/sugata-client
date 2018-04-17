@@ -20,17 +20,12 @@ const styles = {
 
 export default class ArticlePage extends AuthorizableComponent {
 
-    self_id = null;
-
     constructor(props){
         super(props);
+    }
 
-        this.self_id = this.props.match.params.id;
-
-        this.state = {
-            data: {},
-            loading: true,
-        };
+    componentWillReceiveProps(nextProps){
+        return false;
     }
 
     someAction = () => {
