@@ -670,6 +670,7 @@ class ContentArticleMobile extends Component {
     };
 
     render() {
+        document.body.style.position = (!this.state.isLoading===true) ? 'fixed': 'relative';
         const next_article = this.props.data.next_article ? this.props.data.next_article.id : '';
         const nextArticle = !next_article ?  <div style={{display: 'block', background: 'url(/images/header.jpg) no-repeat 50% 50%', backgroundSize: 'cover', color: '#FFF', textAlign: 'center', position: 'relative', zIndex: 50, padding: '1em 0 4em'}}>&nbsp;</div> : <div onClick={this.changedPageNext} style={{display: 'block'}} key={`article.${next_article.id}`}><NextArticle self_id={this.self_id} data={this.props.data}/></div> ;
         const arrow = SUtils.isMobile(true) ? '' : <div style={this.state.isLoading ? styles.arrowOnLoading : styles.arrowOffLoading}><div style={styles.arrowNext} onClick={this.changedPageNext}> </div> <div style={styles.arrowPrev} onClick={this.changedPagePrev}> </div></div>;
