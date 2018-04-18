@@ -212,7 +212,6 @@ export default class AllIssuesView extends Component {
             buttonOn: true,
         };
     }
-
     addMore = () => {
         this.setState({ isLoading: true });
         const issues = this.props.data.issues;
@@ -224,7 +223,6 @@ export default class AllIssuesView extends Component {
             _this.setState({ buttonOn: state });
         });
     };
-
     render() {
         const item = this.props.issues ? this.props.data.issues : '';
         let content= [];
