@@ -99,11 +99,26 @@ const styles = {
     },
 };
 
+let links_clickable = true;
+
 class SwiperMain extends React.Component {
 
     constructor(props){
         super(props);
     }
+
+    linkClickHandler = (e) => {
+        if(!links_clickable)
+            e.preventDefault();
+    };
+
+    proxyChanger = (index, type) => {
+        this.disableClicking();
+        this.props.changer(index, type);
+    };
+
+    restoreClicking = () => links_clickable = true;
+    disableClicking = () => links_clickable = false;
 
     getArticleIssue = article => this.props.issues.find(issue => issue.id === article.issue_id);
 
@@ -114,19 +129,30 @@ class SwiperMain extends React.Component {
                 const issue = this.getArticleIssue(article);
                 slides.push(
                     <div style={styles.slideSwiper} key={article.id}>
-                        <Link to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})} />
+                        <Link
+                            onClick={this.linkClickHandler}
+                            draggable={false}
+                            to={`/article/${article.id}`}
+                            style={Object.assign({}, styles.imgSwiper, {backgroundImage: `url('${article.image_path}')`})} />
                         <div style={styles.infoSwiper}>
                             {!SUtils.empty(issue)
-                                ? <Link to={`/issue/${issue.id}`} style={styles.link}>
+                                ? <Link
+                                    onClick={this.linkClickHandler}
+                                    draggable={false}
+                                    to={`/issue/${issue.id}`} style={styles.link}>
                                       <img style={styles.magSwiper} src={issue.image_path} alt={article.title}/>
                                   </Link>
                                 : null}
-                            <Link to={`/article/${article.id}`} style={styles.textSwiper}>
+                            <Link onClick={this.linkClickHandler}
+                                  draggable={false}
+                                  to={`/article/${article.id}`} style={styles.textSwiper}>
                                 {article.title}
                             </Link>
                             <div>
                                 <p style={styles.captionColorSwiper}>
-                                    <Link to={`/article/${article.id}`} style={styles.captionLinkSwiper}>
+                                    <Link onClick={this.linkClickHandler}
+                                          draggable={false}
+                                          to={`/article/${article.id}`} style={styles.captionLinkSwiper}>
                                         {article.journal_name}
                                     </Link>,&nbsp;
                                     <span>{article.date}</span>
@@ -144,7 +170,13 @@ class SwiperMain extends React.Component {
     render() {
         return (
             <div style={styles.root}>
-                <SwipeableViews style={styles.swiper} enableMouseEvents index={this.props.active} onChangeIndex={this.props.changer}>
+                <SwipeableViews
+                    style={styles.swiper}
+                    enableMouseEvents
+                    index={this.props.active}
+                    onChangeIndex={this.proxyChanger}
+                    onTransitionEnd={this.restoreClicking}
+                >
                     {this.renderSlide()}
                 </SwipeableViews>
                 <Pagination dots={3} index={this.props.active} onChangeIndex={this.props.changer} />

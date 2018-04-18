@@ -11,6 +11,7 @@ const styles = {
     otherIssues: {
         position: 'relative',
         overflow: 'hidden',
+        height: '20em'
     },
     title: {
         fontSize: '1.2em',
@@ -25,7 +26,7 @@ const styles = {
         borderRadius: '0.2em',
         boxShadow: '0.2em 0.2em 0.4em -0.2em rgba(0,0,0,0.2)',
         overflow: 'hidden',
-        height: '12em',
+        height: '14em',
         width: 'auto',
     },
 };
@@ -38,12 +39,6 @@ export default class NewIssues extends Component {
         super(props);
     }
 
-    // shouldComponentUpdate(nextProps, nextState){
-    //     return nextProps === this.props;
-    // }
-
-
-
     render() {
         let new_issues = this.props.data.new_issues;
 
@@ -51,10 +46,21 @@ export default class NewIssues extends Component {
             <div style={styles.otherIssues}>
                 <p style={styles.title}>новые выпуски</p>
                 {SUtils.any(new_issues) ?
-                    <OwlCarousel autoWidth dots={false}>
+                    <OwlCarousel
+                        lazyLoad
+                        autoWidth
+                        dots={false}>
                         {new_issues.map((issue, currentIndex) =>
                             <Link key={issue.id} to={`/issue/${issue.id}`} style={styles.item}>
-                                <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />
+                                <div style={
+                                    Object.assign({}, styles.imgOtherIssues, {
+                                        background: `url(${issue.image_path})`,
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'top center',
+                                        minWidth: '11em'
+                                    })
+                                }></div>
                             </Link>
                         )}
                     </OwlCarousel> : null }
