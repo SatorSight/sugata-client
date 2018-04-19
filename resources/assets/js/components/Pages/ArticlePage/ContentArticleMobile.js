@@ -692,6 +692,7 @@ class ContentArticleMobile extends Component {
         const page_number = this.props.data.article ? this.props.data.article.page_number : '';
         const pages_count = this.props.data.issue ? this.props.data.issue.pages_count : '';
         const image_path = this.props.data.issue ? this.props.data.issue.image_path : '';
+        const issue_id = this.props.data.article ? this.props.data.article.issue_id : '';
 
         return (
             <div>
@@ -719,9 +720,9 @@ class ContentArticleMobile extends Component {
                                 </div>
                             </div>
                             <div style={styles.left}>
-                                <div style={styles.url} >
+                                <Link  to={`/issue/${issue_id}`} style={styles.url}>
                                     <img style={styles.magLeft} src={image_path} alt={journal_name} />
-                                </div>
+                                </Link>
                             </div>
                             <div style={styles.right}>
                                 <div style={styles.url}>
