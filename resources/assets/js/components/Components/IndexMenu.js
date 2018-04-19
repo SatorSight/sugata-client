@@ -301,10 +301,13 @@ class IndexMenu extends Component {
         this.setState({
             [side]: open,
         });
-        if(open)
+        if(open) {
             document.querySelector('#root').style.overflow = 'hidden';
-        else
+            document.querySelector('#root').style.position = 'fixed';
+        }else {
             document.querySelector('#root').style.overflow = 'auto';
+            document.querySelector('#root').style.position = 'initial';
+        }
     };
 
     // shouldComponentUpdate(nextProps, nextState){
