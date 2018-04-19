@@ -124,7 +124,11 @@ const styles = {
         display: 'block',
     },
     main: {
-        padding: '1.5em',
+        // padding: '1.5em',
+        padding: '0.5em 0 0 1.5em',
+        color: 'white',
+        height: '140px',
+        fontSize: '20px',
     },
     overMain: {
         padding: '0 1.5em 1.5em',
@@ -363,23 +367,24 @@ class IndexMenu extends Component {
                                             ) : null}
                                         </div>
                                         <div style={styles.main}>
-                                            {SUtils.any(articles) ? articles.map((article, currentIndex) =>
-                                                <div style={styles.item} key={String(currentIndex)}>
-                                                    <div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
-                                                    <div style={styles.inner}>
-                                                        <div style={styles.over}>
-                                                            <h3 style={styles.title}>{article.title}</h3>
-                                                            <p style={styles.text}>{article.text}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p style={styles.caption}>
-                                                                <span>{article.journal_name}, </span>
-                                                                <span>{article.date}</span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ) : null}
+                                            В разработке ...
+                                            {/*{SUtils.any(articles) ? articles.map((article, currentIndex) =>*/}
+                                                {/*<div style={styles.item} key={String(currentIndex)}>*/}
+                                                    {/*<div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />*/}
+                                                    {/*<div style={styles.inner}>*/}
+                                                        {/*<div style={styles.over}>*/}
+                                                            {/*<h3 style={styles.title}>{article.title}</h3>*/}
+                                                            {/*<p style={styles.text}>{article.text}</p>*/}
+                                                        {/*</div>*/}
+                                                        {/*<div>*/}
+                                                            {/*<p style={styles.caption}>*/}
+                                                                {/*<span>{article.journal_name}, </span>*/}
+                                                                {/*<span>{article.date}</span>*/}
+                                                            {/*</p>*/}
+                                                        {/*</div>*/}
+                                                    {/*</div>*/}
+                                                {/*</div>*/}
+                                            {/*) : null}*/}
                                         </div>
                                         <div style={styles.settings}>
                                             <div style={styles.itemSettings}>
