@@ -113,14 +113,14 @@ class PopularArticles extends Component {
     loadMore = () => this.props.controls['more_popular_articles']();
 
     render() {
-        const articles =  this.props.data.hasOwnProperty('popular_articles') ? this.props.data.popular_articles : [];
-        // const articles = this.props.data.popular_articles;
+        // const articles =  this.props.data.hasOwnProperty('popular_articles') ? this.props.data.popular_articles : [];
+        const articles = this.props.data.popular_articles;
 
         return (
             <div>
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
-                        <div style={styles.item} key={sKey('pa')}>
+                        <div style={styles.item} key={`popular_articles_${article.id}`}>
                             <Link to={`/article/${article.id}`} style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>

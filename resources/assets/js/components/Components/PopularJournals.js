@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import PopularTop from './PopularTop';
 import PopularMain from './PopularMain';
 import * as SUtils from './../Helpers/SUtils';
-import sKey from './../Helpers/sKey'
 
-// import fixtures from './fixtures';
 const styles = {
     issuesSwiper: {
         backgroundColor: '#FFF',

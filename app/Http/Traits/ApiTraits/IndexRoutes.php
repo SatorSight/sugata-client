@@ -46,10 +46,12 @@ trait IndexRoutes{
 
             ImageProxyService::resize($last_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
 
+            $last_issues = $last_issues->sortByDesc('id');
+
             return $last_issues;
         });
 
-        return response()->json($last_issues);
+        return response()->json(array_values($last_issues->toArray()));
     }
 
     /**

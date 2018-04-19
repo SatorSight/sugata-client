@@ -118,9 +118,8 @@ class NewArticles extends Component {
         return (
             <div>
                 <div style={styles.main}>
-                    {/*{this.showPreloader}*/}
                     {SUtils.any(articles) ? articles.map(article =>
-                        <div style={styles.item} key={sKey('ar')}>
+                        <div style={styles.item} key={`new_articles_${article.id}`}>
                             <Link to={`/article/${article.id}`}  style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>
