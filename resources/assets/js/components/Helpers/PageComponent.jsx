@@ -30,6 +30,8 @@ export default class PageComponent extends Component {
 
     getEntity = () => {
         const path = SUtils.getUrlPath();
+        if(SUtils.empty(path[1]))
+            return 'index';
         return path[1];
     };
 
@@ -43,7 +45,7 @@ export default class PageComponent extends Component {
             return ResourceRoutes.ISSUE_RESOURCES;
         if(entity === 'article')
             return ResourceRoutes.ARTICLE_RESOURCES;
-        if(SUtils.empty(entity))
+        if(entity === 'index')
             return ResourceRoutes.MAIN_RESOURCES;
     };
 

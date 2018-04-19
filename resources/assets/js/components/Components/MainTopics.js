@@ -102,6 +102,8 @@ const styles = {
     }
 };
 
+let links_clickable = true;
+
 class MainTopics extends React.Component {
 
     constructor(props){
@@ -111,6 +113,19 @@ class MainTopics extends React.Component {
             index: 0,
         };
     }
+
+    linkClickHandler = (e) => {
+        if(!links_clickable)
+            e.preventDefault();
+    };
+
+    proxyChanger = (index, type) => {
+        this.disableClicking();
+        this.handleChangeIndex(index);
+    };
+
+    restoreClicking = () => links_clickable = true;
+    disableClicking = () => links_clickable = false;
 
     handleChangeIndex = index => this.setState({ index });
 
@@ -123,19 +138,21 @@ class MainTopics extends React.Component {
             articles.map(article => content.push(
                 <div style={styles.slideSwiper} key={article.id}>
                     {article.image !== ''
-                        ?   <Link to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
+                        ?   <Link
+                            onClick={this.linkClickHandler}
+                            draggable={false} to={`/article/${article.id}`} style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                         : null
                     }
                     <div style={styles.infoSwiper}>
-                        <Link to={`/issue/${article.issue_id}`} style={styles.link}>
+                        <Link onClick={this.linkClickHandler} draggable={false} to={`/issue/${article.issue_id}`} style={styles.link}>
                             <img style={styles.magSwiper} src={article.issue_cover} alt={article.title} />
                         </Link>
-                        <Link to={`/article/${article.id}`} style={styles.textSwiper}>
+                        <Link onClick={this.linkClickHandler} draggable={false} to={`/article/${article.id}`} style={styles.textSwiper}>
                             {article.title}
                         </Link>
                         <div>
                             <p style={styles.captionColorSwiper}>
-                                <Link to={`/article/${article.id}`} style={styles.captionLinkSwiper}>
+                                <Link onClick={this.linkClickHandler} draggable={false} to={`/article/${article.id}`} style={styles.captionLinkSwiper}>
                                     {article.journal_name}
                                     </Link>,&nbsp;
                                 <span>{article.date}</span>
@@ -153,7 +170,9 @@ class MainTopics extends React.Component {
                         style={styles.swiper}
                         index={index}
                         enableMouseEvents
-                        onChangeIndex={this.handleChangeIndex}>
+                        onChangeIndex={this.proxyChanger}
+                        onTransitionEnd={this.restoreClicking}
+                    >
                         {content}
                     </SwipeableViews>
                     : null }

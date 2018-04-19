@@ -110,19 +110,7 @@ class NewArticles extends Component {
         super(props);
     }
 
-    loadMore = () => {this.props.controls['more_new_articles'].call()};
-    // loadMore = () => {
-    //     //start preloader
-    //     this.props.controls['more_new_articles'].call()
-    //         .then(() => {
-    //             //stop preloader
-    //         });
-    //
-    // };
-    //
-    // showPreloader = () => {
-    //     return <div>preloader</div>
-    // };
+    loadMore = () => this.props.controls['more_new_articles'].call();
 
     render() {
         const articles =  this.props.data.new_articles;

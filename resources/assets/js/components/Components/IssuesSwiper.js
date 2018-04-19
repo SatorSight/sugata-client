@@ -50,7 +50,7 @@ class IssuesSwiper extends Component {
                             parent_type={this.props.parent_type}
                             active={this.state.index}
                             issues={issues}
-                            changer={this.handleChangeIndex} />
+                        />
                         <div style={styles.shadow} />
                     </div>
                     <SwiperMain active={this.state.index} issues={issues} articles={articles} changer={this.handleChangeIndex} />
