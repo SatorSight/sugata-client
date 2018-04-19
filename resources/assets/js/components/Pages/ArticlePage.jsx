@@ -43,26 +43,13 @@ export default class ArticlePage extends AuthorizableComponent {
     render() {
 
         let content = [];
-        const article_desktop_html = this.state.data.article ? this.state.data.article.desktop_html : '';
+        let stylesImg = 'img {max-width: 100%;}';
         content.push(
             <div key='mobile'>
                 <ContentArticleMobile self_id={this.self_id} data={this.state.data} history={this.props.history} pageChanged={this.changedPage} />
+                <style>{stylesImg}</style>
             </div>
         );
-        // if(!article_desktop_html || SUtils.isMobile(true)) {
-        //     content.push(
-        //         <div key='mobile'>
-        //             <ContentArticleMobile self_id={this.self_id} data={this.state.data} history={this.props.history} pageChanged={this.changedPage} />
-        //         </div>
-        //     );
-        // }
-        // else {
-        //     content.push(
-        //         <div key='desktop'>
-        //             <ContentArticleDesktop self_id={this.self_id} history={this.props.history}  data={this.state.data} />
-        //         </div>
-        //     );
-        // }
 
         return <div style={styles.root}>
                     {content}
