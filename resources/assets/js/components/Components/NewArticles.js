@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as SUtils from './../Helpers/SUtils';
-import sKey from './../Helpers/sKey';
 import { Link } from 'react-router-dom'
 
 

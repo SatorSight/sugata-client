@@ -1,8 +1,5 @@
 import React, {Component} from 'react';
-// import {Router, Route} from 'react-router';
-
-import {BrowserRouter, Route, NavLink} from 'react-router-dom'
-import Lines from 'react-preloaders/Preloaders/Lines';
+import {BrowserRouter, Route} from 'react-router-dom'
 
 import MainPage from './Pages/MainPage'
 import AuthPage from './Pages/AuthPage'
@@ -13,9 +10,6 @@ import JournalPage from './Pages/JournalPage'
 import TagPage from './Pages/TagPage'
 import AllIssuesJournal from './Pages/AllIssuesJournalPage'
 import AllIssuesBundle from './Pages/AllIssuesBundlePage'
-import * as SUtils from "./Helpers/SUtils";
-
-import Waiter from './Helpers/Waiter2';
 
 export default class Application extends Component {
     constructor(props){
