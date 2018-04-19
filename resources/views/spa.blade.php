@@ -14,7 +14,7 @@
     <style>
         @import "/css/font.css";
         * {margin: 0; padding: 0; line-height: 1; font-family: 'HelveticaNeueCyr', arial, serif; outline: none !important; -webkit-tap-highlight-color: rgba(0,0,0,0); -webkit-tap-highlight-color: transparent; }
-        body {font-size: 10px;overflow: auto!important;}
+        body {font-size: 10px; overflow: auto!important; width: 100%;}
         body > .inner {max-width: 720px; margin: 0 auto;}
         a, a:active, a:hover { outline: none; text-decoration: none; }
         .content > ul {
