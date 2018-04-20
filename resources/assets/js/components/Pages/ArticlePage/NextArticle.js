@@ -116,6 +116,9 @@ const styles = {
         border: '1px solid #FFF',
         opacity: 0.8,
     },
+    itemEnd: {
+        display: 'none',
+    }
 };
 
 class NextArticle extends Component {
@@ -131,6 +134,7 @@ class NextArticle extends Component {
             nextCount: 0,
             nextHtml: 0,
             nextPath: 0,
+            end: false,
         };
     }
     componentDidMount(){
@@ -142,10 +146,10 @@ class NextArticle extends Component {
                     nextId: data.id,
                     nextTitle: data.title,
                     nextNumber: data.page_number,
-                    nextCount: data.pages_count,
                     nextHtml: data.html,
                     nextPath: data.image_path,
                     loading: true,
+                    end: false,
                 },);
             })
             .catch((error) =>{
@@ -159,14 +163,21 @@ class NextArticle extends Component {
                 fetch('/api/article/next_article/'+nextProps.id_next)
                     .then((results) => results.json())
                     .then((data) => {
-                        this.setState({
-                            nextId: data.id,
-                            nextTitle: data.title,
-                            nextNumber: data.page_number,
-                            nextCount: data.pages_count,
-                            nextHtml: data.html,
-                            nextPath: data.image_path,
-                        },);
+                        if (!data.id) {
+                            this.setState({
+                                end: true,
+                            },);
+                        }
+                        else {
+                            this.setState({
+                                nextId: data.id,
+                                nextTitle: data.title,
+                                nextNumber: data.page_number,
+                                nextHtml: data.html,
+                                nextPath: data.image_path,
+                                end: false,
+                            },);
+                        }
                     })
                     .then(() => {
                         this.setState({
@@ -186,7 +197,7 @@ class NextArticle extends Component {
     render() {
         const pages_count = this.props.data.issue ? this.props.data.issue.pages_count : '';
         return (
-            <div style={styles.item} key={this.state.nextId}>
+            <div style={this.state.end ? styles.itemEnd : styles.item} key={this.state.nextId}>
                 <div style={styles.inner}>
                     <div style={styles.left}>
                         <div style={styles.url}>

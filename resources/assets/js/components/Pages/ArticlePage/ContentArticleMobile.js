@@ -704,13 +704,8 @@ class ContentArticleMobile extends Component {
         const image_path = this.props.data.issue ? this.props.data.issue.image_path : '';
         const issue_id = this.props.data.article ? this.props.data.article.issue_id : '';
 
-
-        const next_article = this.props.data.next_article ? this.props.data.next_article.id : '';
-        const item_next_article = <div onClick={this.changedPageNext} style={{display: 'block'}}><NextArticle id_next={this.state.idNext} self_id={this.props.self_id} data={this.props.data} /></div>;
-        const off_next_article = <div style={{display: 'block', background: 'url(/images/header.jpg) no-repeat 50% 50%', backgroundSize: 'cover', color: '#FFF', textAlign: 'center', position: 'relative', zIndex: 50, padding: '1em 0 4em'}}>&nbsp;</div>;
-        const nextArticle = !next_article ? off_next_article : item_next_article ;
+        const nextArticle = <div onClick={this.changedPageNext} style={{display: 'block'}}><NextArticle id_next={this.state.idNext} self_id={this.props.self_id} data={this.props.data} /></div>;
         const arrow = SUtils.isMobile(true) ? '' : <div style={this.state.isLoading ? styles.arrowOnLoading : styles.arrowOffLoading}><div style={styles.arrowNext} onClick={this.changedPageNext}> </div> <div style={styles.arrowPrev} onClick={this.changedPagePrev}> </div></div>;
-
 
         return (
             <div>
