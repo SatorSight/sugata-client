@@ -142,7 +142,11 @@ trait BundleRoutes{
                     break;
 
                 $more_articles = Issue::getRandomBasicArticles($last_issues)->take(5 - $articles->count());
-                $articles = $articles->concat($more_articles);
+                foreach ($more_articles as $article)
+                    if(!$articles->contains(function($a) use ($article){
+                        return $a->id === $article->id;
+                    }))
+                        $articles->push($article);
             }
 
             Article::injectWithText($articles);

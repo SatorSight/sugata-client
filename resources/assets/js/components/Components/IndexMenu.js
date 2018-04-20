@@ -301,22 +301,32 @@ class IndexMenu extends Component {
         };
     }
 
+    lockBody = () => {
+        document.querySelector('#root').style.overflow = 'hidden';
+        document.querySelector('#root').style.position = 'fixed';
+    };
+
+    unlockBody = () => {
+        document.querySelector('#root').style.overflow = 'auto';
+        document.querySelector('#root').style.position = 'initial';
+    };
+
+    componentWillUnmount(){
+        this.unlockBody();
+    };
+
     toggleDrawer = (side, open) => () => {
         this.setState({
             [side]: open,
         });
         if(open) {
-            document.querySelector('#root').style.overflow = 'hidden';
-            document.querySelector('#root').style.position = 'fixed';
+            this.lockBody();
         }else {
-            document.querySelector('#root').style.overflow = 'auto';
-            document.querySelector('#root').style.position = 'initial';
+            this.unlockBody();
         }
     };
 
-    // shouldComponentUpdate(nextProps, nextState){
-    //     return nextProps !== this.props;
-    // }
+    linkHandler = () => this.setState({left: false}, this.unlockBody());
 
     handleChange = (event, value) =>  this.setState({ index: value });
     handleChangeOption = (event) =>  this.setState({ option: event.target.value });
@@ -361,7 +371,7 @@ class IndexMenu extends Component {
                                     <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
                                         <div style={styles.mainBundle}>
                                             {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
-                                                <Link key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
+                                                <Link onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
                                                     {bundle.name}
                                                 </Link>
                                             ) : null}
