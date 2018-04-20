@@ -13,7 +13,7 @@ const styles = {
         display: 'block',
         position: 'relative',
         background: '#FFF',
-        zIndex: 40,
+        zIndex: 55,
         textAlign: 'center',
     }
 };
@@ -34,19 +34,13 @@ export default class ArticlePage extends AuthorizableComponent {
         this.paymentTrigger();
     };
 
-    changedPage = page => {
-        const data = this.state.data;
-        data.article.page_number = page;
-        this.setState({data});
-    };
-
     render() {
 
         let content = [];
         let stylesImg = 'img {max-width: 100%;}';
         content.push(
             <div key='mobile'>
-                <ContentArticleMobile self_id={this.self_id} data={this.state.data} history={this.props.history} pageChanged={this.changedPage} />
+                <ContentArticleMobile self_id={this.self_id} data={this.state.data} history={this.props.history}/>
                 <style>{stylesImg}</style>
             </div>
         );
