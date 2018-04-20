@@ -229,7 +229,7 @@ export default class AllIssuesView extends Component {
         if (item!=null){
             for(let i=0; i < item.length; i++){
                 content[i] = <div key={String(i)} style={styles.item}>
-                                <Link  to={`/journal/${item[i].journal_id}`} style={styles.link}>
+                                <Link  to={`/issue/${item[i].id}`} style={styles.link}>
                                     <div style={styles.image}>
                                         <div style={styles.blur} />
                                         {/*<img style={styles.img} src='/images/header.jpg' alt={item[i].journal_name} />*/}

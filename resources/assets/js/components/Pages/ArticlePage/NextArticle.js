@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as SUtils from "../../Helpers/SUtils";
 
 const styles = {
     item: {
@@ -23,6 +24,16 @@ const styles = {
         left: 0,
         bottom: 0,
         overflow: 'hidden',
+    },
+    off: {
+        zIndex: 30,
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 0,
+        bottom: 0,
+        overflow: 'hidden',
+        backgroundColor: "#000",
     },
     imgBg: {
         zIndex: 10,
@@ -105,6 +116,9 @@ const styles = {
         border: '1px solid #FFF',
         opacity: 0.8,
     },
+    itemEnd: {
+        display: 'none',
+    }
 };
 
 class NextArticle extends Component {
@@ -113,38 +127,98 @@ class NextArticle extends Component {
 
         this.state = {
             data: {},
-            loading: true,
+            loading: false,
+            nextId: 0,
+            nextTitle: 0,
+            nextNumber: 0,
+            nextCount: 0,
+            nextHtml: 0,
+            nextPath: 0,
+            end: false,
         };
     }
-    render() {
-        const page_number = this.props.data.next_article ? this.props.data.next_article.page_number : '';
-        const pages_count = this.props.data.issue ? this.props.data.issue.pages_count : '';
-        const title = this.props.data.next_article ? this.props.data.next_article.title : '';
-        const image_path = this.props.data.next_article ? this.props.data.next_article.image_path : '';
+    componentDidMount(){
+        const self_id = Number(this.props.self_id);
+        fetch('/api/article/next_article/'+self_id)
+            .then((results) => results.json())
+            .then((data) => {
+                this.setState({
+                    nextId: data.id,
+                    nextTitle: data.title,
+                    nextNumber: data.page_number,
+                    nextHtml: data.html,
+                    nextPath: data.image_path,
+                    loading: true,
+                    end: false,
+                },);
+            })
+            .catch((error) =>{
+                console.error(error);
+            });
+    }
 
+    componentWillReceiveProps(nextProps){
+        if (this.props.id_next!==nextProps.id_next) {
+            this.setState ({ loading: false }, function () {
+                fetch('/api/article/next_article/'+nextProps.id_next)
+                    .then((results) => results.json())
+                    .then((data) => {
+                        if (!data.id) {
+                            this.setState({
+                                end: true,
+                            },);
+                        }
+                        else {
+                            this.setState({
+                                nextId: data.id,
+                                nextTitle: data.title,
+                                nextNumber: data.page_number,
+                                nextHtml: data.html,
+                                nextPath: data.image_path,
+                                end: false,
+                            },);
+                        }
+                    })
+                    .then(() => {
+                        this.setState({
+                            loading: true,
+                        },);
+                    })
+                    .catch((error) =>{
+                        console.error(error);
+                    });
+            });
+        }
+        else {
+            return false
+        }
+    }
+
+    render() {
+        const pages_count = this.props.data.issue ? this.props.data.issue.pages_count : '';
         return (
-            <div style={styles.item} key={title}>
+            <div style={this.state.end ? styles.itemEnd : styles.item} key={this.state.nextId}>
                 <div style={styles.inner}>
                     <div style={styles.left}>
                         <div style={styles.url}>
-                            <img style={styles.magLeft} src={image_path} alt={title} />
+                            <img style={styles.magLeft} src={this.state.nextPath} alt={this.state.nextTitle} />
                         </div>
                     </div>
                     <div style={styles.right}>
                         <div style={styles.url}>
                             <h3 style={styles.title}>Следующая статья</h3>
-                            <p style={styles.text}>{title}</p>
+                            <p style={styles.text}>{this.state.nextTitle}</p>
                             <div>
                                 <p style={styles.captionColorSwiper}>
-                                    <span>{page_number}/</span>
+                                    <span>{this.state.nextNumber}/</span>
                                     <span>{pages_count}</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div style={styles.bg}>
-                    <img style={styles.imgBg} src="/images/header.jpg" alt={title} />
+                <div style={this.state.loading ? styles.bg : styles.off}>
+                    <img style={styles.imgBg} src="/images/header.jpg" alt={this.state.nextTitle} />
                     <div style={styles.mask} />
                 </div>
             </div>

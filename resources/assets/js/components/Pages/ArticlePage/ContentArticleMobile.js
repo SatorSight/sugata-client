@@ -149,8 +149,19 @@ const styles = {
         top: 0,
         bottom: 0,
         zIndex: 0,
-        background:'#333',
         minHeight: '100vh',
+        background:'#FFF',
+    },
+    pageMask: {
+        position: 'fixed',
+        overflow: 'hidden',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 0,
+        minHeight: '100vh',
+        background:'rgba(0,0,0,0.5)',
     },
     onLoading: {
         display: 'none',
@@ -325,6 +336,7 @@ class ContentArticleMobile extends Component {
             numberArticle: 0,
             pageNumber: 0,
             idArticle: 0,
+            idNext: 0,
             redirectToReferrer: false,
             listingHtml: 0,
             open: false,
@@ -338,6 +350,7 @@ class ContentArticleMobile extends Component {
         let other_articles_ids = this.state.allPage;
         this.setState({ isLoading: false, idArticle: this.props.self_id },);
         let listing =[];
+        scrollTo(0,0);
 
         fetch('/api/article/article/'+self_id)
             .then((results) => results.json())
@@ -349,6 +362,7 @@ class ContentArticleMobile extends Component {
                     allPage: data.other_articles_ids,
                     pageNumber: data.page_number,
                     idArticle: data.id,
+                    idNext: data.id,
                 },);
                 other_articles_ids = this.state.allPage;
                 function find(array, value) {
@@ -416,7 +430,6 @@ class ContentArticleMobile extends Component {
             .catch((error) =>{
                 console.error(error);
             });
-
     }
 
     loadPrev = (e) => {
@@ -458,7 +471,6 @@ class ContentArticleMobile extends Component {
                 left: 0,
             },);
         }
-        this.props.pageChanged(this.state.pageNumber);
         this.props.history.push('/article/'+this.state.idArticle);
         scrollTo(0,0);
     };
@@ -505,7 +517,6 @@ class ContentArticleMobile extends Component {
                 left: 0,
             },);
         }
-        this.props.pageChanged(this.state.pageNumber);
         this.props.history.push('/article/'+this.state.idArticle);
         scrollTo(0,0);
     };
@@ -525,6 +536,7 @@ class ContentArticleMobile extends Component {
                 // });
                 function(){
                     this.loadPrev(this.state.numberArticle);
+                    this.setState({idNext: this.state.idArticle,},);
                 }.bind(this));
         }
         if (e<0 && this.state.numberArticle!==last_article) {
@@ -541,6 +553,7 @@ class ContentArticleMobile extends Component {
                 // });
                 function(){
                     this.loadNext(this.state.numberArticle);
+                    this.setState({idNext: this.state.idArticle,},);
                 }.bind(this));
         }
         else {
@@ -549,7 +562,6 @@ class ContentArticleMobile extends Component {
     };
 
     _onTouchStart = (e) => {
-
         const touch = e.touches[0];
         this.setState({ originalX: touch.clientX });
         this.setState({ originalY: touch.clientY });
@@ -610,9 +622,9 @@ class ContentArticleMobile extends Component {
                     allPage: data.other_articles_ids,
                     pageNumber: data.page_number,
                     idArticle: data.id,
+                    idNext: data.id,
                 },);
                 this.props.history.push('/article/'+this.state.idArticle);
-                this.props.pageChanged(this.state.pageNumber);
                 other_articles_ids = this.state.allPage;
                 function find(array, value) {
                     if (array.indexOf) {
@@ -670,13 +682,9 @@ class ContentArticleMobile extends Component {
     };
 
     render() {
-        document.body.style.position = (!this.state.isLoading===true) ? 'fixed': 'relative';
-        const next_article = this.props.data.next_article ? this.props.data.next_article.id : '';
-        const nextArticle = !next_article ?  <div style={{display: 'block', background: 'url(/images/header.jpg) no-repeat 50% 50%', backgroundSize: 'cover', color: '#FFF', textAlign: 'center', position: 'relative', zIndex: 50, padding: '1em 0 4em'}}>&nbsp;</div> : <div onClick={this.changedPageNext} style={{display: 'block'}} key={`article.${next_article.id}`}><NextArticle self_id={this.self_id} data={this.props.data}/></div> ;
-        const arrow = SUtils.isMobile(true) ? '' : <div style={this.state.isLoading ? styles.arrowOnLoading : styles.arrowOffLoading}><div style={styles.arrowNext} onClick={this.changedPageNext}> </div> <div style={styles.arrowPrev} onClick={this.changedPagePrev}> </div></div>;
-
         const prev = <div style={Object.assign({}, styles.background, {zIndex: this.state.zIndexPrev})}>
                             <div style={styles.inner} dangerouslySetInnerHTML={{ __html: this.state.htmlPrev }} />
+                            <div style={styles.pageMask} />
                         </div>;
 
         const current = <div onTouchStart={this._onTouchStart} onTouchMove={this._onTouchMove} onTouchEnd={this._onTouchEnd}
@@ -687,12 +695,16 @@ class ContentArticleMobile extends Component {
 
         const next = <div style={Object.assign({}, styles.background, {zIndex: this.state.zIndexNext})}>
                             <div style={styles.inner} dangerouslySetInnerHTML={{ __html: this.state.htmlNext }} />
+                            <div style={styles.pageMask} />
                         </div>;
         const journal_name = this.props.data.journal ? this.props.data.journal.name : '';
         const page_number = this.props.data.article ? this.props.data.article.page_number : '';
         const pages_count = this.props.data.issue ? this.props.data.issue.pages_count : '';
         const image_path = this.props.data.issue ? this.props.data.issue.image_path : '';
         const issue_id = this.props.data.article ? this.props.data.article.issue_id : '';
+
+        const nextArticle = <div onClick={this.changedPageNext} style={{display: 'block'}}><NextArticle id_next={this.state.idNext} self_id={this.props.self_id} data={this.props.data} /></div>;
+        const arrow = SUtils.isMobile(true) ? '' : <div style={this.state.isLoading ? styles.arrowOnLoading : styles.arrowOffLoading}><div style={styles.arrowNext} onClick={this.changedPageNext}> </div> <div style={styles.arrowPrev} onClick={this.changedPagePrev}> </div></div>;
 
         return (
             <div>
@@ -729,7 +741,7 @@ class ContentArticleMobile extends Component {
                                     <h3 style={styles.title}>&laquo;{journal_name}&raquo;</h3>
                                     <div style={styles.page}>
                                         <p style={styles.captionColorSwiper}>
-                                            <span>{page_number}/</span>
+                                            <span>{this.state.pageNumber}/</span>
                                             <span>{pages_count}</span>
                                         </p>
                                     </div>
