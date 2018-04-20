@@ -350,6 +350,7 @@ class ContentArticleMobile extends Component {
         let other_articles_ids = this.state.allPage;
         this.setState({ isLoading: false, idArticle: this.props.self_id },);
         let listing =[];
+        scrollTo(0,0);
 
         fetch('/api/article/article/'+self_id)
             .then((results) => results.json())
@@ -429,7 +430,6 @@ class ContentArticleMobile extends Component {
             .catch((error) =>{
                 console.error(error);
             });
-
     }
 
     loadPrev = (e) => {
@@ -562,7 +562,6 @@ class ContentArticleMobile extends Component {
     };
 
     _onTouchStart = (e) => {
-
         const touch = e.touches[0];
         this.setState({ originalX: touch.clientX });
         this.setState({ originalY: touch.clientY });
