@@ -67,6 +67,7 @@ export const ISSUE_RESOURCES = Object.freeze({
         'main_topics',
         'new_articles',
         'other_issues',
+        'first_article_id'
     ],
     with_from: [
         'more_new_articles',

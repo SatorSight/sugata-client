@@ -68,6 +68,7 @@ Route::get('/all_issues_bundle/more_issues/{bundle_id}/{from}/', 'ApiController@
 
 Route::get('/issue/bundles/', 'ApiController@issueGetBundles');
 Route::get('/issue/bundle/{issue_id}/', 'ApiController@issueGetCurrentBundle');
+Route::get('/issue/first_article_id/{issue_id}/', 'ApiController@issueGetFirstArticleId');
 Route::get('/issue/issue/{issue_id}/', 'ApiController@issueGetIssue');
 Route::get('/issue/all_issues/{issue_id}/', 'ApiController@issueGetAllIssues');
 Route::get('/issue/main_topics/{issue_id}/', 'ApiController@issueGetMainTopics');

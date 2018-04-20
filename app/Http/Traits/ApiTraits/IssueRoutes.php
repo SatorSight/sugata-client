@@ -38,6 +38,31 @@ trait IssueRoutes{
     }
 
     /**
+     * @desc first issue article id
+     * @param $issue_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function issueGetFirstArticleId($issue_id){
+        $id = Cache::remember('issue_first_article_id_' . $issue_id, $this->expiration, function() use($issue_id) {
+            $id = Article::select('id')
+                ->where('issue_id', $issue_id)
+                ->orderBy('page_number')
+                ->limit(1)
+                ->get()
+                ->first()
+                ->id
+            ;
+
+            return $id;
+        });
+
+        $idObj = new \stdClass();
+        $idObj->id = $id;
+
+        return response()->json($idObj);
+    }
+
+    /**
      * @desc get all issue data
      * @param $issue_id
      * @return \Illuminate\Http\JsonResponse

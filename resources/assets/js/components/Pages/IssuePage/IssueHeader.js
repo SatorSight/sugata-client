@@ -275,6 +275,7 @@ class IssueHeader extends Component {
         const bundle = this.props.data.bundle ? this.props.data.bundle : null;
         const issues = this.props.data.all_issues;
         const index = issues ? this.index(issues) : null;
+        const first_article_id = this.props.data.first_article_id ? this.props.data.first_article_id.id : 0;
 
         return (
             <div style={styles.header}>
@@ -300,7 +301,7 @@ class IssueHeader extends Component {
                         {this.prev(issues)}
                         {this.cur(issues)}
                         {this.next(issues)}
-                        {issues[index] ?  <Link style={styles.button} key={issues[index].id} to={`/issue/${issues[index].id}`}>
+                        {issues[index] ?  <Link style={styles.button} key={issues[index].id} to={`/article/${first_article_id}`}>
                             открыть и читать
                         </Link> : null}
                     </div> : null }
