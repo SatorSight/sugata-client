@@ -149,8 +149,19 @@ const styles = {
         top: 0,
         bottom: 0,
         zIndex: 0,
-        background:'#333',
         minHeight: '100vh',
+        background:'#FFF',
+    },
+    pageMask: {
+        position: 'fixed',
+        overflow: 'hidden',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 0,
+        minHeight: '100vh',
+        background:'rgba(0,0,0,0.5)',
     },
     onLoading: {
         display: 'none',
@@ -674,6 +685,7 @@ class ContentArticleMobile extends Component {
     render() {
         const prev = <div style={Object.assign({}, styles.background, {zIndex: this.state.zIndexPrev})}>
                             <div style={styles.inner} dangerouslySetInnerHTML={{ __html: this.state.htmlPrev }} />
+                            <div style={styles.pageMask} />
                         </div>;
 
         const current = <div onTouchStart={this._onTouchStart} onTouchMove={this._onTouchMove} onTouchEnd={this._onTouchEnd}
@@ -684,6 +696,7 @@ class ContentArticleMobile extends Component {
 
         const next = <div style={Object.assign({}, styles.background, {zIndex: this.state.zIndexNext})}>
                             <div style={styles.inner} dangerouslySetInnerHTML={{ __html: this.state.htmlNext }} />
+                            <div style={styles.pageMask} />
                         </div>;
         const journal_name = this.props.data.journal ? this.props.data.journal.name : '';
         const page_number = this.props.data.article ? this.props.data.article.page_number : '';
