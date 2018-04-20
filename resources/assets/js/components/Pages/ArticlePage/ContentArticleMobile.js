@@ -612,6 +612,7 @@ class ContentArticleMobile extends Component {
                     allPage: data.other_articles_ids,
                     pageNumber: data.page_number,
                     idArticle: data.id,
+                    idNext: data.id,
                 },);
                 this.props.history.push('/article/'+this.state.idArticle);
                 other_articles_ids = this.state.allPage;
