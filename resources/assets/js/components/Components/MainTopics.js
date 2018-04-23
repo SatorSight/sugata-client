@@ -134,7 +134,6 @@ class MainTopics extends React.Component {
         let content = [];
         let articles = this.props.data.main_topics;
         const dot = this.props.data.main_topics ? this.props.data.main_topics.length : '';
-        console.log(dot);
         if(SUtils.any(articles))
             articles.map(article => content.push(
                 <div style={styles.slideSwiper} key={article.id}>

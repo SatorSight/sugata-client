@@ -168,6 +168,7 @@ class SwiperMain extends React.Component {
     };
 
     render() {
+        const dot = this.props.articles ? this.props.articles.length : '';
         return (
             <div style={styles.root}>
                 <SwipeableViews
@@ -179,7 +180,7 @@ class SwiperMain extends React.Component {
                 >
                     {this.renderSlide()}
                 </SwipeableViews>
-                <Pagination dots={3} index={this.props.active} onChangeIndex={this.props.changer} />
+                <Pagination dots={dot} index={this.props.active} onChangeIndex={this.props.changer} />
             </div>
         );
     }
