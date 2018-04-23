@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as SUtils from './../Helpers/SUtils';
 import { Link } from 'react-router-dom'
+import LoadMoreButton from '../Components/LoadMoreButton';
 
 
 const styles = {
@@ -140,9 +141,7 @@ class PopularArticles extends Component {
                             </div>
                         </div>
                     ) : null }
-                    <div style={styles.fot}>
-                        <button onClick={this.loadMore} style={styles.button}>Загрузить еще</button>
-                    </div>
+                    <LoadMoreButton load_more={this.loadMore}/>
                 </div>
             </div>
         );

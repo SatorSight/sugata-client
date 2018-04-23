@@ -17,3 +17,6 @@ yarn-error.log
 /config/database.php
 resources/views/spa.blade.php
 /public/uploaded_images_resized/
+/public/fonts/
+/public/css/
+/public/js/

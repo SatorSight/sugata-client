@@ -48,8 +48,8 @@ let mix = require('laravel-mix');
 
  * */
 
-mix.react('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css');
+mix.react('resources/assets/js/app.js', 'public/js');
+mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 if (process.env.npm_lifecycle_event !== 'hot') {
     mix.version();
@@ -62,10 +62,6 @@ mix.webpackConfig({
                 test: /\.jsx?$/,
                 loaders: ['babel-loader'],
             },
-
-
-
-
         ]
     },
 });
