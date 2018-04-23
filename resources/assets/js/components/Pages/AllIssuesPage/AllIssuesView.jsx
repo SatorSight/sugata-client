@@ -219,14 +219,14 @@ export default class AllIssuesView extends Component {
         this.props.load_more().then(function() {
             _this.setState({ isLoading: false });
             const issuesAdd = _this.props.data.issues;
-            let state = (issues.length!==issuesAdd.length) ? true : false;
+            let state = issues.length!==issuesAdd.length;
             _this.setState({ buttonOn: state });
         });
     };
     render() {
         const item = this.props.issues ? this.props.data.issues : '';
         let content= [];
-        if (item!=null){
+        if (item){
             for(let i=0; i < item.length; i++){
                 content[i] = <div key={String(i)} style={styles.item}>
                                 <Link  to={`/issue/${item[i].id}`} style={styles.link}>
@@ -238,7 +238,7 @@ export default class AllIssuesView extends Component {
 
                                     <div style={styles.inner}>
                                         <p style={styles.name}>{item[i].journal_name}</p>
-                                        <p style={styles.date}>{item[i].content_date}</p>
+                                        <p style={styles.date}>{SUtils.toRuMonthYearLocale(item[i].content_date)}</p>
                                     </div>
                                 </Link>
                             </div>;
@@ -272,7 +272,7 @@ export default class AllIssuesView extends Component {
                     {content}
                 </div>
                 <div style={this.state.buttonOn ? styles.buttonDisplay : styles.buttonHidden}>
-                    <Button color="primary" style={this.state.isLoading ? styles.offButton : styles.button} onClick={this.addMore}>
+                    <Button classes={{}} color="primary" style={this.state.isLoading ? styles.offButton : styles.button} onClick={this.addMore}>
                         {this.state.isLoading ? ' ' : <span style={styles.span}>Загрузить еще</span>}
                     </Button>
                 </div>
