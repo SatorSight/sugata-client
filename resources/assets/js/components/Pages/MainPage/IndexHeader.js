@@ -87,7 +87,7 @@ const styles = {
         fontWeight: 200,
         display: 'inline-block',
         padding: '0.7em 1.5em',
-        margin: '4.8em auto',
+        margin: '4.8em auto 4.6em',
         position: 'relative',
         zIndex: 30,
     },
