@@ -80,7 +80,7 @@ const styles = {
         zIndex: 30,
     },
     h1: {
-        fontSize: '2.1em',
+        fontSize: '2em',
         letterSpacing: '0.5em',
         textTransform: 'uppercase',
         color: '#FFF',
