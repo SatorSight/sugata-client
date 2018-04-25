@@ -7,6 +7,7 @@ use App\Http\Traits\HasLatest;
 use App\Lib\SUtils;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection;
 
 class Article extends Model
@@ -55,7 +56,7 @@ class Article extends Model
 //        ])->first();
 //    }
 
-    public static function getChosen() : Collection{
+    public static function getChosen() : Collection {
 
         $articles = Article::where('chosen', true)->orderBy('page_number', 'desc')->take(4)->get();
 
@@ -166,6 +167,7 @@ class Article extends Model
     }
 
     public static function injectWithImages(Collection &$articles) : void {
+        //todo change to transform
         $articles = $articles->map(function($article){
             if(!empty($article)) {
                 if (!empty($article->getImage())) {
@@ -173,6 +175,54 @@ class Article extends Model
                     if (isset($image->path))
                         $article->image_path = $image->path;
                 }
+            }
+            return $article;
+        });
+    }
+
+    public static function injectNextAndPrevIssue(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            if(!empty($article)) {
+
+                $issue_id = $article->issue->id;
+                $journal = $article->issue->journal;
+                $issues = $journal->issues->sortByDesc('number');
+
+                $current_key = null;
+                $issues->each(function($issue, $key) use ($issue_id, &$current_key){
+                    if($issue->id === $issue_id){
+                        $current_key = $key;
+                    }
+                });
+
+                $prev = $issues->get($current_key - 1);
+                $next = $issues->get($current_key + 1);
+
+                //todo fix this wtf
+                $side_collection = new \Illuminate\Database\Eloquent\Collection();
+                if($prev)
+                    $side_collection->push($prev);
+                if($next)
+                    $side_collection->push($next);
+
+                Issue::injectWithImages($side_collection);
+                Issue::injectWithJournalNames($side_collection);
+
+                $next = $side_collection->pop();
+                $prev = $side_collection->pop();
+
+                $side_issues = new \stdClass();
+                $side_issues->prev = $prev;
+                $side_issues->next = $next;
+
+                $article->side_issues = $side_issues;
+
+                /** @var Collection $ids */
+                $ids = Article::select('id')->where('issue_id', $article->issue_id)->orderBy('page_number')->get();
+                $article->other_articles_ids = $ids->reduce(function($carry, $item){
+                    $carry[] = $item->id;
+                    return $carry;
+                }, []);
             }
             return $article;
         });
@@ -188,6 +238,37 @@ class Article extends Model
                     return $carry;
                 }, []);
             }
+            return $article;
+        });
+    }
+
+    public static function injectNextArticle(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            $next_article = Article::where('issue_id', $article->issue_id)->where('page_number', $article->page_number + 1)->first();
+
+            if($next_article) {
+
+                $collection = new Collection();
+                $collection->push($next_article);
+
+                self::injectWithImages($collection);
+
+                $next_article = $collection->first();
+
+
+                $next_article_obj = new \stdClass();
+                if(!empty($next_article->image_path))
+                    $next_article_obj->image_path = $next_article->image_path;
+                if(!empty($next_article->title))
+                    $next_article_obj->title = $next_article->title;
+                $next_article_obj->page_number = $next_article->page_number;
+
+            }else{
+                $next_article_obj = null;
+            }
+
+            $article->next_article = $next_article_obj;
+
             return $article;
         });
     }

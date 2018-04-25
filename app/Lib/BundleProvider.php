@@ -45,6 +45,9 @@ class BundleProvider{
             $journal = Journal::find($id);
             $bundle = $journal->bundle;
         }
+        if($entity == 'bundle'){
+            $bundle = Bundle::find($id);
+        }
 
         return $bundle;
     }

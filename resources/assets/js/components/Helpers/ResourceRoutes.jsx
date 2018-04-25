@@ -107,6 +107,7 @@ export const ARTICLE_RESOURCES = Object.freeze({
         'journal',
         'issue',
         'article',
-        'next_article',
+        'listing',
+        // 'next_article',
     ],
 });

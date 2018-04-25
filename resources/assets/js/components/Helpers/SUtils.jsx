@@ -70,12 +70,26 @@ export function any(haystack) {
     return haystack.length > 0
 }
 
-export function empty(haystack) {
+export function empty(haystack){
     if(!haystack)
+        return true;
+    if(Number.isInteger(haystack) && isNaN(haystack))
+        return true;
+    if(haystack === null)
         return true;
     if(haystack === undefined)
         return true;
-    return haystack.length === 0
+    if(haystack === '')
+        return true;
+    if(haystack === false)
+        return true;
+    if(haystack.length === 0)
+        return true;
+    if(haystack.constructor === Object && Object.keys(haystack).length === 0)
+        return true;
+    if((haystack instanceof DateRange) && empty(haystack.from) && empty(haystack.to))
+        return true;
+    return false;
 }
 
 export function first(haystack) {
@@ -224,4 +238,36 @@ export function toRuMonthYearLocale(date_string){
     ru_date = capitalize(ru_date);
 
     return ru_date;
+}
+
+export function last(haystack) {
+    if(haystack && haystack.length > 0)
+        return haystack[haystack.length - 1];
+    else
+        return false;
+}
+
+export function propOrNull(obj, prop){
+    // if(empty(obj))
+    //     return null;
+    // return (!obj) ? null : obj[prop];
+    if(!obj)
+        return null;
+    if(!obj.hasOwnProperty(prop))
+        return null;
+    return obj[prop];
+}
+
+export class DateRange{
+    constructor(from = null, to = null){
+        this.from = from || '';
+        this.to = to || '';
+    }
+
+    static plain(){
+        return {
+            from: this.from,
+            to: this.to
+        }
+    }
 }

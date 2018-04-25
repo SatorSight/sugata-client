@@ -7,6 +7,7 @@
     <meta name="HandheldFriendly" content="true" />
     <meta name="MobileOptimized" content="320" />
     <title>КиоскПлюс</title>
+    <style></style>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" type="text/css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>

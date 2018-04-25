@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ContentArticleMobile from "./ArticlePage/ContentArticleMobile";
-import { Link } from 'react-router-dom'
+import Reader from './ArticlePage/Reader/Reader';
+import Waiter from '../Helpers/Waiter2';
 
 import AuthorizableComponent from '../Helpers/AuthorizableComponent';
 
@@ -35,21 +35,15 @@ export default class ArticlePage extends AuthorizableComponent {
     };
 
     render() {
-
-        let content = [];
-        let stylesImg = 'img {max-width: 100%;}';
-        content.push(
-            <div key='mobile'>
-                <ContentArticleMobile self_id={this.self_id} data={this.state.data} history={this.props.history}/>
-                <style>{stylesImg}</style>
-            </div>
-        );
-
         return <div style={styles.root}>
-                    {content}
-                    <div style={styles.button}>
-                        <button onClick={this.paymentTrigger}>try paid content</button>
-                    </div>
+                    {this.state.loading
+                        ? <Waiter/>
+                        : <Reader
+                            page_load_limit={4}
+                            payment_trigger={this.paymentTrigger}
+                            {...this.state.data}
+                            history={this.props.history} />}
+
                 </div>;
     }
 }

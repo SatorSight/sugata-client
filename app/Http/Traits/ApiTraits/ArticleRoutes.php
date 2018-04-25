@@ -47,7 +47,11 @@ trait ArticleRoutes{
     public function articleGetListing($article_id){
         $listing = Cache::remember('article_listing_' . $article_id, $this->expiration, function() use($article_id) {
             $issue = Article::find($article_id)->issue;
-            $listing = $issue->articles
+
+            $listing = Article::where('issue_id', $issue->id)
+                ->whereNotNull('title')
+                ->where('title', '!=', '')
+                ->get()
                 ->map(function($article){
                     /** @var Article $article */
                     if(!empty($article->title)){
@@ -68,7 +72,31 @@ trait ArticleRoutes{
                     }
                     return null;
                 })
-                ->reject(function($article){ return empty($article); });
+            ;
+//
+//
+//            $listing = $issue->articles
+//                ->map(function($article){
+//                    /** @var Article $article */
+//                    if(!empty($article->title)){
+//                        $l = new \stdClass();
+//                        $l->id = $article->id;
+//                        $l->page_number = $article->page_number;
+//                        $l->title = $article->title;
+//
+//                        $article_collection = new Collection();
+//                        $article_collection->push($article);
+//
+//                        Article::injectWithImages($article_collection);
+//                        ImageProxyService::resize($article_collection, 'image_path', ImageProxyService::LISTING_ARTICLE_200);
+//
+//                        $l->image = $article->image_path;
+//
+//                        return $l;
+//                    }
+//                    return null;
+//                })
+//                ->reject(function($article){ return empty($article); });
 
             $listing = array_values($listing->toArray());
             usort($listing, function($a, $b){
@@ -130,6 +158,8 @@ trait ArticleRoutes{
             $article_collection = new Collection();
             $article_collection->push($article);
             Article::injectOtherArticlesIdList($article_collection);
+            Article::injectNextArticle($article_collection);
+            Article::injectNextAndPrevIssue($article_collection);
 
             $article = $article_collection->first();
 
