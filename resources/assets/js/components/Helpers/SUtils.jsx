@@ -93,7 +93,7 @@ export function empty(haystack){
 }
 
 export function first(haystack) {
-    return haystack.find(() => true);
+    return !empty(haystack) ? haystack.find(() => true) : null;
 }
 
 export function clone_array(haystack) {

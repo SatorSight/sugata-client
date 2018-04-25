@@ -25,7 +25,7 @@ const styles = {
         borderRadius: '0.2em',
         boxShadow: '0.2em 0.2em 0.4em -0.2em rgba(0,0,0,0.2)',
         overflow: 'hidden',
-        height: '12em',
+        height: '15em',
         width: 'auto',
     },
     fot: {
@@ -61,20 +61,35 @@ export default class OtherIssues extends Component {
 
     render() {
         const issues = this.props.issues;
+        const first_issue = SUtils.first(issues);
+        const journal_id = SUtils.propOrNull(first_issue, 'journal_id');
 
         return (
             <div style={styles.otherIssues}>
                 <p style={styles.title}>Другие выпуски</p>
                 {SUtils.any(issues) ?
-                    <OwlCarousel autoWidth dots={false}>
+                    <OwlCarousel
+                        autoWidth
+                        lazyLoad
+                        dots={false}>
                         {issues.map((issue, currentIndex) =>
                             <Link key={issue.id} to={`/issue/${issue.id}`} style={styles.item}>
-                                <img style={styles.imgOtherIssues} src={issue.image_path} alt={issue.number} />
+                                <div style={
+                                    Object.assign({}, styles.imgOtherIssues, {
+                                        background: `url(${issue.image_path})`,
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'top center',
+                                        minWidth: '11em'
+                                    })
+                                }></div>
                             </Link>
                         )}
                     </OwlCarousel> : null }
                 <div style={styles.fot}>
-                    <a href="#look" style={styles.button}>Смотреть все</a>
+                    <Link to={`/all_issues/journal/${journal_id}`} style={styles.button}>
+                        Смотреть все
+                    </Link>
                 </div>
             </div>
         );

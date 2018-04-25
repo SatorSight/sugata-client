@@ -74,18 +74,22 @@ class GetChangedData extends Command
                         foreach ($arrayed_object as $field => $value){
                             $klass = MasterClassAdapter::masterToSlave($master_class);
                             if(Schema::hasColumn($existing_object->getTable(), $field)){
-                                if($field != 'updated_at' && $field != 'created_at')
-                                    if(strpos($field, 'date') === false)
-                                        if($existing_object->$field != $value) {
-                                            $existing_object->$field = $value;
-                                            if(new $klass instanceof ImageBasedClass){
-                                                if(!empty($arrayed_object['parent_id'])) {
-                                                    if ($field == 'id')
-                                                        $image_ids[] = $value;
-                                                }else
-                                                    continue;
+                                if($field != 'updated_at' && $field != 'created_at') {
+                                    if(strpos($field, 'date') !== false){
+                                        $value = new \DateTime($value);
+                                    }
+                                    if ($existing_object->$field != $value) {
+                                        $existing_object->$field = $value;
+                                        if (new $klass instanceof ImageBasedClass) {
+                                            if (!empty($arrayed_object['parent_id'])) {
+                                                if ($field == 'id')
+                                                    $image_ids[] = $value;
+                                            } else {
+                                                continue;
                                             }
                                         }
+                                    }
+                                }
                             }
                         }
                         $existing_object->save();
@@ -103,14 +107,15 @@ class GetChangedData extends Command
 
                         foreach ($arrayed_object as $field => $value){
                             if(Schema::hasColumn($obj->getTable(), $field)){
-                                if($field != 'updated_at' && $field != 'created_at')
-                                    if(strpos($field, 'date') === false) {
-                                        $obj->$field = $value;
-                                        if($obj instanceof ImageBasedClass){
-                                            if($field == 'id')
-                                                $image_ids[] = $value;
-                                        }
+                                if($field != 'updated_at' && $field != 'created_at') {
+                                    if(strpos($field, 'date') !== false)
+                                        $value = new \DateTime($value);
+                                    $obj->$field = $value;
+                                    if ($obj instanceof ImageBasedClass) {
+                                        if ($field == 'id')
+                                            $image_ids[] = $value;
                                     }
+                                }
                             }
                         }
                         $obj->save();

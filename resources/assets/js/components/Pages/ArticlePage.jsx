@@ -28,12 +28,6 @@ export default class ArticlePage extends AuthorizableComponent {
         return false;
     }
 
-    someAction = () => {
-        console.log('some action');
-        console.log(this.authorized());
-        this.paymentTrigger();
-    };
-
     render() {
         return <div style={styles.root}>
                     {this.state.loading
