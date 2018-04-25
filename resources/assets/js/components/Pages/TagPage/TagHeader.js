@@ -174,9 +174,9 @@ class TagHeader extends Component {
                     <div style={styles.indexMenu}>
                         <IndexMenu data={this.props.data} />
                     </div>
-                    <div style={styles.customMenu}>
-                        <CustomMenu data={this.props.data}/>
-                    </div>
+                    {/*<div style={styles.customMenu}>*/}
+                        {/*<CustomMenu data={this.props.data}/>*/}
+                    {/*</div>*/}
                     {SUtils.any(journals) ? <div>
                         <h1 style={styles.h1}>&laquo;{journals[index].bundle.name}&raquo;</h1>
                         <p style={styles.h2}>{journals.length} статей по теме<span style={styles.arrow} /></p>

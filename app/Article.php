@@ -161,6 +161,7 @@ class Article extends Model
         $res = str_replace('</p>', '', $res);
         $res = str_replace('</br>', '', $res);
         $res = str_replace('<br/>', '', $res);
+        $res = str_replace('&nbsp;', ' ', $res);
         $res = strip_tags($res);
 
         return $res;
@@ -237,6 +238,16 @@ class Article extends Model
                     $carry[] = $item->id;
                     return $carry;
                 }, []);
+            }
+            return $article;
+        });
+    }
+
+    public static function injectIssueContentDate(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            if(!empty($article)) {
+                $article->content_date = $article->issue->content_date;
+                unset($article->issue);
             }
             return $article;
         });

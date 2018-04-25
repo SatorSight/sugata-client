@@ -144,9 +144,9 @@ class JournalHeader extends Component {
                         <div style={styles.indexMenu}>
                             <IndexMenu data={this.props.data} />
                         </div>
-                        <div style={styles.customMenu}>
-                            <CustomMenu data={this.props.data} />
-                        </div>
+                        {/*<div style={styles.customMenu}>*/}
+                            {/*<CustomMenu data={this.props.data} />*/}
+                        {/*</div>*/}
                         {journal ? <div>
                             <h1 style={styles.h1}>{bundle ? bundle.name : ''}<span style={styles.arrow} /></h1>
                             <div style={styles.bigLogo}>

@@ -198,6 +198,7 @@ trait IssueRoutes{
             Article::injectDates($basic_articles);
             Article::injectJournalNames($basic_articles);
             Article::injectWithImages($basic_articles);
+            Article::injectIssueContentDate($basic_articles);
 
             ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -249,6 +250,7 @@ trait IssueRoutes{
             Article::injectDates($basic_articles);
             Article::injectJournalNames($basic_articles);
             Article::injectWithImages($basic_articles);
+            Article::injectIssueContentDate($basic_articles);
 
             ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 

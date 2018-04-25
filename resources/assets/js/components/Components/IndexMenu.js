@@ -370,6 +370,9 @@ class IndexMenu extends Component {
                                     </Tabs>
                                     <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
                                         <div style={styles.mainBundle}>
+                                            <Link onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
+                                                На главную
+                                            </Link>
                                             {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
                                                 <Link onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
                                                     {bundle.name}

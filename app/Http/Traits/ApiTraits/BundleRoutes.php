@@ -115,6 +115,7 @@ trait BundleRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+            Article::injectIssueContentDate($articles);
 
             ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -155,6 +156,7 @@ trait BundleRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+            Article::injectIssueContentDate($articles);
 
             ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -194,6 +196,7 @@ trait BundleRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+            Article::injectIssueContentDate($articles);
 
             ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -235,6 +238,7 @@ trait BundleRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+            Article::injectIssueContentDate($articles);
 
             ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 

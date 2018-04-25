@@ -123,7 +123,7 @@ class NewArticles extends Component {
                             <div style={styles.inner}>
                                 <div style={styles.over}>
                                     <Link to={`/article/${article.id}`} style={styles.title}>
-                                        {article.title}
+                                        {SUtils.capitalize(article.title.toLowerCase())}
                                     </Link>
                                     <p style={styles.shortContent}>
                                         {article.text}
@@ -133,7 +133,7 @@ class NewArticles extends Component {
                                 <div>
                                     <p style={styles.caption}>
                                         <span>{article.journal_name}, </span>
-                                        <span>{article.date}</span>
+                                        <span>{SUtils.toRuMonthYearLocale(article.content_date)}</span>
                                     </p>
                                 </div>
                             </div>

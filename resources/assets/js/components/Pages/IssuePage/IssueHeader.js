@@ -215,10 +215,6 @@ class IssueHeader extends Component {
                     prev = issues[i - 1];
         });
 
-        // console.log('prev asdddddddddddddddddddddddd');
-        // console.log(prev);
-
-
         return prev ?   <Link to={`/issue/${prev.id}`} style={styles.leftMag}>
                             <img style={styles.butMag} src={prev.image_path} alt={prev.journal_name} />
                             <img style={styles.butMagMask} src={prev.image_path} alt={prev.journal_name} />
@@ -233,10 +229,6 @@ class IssueHeader extends Component {
                     next = issues[i + 1];
         });
 
-        // console.log('next asdddddddddddddddddddddddd');
-        // console.log(next);
-
-
         return next ?   <Link to={`/issue/${next.id}`} style={styles.rightMag}>
                             <img style={styles.butMag} src={next.image_path} alt={next.journal_name} />
                             <img style={styles.butMagMask} src={next.image_path} alt={next.journal_name} />
@@ -249,10 +241,6 @@ class IssueHeader extends Component {
             if(parseInt(issue.id) === parseInt(this.props.self_id))
                 cur = issue;
         });
-
-        // console.log('cur asdddddddddddddddddddddddd');
-        // console.log(cur);
-
 
         return cur ? <Link to={`/issue/${cur.id}`} style={styles.bigMag}>
                         <img style={styles.imgMag} src={cur.image_path} alt={cur.journal_name} />
@@ -289,15 +277,15 @@ class IssueHeader extends Component {
                     <div style={styles.indexMenu}>
                         <IndexMenu data={this.props.data} />
                     </div>
-                    <div style={styles.customMenu}>
-                        <CustomMenu data={this.props.data} />
-                    </div>
+                    {/*<div style={styles.customMenu}>*/}
+                        {/*<CustomMenu data={this.props.data} />*/}
+                    {/*</div>*/}
                     {SUtils.any(issues) ? <div>
                         {bundle ?
                             <Link to={`/bundle/${bundle.id}`} style={styles.h1}>
                                 {bundle.name}<span style={styles.arrow}/>
                             </Link> : null}
-                        <p style={styles.date}>{index ? issues[index].updated_at : ''}</p>
+                        <p style={styles.date}>{index ? SUtils.toRuMonthYearLocale(issues[index].content_date).toUpperCase() : ''}</p>
                         {this.prev(issues)}
                         {this.cur(issues)}
                         {this.next(issues)}

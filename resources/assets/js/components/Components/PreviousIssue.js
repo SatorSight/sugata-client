@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as SUtils from "../Helpers/SUtils";
+import { Link } from 'react-router-dom'
 
 const styles = {
     item: {
@@ -102,27 +103,30 @@ class PreviousIssue extends Component {
         const issue = this.props.issue;
         return (
             <div>
+
                 {issue ?
-                    <div style={styles.item} key={issue.id}>
-                        <div style={styles.inner}>
-                            <div style={styles.left}>
-                                <a style={styles.url} href={issue.url_prefix}>
-                                    <img style={styles.magLeft} src={issue.image_path} alt={issue.journal_name} />
-                                </a>
+                    <Link style={{cursor: 'pointer'}} to={`/issue/${issue.id}`}>
+                        <div style={styles.item} key={issue.id}>
+                            <div style={styles.inner}>
+                                <div style={styles.left}>
+                                    <a style={styles.url} href={issue.url_prefix}>
+                                        <img style={styles.magLeft} src={issue.image_path} alt={issue.journal_name} />
+                                    </a>
+                                </div>
+                                <div style={styles.right}>
+                                    <a style={styles.url} href={issue.url_prefix}>
+                                        <h3 style={styles.title}>предыдущий выпуск</h3>
+                                        <img style={styles.logo} src={issue.logo_path} alt={issue.name} />
+                                        <p style={styles.date}>{SUtils.toRuMonthYearLocale(issue.content_date).toUpperCase()}</p>
+                                    </a>
+                                </div>
                             </div>
-                            <div style={styles.right}>
-                                <a style={styles.url} href={issue.url_prefix}>
-                                    <h3 style={styles.title}>предыдущий выпуск</h3>
-                                    <img style={styles.logo} src={issue.logo_path} alt={issue.name} />
-                                    <p style={styles.date}>{issue.created_at}</p>
-                                </a>
+                            <div style={styles.bg}>
+                                <img style={styles.imgBg} src={issue.image_path} alt={issue.journal_name} />
+                                <div style={styles.mask} />
                             </div>
                         </div>
-                        <div style={styles.bg}>
-                            <img style={styles.imgBg} src={issue.image_path} alt={issue.journal_name} />
-                            <div style={styles.mask} />
-                        </div>
-                    </div> : null }
+                    </Link> : null }
             </div>
         );
     }

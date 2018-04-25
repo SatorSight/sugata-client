@@ -103,6 +103,7 @@ trait JournalRoutes{
             Article::injectDates($basic_articles);
             Article::injectJournalNames($basic_articles);
             Article::injectWithImages($basic_articles);
+            Article::injectIssueContentDate($basic_articles);
 
             ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -136,6 +137,7 @@ trait JournalRoutes{
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
+            Article::injectIssueContentDate($articles);
 
             ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -158,6 +160,7 @@ trait JournalRoutes{
             Article::injectDates($basic_articles);
             Article::injectJournalNames($basic_articles);
             Article::injectWithImages($basic_articles);
+            Article::injectIssueContentDate($basic_articles);
 
             ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 
@@ -186,6 +189,7 @@ trait JournalRoutes{
             Article::clearFromHtml($articles);
             Article::injectDates($articles);
             Article::injectJournalNames($articles);
+            Article::injectIssueContentDate($articles);
             Article::injectWithImages($articles);
 
             ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
