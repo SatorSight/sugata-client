@@ -1,4 +1,6 @@
 export function in_array(needle, haystack) {
+    if(!haystack || !needle)
+        return false;
     return haystack.indexOf(needle) !== -1;
 }
 
