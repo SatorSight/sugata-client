@@ -22,7 +22,7 @@ export default class AllIssuesBundlePage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <AllIssuesView data={this.state.data} self_id={this.self_id} load_more={this.loadMore} title={this.state.data.title} issues={this.state.data.issues} />
+                <AllIssuesView auth_data={this.state.auth_data} data={this.state.data} self_id={this.self_id} load_more={this.loadMore} title={this.state.data.title} issues={this.state.data.issues} />
             </div>
         );
     }

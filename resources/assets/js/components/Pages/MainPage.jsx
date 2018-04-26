@@ -24,7 +24,7 @@ class MainPage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <IndexHeader data={this.state.data}/>
+                <IndexHeader auth_data={this.state.auth_data} data={this.state.data}/>
                 <NewIssues data={this.state.data}/>
                 <MainTopics data={this.state.data}/>
                 <MainTabs

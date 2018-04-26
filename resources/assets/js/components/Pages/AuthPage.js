@@ -37,7 +37,7 @@ export default class AuthPage extends Component {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <AuthHeader data={this.state.data}/>
+                <AuthHeader auth_data={this.state.auth_data} data={this.state.data}/>
                 <IndexFooter />
             </div>
         );

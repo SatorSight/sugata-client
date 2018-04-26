@@ -24,7 +24,7 @@ export default class JournalPage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <JournalHeader data={this.state.data}/>
+                <JournalHeader auth_data={this.state.auth_data} data={this.state.data}/>
                 <IssuesSwiper
                     parent_type={'journal'}
                     issues={this.state.data.last_issues}

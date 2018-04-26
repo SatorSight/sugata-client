@@ -22,7 +22,7 @@ export default class BundlePage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <BundleHeader data={this.state.data}/>
+                <BundleHeader auth_data={this.state.auth_data} data={this.state.data}/>
                 <IssuesSwiper
                     parent_type={'bundle'}
                     bundle_id={this.self_id}

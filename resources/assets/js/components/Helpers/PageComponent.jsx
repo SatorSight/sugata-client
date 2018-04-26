@@ -18,6 +18,7 @@ export default class PageComponent extends Component {
     }
 
     componentDidMount(){
+        SUtils.loadAuthDataToState(this);
         SUtils.load(this.getRoutesObject(), this);
     }
     componentWillReceiveProps(nextProps){

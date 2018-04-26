@@ -39,7 +39,7 @@ class IssuePage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <IssueHeader self_id={this.self_id} data={this.state.data}/>
+                <IssueHeader auth_data={this.state.auth_data} self_id={this.self_id} data={this.state.data}/>
                 <IssuesTheme data={this.state.data}/>
                 <MainTabs
                     onlyFirst

@@ -258,7 +258,7 @@ export default class AllIssuesView extends Component {
                         </div>
                         <div style={styles.inner}>
                             <div style={styles.indexMenu}>
-                                <IndexMenu data={this.props.data}/>
+                                <IndexMenu auth_data={this.props.auth_data} data={this.props.data}/>
                             </div>
                             <Link to="/" style={styles.h2}>
                                 киоск плюс

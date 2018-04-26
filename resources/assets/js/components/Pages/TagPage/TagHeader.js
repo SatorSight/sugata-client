@@ -172,7 +172,7 @@ class TagHeader extends Component {
                 </div>
                 <div style={styles.inner}>
                     <div style={styles.indexMenu}>
-                        <IndexMenu data={this.props.data} />
+                        <IndexMenu auth_data={this.props.auth_data} data={this.props.data} />
                     </div>
                     {/*<div style={styles.customMenu}>*/}
                         {/*<CustomMenu data={this.props.data}/>*/}

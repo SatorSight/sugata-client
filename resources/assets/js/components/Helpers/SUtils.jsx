@@ -189,6 +189,16 @@ export function loadAll(routes, callback, _this, self_id = null){
     Promise.all(promises).then(() => callback());
 }
 
+export function loadAuthDataToState(_this){
+    fetch('/api/auth/load_auth_data', {credentials: 'include'})
+        .then(r => r.json())
+        .then(data => {
+            console.log('---------------data-------------');
+            console.log(data);
+            _this.setState({auth_data: data});
+        });
+}
+
 export function load(route, _this){
     _this.setState({loading: true}, () => {
         loadAll(route, () => _this.setState({loading: false}), _this, _this.self_id);
@@ -224,6 +234,13 @@ export function getGetParameterByName(name){
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+export function getCookie(name) {
+    const matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 export function toRuMonthYearLocale(date_string){

@@ -131,7 +131,7 @@ const styles = {
         fontSize: '20px',
     },
     overMain: {
-        padding: '0 1.5em 1.5em',
+        // padding: '0 1.5em 1.5em',
     },
     mainBundle: {
         padding: '1em 0',
@@ -266,6 +266,148 @@ const styles = {
         textAlign: 'right',
     },
 };
+
+const balance_styles = {
+    "container": {
+        "width": "100%"
+    },
+    "balance_bg": {
+        "width": "100%",
+        "position": "fixed",
+        "height": "100%",
+        "background": "url('/images/balance_bg.png')",
+        "backgroundPosition": "50% 220%",
+        "backgroundSize": "260%",
+        "opacity": "0.4",
+        "zIndex": "-1"
+    },
+    "bundle_bg": {
+        "width": "calc(100% - 20px)",
+        "height": "100%",
+        "background": "rgba(0,0,0,0.5)",
+        "position": "absolute",
+        "zIndex": "-1"
+    },
+    "bundle": {
+        "width": "calc(100% - 30px)",
+        "height": "5rem",
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "border": "1px solid rgba(255,255,255,0.4)",
+        "marginBottom": "10px",
+        "borderRadius": "5px",
+        "marginLeft": '5px',
+        "marginRight": '5px',
+        "padding": "10px",
+        // "background": "radial-gradient(circle at 100% 140%, rgba(86, 50, 81, 0.8) 30%, rgba(0, 0, 0, 0.5) 50%)",
+        "backgroundSize": "100%",
+        "backgroundRepeat": "no-repeat"
+    },
+    "bundle_container": {
+        "width": "100%",
+        "zIndex": "-2",
+        "backgroundImage": "linear-gradient(\n    60deg,\n    rgba(0, 0, 0, 0) 0%,\n    rgba(0, 0, 0, 0) 25%,\n\n    rgba(137,78,141,0.3) 33%,\n    rgba(103,137,210,0.3) 41%,\n    rgba(69,194,134,0.3) 49%,\n    rgba(255,171,61,0.3) 57%,\n\n    rgba(0, 0, 0, 0) 75%,\n    rgba(0, 0, 0, 0) 100%\n  )",
+        "backgroundSize": "170%",
+        "backgroundPosition": "0% 50%",
+        "backgroundRepeat": "no-repeat"
+    },
+    "left_container": {
+        // "marginLeft": "1rem"
+    },
+    "premium": {
+        "height": "60rem"
+    },
+    "label": {
+        "color": "white",
+        "fontSize": "1.2rem",
+        "textTransform": "uppercase",
+        "fontFamily": "Montserrat",
+        "letterSpacing": "2px",
+        'marginBottom': '5px'
+        // "lineHeight": "33px"
+    },
+    "journals_list": {
+        "color": "white",
+        "fontFamily": "HelveticaNeueCyr",
+        // "lineHeight": "32px",
+        "lineHeight": "1rem",
+        "fontWeight": "400",
+        "fontSize": "0.8rem",
+    },
+    "check_mark": {
+        "paddingTop": "4px"
+    },
+    "active_button": {
+        "backgroundColor": "rgba(0,0,0,0)",
+        "color": "white",
+        "padding": "5% 5%",
+        "textDecoration": "none",
+        "fontSize": "0.9rem",
+        "border": "2px solid white",
+        "borderRadius": "10px",
+        "fontWeight": "500",
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "center",
+        "justifyContent": "space-around"
+    },
+    "active_button_premium": {
+        "backgroundColor": "rgba(0,0,0,0)",
+        "color": "white",
+        "padding": "5% 5%",
+        "textDecoration": "none",
+        "fontSize": "0.9rem",
+        "border": "2px solid white",
+        "borderRadius": "10px",
+        "fontWeight": "500",
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "center",
+        "justifyContent": "space-around"
+    },
+    "inactive_button": {
+        "backgroundColor": "white",
+        "color": "black",
+        "padding": "0.5rem",
+        "textDecoration": "none",
+        "fontSize": "0.9rem",
+        "border": "2px solid white",
+        "borderRadius": "10px",
+        "fontFamily": "HelveticaNeueCyr",
+        "display": "flex",
+        "flexDirection": "row",
+        "alignItems": "center",
+        "justifyContent": "space-around"
+    },
+    "mark_container": {
+        "marginRight": "1rem"
+    },
+    "bundle_premium": {
+        "width": "calc(100% - 20px)",
+        "height": "14rem",
+        "display": "flex",
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "marginBottom": "10px",
+        "borderRadius": "5px",
+        "padding": "10px",
+        "fontSize": "1.3rem"
+    },
+    button_label: {
+        marginTop: '4px'
+    },
+    premium_label: {
+        "color": "white",
+        "fontSize": "1.6rem",
+        "textTransform": "uppercase",
+        "fontFamily": "Montserrat",
+        "letterSpacing": "2px",
+        'marginBottom': '5px'
+    }
+};
+
+
 const theme = createMuiTheme({
     palette: {
         type: 'dark',
@@ -287,6 +429,34 @@ const theme = createMuiTheme({
     },
 });
 
+// const colors = {
+//     violet: {
+//
+//     },
+//     red: {
+//
+//     },
+// };
+
+const colors = [
+    'rgba(137,78,141, 0.8)',
+    'rgba(171,15,15, 0.8)',
+    'rgba(125,61,255, 0.8)',
+    'rgba(143,194,80, 0.8)'
+];
+
+
+
+let iterator = 0;
+const get_color_style = () => {
+    const style = {background: `radial-gradient(circle at 100% 140%, ${colors[iterator]} 30%, rgba(0, 0, 0, 0.5) 50%)`};
+    iterator++;
+    if(!colors[iterator])
+        iterator = 0;
+
+    return style;
+};
+
 class IndexMenu extends Component {
     constructor(props){
         super(props);
@@ -299,6 +469,8 @@ class IndexMenu extends Component {
             index: 0,
             option: 'true',
         };
+
+        console.log(this.props.auth_data);
     }
 
     lockBody = () => {
@@ -332,6 +504,10 @@ class IndexMenu extends Component {
     handleChangeOption = (event) =>  this.setState({ option: event.target.value });
     handleChangeIndex = index => this.setState({ index });
 
+    go_to_subscription = () => {
+        alert('in progress =(');
+    };
+
 
     render() {
         const { classes } = this.props;
@@ -339,6 +515,10 @@ class IndexMenu extends Component {
         let articles = this.props.data.new_articles;
         let issues = this.props.data.new_issues;
         let bundles = this.props.data.bundles;
+
+        const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
+        const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
+
         return (
             <MuiThemeProvider theme={theme}>
                 <div>
@@ -379,26 +559,109 @@ class IndexMenu extends Component {
                                                 </Link>
                                             ) : null}
                                         </div>
-                                        <div style={styles.main}>
-                                            В разработке ...
-                                            {/*{SUtils.any(articles) ? articles.map((article, currentIndex) =>*/}
-                                                {/*<div style={styles.item} key={String(currentIndex)}>*/}
-                                                    {/*<div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />*/}
-                                                    {/*<div style={styles.inner}>*/}
-                                                        {/*<div style={styles.over}>*/}
-                                                            {/*<h3 style={styles.title}>{article.title}</h3>*/}
-                                                            {/*<p style={styles.text}>{article.text}</p>*/}
-                                                        {/*</div>*/}
-                                                        {/*<div>*/}
-                                                            {/*<p style={styles.caption}>*/}
-                                                                {/*<span>{article.journal_name}, </span>*/}
-                                                                {/*<span>{article.date}</span>*/}
-                                                            {/*</p>*/}
+
+
+                                        <div style={balance_styles.container}>
+                                            <div style={balance_styles.balance_bg}></div>
+                                            <div style={balance_styles.bundle_container}>
+
+
+                                                {(!operator || operator.tech_name === 'beeline.ru') ?
+                                                <div style={balance_styles.bundle_premium}>
+                                                    <div style={balance_styles.left_container}>
+                                                        <div style={balance_styles.premium_label}>Премиум</div>
+                                                        <div style={balance_styles.journals_list}>
+                                                            Включает все журналы
+                                                        </div>
+                                                    </div>
+                                                    <div style={balance_styles.button_container}>
+                                                        <button style={balance_styles.active_button_premium} type="button" name="button">
+                                                            <div style={balance_styles.mark_container}>
+                                                                <div style={balance_styles.check_mark}>
+                                                                    <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
+                                                                    {/*<svg viewBox="0 0 30 22" width="30" height="20"><style>tspan { white-space:pre }.shp0 { fill: none;stroke: #ffffff;stroke-linecap:round;stroke-width: 3.2 }</style><path id="Path 2" class="shp0" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>*/}
+                                                                </div>
+                                                            </div>
+                                                            <div style={balance_styles.button_label}>Активна</div>
+                                                        </button>
+                                                    </div>
+                                                </div> : null}
+
+                                                {SUtils.any(bundles) ? bundles.map(bundle =>
+                                                    <div key={`balance_bundles_${bundle.id}`} style={
+                                                        Object.assign(
+                                                            {},
+                                                            balance_styles.bundle,
+                                                            get_color_style()
+                                                        )
+                                                    }>
+                                                        <div style={balance_styles.left_container}>
+                                                            <div style={balance_styles.label}>«{bundle.name}»</div>
+                                                            <div style={balance_styles.journals_list}>
+                                                                {bundle.journal_names.slice(0, 3).join(', ')}
+                                                            </div>
+                                                        </div>
+                                                        {SUtils.in_array(bundle.id, user_bundles)
+                                                            ? <div style={balance_styles.button_container}>
+                                                                <button style={balance_styles.active_button} type="button" name="button">
+                                                                    <div style={balance_styles.mark_container}>
+                                                                        <div style={balance_styles.check_mark}>
+                                                                            <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style={balance_styles.button_label}>Активна</div>
+                                                                </button>
+                                                            </div>
+                                                            : <button onClick={this.go_to_subscription} style={balance_styles.inactive_button} type="button" name="button">
+                                                                <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
+                                                            </button>
+                                                        }
+                                                    </div>
+                                                ) : null}
+
+
+                                                {/*<div style={balance_styles.bundle}>*/}
+                                                    {/*<div style={balance_styles.left_container}>*/}
+                                                        {/*<div style={balance_styles.label}>«Технологии и игры»</div>*/}
+                                                        {/*<div style={balance_styles.journals_list}>*/}
+                                                            {/*Мир фантастики, Игромания, Chip*/}
                                                         {/*</div>*/}
                                                     {/*</div>*/}
+                                                    {/*<div style={balance_styles.button_container}>*/}
+                                                        {/*<button style={balance_styles.inactive_button} type="button" name="button">*/}
+                                                            {/*<div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>*/}
+                                                        {/*</button>*/}
+                                                    {/*</div>*/}
                                                 {/*</div>*/}
-                                            {/*) : null}*/}
+
+
+
+                                            </div>
+
                                         </div>
+
+
+                                        {/*{SUtils.any(articles) ? articles.map((article, currentIndex) =>*/}
+                                            {/*<div style={styles.item} key={String(currentIndex)}>*/}
+                                                {/*<div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />*/}
+                                                {/*<div style={styles.inner}>*/}
+                                                    {/*<div style={styles.over}>*/}
+                                                        {/*<h3 style={styles.title}>{article.title}</h3>*/}
+                                                        {/*<p style={styles.text}>{article.text}</p>*/}
+                                                    {/*</div>*/}
+                                                    {/*<div>*/}
+                                                        {/*<p style={styles.caption}>*/}
+                                                            {/*<span>{article.journal_name}, </span>*/}
+                                                            {/*<span>{article.date}</span>*/}
+                                                        {/*</p>*/}
+                                                    {/*</div>*/}
+                                                {/*</div>*/}
+                                            {/*</div>*/}
+                                        {/*) : null}*/}
+
+
+
+
                                         <div style={styles.settings}>
                                             <div style={styles.itemSettings}>
                                                 <label style={styles.leftSettings}>Номер телефона

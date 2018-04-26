@@ -5,7 +5,11 @@ namespace App\Http\Traits\ApiTraits;
 use App\Bundle;
 use App\Lib\AuthService;
 use App\Lib\SUtils;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 
 trait AuthRoutes{
 
@@ -53,6 +57,27 @@ trait AuthRoutes{
     public function userAuthorized(){
         $res = AuthService::userAuthorized() ? 'ok' : 'fail';
         return response()->json(['result' => $res]);
+    }
+
+    public function loadAuthData(){
+        $user_msisdn = Cookie::get('COOKIE_USER_MSISDN');
+        $users = User::where('msisdn', $user_msisdn)->get();
+
+        /** @var Collection $user_bundles */
+        $user_bundles = $users
+            ->map(function($u){
+                return $u->bundle->id;
+            })
+        ;
+
+        $as = new AuthService(Bundle::first());
+        $operator = $as->getOperator();
+
+        $resp = new \stdClass();
+        $resp->operator = $operator;
+        $resp->user_bundles = $user_bundles->isEmpty() ? [] : $user_bundles->toArray();
+
+        return response()->json($resp);
     }
 
 //    public function getSubLink($bundle_id){

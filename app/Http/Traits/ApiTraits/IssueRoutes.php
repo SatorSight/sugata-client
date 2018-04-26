@@ -18,7 +18,9 @@ trait IssueRoutes{
      */
     public function issueGetBundles(){
         $bundles = Cache::remember('bundles', $this->expiration, function(){
-            return Bundle::orderBy('order', 'ASC')->get();
+            $bundles = Bundle::orderBy('order', 'ASC')->get();
+            Bundle::injectJournalNames($bundles);
+            return $bundles;
         });
 
         return response()->json($bundles);

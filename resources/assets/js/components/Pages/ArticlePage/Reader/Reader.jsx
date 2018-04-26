@@ -550,7 +550,7 @@ export default class Reader extends Component {
                     <div style={styles.item}>
                         <div style={styles.inner_header}>
                             <div style={styles.indexMenu}>
-                                <IndexMenu data={{bundles: this.props.bundles}} />
+                                <IndexMenu auth_data={this.props.auth_data} data={{bundles: this.props.bundles}} />
                             </div>
                             <div>
                                 <ListingMenu navigate={this.navigate} listing={this.props.listing}/>

@@ -2,6 +2,7 @@ import React from 'react';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
+import * as SUtils from "../../../Helpers/SUtils";
 
 const theme = createMuiTheme({
     palette: {
@@ -368,7 +369,7 @@ class ListingMenu extends React.Component {
                                 <span style={styles.arrowTop} />
                             </div>
                             <div style={styles.listing_content}>
-                                {listing.map(l =>
+                                {SUtils.any(listing) ? listing.map(l =>
                                     <div onClick={() => this.props.navigate(l.id)} key={`listing_${l.page_number}`} style={styles.listing_item}>
                                         <div
                                             style={styles.listing_link}>
@@ -378,7 +379,7 @@ class ListingMenu extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                )}
+                                ) : null}
                                 <div key={'last'} style={styles.listing_last} />
                             </div>
                         </div>
