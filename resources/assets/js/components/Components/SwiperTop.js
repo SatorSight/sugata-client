@@ -13,6 +13,7 @@ const styles = {
         overflow: 'hidden',
         width: '95%',
         marginLeft: '5%',
+        display: 'flex'
     },
     slideSwiper: {
         display: 'block',
