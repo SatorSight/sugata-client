@@ -305,6 +305,14 @@ const styles = {
         width: '100%',
         opacity: '0.3'
     },
+    url_title: {
+        display: 'block',
+        overflow: 'hidden',
+        textDecoration: 'none',
+        maxHeight: '5em',
+        color: '#fff',
+        padding: '0.1em'
+    },
 };
 
 export default class Reader extends Component {
@@ -562,7 +570,11 @@ export default class Reader extends Component {
                             </div>
                             <div style={styles.right}>
                                 <div style={styles.url}>
-                                    <h3 style={styles.title}>&laquo;{SUtils.propOrNull(journal, 'name')}&raquo;</h3>
+                                    <h3 style={styles.title}>
+                                        <Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url_title}>
+                                            &laquo;{SUtils.propOrNull(journal, 'name')}&raquo;
+                                        </Link>
+                                    </h3>
                                     <div>
                                         <p style={styles.captionColorSwiper}>
                                             <span>{current_page_number}/</span>
@@ -621,9 +633,13 @@ export default class Reader extends Component {
                                     {this.state.next
                                         // next article image
                                         ? <img style={styles.next_article_magLeft} src={current_next_article_image_path} alt={current_next_article_title} />
-                                        : this.props.article.side_issues.next
+                                        : this.props.article.side_issues.prev
                                             // next issue cover
-                                            ? <img style={styles.next_article_magLeft} src={this.props.article.side_issues.next.image_path} alt={this.props.article.side_issues.next.name} />
+                                            ? <div>
+                                                <img style={styles.next_article_magLeft}
+                                                   src={this.props.article.side_issues.prev.image_path}
+                                                   alt={this.props.article.side_issues.prev.name} />
+                                            </div>
                                             // journal cover
                                             : <img style={styles.next_article_magLeft} src={SUtils.propOrNull(journal, 'image_path')} alt={SUtils.propOrNull(journal, 'name')} />
                                     }
@@ -635,8 +651,12 @@ export default class Reader extends Component {
                                         {this.state.next
                                             ? 'Следующая статья'
                                             : this.props.article.side_issues.next
-                                                ? `Журнал ${SUtils.propOrNull(journal, 'name')}`
-                                                : 'Предыдущий выпуск'
+                                                ? <div>
+                                                    <div>Предыдущий выпуск</div>
+                                                    <img style={{margin: '0.5em 0 0.5em 0'}} src={this.props.article.side_issues.prev.logo_path} alt=""/>
+                                                    <div>{SUtils.toRuMonthYearLocale(this.props.article.side_issues.prev.content_date)}</div>
+                                                </div>
+                                                : `Журнал ${SUtils.propOrNull(journal, 'name')}`
                                         }
                                     </h3>
                                     <p style={styles.next_article_text}>{current_next_article_title}</p>

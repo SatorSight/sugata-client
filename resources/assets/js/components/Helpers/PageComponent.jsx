@@ -17,13 +17,18 @@ export default class PageComponent extends Component {
         this.self_id = this.props.match.params.id;
     }
 
+    scroll_top = () => scrollTo(0, 0);
+
     componentDidMount(){
+
         SUtils.loadAuthDataToState(this);
         SUtils.load(this.getRoutesObject(), this);
+        this.scroll_top();
     }
     componentWillReceiveProps(nextProps){
         this.self_id = nextProps.match.params.id;
         SUtils.load(this.getRoutesObject(), this);
+        this.scroll_top();
     }
 
     loadMoreNew = () => SUtils.appendStateWithApiRequestFor('new_articles', this.getEntity(), 'more_new_articles', this, this.self_id);

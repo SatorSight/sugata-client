@@ -208,6 +208,7 @@ class Article extends Model
 
                 Issue::injectWithImages($side_collection);
                 Issue::injectWithJournalNames($side_collection);
+                Issue::injectWithJournalLogo($side_collection);
 
                 $next = $side_collection->pop();
                 $prev = $side_collection->pop();

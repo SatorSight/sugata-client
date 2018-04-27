@@ -101,6 +101,8 @@ class PreviousIssue extends Component {
 
     render() {
         const issue = this.props.issue;
+        const cur_issue = this.props.current_issue;
+
         return (
             <div>
                 {issue ?
@@ -115,7 +117,10 @@ class PreviousIssue extends Component {
                                 <div style={styles.right}>
                                     <div style={styles.url}>
                                         <h3 style={styles.title}>предыдущий выпуск</h3>
-                                        <img style={styles.logo} src={issue.logo_path} alt={issue.name} />
+                                        <img
+                                            style={styles.logo}
+                                            src={SUtils.propOrNull(cur_issue, 'logo_path')}
+                                            alt={issue.name} />
                                         <p style={styles.date}>{SUtils.toRuMonthYearLocale(issue.content_date).toUpperCase()}</p>
                                     </div>
                                 </div>

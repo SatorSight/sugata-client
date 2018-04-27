@@ -46,7 +46,7 @@ class IssuePage extends AuthorizableComponent {
                     controls={controls}
                     data={this.state.data}/>
                 <OtherIssues issues={this.state.data.all_issues}/>
-                <PreviousIssue issue={this.getPrevIssue()}/>
+                <PreviousIssue current_issue={this.state.data.issue} issue={this.getPrevIssue()}/>
             </div>
         );
     }
