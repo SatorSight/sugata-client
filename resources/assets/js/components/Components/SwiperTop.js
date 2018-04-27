@@ -13,7 +13,8 @@ const styles = {
         overflow: 'hidden',
         width: '95%',
         marginLeft: '5%',
-        display: 'flex'
+        display: 'flex',
+        transition: '1s'
     },
     slideSwiper: {
         display: 'block',
@@ -43,6 +44,7 @@ const styles = {
         borderLeft: '0.1em solid rgba(255,255,255,0.5)',
         borderBottom: '0.1em solid rgba(255,255,255,0.5)',
         borderRadius: '50% 0 0 50%',
+        transition: '1s'
     },
     arrow: {
         display: 'block',
@@ -70,6 +72,14 @@ const styles = {
     },
 };
 
+const swiper_styles = {
+    transform: 'translate(-6em)'
+};
+
+const all_button_styles = {
+    transform: 'translate(3em)'
+};
+
 class SwiperTop extends React.Component {
     constructor(props) {
         super(props);
@@ -88,9 +98,22 @@ class SwiperTop extends React.Component {
     render() {
         const { active } = this.props;
 
+        console.log('zzzzzzzzzzzzzzzzzz');
+        console.log(active);
+        console.log(this.props.issues.length);
+
+
+        const swiper_style = active === this.props.issues.length - 1
+            ? Object.assign({}, swiper_styles, styles.swiper)
+            : styles.swiper;
+
+        const button_style = active !== this.props.issues.length - 1
+            ? Object.assign({}, all_button_styles, styles.link)
+            : styles.link;
+
         return (
             <div style={styles.root}>
-                <div style={styles.swiper}>
+                <div style={swiper_style}>
                     {this.props.issues.map((issue, i) => {
                         let show;
                         if (i === active)
@@ -103,8 +126,8 @@ class SwiperTop extends React.Component {
                         }
                     )}
                 </div>
-                <div>
-                    <Link to={this.getAllIssuesLink()} style={styles.link}>
+                <div style={button_style}>
+                    <Link to={this.getAllIssuesLink()}>
                         <span style={Object.assign({}, styles.top, styles.arrow)} />
                         <span style={Object.assign({}, styles.fot, styles.arrow)} />
                     </Link>

@@ -245,7 +245,7 @@ const styles = {
         overflow: 'hidden',
         borderRadius: '0.2em',
         marginLeft: '26%',
-        padding: '1.8em 0',
+        padding: '1.8em 0 0 0',
         maxWidth: '50%',
     },
     next_article_title: {
@@ -653,7 +653,7 @@ export default class Reader extends Component {
                                             : this.props.article.side_issues.next
                                                 ? <div>
                                                     <div>Предыдущий выпуск</div>
-                                                    <img style={{margin: '0.5em 0 0.5em 0'}} src={this.props.article.side_issues.prev.logo_path} alt=""/>
+                                                    <img style={{height: '3em', margin: '0.5em 0 0.5em 0'}} src={this.props.article.side_issues.prev.logo_path} alt=""/>
                                                     <div>{SUtils.toRuMonthYearLocale(this.props.article.side_issues.prev.content_date)}</div>
                                                 </div>
                                                 : `Журнал ${SUtils.propOrNull(journal, 'name')}`
