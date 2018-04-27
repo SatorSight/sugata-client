@@ -539,7 +539,7 @@ class IndexMenu extends Component {
                                     <SwipeableViews
                                         animateHeight
                                         enableMouseEvents
-                                        slideStyle={{overflow: 'auto'}}
+                                        slideStyle={{overflowX: 'auto'}}
                                         index={index}
                                         onChangeIndex={this.handleChangeIndex}>
                                         <div style={styles.mainBundle}>

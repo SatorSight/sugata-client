@@ -67,7 +67,7 @@ trait AllIssuesRoutes
      */
     public function allIssuesJournalGetIssues($journal_id){
         $issues = Cache::remember('all_issues_journal_' . $journal_id, $this->expiration, function () use ($journal_id) {
-            $issues = Journal::find($journal_id)->issues->sortByDesc('id')->take(20);
+            $issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(20);
 
             Issue::injectWithImages($issues);
             Issue::injectWithJournalNames($issues);
@@ -91,7 +91,7 @@ trait AllIssuesRoutes
                 return $journal->id;
             })->toArray();
 
-            $issues = Issue::whereIn('journal_id', $journals_ids)->orderByDesc('id')->limit(20)->get();
+            $issues = Issue::whereIn('journal_id', $journals_ids)->orderByDesc('content_date')->limit(20)->get();
 
             Issue::injectWithImages($issues);
             Issue::injectWithJournalNames($issues);
