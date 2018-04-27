@@ -536,7 +536,12 @@ class IndexMenu extends Component {
                                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="баланс" style={styles.tabsItem} />
                                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="настройки" style={styles.tabsItem} />
                                     </Tabs>
-                                    <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
+                                    <SwipeableViews
+                                        animateHeight
+                                        enableMouseEvents
+                                        slideStyle={{overflow: 'auto'}}
+                                        index={index}
+                                        onChangeIndex={this.handleChangeIndex}>
                                         <div style={styles.mainBundle}>
                                             <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
                                                 На главную
