@@ -9,13 +9,13 @@ export default class AuthorizableComponent extends PageComponent {
 
     auth_helper = new AuthHelper();
 
+    paymentTrigger = (bundle = null) => {
+        let bundle_id = bundle || null;
 
-
-    paymentTrigger = () => {
-        let bundle_id = null;
-
-        if(this.state.data && this.state.data.bundle)
-            bundle_id = this.state.data.bundle.id;
+        if(!bundle_id) {
+            if (this.state.data && this.state.data.bundle)
+                bundle_id = this.state.data.bundle.id;
+        }
 
         if(!this.auth_helper.authorized){
             const current_url = window.location.protocol + "//" + window.location.host + window.location.pathname;

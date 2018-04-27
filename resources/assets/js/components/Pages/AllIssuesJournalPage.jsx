@@ -1,11 +1,11 @@
 import React from 'react'
 import Waiter from '../Helpers/Waiter2';
-import PageComponent from '../Helpers/PageComponent';
+import AuthorizableComponent from '../Helpers/AuthorizableComponent';
 import AllIssuesView from '../Pages/AllIssuesPage/AllIssuesView';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import * as SUtils from '../Helpers/SUtils';
 
-export default class AllIssuesJournalPage extends PageComponent {
+export default class AllIssuesJournalPage extends AuthorizableComponent {
     constructor(props){
         super(props);
 
@@ -22,7 +22,7 @@ export default class AllIssuesJournalPage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <AllIssuesView auth_data={this.state.auth_data} data={this.state.data} self_id={this.self_id} load_more={this.loadMore} title={this.state.data.title} issues={this.state.data.issues} />
+                <AllIssuesView payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data} self_id={this.self_id} load_more={this.loadMore} title={this.state.data.title} issues={this.state.data.issues} />
             </div>
         );
     }

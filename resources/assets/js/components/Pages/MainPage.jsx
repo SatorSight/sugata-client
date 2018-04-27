@@ -6,9 +6,9 @@ import MainTabs from './../Components/MainTabs';
 import PopularJournals from './../Components/PopularJournals';
 import IndexFooter from '../Components/IndexFooter';
 import Waiter from '../Helpers/Waiter2';
-import PageComponent from '../Helpers/PageComponent';
+import AuthorizableComponent from '../Helpers/AuthorizableComponent';
 
-class MainPage extends PageComponent {
+class MainPage extends AuthorizableComponent {
     constructor(props){
         super(props);
     }
@@ -24,7 +24,7 @@ class MainPage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <IndexHeader auth_data={this.state.auth_data} data={this.state.data}/>
+                <IndexHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
                 <NewIssues data={this.state.data}/>
                 <MainTopics data={this.state.data}/>
                 <MainTabs

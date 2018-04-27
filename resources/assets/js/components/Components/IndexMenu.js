@@ -341,7 +341,7 @@ const balance_styles = {
     "active_button": {
         "backgroundColor": "rgba(0,0,0,0)",
         "color": "white",
-        "padding": "5% 5%",
+        "padding": "5% 10%",
         "textDecoration": "none",
         "fontSize": "0.9rem",
         "border": "2px solid white",
@@ -355,7 +355,7 @@ const balance_styles = {
     "active_button_premium": {
         "backgroundColor": "rgba(0,0,0,0)",
         "color": "white",
-        "padding": "5% 5%",
+        "padding": "5% 10%",
         "textDecoration": "none",
         "fontSize": "0.9rem",
         "border": "2px solid white",
@@ -470,8 +470,7 @@ class IndexMenu extends Component {
             option: 'true',
         };
 
-        console.log(this.props.auth_data);
-    }
+   }
 
     lockBody = () => {
         document.querySelector('#root').style.overflow = 'hidden';
@@ -504,8 +503,8 @@ class IndexMenu extends Component {
     handleChangeOption = (event) =>  this.setState({ option: event.target.value });
     handleChangeIndex = index => this.setState({ index });
 
-    go_to_subscription = () => {
-        alert('in progress =(');
+    go_to_subscription = bundle_id => {
+        this.props.payment_trigger(bundle_id);
     };
 
 
@@ -612,7 +611,7 @@ class IndexMenu extends Component {
                                                                     <div style={balance_styles.button_label}>Активна</div>
                                                                 </button>
                                                             </div>
-                                                            : <button onClick={this.go_to_subscription} style={balance_styles.inactive_button} type="button" name="button">
+                                                            : <button onClick={() => this.go_to_subscription(bundle.id)} style={balance_styles.inactive_button} type="button" name="button">
                                                                 <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
                                                             </button>
                                                         }

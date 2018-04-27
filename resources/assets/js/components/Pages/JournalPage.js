@@ -6,9 +6,9 @@ import OtherIssues from './../Components/OtherIssues';
 import PopularJournals from './../Components/PopularJournals';
 import IndexFooter from '../Components/IndexFooter';
 import Waiter from '../Helpers/Waiter2';
-import PageComponent from '../Helpers/PageComponent';
+import AuthorizableComponent from '../Helpers/AuthorizableComponent';
 
-export default class JournalPage extends PageComponent {
+export default class JournalPage extends AuthorizableComponent {
     constructor(props){
         super(props);
     }
@@ -24,7 +24,7 @@ export default class JournalPage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <JournalHeader auth_data={this.state.auth_data} data={this.state.data}/>
+                <JournalHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
                 <IssuesSwiper
                     parent_type={'journal'}
                     issues={this.state.data.last_issues}

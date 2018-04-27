@@ -4,9 +4,9 @@ import IssuesSwiper from './../Components/IssuesSwiper';
 import MainTabs from './../Components/MainTabs';
 import IndexFooter from '../Components/IndexFooter';
 import Waiter from '../Helpers/Waiter2';
-import PageComponent from '../Helpers/PageComponent';
+import AuthorizableComponent from '../Helpers/AuthorizableComponent';
 
-export default class BundlePage extends PageComponent {
+export default class BundlePage extends AuthorizableComponent {
     constructor(props){
         super(props);
     }
@@ -22,7 +22,7 @@ export default class BundlePage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <BundleHeader auth_data={this.state.auth_data} data={this.state.data}/>
+                <BundleHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
                 <IssuesSwiper
                     parent_type={'bundle'}
                     bundle_id={this.self_id}

@@ -6,9 +6,9 @@ import OtherIssues from './../Components/OtherIssues';
 import PreviousIssue from "../Components/PreviousIssue";
 import * as SUtils from './../Helpers/SUtils';
 import Waiter from '../Helpers/Waiter2';
-import PageComponent from '../Helpers/PageComponent';
+import AuthorizableComponent from '../Helpers/AuthorizableComponent';
 
-class IssuePage extends PageComponent {
+class IssuePage extends AuthorizableComponent {
     constructor(props){
         super(props);
     }
@@ -39,7 +39,7 @@ class IssuePage extends PageComponent {
                 {this.state.loading
                     ? <Waiter/>
                     : null}
-                <IssueHeader auth_data={this.state.auth_data} self_id={this.self_id} data={this.state.data}/>
+                <IssueHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} self_id={this.self_id} data={this.state.data}/>
                 <IssuesTheme data={this.state.data}/>
                 <MainTabs
                     onlyFirst
