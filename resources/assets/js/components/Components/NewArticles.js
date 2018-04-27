@@ -123,7 +123,7 @@ class NewArticles extends Component {
                             <div style={styles.inner}>
                                 <div style={styles.over}>
                                     <Link to={`/article/${article.id}`} style={styles.title}>
-                                        {SUtils.capitalize(article.title.toLowerCase())}
+                                        {SUtils.capitalize(article.title.toUpperCase())}
                                     </Link>
                                     <p style={styles.shortContent}>
                                         {article.text}

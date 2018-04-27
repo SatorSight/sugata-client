@@ -103,22 +103,21 @@ class PreviousIssue extends Component {
         const issue = this.props.issue;
         return (
             <div>
-
                 {issue ?
                     <Link style={{cursor: 'pointer'}} to={`/issue/${issue.id}`}>
                         <div style={styles.item} key={issue.id}>
                             <div style={styles.inner}>
                                 <div style={styles.left}>
-                                    <a style={styles.url} href={issue.url_prefix}>
+                                    <div style={styles.url}>
                                         <img style={styles.magLeft} src={issue.image_path} alt={issue.journal_name} />
-                                    </a>
+                                    </div>
                                 </div>
                                 <div style={styles.right}>
-                                    <a style={styles.url} href={issue.url_prefix}>
+                                    <div style={styles.url}>
                                         <h3 style={styles.title}>предыдущий выпуск</h3>
                                         <img style={styles.logo} src={issue.logo_path} alt={issue.name} />
                                         <p style={styles.date}>{SUtils.toRuMonthYearLocale(issue.content_date).toUpperCase()}</p>
-                                    </a>
+                                    </div>
                                 </div>
                             </div>
                             <div style={styles.bg}>

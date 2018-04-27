@@ -237,7 +237,7 @@ trait JournalRoutes{
         $issues = Cache::remember('journal_rest_issues_' . $journal_id, $this->expiration, function() use($journal_id) {
             $issues = Journal::find($journal_id)
                 ->issues
-                ->sortByDesc('number')
+                ->sortByDesc('id')
                 ->slice(1)
 //            ->reject(function($issue) use ($journal_id){ return $issue->journal_id == $journal_id; })
             ;
