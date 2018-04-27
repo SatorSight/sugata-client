@@ -151,7 +151,7 @@ class JournalHeader extends Component {
                             <h1 style={styles.h1}>{bundle ? bundle.name : ''}<span style={styles.arrow} /></h1>
                             <div style={styles.bigLogo}>
                                 <img src={journal.logo_path} style={styles.imgLogo} alt={journal.name} />
-                                <h3 style={styles.h3}>{journal.issues_count} выпуска</h3>
+                                <h3 style={styles.h3}>{journal.issues_count} {SUtils.inclineRuWordByNumber('выпуск', journal.issues_count)}</h3>
                             </div>
                         </div> : null }
                     </div>

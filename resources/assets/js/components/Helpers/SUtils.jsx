@@ -72,6 +72,21 @@ export function any(haystack) {
     return haystack.length > 0
 }
 
+export function inclineRuWordByNumber(word_stem, number){
+    number = parseInt(number);
+    const last_tone = parseInt(number.toString().split('').pop());
+
+    if(number < 11 || number > 20) {
+        if (last_tone === 1 )
+            return word_stem;
+        if (last_tone > 1 && last_tone < 5)
+            return word_stem + 'а';
+        if (last_tone > 4 || last_tone === 0)
+            return word_stem + 'ов';
+    }else
+        return word_stem + 'ов';
+}
+
 export function empty(haystack){
     if(!haystack)
         return true;
