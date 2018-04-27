@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
 import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
+import { Link } from 'react-router-dom'
 
 
 const styles = {
@@ -119,7 +120,14 @@ const styles = {
         fontSize: '1em',
         fontWeight: 400,
         letterSpacing: '0.15em',
-    }
+    },
+    url: {
+        display: 'block',
+        overflow: 'hidden',
+        textDecoration: 'none',
+        maxHeight: '5em',
+        color: '#fff'
+    },
 };
 class JournalHeader extends Component {
 
@@ -148,7 +156,12 @@ class JournalHeader extends Component {
                             {/*<CustomMenu data={this.props.data} />*/}
                         {/*</div>*/}
                         {journal ? <div>
-                            <h1 style={styles.h1}>{bundle ? bundle.name : ''}<span style={styles.arrow} /></h1>
+                            <h1 style={styles.h1}>
+                                <Link style={styles.url} to={`/bundle/${bundle.id}`}>
+                                    {bundle ? bundle.name : ''}
+                                </Link>
+                                <span style={styles.arrow} />
+                            </h1>
                             <div style={styles.bigLogo}>
                                 <img src={journal.logo_path} style={styles.imgLogo} alt={journal.name} />
                                 <h3 style={styles.h3}>{journal.issues_count} {SUtils.inclineRuWordByNumber('выпуск', journal.issues_count)}</h3>
