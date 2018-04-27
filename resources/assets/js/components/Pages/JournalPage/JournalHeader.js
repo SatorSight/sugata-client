@@ -157,7 +157,7 @@ class JournalHeader extends Component {
                         {/*</div>*/}
                         {journal ? <div>
                             <h1 style={styles.h1}>
-                                <Link style={styles.url} to={`/bundle/${bundle.id}`}>
+                                <Link style={styles.url} to={`/bundle/${SUtils.propOrNull(bundle, 'id')}`}>
                                     {bundle ? bundle.name : ''}
                                 </Link>
                                 <span style={styles.arrow} />
