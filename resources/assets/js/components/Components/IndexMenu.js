@@ -341,7 +341,7 @@ const balance_styles = {
     "active_button": {
         "backgroundColor": "rgba(0,0,0,0)",
         "color": "white",
-        "padding": "5% 10%",
+        "padding": "0.3em 0.7em",
         "textDecoration": "none",
         "fontSize": "0.9rem",
         "border": "2px solid white",
@@ -355,7 +355,7 @@ const balance_styles = {
     "active_button_premium": {
         "backgroundColor": "rgba(0,0,0,0)",
         "color": "white",
-        "padding": "5% 10%",
+        "padding": "0.3em 0.7em",
         "textDecoration": "none",
         "fontSize": "0.9rem",
         "border": "2px solid white",
@@ -429,23 +429,12 @@ const theme = createMuiTheme({
     },
 });
 
-// const colors = {
-//     violet: {
-//
-//     },
-//     red: {
-//
-//     },
-// };
-
 const colors = [
     'rgba(137,78,141, 0.8)',
     'rgba(171,15,15, 0.8)',
     'rgba(125,61,255, 0.8)',
     'rgba(143,194,80, 0.8)'
 ];
-
-
 
 let iterator = 0;
 const get_color_style = () => {
@@ -520,7 +509,7 @@ class IndexMenu extends Component {
 
         return (
             <MuiThemeProvider theme={theme}>
-                <div>
+                <div style={{overflow: 'auto'}}>
                     <Button color="primary" className={classes.button} onClick={this.toggleDrawer('left', true)}>
                         <span className={classes.line} />
                         <span className={classes.line} />
@@ -549,11 +538,11 @@ class IndexMenu extends Component {
                                     </Tabs>
                                     <SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>
                                         <div style={styles.mainBundle}>
-                                            <Link onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
+                                            <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
                                                 На главную
                                             </Link>
                                             {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
-                                                <Link onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
+                                                <Link draggable={false} onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
                                                     {bundle.name}
                                                 </Link>
                                             ) : null}
@@ -585,7 +574,6 @@ class IndexMenu extends Component {
                                                         </button>
                                                     </div>
                                                 </div> : null}
-
                                                 {SUtils.any(bundles) ? bundles.map(bundle =>
                                                     <div key={`balance_bundles_${bundle.id}`} style={
                                                         Object.assign(
@@ -617,49 +605,8 @@ class IndexMenu extends Component {
                                                         }
                                                     </div>
                                                 ) : null}
-
-
-                                                {/*<div style={balance_styles.bundle}>*/}
-                                                    {/*<div style={balance_styles.left_container}>*/}
-                                                        {/*<div style={balance_styles.label}>«Технологии и игры»</div>*/}
-                                                        {/*<div style={balance_styles.journals_list}>*/}
-                                                            {/*Мир фантастики, Игромания, Chip*/}
-                                                        {/*</div>*/}
-                                                    {/*</div>*/}
-                                                    {/*<div style={balance_styles.button_container}>*/}
-                                                        {/*<button style={balance_styles.inactive_button} type="button" name="button">*/}
-                                                            {/*<div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>*/}
-                                                        {/*</button>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-
-
-
                                             </div>
-
                                         </div>
-
-
-                                        {/*{SUtils.any(articles) ? articles.map((article, currentIndex) =>*/}
-                                            {/*<div style={styles.item} key={String(currentIndex)}>*/}
-                                                {/*<div style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />*/}
-                                                {/*<div style={styles.inner}>*/}
-                                                    {/*<div style={styles.over}>*/}
-                                                        {/*<h3 style={styles.title}>{article.title}</h3>*/}
-                                                        {/*<p style={styles.text}>{article.text}</p>*/}
-                                                    {/*</div>*/}
-                                                    {/*<div>*/}
-                                                        {/*<p style={styles.caption}>*/}
-                                                            {/*<span>{article.journal_name}, </span>*/}
-                                                            {/*<span>{article.date}</span>*/}
-                                                        {/*</p>*/}
-                                                    {/*</div>*/}
-                                                {/*</div>*/}
-                                            {/*</div>*/}
-                                        {/*) : null}*/}
-
-
-
 
                                         <div style={styles.settings}>
                                             <div style={styles.itemSettings}>
