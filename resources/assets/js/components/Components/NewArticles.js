@@ -118,7 +118,7 @@ class NewArticles extends Component {
             <div>
                 <div style={styles.main}>
                     {SUtils.any(articles) ? articles.map(article =>
-                        <div style={styles.item} key={`new_articles_${article.id}`}>
+                        article ? <div style={styles.item} key={`new_articles_${article.id}`}>
                             <Link to={`/article/${article.id}`}  style={Object.assign({}, styles.ava, {backgroundImage:'url(' + article.image_path + ')' })} />
                             <div style={styles.inner}>
                                 <div style={styles.over}>
@@ -137,7 +137,7 @@ class NewArticles extends Component {
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </div> : null
                     ) : null }
                     <LoadMoreButton load_more={this.loadMore}/>
                 </div>
