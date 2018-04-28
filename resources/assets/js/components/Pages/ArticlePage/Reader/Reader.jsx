@@ -174,6 +174,11 @@ const styles = {
         overflow: 'hidden',
         zIndex: 20,
         minHeight: '100vh',
+
+        lineHeight: '1.7',
+        fontFamily: 'serif',
+        textAlign: 'left',
+        fontSize: '1rem'
     },
     container: {
         textAlign: 'center',

@@ -159,6 +159,8 @@ trait ArticleRoutes{
 
             $article_collection = new Collection();
             $article_collection->push($article);
+
+            Article::clearDefaultStyles($article_collection);
             Article::injectOtherArticlesIdList($article_collection);
             Article::injectNextArticle($article_collection);
             Article::injectNextAndPrevIssue($article_collection);

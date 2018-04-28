@@ -41,6 +41,28 @@ a, a:active, a:hover { outline: none; text-decoration: none; }
 .content li:nth-child(odd) {background: #BEBBE2;}
 .content li:nth-child(even) {background: white;}
 
+.page_context p{
+  margin-bottom: 1rem;
+}
+
+.page_context h2, .page_context h1{
+  font-weight: 300;
+}
+
+.page_context h1{
+  margin-bottom: 1rem;
+
+}
+
+
+
+.page_context, .page_context div, .page_context p{
+  line-height: 1.7;
+  font-family: serif;
+  text-align: left;
+  font-size: 1rem;
+}
+
 @media (max-height: 280px) {
   body {font-size: 8px;}
 }

@@ -244,6 +244,20 @@ class Article extends Model
         });
     }
 
+    public static function clearDefaultStyles(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            if(!empty($article)) {
+                $html = $article->html;
+                if(!empty($html))
+                    $html = preg_replace('/<style>.*?<\/style>/is', '', $html);
+//                    $html = preg_replace('/class=".*?"/is', '', $html);
+
+                $article->html = $html;
+            }
+            return $article;
+        });
+    }
+
     public static function injectIssueContentDate(Collection &$articles) : void {
         $articles = $articles->map(function($article){
             if(!empty($article)) {
