@@ -140,7 +140,7 @@ const styles = {
         position: 'relative',
 
         // margin: '3.1em 1.8em 0',
-        margin: '1.1em 1.8em 1em 1.8em',
+        margin: '0.3em 1.8em 1em 1.8em',
     },
     inputMask: {
         width: '90%',
