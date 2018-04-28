@@ -138,7 +138,9 @@ const styles = {
     divInput: {
         overflow: 'hidden',
         position: 'relative',
-        margin: '3.1em 1.8em 0',
+
+        // margin: '3.1em 1.8em 0',
+        margin: '1.1em 1.8em 1em 1.8em',
     },
     inputMask: {
         width: '90%',
@@ -152,7 +154,7 @@ const styles = {
         color: '#000',
         textAlign: 'center',
         lineHeight: '1.8',
-        minHeight: '20em'
+        // minHeight: '20em'
     },
     spanInput: {
         zIndex: 20,
