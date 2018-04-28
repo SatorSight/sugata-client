@@ -602,6 +602,7 @@ export default class Reader extends Component {
                     onTouchStart={this._onTouchStart}
                     onTouchMove={this._onTouchMove}
                     onTouchEnd={this._onTouchEnd}
+                    className={'html-root'}
                     style={Object.assign({},
                         styles.container,
                         styles.root,
