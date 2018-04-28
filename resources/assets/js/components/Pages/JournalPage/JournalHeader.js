@@ -120,6 +120,7 @@ const styles = {
         fontSize: '1em',
         fontWeight: 400,
         letterSpacing: '0.15em',
+        margin: '0.5rem 0'
     },
     url: {
         display: 'block',
