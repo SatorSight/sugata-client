@@ -77,7 +77,7 @@ const styles = {
         color: '#FFF',
         fontWeight: 200,
         display: 'inline-block',
-        padding: '0.4em 1.4em 1em',
+        padding: '1em 1.4em 1em',
         margin: '1em auto 16em',
         position: 'relative',
         zIndex: 30,
