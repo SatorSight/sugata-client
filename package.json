@@ -36,6 +36,7 @@
         "react-router-dom": "^4.2.2",
         "react-swipeable-views": "^0.12.12",
         "scss-loader": "^0.0.1",
-        "style-loader": "^0.20.1"
+        "style-loader": "^0.20.1",
+        "whatwg-fetch": "^2.0.4"
     }
 }
