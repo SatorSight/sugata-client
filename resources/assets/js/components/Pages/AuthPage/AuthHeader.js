@@ -152,6 +152,7 @@ const styles = {
         color: '#000',
         textAlign: 'center',
         lineHeight: '1.8',
+        minHeight: '20em'
     },
     spanInput: {
         zIndex: 20,
