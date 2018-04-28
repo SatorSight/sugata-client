@@ -143,7 +143,7 @@ const styles = {
     inputMask: {
         width: '90%',
         position: 'relative',
-        padding: '0 5% 2.22em',
+        padding: '0 5% 1.22em',
         border: 0,
         backgroundColor: '#FFF',
         wordSpacing: '0,2em',
