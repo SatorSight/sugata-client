@@ -92,6 +92,7 @@ const styles = {
         display: 'inline-block',
         opacity: 0.5,
         // height: '0.65rem'
+        paddingTop: '5px'
     },
     arrow:{
         position: 'absolute',
