@@ -9,7 +9,8 @@ import IndexMenu from '../../../Components/IndexMenu';
 const styles = {
     header: {
         width: '100%',
-        height: '100%',
+        // height: '100%',
+        height: '4.7rem',
         position: 'relative',
         background: '#000',
         zIndex: 50,
@@ -173,7 +174,8 @@ const styles = {
         position: 'relative',
         overflow: 'hidden',
         zIndex: 20,
-        minHeight: '100vh',
+        // minHeight: '100vh',
+        minHeight: 'calc(100vh - 12.7rem)',
 
         lineHeight: '1.7',
         fontFamily: 'serif',
@@ -216,7 +218,7 @@ const styles = {
         width: '100%',
         backgroundColor: '#000',
         position: 'relative',
-        minHeight: '9.8em',
+        minHeight: '8rem',
         zIndex: 50,
         cursor: 'pointer',
     },
@@ -613,7 +615,9 @@ export default class Reader extends Component {
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
                 </div>
-                <div style={Object.assign({},
+                <div
+                    className={'html-root'}
+                    style={Object.assign({},
                     styles.background,
                     styles.container,
                     {zIndex: this.state.zIndexPrev}
@@ -621,7 +625,9 @@ export default class Reader extends Component {
                     {this.state.prev ? this.state.prev.render() : null}
                     <div style={styles.pageMask} />
                 </div>
-                 <div style={Object.assign({},
+                 <div
+                     className={'html-root'}
+                     style={Object.assign({},
                      styles.background,
                      styles.container,
 
