@@ -78,7 +78,7 @@ const styles = {
         fontWeight: 200,
         display: 'inline-block',
         padding: '1em 1.4em 1em',
-        margin: '1em auto 16em',
+        margin: '1em auto 12em',
         position: 'relative',
         zIndex: 30,
     },
@@ -120,7 +120,7 @@ const styles = {
         fontSize: '1em',
         fontWeight: 400,
         letterSpacing: '0.15em',
-        margin: '0.5rem 0'
+        margin: '1rem 0'
     },
     url: {
         display: 'block',
