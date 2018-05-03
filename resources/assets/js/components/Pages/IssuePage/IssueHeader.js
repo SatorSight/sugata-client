@@ -211,8 +211,9 @@ class IssueHeader extends Component {
         let prev = null;
         issues.map((issue, i) => {
             if(parseInt(issue.id) === parseInt(this.props.self_id))
-                if(i > 0)
-                    prev = issues[i - 1];
+                if(i < issues.length - 1)
+                    prev = issues[i + 1];
+
         });
 
         return prev ?   <Link to={`/issue/${prev.id}`} style={styles.leftMag}>
@@ -225,8 +226,8 @@ class IssueHeader extends Component {
         let next = null;
         issues.map((issue, i) => {
             if(parseInt(issue.id) === parseInt(this.props.self_id))
-                if(i < issues.length - 1)
-                    next = issues[i + 1];
+                if(i > 0)
+                    next = issues[i - 1];
         });
 
         return next ?   <Link to={`/issue/${next.id}`} style={styles.rightMag}>
