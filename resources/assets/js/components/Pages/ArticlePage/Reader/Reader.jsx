@@ -177,6 +177,7 @@ const styles = {
         // minHeight: '100vh',
         minHeight: 'calc(100vh - 12.7rem)',
 
+
         lineHeight: '1.7',
         fontFamily: 'serif',
         textAlign: 'left',
@@ -242,7 +243,7 @@ const styles = {
     },
     next_article_url: {
         display: 'block',
-        overflow: 'hidden',
+        // overflow: 'hidden',
     },
     next_article_magLeft: {
         width: '100%',
