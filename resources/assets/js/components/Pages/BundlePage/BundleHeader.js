@@ -91,6 +91,7 @@ const styles = {
         fontWeight: 200,
         display: 'inline-block',
         opacity: 0.5,
+        height: '0.65rem'
     },
     arrow:{
         position: 'absolute',
