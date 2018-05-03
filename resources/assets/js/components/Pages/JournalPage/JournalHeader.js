@@ -124,7 +124,7 @@ const styles = {
     },
     url: {
         display: 'block',
-        overflow: 'hidden',
+        // overflow: 'hidden',
         textDecoration: 'none',
         maxHeight: '5em',
         color: '#fff'
