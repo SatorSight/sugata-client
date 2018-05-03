@@ -83,7 +83,7 @@ const styles = {
         zIndex: 30,
     },
     h2: {
-        fontSize: '0.85em',
+        fontSize: '1em',
         letterSpacing: '0.4em',
         margin: '3em auto 0',
         textTransform: 'uppercase',
@@ -91,7 +91,7 @@ const styles = {
         fontWeight: 200,
         display: 'inline-block',
         opacity: 0.5,
-        height: '0.65rem'
+        // height: '0.65rem'
     },
     arrow:{
         position: 'absolute',
