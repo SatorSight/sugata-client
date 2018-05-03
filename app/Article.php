@@ -189,7 +189,7 @@ class Article extends Model
 
                 $issue_id = $article->issue->id;
                 $journal = $article->issue->journal;
-                $issues = $journal->issues->sortByDesc('content_date');
+                $issues = $journal->issues->sortByDesc('content_date')->values();
 
                 $current_key = null;
                 $issues->each(function($issue, $key) use ($issue_id, &$current_key){
