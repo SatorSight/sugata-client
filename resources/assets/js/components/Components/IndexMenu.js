@@ -209,7 +209,7 @@ const styles = {
         margin: '0 1rem',
         position: 'relative',
         paddingBottom: '1px',
-        minHeight: '80vh',
+        minHeight: '60vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between'
