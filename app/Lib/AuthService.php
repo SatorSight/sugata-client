@@ -83,6 +83,15 @@ class AuthService extends GatewayService {
         Cookie::queue(Cookie::make(self::COOKIE_USER_MSISDN, $user->msisdn, SUtils::MAX_COOKIE_TIME));
     }
 
+    public static function destroyUserSessionAndCookies(){
+        Session::put(self::SESSION_USER_ID, null);
+        Session::put(self::SESSION_USER_MSISDN, null);
+
+        Cookie::queue(Cookie::make(self::COOKIE_USER_ID, null, SUtils::MAX_COOKIE_TIME));
+        Cookie::queue(Cookie::make(self::COOKIE_USER_MSISDN, null, SUtils::MAX_COOKIE_TIME));
+    }
+
+
     public static function userAuthorized(){
         $session_user_id = Session::get(self::SESSION_USER_ID);
         $session_user_msisdn = Session::get(self::SESSION_USER_MSISDN);

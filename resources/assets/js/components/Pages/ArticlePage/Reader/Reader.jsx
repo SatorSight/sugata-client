@@ -512,10 +512,12 @@ export default class Reader extends Component {
 
         const direction = e.changedTouches[0].clientX - this.state.originalX < 0 ? 'next' : 'prev';
 
-        if(this.current_page_is_last() && direction === 'next')
-            this.go_next();
-        else if(this.current_page_is_first() && direction === 'prev')
-            this.go_prev();
+        if (deltaX > this.minDistance && deltaY < this.minDistance){
+            if(this.current_page_is_last() && direction === 'next')
+                this.go_next();
+            else if(this.current_page_is_first() && direction === 'prev')
+                this.go_prev();
+        }
 
         if (   deltaX > this.minDistance
             && deltaY < this.minDistance

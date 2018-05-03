@@ -76,8 +76,15 @@ trait AuthRoutes{
         $resp = new \stdClass();
         $resp->operator = $operator;
         $resp->user_bundles = $user_bundles->isEmpty() ? [] : $user_bundles->toArray();
+        $resp->msisdn = $user_msisdn;
 
         return response()->json($resp);
+    }
+
+    public function logout(){
+        AuthService::destroyUserSessionAndCookies();
+
+        return response()->json('ok');
     }
 
 //    public function getSubLink($bundle_id){

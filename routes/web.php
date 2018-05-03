@@ -17,5 +17,6 @@ Route::get('/api/auth/check_msisdn/{data}', 'ApiController@checkMsisdn');
 Route::get('/api/auth/user_authorized/', 'ApiController@userAuthorized');
 Route::get('/api/auth/get_sub_link/{bundle_id}/', 'ApiController@getSubLink');
 Route::get('/api/auth/load_auth_data/', 'ApiController@loadAuthData');
+Route::get('/api/logout/', 'ApiController@logout');
 
 Route::get('/{any}', 'AppController@index')->where('any', '.*');

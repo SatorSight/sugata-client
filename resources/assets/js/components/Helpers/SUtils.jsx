@@ -32,6 +32,24 @@ export function merge_data(data1, data2) {
     return result_array;
 }
 
+export function beautifyTel(tel){
+    if(empty(tel))
+        return tel;
+    const arr = tel.split('');
+    if(empty(arr) || arr.length < 12)
+        return tel;
+
+    return arr[0] + arr[1]
+        + ' ('
+        + arr[2] + arr[3] + arr[4]
+        + ') '
+        + arr[5] + arr[6] + arr[7]
+        + '-'
+        + arr[8] + arr[9]
+        + '-'
+        + arr[10] + arr[11];
+}
+
 export function push_if_not_there(needle, haystack) {
     if (!in_array(needle, haystack))
         haystack.push(needle);

@@ -206,8 +206,13 @@ const styles = {
         WebkitTextFillColor: 'transparent',
     },
     settings: {
+        margin: '0 1rem',
         position: 'relative',
         paddingBottom: '1px',
+        minHeight: '80vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between'
     },
     itemSettings: {
         position: 'relative',
@@ -404,6 +409,30 @@ const balance_styles = {
         "fontFamily": "Montserrat",
         "letterSpacing": "2px",
         'marginBottom': '5px'
+    },
+    button_settings: {
+        fontSize: '1em',
+        padding: '1.2em 1em 1em',
+        letterSpacing: 1,
+        textTransform: 'uppercase',
+        // color: '#000',
+        fontFamily: 'HelveticaNeueCyr, sans-serif',
+        fontWeight: 400,
+        width: '90%',
+        maxWidth: 400,
+        margin: '0 auto 2em',
+        borderRadius: '2em',
+        lineHeight: '3em',
+        border: '1px solid #E0E0E0',
+        cursor: 'pointer',
+        // display: 'block',
+        backgroundColor: '#FFF',
+
+        display: 'flex'
+    },
+    span: {
+        color: 'black',
+        fontWeight: 500
     }
 };
 
@@ -496,6 +525,147 @@ class IndexMenu extends Component {
         this.props.payment_trigger(bundle_id);
     };
 
+    resolveLoginLogout = () => {
+        if(SUtils.propOrNull(this.props.auth_data, 'msisdn')){
+            this.logout();
+        }else{
+            //login
+        }
+    };
+
+    login = () => {};
+    logout = () => {
+        fetch('/api/logout', {credentials: 'include'})
+            .then(resp => window.location.reload())
+    };
+
+
+
+    renderTabs = () => {
+
+        let tabs = [];
+
+        const { index } = this.state;
+        let articles = this.props.data.new_articles;
+        let issues = this.props.data.new_issues;
+        let bundles = this.props.data.bundles;
+
+        const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
+        const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
+        const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
+
+
+        tabs.push(<div key={'menu-tab-links'} style={styles.mainBundle}>
+            <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
+                На главную
+            </Link>
+            {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
+                <Link draggable={false} onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
+                    {bundle.name}
+                </Link>
+            ) : null}
+        </div>);
+
+        tabs.push(<div key={'menu-tab-balance'} style={balance_styles.container}>
+            <div style={balance_styles.balance_bg}></div>
+            <div style={balance_styles.bundle_container}>
+                {(!operator || operator.tech_name === 'beeline.ru') ?
+                    <div style={balance_styles.bundle_premium}>
+                        <div style={balance_styles.left_container}>
+                            <div style={balance_styles.premium_label}>Премиум</div>
+                            <div style={balance_styles.journals_list}>
+                                Включает все журналы
+                            </div>
+                        </div>
+                        <div style={balance_styles.button_container}>
+                            <button style={balance_styles.active_button_premium} type="button" name="button">
+                                <div style={balance_styles.mark_container}>
+                                    <div style={balance_styles.check_mark}>
+                                        <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
+                                    </div>
+                                </div>
+                                <div style={balance_styles.button_label}>Активна</div>
+                            </button>
+                        </div>
+                    </div> : null}
+                {SUtils.any(bundles) ? bundles.map(bundle =>
+                    <div key={`balance_bundles_${bundle.id}`} style={
+                        Object.assign(
+                            {},
+                            balance_styles.bundle,
+                            get_color_style()
+                        )
+                    }>
+                        <div style={balance_styles.left_container}>
+                            <div style={balance_styles.label}>«{bundle.name}»</div>
+                            <div style={balance_styles.journals_list}>
+                                {bundle.journal_names.slice(0, 3).join(', ')}
+                            </div>
+                        </div>
+                        {SUtils.in_array(bundle.id, user_bundles)
+                            ? <div style={balance_styles.button_container}>
+                                <button style={balance_styles.active_button} type="button" name="button">
+                                    <div style={balance_styles.mark_container}>
+                                        <div style={balance_styles.check_mark}>
+                                            <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
+                                        </div>
+                                    </div>
+                                    <div style={balance_styles.button_label}>Активна</div>
+                                </button>
+                            </div>
+                            : <button onClick={() => this.go_to_subscription(bundle.id)} style={balance_styles.inactive_button} type="button" name="button">
+                                <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
+                            </button>
+                        }
+                    </div>
+                ) : null}
+            </div>
+        </div>);
+
+
+        if(user_msisdn){
+            tabs.push(<div key={'menu-tab-settings'} style={styles.settings}>
+                <div style={styles.itemSettings}>
+                    <label style={styles.leftSettings}>Номер телефона
+                        <input style={styles.lineSettings} type="text"
+                               value={SUtils.beautifyTel(user_msisdn)}
+                            // placeholder="+7 (909) 999-99-99"
+                               disabled />
+                    </label>
+                    <span style={styles.arrowSettings} />
+                </div>
+                <Button classes={{}} color="primary" style={balance_styles.button_settings} onClick={this.resolveLoginLogout}>
+                    <svg style={{marginBottom: '0.2rem', marginRight: '1rem'}} fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
+                    </svg>
+                    <span style={balance_styles.span}>
+                        {user_msisdn ? 'Выйти' : 'Войти'}
+                    </span>
+                </Button>
+
+                {/*<div style={styles.itemSettings}>*/}
+                {/*<label style={styles.leftSettings}>Имя (для комментариев)*/}
+                {/*<input style={styles.lineSettings} type="text" placeholder="Константин" />*/}
+                {/*</label>*/}
+                {/*<span style={styles.arrowSettings} />*/}
+                {/*</div>*/}
+                {/*<div style={styles.itemSettings}>*/}
+                {/*<label style={styles.leftSettings}>Присылать оповещения</label>*/}
+                {/*<select style={styles.lineSettings} value={this.state.option} onChange={this.handleChangeOption}>*/}
+                {/*<option style={styles.optionSettings} value="true">&nbsp;Да</option>*/}
+                {/*<option style={styles.optionSettings} value="false">Нет</option>*/}
+                {/*</select>*/}
+                {/*<span style={styles.arrowSettings} />*/}
+                {/*</div>*/}
+            </div>);
+
+        }
+
+        return tabs;
+
+    };
+
 
     render() {
         const { classes } = this.props;
@@ -506,6 +676,7 @@ class IndexMenu extends Component {
 
         const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
         const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
+        const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
 
         return (
             <MuiThemeProvider theme={theme}>
@@ -534,7 +705,7 @@ class IndexMenu extends Component {
                                     <Tabs indicatorColor="none" fullWidth value={index} onChange={this.handleChange} style={styles.tabs}>
                                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="витрина" style={styles.tabsItem} className={classes.tabsItem} />
                                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="баланс" style={styles.tabsItem} />
-                                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="настройки" style={styles.tabsItem} />
+                                        <Tab disabled={user_msisdn === null} classes={{ rootInheritSelected: this.props.classes.activeItem}} label="настройки" style={styles.tabsItem} />
                                     </Tabs>
                                     <SwipeableViews
                                         animateHeight
@@ -542,99 +713,7 @@ class IndexMenu extends Component {
                                         slideStyle={{overflowX: 'auto'}}
                                         index={index}
                                         onChangeIndex={this.handleChangeIndex}>
-                                        <div style={styles.mainBundle}>
-                                            <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
-                                                На главную
-                                            </Link>
-                                            {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
-                                                <Link draggable={false} onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
-                                                    {bundle.name}
-                                                </Link>
-                                            ) : null}
-                                        </div>
-
-
-                                        <div style={balance_styles.container}>
-                                            <div style={balance_styles.balance_bg}></div>
-                                            <div style={balance_styles.bundle_container}>
-
-
-                                                {(!operator || operator.tech_name === 'beeline.ru') ?
-                                                <div style={balance_styles.bundle_premium}>
-                                                    <div style={balance_styles.left_container}>
-                                                        <div style={balance_styles.premium_label}>Премиум</div>
-                                                        <div style={balance_styles.journals_list}>
-                                                            Включает все журналы
-                                                        </div>
-                                                    </div>
-                                                    <div style={balance_styles.button_container}>
-                                                        <button style={balance_styles.active_button_premium} type="button" name="button">
-                                                            <div style={balance_styles.mark_container}>
-                                                                <div style={balance_styles.check_mark}>
-                                                                    <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
-                                                                    {/*<svg viewBox="0 0 30 22" width="30" height="20"><style>tspan { white-space:pre }.shp0 { fill: none;stroke: #ffffff;stroke-linecap:round;stroke-width: 3.2 }</style><path id="Path 2" class="shp0" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>*/}
-                                                                </div>
-                                                            </div>
-                                                            <div style={balance_styles.button_label}>Активна</div>
-                                                        </button>
-                                                    </div>
-                                                </div> : null}
-                                                {SUtils.any(bundles) ? bundles.map(bundle =>
-                                                    <div key={`balance_bundles_${bundle.id}`} style={
-                                                        Object.assign(
-                                                            {},
-                                                            balance_styles.bundle,
-                                                            get_color_style()
-                                                        )
-                                                    }>
-                                                        <div style={balance_styles.left_container}>
-                                                            <div style={balance_styles.label}>«{bundle.name}»</div>
-                                                            <div style={balance_styles.journals_list}>
-                                                                {bundle.journal_names.slice(0, 3).join(', ')}
-                                                            </div>
-                                                        </div>
-                                                        {SUtils.in_array(bundle.id, user_bundles)
-                                                            ? <div style={balance_styles.button_container}>
-                                                                <button style={balance_styles.active_button} type="button" name="button">
-                                                                    <div style={balance_styles.mark_container}>
-                                                                        <div style={balance_styles.check_mark}>
-                                                                            <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div style={balance_styles.button_label}>Активна</div>
-                                                                </button>
-                                                            </div>
-                                                            : <button onClick={() => this.go_to_subscription(bundle.id)} style={balance_styles.inactive_button} type="button" name="button">
-                                                                <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
-                                                            </button>
-                                                        }
-                                                    </div>
-                                                ) : null}
-                                            </div>
-                                        </div>
-
-                                        <div style={styles.settings}>
-                                            <div style={styles.itemSettings}>
-                                                <label style={styles.leftSettings}>Номер телефона
-                                                    <input style={styles.lineSettings} type="text" placeholder="+7 (909) 999-99-99" disabled />
-                                                </label>
-                                                <span style={styles.arrowSettings} />
-                                            </div>
-                                            <div style={styles.itemSettings}>
-                                                <label style={styles.leftSettings}>Имя (для комментариев)
-                                                    <input style={styles.lineSettings} type="text" placeholder="Константин" />
-                                                </label>
-                                                <span style={styles.arrowSettings} />
-                                            </div>
-                                            <div style={styles.itemSettings}>
-                                                <label style={styles.leftSettings}>Присылать оповещения</label>
-                                                <select style={styles.lineSettings} value={this.state.option} onChange={this.handleChangeOption}>
-                                                    <option style={styles.optionSettings} value="true">&nbsp;Да</option>
-                                                    <option style={styles.optionSettings} value="false">Нет</option>
-                                                </select>
-                                                <span style={styles.arrowSettings} />
-                                            </div>
-                                        </div>
+                                        {this.renderTabs()}
                                     </SwipeableViews>
                                 </div>
                             </MuiThemeProvider>
