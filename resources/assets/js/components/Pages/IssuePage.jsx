@@ -20,8 +20,8 @@ class IssuePage extends AuthorizableComponent {
             const issue = this.state.data.issue;
             this.state.data.all_issues.map((iss, i) => {
                 if(iss.id === issue.id) {
-                    if (!SUtils.empty(this.state.data.all_issues[i - 1]))
-                        prev_issue = this.state.data.all_issues[i - 1];
+                    if (!SUtils.empty(this.state.data.all_issues[i + 1]))
+                        prev_issue = this.state.data.all_issues[i + 1];
                 }
             });
         }

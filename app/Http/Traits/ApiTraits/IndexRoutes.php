@@ -48,7 +48,7 @@ trait IndexRoutes{
 
             ImageProxyService::resize($last_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
 
-            $last_issues = $last_issues->sortByDesc('id');
+            $last_issues = $last_issues->sortByDesc('content_date');
 
             return $last_issues;
         });

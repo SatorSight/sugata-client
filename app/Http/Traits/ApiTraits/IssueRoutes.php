@@ -133,7 +133,7 @@ trait IssueRoutes{
 
             ImageProxyService::resize($journal_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
 
-            $journal_issues = $journal_issues->sortByDesc('id');
+            $journal_issues = $journal_issues->sortByDesc('content_date');
 
             return $journal_issues;
         });

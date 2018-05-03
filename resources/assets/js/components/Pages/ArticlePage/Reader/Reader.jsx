@@ -445,8 +445,8 @@ export default class Reader extends Component {
 
 
     go_to_next_issue = () => {
-        if(this.props.article.side_issues.prev)
-            window.location = `/issue/${this.props.article.side_issues.prev.id}`;
+        if(this.props.article.side_issues.next)
+            window.location = `/issue/${this.props.article.side_issues.next.id}`;
         else
             window.location = `/journal/${this.props.journal.id}`
     };
@@ -646,12 +646,12 @@ export default class Reader extends Component {
                                     {this.state.next
                                         // next article image
                                         ? <img style={styles.next_article_magLeft} src={current_next_article_image_path} alt={current_next_article_title} />
-                                        : this.props.article.side_issues.prev
+                                        : this.props.article.side_issues.next
                                             // next issue cover
                                             ? <div>
                                                 <img style={styles.next_article_magLeft}
-                                                   src={this.props.article.side_issues.prev.image_path}
-                                                   alt={this.props.article.side_issues.prev.name} />
+                                                   src={this.props.article.side_issues.next.image_path}
+                                                   alt={this.props.article.side_issues.next.name} />
                                             </div>
                                             // journal cover
                                             : <img style={styles.next_article_magLeft} src={SUtils.propOrNull(journal, 'image_path')} alt={SUtils.propOrNull(journal, 'name')} />
@@ -666,8 +666,8 @@ export default class Reader extends Component {
                                             : this.props.article.side_issues.next
                                                 ? <div>
                                                     <div>Предыдущий выпуск</div>
-                                                    <img style={{height: '3em', margin: '0.5em 0 0.5em 0'}} src={this.props.article.side_issues.prev.logo_path} alt=""/>
-                                                    <div>{SUtils.toRuMonthYearLocale(this.props.article.side_issues.prev.content_date)}</div>
+                                                    <img style={{height: '3em', margin: '0.5em 0 0.5em 0'}} src={this.props.article.side_issues.next.logo_path} alt=""/>
+                                                    <div>{SUtils.toRuMonthYearLocale(this.props.article.side_issues.next.content_date)}</div>
                                                 </div>
                                                 : `Журнал ${SUtils.propOrNull(journal, 'name')}`
                                         }

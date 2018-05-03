@@ -47,7 +47,7 @@ trait JournalRoutes{
      */
     public function journalGetLastIssues($journal_id){
         $last_issues = Cache::remember('journal_last_issues_' . $journal_id, $this->expiration, function() use($journal_id) {
-            $last_issues = Journal::find($journal_id)->issues->sortByDesc('id')->take(4);
+            $last_issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(4);
 
             Issue::injectWithImages($last_issues);
             ImageProxyService::resize($last_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
@@ -65,7 +65,7 @@ trait JournalRoutes{
      */
     public function journalGetIssuesCoverArticles($journal_id){
         $cover_articles = Cache::remember('journal_cover_articles_' . $journal_id, $this->expiration, function() use($journal_id) {
-            $last_issues = Journal::find($journal_id)->issues->sortByDesc('id')->take(4);
+            $last_issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(4);
             $cover_articles = $last_issues->map(function($issue){
                 return $issue->getCoverArticle();
             });
@@ -123,7 +123,7 @@ trait JournalRoutes{
     public function journalGetRandomArticlesFromNonLastIssue($journal_id){
         $articles = Cache::remember('journal_random_articles_' . $journal_id, $this->expiration, function() use($journal_id) {
             $non_last_issues = Journal::find($journal_id)->issues
-                ->sortByDesc('id')
+                ->sortByDesc('content_date')
                 ->slice(1)
                 ->take(5)
             ;
@@ -175,7 +175,7 @@ trait JournalRoutes{
     public function journalGetMorePopularArticles($journal_id, $from){
         $articles = Cache::remember('journal_more_popular_articles_' . $journal_id . '_' . $from, $this->expiration, function() use($journal_id, $from) {
             $non_last_issues = Journal::find($journal_id)->issues
-                ->sortByDesc('id')
+                ->sortByDesc('content_date')
                 ->slice(1)
                 ->slice($from)
                 ->take(5)
@@ -237,7 +237,7 @@ trait JournalRoutes{
         $issues = Cache::remember('journal_rest_issues_' . $journal_id, $this->expiration, function() use($journal_id) {
             $issues = Journal::find($journal_id)
                 ->issues
-                ->sortByDesc('id')
+                ->sortByDesc('content_date')
                 ->slice(1)
 //            ->reject(function($issue) use ($journal_id){ return $issue->journal_id == $journal_id; })
             ;

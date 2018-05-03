@@ -238,12 +238,13 @@ class IssueHeader extends Component {
 
     cur = issues => {
         let cur = null;
+        const first_article_id = this.props.data.first_article_id ? this.props.data.first_article_id.id : 0;
         issues.map((issue, i) => {
             if(parseInt(issue.id) === parseInt(this.props.self_id))
                 cur = issue;
         });
 
-        return cur ? <Link to={`/issue/${cur.id}`} style={styles.bigMag}>
+        return cur ? <Link to={`/article/${first_article_id}`} style={styles.bigMag}>
                         <img style={styles.imgMag} src={cur.image_path} alt={cur.journal_name} />
                         <img style={styles.imgMagMask} src={cur.image_path} alt={cur.journal_name} />
                     </Link> : null;
