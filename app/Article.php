@@ -162,6 +162,8 @@ class Article extends Model
         $res = str_replace('</br>', '', $res);
         $res = str_replace('<br/>', '', $res);
         $res = str_replace('&nbsp;', ' ', $res);
+        $res = str_replace('&lt;', ' ', $res);
+        $res = str_replace('&gt;', ' ', $res);
         $res = strip_tags($res);
 
         return $res;
@@ -187,7 +189,7 @@ class Article extends Model
 
                 $issue_id = $article->issue->id;
                 $journal = $article->issue->journal;
-                $issues = $journal->issues->sortByDesc('number');
+                $issues = $journal->issues->sortByDesc('content_date');
 
                 $current_key = null;
                 $issues->each(function($issue, $key) use ($issue_id, &$current_key){

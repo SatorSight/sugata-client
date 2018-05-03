@@ -301,7 +301,7 @@ trait IssueRoutes{
     public function issueGetOtherIssues($issue_id){
         $issues = Cache::remember('issue_other_issues_' . $issue_id, $this->expiration, function() use($issue_id) {
             $issues = Issue::find($issue_id)->journal->issues
-                ->sortByDesc('number')
+                ->sortByDesc('content_date')
                 ->reject(function($i) use ($issue_id){
                     return $issue_id == $i->id;
                 });
