@@ -323,9 +323,10 @@ class AuthHeader extends Component {
                         <div style={styles.divInput}>
                             <span style={styles.spanInput}>Ваш номер телефона</span>
                             <InputMask
+                                onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
                                 onChange={this.onChange}
                                 value={this.state.msisdn}
-                                style={styles.inputMask} {...this.props}
+                                style={styles.inputMask}
                                 type="tel"
                                 mask="+7 (999) 999-99-99"
                                 placeholder="+7 (   )    -  -  "
