@@ -379,14 +379,19 @@ class Article extends Model
     }
 
     public static function isHTMLCorrect(string $html) : bool {
-        preg_match('/<p>(.*?)<\/p>/', $html, $matches);
+        preg_match_all('/<p>(.*?)<\/p>/is', $html, $matches);
+
         if(empty($matches))
             return false;
 
-        $p_contents = $matches[1];
-        if(strlen($p_contents) > 200)
-            return true;
-        return false;
+        $text_found = false;
+        foreach ($matches[1] as $match)
+            if(strlen($match) > 200)
+                $text_found = true;
+        if(!$text_found)
+            return false;
+
+        return true;
     }
 
 }
