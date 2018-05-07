@@ -98,11 +98,6 @@ class SwiperTop extends React.Component {
     render() {
         const { active } = this.props;
 
-        console.log('zzzzzzzzzzzzzzzzzz');
-        console.log(active);
-        console.log(this.props.issues.length);
-
-
         const swiper_style = active === this.props.issues.length - 1
             ? Object.assign({}, swiper_styles, styles.swiper)
             : styles.swiper;

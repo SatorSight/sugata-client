@@ -553,15 +553,11 @@ class IndexMenu extends Component {
 
         let tabs = [];
 
-        const { index } = this.state;
-        let articles = this.props.data.new_articles;
-        let issues = this.props.data.new_issues;
         let bundles = this.props.data.bundles;
 
         const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
         const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
         const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
-
 
         tabs.push(<div key={'menu-tab-links'} style={styles.mainBundle}>
             <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>

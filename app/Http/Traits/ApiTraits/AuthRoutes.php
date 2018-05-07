@@ -65,7 +65,13 @@ trait AuthRoutes{
     public function loadAuthData(){
         $user_msisdn = Cookie::get('COOKIE_USER_MSISDN');
 
+        if(empty($user_msisdn))
+            return response()->json(self::getNoUserMessage());
+
         $user = User::where('msisdn', $user_msisdn)->first();
+        if(!$user)
+            return response()->json(self::getNoUserMessage());
+
         $user_bundle_accesses = $user->bundle_accesses()->get();
 
         $user_bundle_accesses_ids = $user_bundle_accesses->map(function($b_a){
@@ -82,6 +88,14 @@ trait AuthRoutes{
         $resp->msisdn = $user_msisdn;
 
         return response()->json($resp);
+    }
+
+    public static function getNoUserMessage() : \stdClass {
+        $resp = new \stdClass();
+        $resp->operator = null;
+        $resp->user_bundles = [];
+        $resp->msisdn = null;
+        return $resp;
     }
 
     public function logout(){
