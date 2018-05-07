@@ -525,6 +525,14 @@ class IndexMenu extends Component {
         this.props.payment_trigger(bundle_id);
     };
 
+    subscribed_to_all_bundles = () => {
+        const bundles = this.props.data.bundles;
+        const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
+        if(bundles && user_bundles)
+            return bundles.length === user_bundles.length;
+        return false;
+    };
+
     resolveLoginLogout = () => {
         if(SUtils.propOrNull(this.props.auth_data, 'msisdn')){
             this.logout();
@@ -577,7 +585,11 @@ class IndexMenu extends Component {
                                 Включает все журналы
                             </div>
                         </div>
-                        <div style={balance_styles.button_container}>
+                        {/*
+                         PREMIUM HARDCODE
+                         */}
+                        {this.subscribed_to_all_bundles()
+                            ? <div style={balance_styles.button_container}>
                             <button style={balance_styles.active_button_premium} type="button" name="button">
                                 <div style={balance_styles.mark_container}>
                                     <div style={balance_styles.check_mark}>
@@ -587,7 +599,12 @@ class IndexMenu extends Component {
                                 <div style={balance_styles.button_label}>Активна</div>
                             </button>
                         </div>
-                    </div> : null}
+                        : <button onClick={() => this.go_to_subscription()} style={balance_styles.inactive_button} type="button" name="button">
+                            <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
+                        </button>}
+                    </div>
+                    : null
+                }
                 {SUtils.any(bundles) ? bundles.map(bundle =>
                     <div key={`balance_bundles_${bundle.id}`} style={
                         Object.assign(
@@ -670,9 +687,6 @@ class IndexMenu extends Component {
     render() {
         const { classes } = this.props;
         const { index } = this.state;
-        let articles = this.props.data.new_articles;
-        let issues = this.props.data.new_issues;
-        let bundles = this.props.data.bundles;
 
         const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
         const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');

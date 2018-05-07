@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    public function bundle() {
-        return $this->belongsTo('App\Bundle');
+
+    public function bundle_accesses() {
+        return $this->belongsToMany(BundleAccess::class, 'users_bundle_accesses');
     }
 
     public function operator() {

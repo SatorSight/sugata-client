@@ -20,6 +20,8 @@ class MasterClassAdapter{
         'Comment' => 'Comment',
         'Image' => 'Image',
         'Logo' => 'Logo',
+        'BundleAccess' => 'BundleAccess',
+        'BundleAccessesBundle' => 'BundleAccessesBundle',
         'AdditionalImage' => 'AdditionalImage'
     ];
 

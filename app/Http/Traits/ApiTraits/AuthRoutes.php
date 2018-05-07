@@ -19,8 +19,11 @@ trait AuthRoutes{
         $msisdn = $decoded->data->msisdn;
         $msisdn = SUtils::normalizeTel($msisdn);
 
-        $bundle_id = $decoded->data->bundle_id;
-        $bundle = Bundle::find($bundle_id);
+        $bundle = null;
+        if(isset($decoded->data->bundle_id)) {
+            $bundle_id = $decoded->data->bundle_id;
+            $bundle = Bundle::find($bundle_id);
+        }
 
         $as = new AuthService($bundle);
         $as->loadSubscriptionInfoByMsisdn($msisdn);
@@ -61,21 +64,21 @@ trait AuthRoutes{
 
     public function loadAuthData(){
         $user_msisdn = Cookie::get('COOKIE_USER_MSISDN');
-        $users = User::where('msisdn', $user_msisdn)->get();
 
-        /** @var Collection $user_bundles */
-        $user_bundles = $users
-            ->map(function($u){
-                return $u->bundle->id;
-            })
-        ;
+        $user = User::where('msisdn', $user_msisdn)->first();
+        $user_bundle_accesses = $user->bundle_accesses()->get();
 
-        $as = new AuthService(Bundle::first());
+        $user_bundle_accesses_ids = $user_bundle_accesses->map(function($b_a){
+            return $b_a->bundles()->get()->map(function($b){ return $b->id; });
+        });
+        $user_bundles_ids = array_flatten(array_values($user_bundle_accesses_ids->toArray()));
+
+        $as = new AuthService();
         $operator = $as->getOperator();
 
         $resp = new \stdClass();
         $resp->operator = $operator;
-        $resp->user_bundles = $user_bundles->isEmpty() ? [] : $user_bundles->toArray();
+        $resp->user_bundles = $user_bundles_ids;
         $resp->msisdn = $user_msisdn;
 
         return response()->json($resp);

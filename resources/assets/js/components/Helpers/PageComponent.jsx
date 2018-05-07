@@ -20,8 +20,6 @@ export default class PageComponent extends Component {
     scroll_top = () => scrollTo(0, 0);
 
     componentDidMount(){
-
-        SUtils.loadAuthDataToState(this);
         SUtils.load(this.getRoutesObject(), this);
         this.scroll_top();
     }

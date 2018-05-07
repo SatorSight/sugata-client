@@ -376,8 +376,8 @@ export default class Reader extends Component {
 
         const pages_loaded = this.state.pages_loaded + 1;
         this.setState({ pages_loaded }, () => {
-            if(pages_loaded > this.props.page_load_limit)
-                this.props.payment_trigger();
+            if(pages_loaded > this.props.page_load_limit && this.props.bundle)
+                this.props.payment_trigger(this.props.bundle.id);
         });
 
         return article;

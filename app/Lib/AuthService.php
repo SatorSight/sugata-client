@@ -3,6 +3,7 @@
 namespace App\Lib;
 
 use App\Bundle;
+use App\BundleAccess;
 use App\Operator;
 use App\User;
 use Illuminate\Support\Facades\Cookie;
@@ -21,7 +22,7 @@ class AuthService extends GatewayService {
     private $ip_checker_url;
     private $operator;
 
-    public function __construct(Bundle $bundle){
+    public function __construct(Bundle $bundle = null){
         parent::__construct();
         $this->ip_checker_url = config('client.ip_checker_url');
         $this->bundle = $bundle;
@@ -70,9 +71,37 @@ class AuthService extends GatewayService {
 //        $user->login = '';
         $user->active = true;
         $user->operator_id = $operator->id;
-        $user->bundle_id = $this->bundle->id;
+
+        $bundle = $this->bundle ? $this->bundle->id : null;
+        if($bundle)
+            $bundle = Bundle::find($bundle);
+        $bundle_access = self::findBundleAccess($operator, $bundle);
+
         $user->save();
+        $user->bundle_accesses()->attach($bundle_access->id);
     }
+
+    public static function findBundleAccess($operator, $bundle){
+        $bundle_accesses = BundleAccess::all();
+
+        $bundle_access_key = $bundle_accesses->search(function($b_a) use ($bundle, $operator){
+            if($b_a->operator->id == $operator->id) {
+                if (!$bundle || $b_a->bundles()->get()->contains($bundle))
+                    return $b_a;
+                else
+                    return false;
+            }else
+                return false;
+        });
+
+        if($bundle_access_key !== false)
+            $bundle_access = $bundle_accesses->get($bundle_access_key);
+        else
+            $bundle_access = null;
+
+        return $bundle_access;
+    }
+
 
     public function writeUserSessionAndCookies(){
         $user = $this->getUser();
@@ -157,7 +186,7 @@ class AuthService extends GatewayService {
         $url = join('/', [
             $this->getSchemaDomainUrlPart(),
             $url,
-            $this->bundle->id,
+            ($this->bundle ? $this->bundle->id : 'null'),
             $this->getOperator()->id,
             $this->getAuthUrlPostfix()
         ]);
@@ -170,7 +199,7 @@ class AuthService extends GatewayService {
             $this->getSchemaDomainUrlPart(), //http://
             $url, // /something
             $bridge_token,
-            $this->bundle->id,
+            ($this->bundle ? $this->bundle->id : 'null'),
             $this->getAuthUrlPostfix() // realm_id + secret
         ]);
     }
@@ -181,7 +210,9 @@ class AuthService extends GatewayService {
             $this->getSchemaDomainUrlPart(), //http://
             $url, // /something
             $msisdn,
-            $this->bundle->id,
+            ($this->bundle ? $this->bundle->id : 'null'),
+//            $this->getOperator()->id,
+            1,
             $this->getAuthUrlPostfix() // realm_id + secret
         ]);
     }

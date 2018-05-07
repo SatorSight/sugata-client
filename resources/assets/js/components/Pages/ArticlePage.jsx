@@ -33,6 +33,7 @@ export default class ArticlePage extends AuthorizableComponent {
                     {this.state.loading
                         ? <Waiter/>
                         : <Reader
+                            bundle={this.props.bundle}
                             auth_data={this.state.auth_data}
                             page_load_limit={4}
                             payment_trigger={this.paymentTrigger}

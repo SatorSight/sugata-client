@@ -68,7 +68,18 @@ class GetChangedData extends Command
         foreach($entities as $master_class => $objects_array){
             if(!empty($objects_array)){
                 foreach($objects_array as $object){
-                    $existing_object = MasterClassAdapter::masterToSlave($master_class)::find($object->id);
+
+                    if(isset($object->id))
+                        $existing_object = MasterClassAdapter::masterToSlave($master_class)::find($object->id);
+                    else{
+                        $object_data = (array)$object;
+                        $criteria = [];
+                        foreach ($object_data as $key => $value){
+                            $criteria[] = [$key, '=', $value];
+                        }
+                        $existing_object = MasterClassAdapter::masterToSlave($master_class)::where($criteria)->first();
+                    }
+
                     if($existing_object){
                         $arrayed_object = (array)$object;
                         foreach ($arrayed_object as $field => $value){
