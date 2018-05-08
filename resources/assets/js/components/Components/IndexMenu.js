@@ -383,7 +383,8 @@ const balance_styles = {
         "display": "flex",
         "flexDirection": "row",
         "alignItems": "center",
-        "justifyContent": "space-around"
+        "justifyContent": "space-around",
+        "cursor": "pointer"
     },
     "mark_container": {
         "marginRight": "1rem"
@@ -522,6 +523,8 @@ class IndexMenu extends Component {
     handleChangeIndex = index => this.setState({ index });
 
     go_to_subscription = bundle_id => {
+        console.log('bundle_id--------');
+        console.log(bundle_id);
         this.props.payment_trigger(bundle_id);
     };
 
@@ -532,6 +535,12 @@ class IndexMenu extends Component {
             return false;
         if(bundles.length < 1 && user_bundles.length < 1)
             return false;
+
+        // if(bundles && user_bundles)
+        //     console.log('aaa');
+        //     console.log(bundles);
+        //     console.log(user_bundles);
+
         if(bundles && user_bundles)
             return bundles.length === user_bundles.length;
         return false;
@@ -559,9 +568,19 @@ class IndexMenu extends Component {
 
         let bundles = this.props.data.bundles;
 
-        const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
+        const operator_object = SUtils.propOrNull(this.props.auth_data, 'operator');
+        const operator = SUtils.propOrNull(operator_object, 'tech_name');
         const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
         const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
+
+        // console.log(']]]]]]]]]]]]]');
+        // console.log(this.props.auth_data);
+        // console.log(operator);
+        // console.log(operator_object);
+        // console.log(user_msisdn);
+        // console.log(user_bundles);
+        // console.log(this.subscribed_to_all_bundles());
+        // console.log(']]]]]]]]]]]]]');
 
         tabs.push(<div key={'menu-tab-links'} style={styles.mainBundle}>
             <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
@@ -577,7 +596,7 @@ class IndexMenu extends Component {
         tabs.push(<div key={'menu-tab-balance'} style={balance_styles.container}>
             <div style={balance_styles.balance_bg}></div>
             <div style={balance_styles.bundle_container}>
-                {(!operator || operator.tech_name === 'beeline.ru') ?
+                {(!operator || operator === 'unknown' || operator === 'beeline.ru') ?
                     <div style={balance_styles.bundle_premium}>
                         <div style={balance_styles.left_container}>
                             <div style={balance_styles.premium_label}>Премиум</div>

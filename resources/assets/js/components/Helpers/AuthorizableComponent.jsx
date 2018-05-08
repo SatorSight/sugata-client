@@ -35,7 +35,7 @@ export default class AuthorizableComponent extends PageComponent {
         // console.log(typeof user_bundles);
         // console.log(SUtils.in_array(parseInt(bundle.id), user_bundles));
 
-        if(bundle && !has_bundle_access){
+        if(!has_bundle_access){
         // if(!this.auth_helper.authorized){
             const current_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.location = '/auth?return_url=' + current_url + (bundle ? '&bundle_id=' + bundle : '');
