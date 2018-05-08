@@ -528,6 +528,10 @@ class IndexMenu extends Component {
     subscribed_to_all_bundles = () => {
         const bundles = this.props.data.bundles;
         const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
+        if(!bundles || !user_bundles)
+            return false;
+        if(bundles.length < 1 && user_bundles.length < 1)
+            return false;
         if(bundles && user_bundles)
             return bundles.length === user_bundles.length;
         return false;
