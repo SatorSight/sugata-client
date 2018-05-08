@@ -91,8 +91,11 @@ trait AuthRoutes{
     }
 
     public static function getNoUserMessage() : \stdClass {
+        $as = new AuthService();
+        $operator = $as->getOperator();
+
         $resp = new \stdClass();
-        $resp->operator = null;
+        $resp->operator = $operator;
         $resp->user_bundles = [];
         $resp->msisdn = null;
         return $resp;
