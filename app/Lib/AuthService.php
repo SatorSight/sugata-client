@@ -305,8 +305,7 @@ class AuthService extends GatewayService {
             $url, // /something
             $msisdn,
             ($this->bundle ? $this->bundle->id : 'null'),
-//            $this->getOperator()->id,
-            1,
+            $this->getOperator()->id,
             $this->getAuthUrlPostfix() // realm_id + secret
         ]);
     }
