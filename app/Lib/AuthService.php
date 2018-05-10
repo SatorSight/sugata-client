@@ -198,11 +198,10 @@ class AuthService extends GatewayService {
 
     public static function syncUserBundleAccesses($user, $bundle_accesses_ids){
         $bundle_accesses = BundleAccess::whereIn('id', $bundle_accesses_ids)->get();
-        $user_b_a = $user->bundle_accesses()->get();
+        $user->bundle_accesses()->detach();
 
         foreach ($bundle_accesses as $b_a)
-            if(!$user_b_a->contains($b_a))
-                self::attachBundleAccesses($user, $b_a);
+            self::attachBundleAccesses($user, $b_a);
     }
 
     public function createUserWith($msisdn) {
