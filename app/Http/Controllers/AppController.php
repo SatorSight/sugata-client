@@ -29,12 +29,32 @@ class AppController extends Controller
             $bundle = $bp->getCurrentBundle();
 
             $as = new AuthService($bundle);
-            $as->loadSubscriptionInfoByBridgeToken($bridge_token);
-            if($as->userSubscribed()) {
-                $as->createUser();
-                $as->writeUserSessionAndCookies();
+
+            $bundle_accesses = $as->getBundleAccessesByBridgeToken($bridge_token);
+
+            if(empty($bundle_accesses))
+                return false;
+
+            $msisdn = $as->getMsisdn();
+            $user = null;
+
+            if(AuthService::userAuthorized()){
+                $user = AuthService::getAuthorizedUser();
+            }else{
+                $user = $as->getUserByMsisdn($msisdn);
             }
+
+            if(!$user){
+                $user = $as->createUserWith($msisdn);
+            }
+
+            if(!$user)
+                return false;
+
+            AuthService::syncUserBundleAccesses($user, $bundle_accesses);
+            $as->writeUserSessionAndCookies($user);
         }
+        return true;
     }
 
 }

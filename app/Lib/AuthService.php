@@ -22,6 +22,8 @@ class AuthService extends GatewayService {
     private $ip_checker_url;
     private $operator;
 
+    private $msisdn;
+
     public function __construct(Bundle $bundle = null){
         parent::__construct();
         $this->ip_checker_url = config('client.ip_checker_url');
@@ -35,6 +37,37 @@ class AuthService extends GatewayService {
     public function loadSubscriptionInfoByBridgeToken(string $bridge_token) : void{
         $this->subscriptionInfo = $this->askInfoByBridgeToken($bridge_token);
     }
+
+
+
+    public function getMsisdn(){
+        return $this->msisdn;
+    }
+
+    public function setMsisdn($msisdn){
+        $this->msisdn = $msisdn;
+    }
+
+
+
+
+
+    public function getBundleAccessesByBridgeToken(string $bridge_token) : array {
+        $resp = $this->askMasterForBundleAccessesWithBridge($bridge_token);
+
+        if(!empty($resp->msisdn))
+            $this->setMsisdn($resp->msisdn);
+
+        return $resp->bundle_accesses_ids;
+    }
+
+    public function askMasterForBundleAccessesWithBridge(string $bridge_token) : \stdClass {
+        $url = $this->getBridgeTokenInfoUrl($bridge_token);
+        $response = $this->read($url);
+        return $response;
+    }
+
+
 
     public function askMasterForActions(){
         $url = $this->getAuthActionsUrl();
@@ -77,8 +110,10 @@ class AuthService extends GatewayService {
             $bundle = Bundle::find($bundle);
         $bundle_access = self::findBundleAccess($operator, $bundle);
 
-        $user->save();
-        $user->bundle_accesses()->attach($bundle_access->id);
+        if($bundle_access) {
+            $user->save();
+            $user->bundle_accesses()->attach($bundle_access->id);
+        }
     }
 
     public static function findBundleAccess($operator, $bundle){
@@ -103,8 +138,9 @@ class AuthService extends GatewayService {
     }
 
 
-    public function writeUserSessionAndCookies(){
-        $user = $this->getUser();
+    public function writeUserSessionAndCookies($user = null){
+        if(!$user)
+            $user = $this->getUser();
         Session::put(self::SESSION_USER_ID, $user->id);
         Session::put(self::SESSION_USER_MSISDN, $user->msisdn);
 
@@ -134,6 +170,61 @@ class AuthService extends GatewayService {
             return true;
         return false;
     }
+
+
+
+
+    public function getUserByMsisdn($msisdn){
+        return User::where('msisdn', $msisdn)->first();
+    }
+
+    public static function getAuthorizedUser(){
+        if(!self::userAuthorized())
+            return null;
+
+        $session_user_id = Session::get(self::SESSION_USER_ID);
+        $cookie_user_id = Cookie::get(self::COOKIE_USER_ID);
+
+        $user = null;
+
+        if(!empty($session_user_id))
+            $user = User::find($session_user_id);
+
+        if(!$user && !empty($cookie_user_id))
+            $user = User::find($cookie_user_id);
+
+        return $user;
+    }
+
+    public static function syncUserBundleAccesses($user, $bundle_accesses_ids){
+        $bundle_accesses = BundleAccess::whereIn('id', $bundle_accesses_ids)->get();
+        $user_b_a = $user->bundle_accesses()->get();
+
+        foreach ($bundle_accesses as $b_a)
+            if(!$user_b_a->contains($b_a))
+                self::attachBundleAccesses($user, $b_a);
+    }
+
+    public function createUserWith($msisdn) {
+        $operator = $this->getOperator();
+
+        $user = new User;
+        $user->msisdn = $msisdn;
+        $user->active = true;
+        $user->operator_id = $operator->id;
+
+        $user->save();
+        return $user;
+    }
+
+    public static function attachBundleAccesses(User $user, $bundle_access){
+        $user->bundle_accesses()->attach($bundle_access->id);
+    }
+
+
+
+
+
 
     private function getUser(): User {
         $msisdn = $this->userMsisdn();
