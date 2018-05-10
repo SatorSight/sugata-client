@@ -168,8 +168,11 @@ class AuthService extends GatewayService {
     private function askInfoByBridgeToken(string $bridge_token){
         $url = $this->getBridgeTokenInfoUrl($bridge_token);
         $data = $this->read($url);
-        if(empty($data->status))
+        if(empty($data->status)) {
+            if(empty($data))
+                $data = new \stdClass();
             $data->status = 0;
+        }
         return $data;
     }
 
@@ -200,6 +203,7 @@ class AuthService extends GatewayService {
             $url, // /something
             $bridge_token,
             ($this->bundle ? $this->bundle->id : 'null'),
+            $this->getOperator()->id,
             $this->getAuthUrlPostfix() // realm_id + secret
         ]);
     }

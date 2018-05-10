@@ -28,13 +28,11 @@ class AppController extends Controller
             $bp = new BundleProvider($route);
             $bundle = $bp->getCurrentBundle();
 
-            if($bundle) {
-                $as = new AuthService($bundle);
-                $as->loadSubscriptionInfoByBridgeToken($bridge_token);
-                if($as->userSubscribed()) {
-                    $as->createUser();
-                    $as->writeUserSessionAndCookies();
-                }
+            $as = new AuthService($bundle);
+            $as->loadSubscriptionInfoByBridgeToken($bridge_token);
+            if($as->userSubscribed()) {
+                $as->createUser();
+                $as->writeUserSessionAndCookies();
             }
         }
     }
