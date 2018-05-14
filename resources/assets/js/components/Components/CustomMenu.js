@@ -5,7 +5,7 @@ import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
 import SwipeableViews from 'react-swipeable-views';
 import * as SUtils from "../Helpers/SUtils";
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const fontWeightMedium = 400;
 

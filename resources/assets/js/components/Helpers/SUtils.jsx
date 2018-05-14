@@ -245,9 +245,9 @@ export function getUrlPath(){
     return path.split('/');
 }
 
-export function orNull($obj){
-    if(!empty($obj))
-        return $obj;
+export function orNull(obj){
+    if(!empty(obj))
+        return obj;
     return null;
 }
 

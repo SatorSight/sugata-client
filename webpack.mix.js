@@ -51,9 +51,14 @@ let mix = require('laravel-mix');
 mix.react('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 
-if (process.env.npm_lifecycle_event !== 'hot') {
+
+if (mix.inProduction()) {
     mix.version();
 }
+
+// if (process.env.npm_lifecycle_event !== 'hot') {
+//     mix.version();
+// }
 
 mix.webpackConfig({
     module: {
@@ -62,6 +67,29 @@ mix.webpackConfig({
                 test: /\.jsx?$/,
                 loaders: ['babel-loader'],
             },
+            {
+                test: /\.js?$/,
+                loaders: ['babel-loader'],
+            },
         ]
     },
 });
+
+
+// mix.options({
+
+
+
+    // uglify: {
+    //     uglifyOptions: {
+    //         output: {
+    //             comments: function(node, comment){
+    //                 return /\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm.test(comment.value);
+    //             },
+    //             beautify: false
+    //         },
+    //     },
+    // },
+
+    // clearConsole: true
+// });
