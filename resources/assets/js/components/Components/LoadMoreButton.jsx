@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import Button from 'material-ui/Button';
 
 const styles = {
@@ -54,7 +54,8 @@ const styles = {
         clear: 'both',
     },
 };
-export default class LoadMoreButton extends Component {
+
+export default class LoadMoreButton extends PureComponent {
 
     constructor(props){
         super(props);

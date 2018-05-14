@@ -73,7 +73,7 @@ export default class OtherIssues extends Component {
                         lazyLoad
                         dots={false}>
                         {issues.map((issue, currentIndex) =>
-                            <Link key={issue.id} to={`/issue/${issue.id}`} style={styles.item}>
+                            <Link key={`other_issues_${issue.id}`} to={`/issue/${issue.id}`} style={styles.item}>
                                 <div style={
                                     Object.assign({}, styles.imgOtherIssues, {
                                         background: `url(${issue.image_path})`,

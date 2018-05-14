@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
-import CustomMenu from '../../Components/CustomMenu';
+// import CustomMenu from '../../Components/CustomMenu';
 import OwlCarousel from 'react-owl-carousel';
 import * as SUtils from "../../Helpers/SUtils";
 import { Link } from 'react-router-dom'

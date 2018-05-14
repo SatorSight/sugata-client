@@ -80,7 +80,6 @@ class PopularMain extends React.Component {
                             style={styles.swiper}
                             enableMouseEvents
                             index={this.props.active}
-                            // onChangeIndex={this.props.changer}
                             onSwitching={this.proxyChanger}
             >
                 {this.props.journals.map((journal, index) =>

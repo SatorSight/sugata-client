@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
 import * as SUtils from './../Helpers/SUtils';
@@ -104,7 +104,7 @@ const styles = {
 
 let links_clickable = true;
 
-class MainTopics extends React.Component {
+class MainTopics extends PureComponent {
 
     constructor(props){
         super(props);
@@ -136,7 +136,7 @@ class MainTopics extends React.Component {
         const dot = this.props.data.main_topics ? this.props.data.main_topics.length : '';
         if(SUtils.any(articles))
             articles.map(article => content.push(
-                <div style={styles.slideSwiper} key={article.id}>
+                <div style={styles.slideSwiper} key={`main_topics_articles_${article.id}`}>
                     {article.image !== ''
                         ?   <Link
                             onClick={this.linkClickHandler}

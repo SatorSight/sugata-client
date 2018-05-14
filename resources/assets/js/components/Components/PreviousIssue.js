@@ -107,7 +107,7 @@ class PreviousIssue extends Component {
             <div>
                 {issue ?
                     <Link style={{cursor: 'pointer'}} to={`/issue/${issue.id}`}>
-                        <div style={styles.item} key={issue.id}>
+                        <div style={styles.item} key={`prev_issue_${issue.id}`}>
                             <div style={styles.inner}>
                                 <div style={styles.left}>
                                     <div style={styles.url}>

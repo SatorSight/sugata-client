@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import SwipeableViews from 'react-swipeable-views';
@@ -36,27 +36,18 @@ const theme = createMuiTheme({
         },
     },
 });
-class MainTabs extends Component {
+class MainTabs extends PureComponent {
 
     constructor(props){
         super(props);
 
         this.state = {
-            index: this.props.initialIndex ? this.props.initialIndex : 0,
+            index: this.props.initialIndex || 0,
         };
     }
 
-    handleChange = (event, value) => {
-        this.setState({
-            index: value,
-        });
-    };
-
-    handleChangeIndex = index => {
-        this.setState({
-            index,
-        });
-    };
+    handleChange = (event, value) => this.setState({ index: value });
+    handleChangeIndex = index => this.setState({ index });
 
     //todo rewrite render methods below
 
@@ -70,8 +61,8 @@ class MainTabs extends Component {
                         <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
                    </Tabs>;
         return <Tabs indicatorColor="none" value={this.state.index} onChange={this.handleChange} style={styles.tabs}>
-                    <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
-                    <Tab classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
+                    <Tab key={'tab_0'} classes={{ rootInheritSelected: this.props.classes.activeItem}} label="Новое" style={styles.tabsItem} />
+                    <Tab key={'tab_1'} classes={{ rootInheritSelected: this.props.classes.activeItem, }} label="Популярное" style={styles.tabsItem} />
                </Tabs>
     };
 
@@ -95,20 +86,11 @@ class MainTabs extends Component {
             <MuiThemeProvider theme={theme}>
                 <div style={styles.main}>
                     {this.renderTabs()}
-                    {/*<Tabs indicatorColor="none" value={index} onChange={this.handleChange} style={styles.tabs}>*/}
-                        {/*{this.props.onlySecond ? null : }*/}
-                        {/*{this.props.onlyFirst ? null : }*/}
-                    {/*</Tabs>*/}
                     {this.renderViews()}
-                    {/*<SwipeableViews animateHeight enableMouseEvents index={index} onChangeIndex={this.handleChangeIndex}>*/}
-                        {/*{this.props.onlySecond ? null : <NewArticles controls={this.props.controls} data={this.props.data}/>}*/}
-                        {/*{this.props.onlyFirst ? null : <PopularArticles controls={this.props.controls} data={this.props.data}/>}*/}
-                    {/*</SwipeableViews>*/}
                 </div>
             </MuiThemeProvider>
         );
     }
 }
 
-// export default MainTabs;
 export default withStyles(styles)(MainTabs);

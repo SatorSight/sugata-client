@@ -51,6 +51,10 @@ export default class PageComponent extends Component {
             return ResourceRoutes.ARTICLE_RESOURCES;
         if(entity === 'index')
             return ResourceRoutes.MAIN_RESOURCES;
+        if(entity === 'auth')
+            return ResourceRoutes.AUTH_RESOURCES;
+        console.log('------------aaa');
+        console.log(entity);
     };
 
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import OwlCarousel from 'react-owl-carousel';
 import * as SUtils from './../Helpers/SUtils';
 import { Link } from 'react-router-dom'
@@ -33,7 +33,7 @@ const styles = {
 
 
 
-export default class NewIssues extends Component {
+export default class NewIssues extends PureComponent {
 
     constructor(props){
         super(props);
@@ -51,7 +51,7 @@ export default class NewIssues extends Component {
                         autoWidth
                         dots={false}>
                         {new_issues.map((issue, currentIndex) =>
-                            <Link key={issue.id} to={`/issue/${issue.id}`} style={styles.item}>
+                            <Link key={`new_issues_${issue.id}`} to={`/issue/${issue.id}`} style={styles.item}>
                                 <div style={
                                     Object.assign({}, styles.imgOtherIssues, {
                                         background: `url(${issue.image_path})`,

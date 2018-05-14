@@ -75,3 +75,5 @@ Route::get('/issue/main_topics/{issue_id}/', 'ApiController@issueGetMainTopics')
 Route::get('/issue/new_articles/{issue_id}/', 'ApiController@issueGetNewArticles');
 Route::get('/issue/more_new_articles/{issue_id}/{from}/', 'ApiController@issueGetMoreNewArticles')->where(['id' => '[0-9]+']);
 Route::get('/issue/other_issues/{issue_id}/', 'ApiController@issueGetOtherIssues');
+
+Route::get('/auth/bundles/', 'ApiController@indexGetBundles');

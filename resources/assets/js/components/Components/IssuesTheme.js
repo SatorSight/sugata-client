@@ -157,9 +157,9 @@ export default class IssuesTheme extends Component {
             <div style={styles.root}>
                 {SUtils.any(articles) ?
                 <OwlCarousel autoWidth dots={false} style={styles.swiper} >
-                    {articles.map((article, currentIndex) => {
+                    {articles.map(article => {
                         return !SUtils.empty(article)
-                        ? <div key={String(currentIndex)} style={styles.item} >
+                        ? <div key={`issues_theme_article_${article.id}`} style={styles.item} >
                             <div style={styles.mask} />
                             <div style={Object.assign({}, styles.imgSwiper, {backgroundImage:`url('${article.image_path}')` })} />
                             <div style={styles.infoSwiper}>

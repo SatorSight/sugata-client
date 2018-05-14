@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import IndexMenu from '../../Components/IndexMenu';
-import CustomMenu from '../../Components/CustomMenu';
+// import CustomMenu from '../../Components/CustomMenu';
 import IndexMenuSet from '../../Components/IndexMenuSet';
 import { Link } from 'react-router-dom'
 
@@ -116,7 +116,7 @@ const styles = {
         zIndex: 50,
     },
 };
-class IndexHeader extends Component {
+class IndexHeader extends PureComponent {
 
     constructor(props){
         super(props);

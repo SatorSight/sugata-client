@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 
 const styles = {
@@ -36,7 +36,7 @@ const styles = {
         zIndex: 10,
     },
 };
-class PopularTop extends React.Component {
+class PopularTop extends PureComponent {
     constructor(props) {
         super(props);
     }
@@ -44,8 +44,8 @@ class PopularTop extends React.Component {
     render() {
         return (
             <SwipeableViews style={styles.swiper} index={this.props.active}>
-                {this.props.journals.map((journal, i) =>
-                    <div style={styles.item} key={journal.id}>
+                {this.props.journals.map((journal) =>
+                    <div style={styles.item} key={`popular_editions_top_${journal.id}`}>
                         <div style={styles.mask} />
                         <img style={styles.bg} src={journal.additional_image_path} alt={journal.title} />
                     </div>

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import InputMask from 'react-input-mask';
 import IndexMenu from '../../Components/IndexMenu';
-import CustomMenu from '../../Components/CustomMenu';
+// import CustomMenu from '../../Components/CustomMenu';
 import AuthHelper from '../../Helpers/AuthHelper';
 import { Link } from 'react-router-dom'
 
@@ -9,10 +9,9 @@ import { Link } from 'react-router-dom'
 const styles = {
     header: {
         width: '100%',
-        height: '100%',
         position: 'relative',
         background: '#000',
-        overflow: 'hidden',
+        height: '100vh'
     },
     mask: {
         position: 'absolute',
@@ -69,8 +68,7 @@ const styles = {
     },
     inner: {
         position: 'relative',
-        maxWidth: '40em',
-        height: '100%',
+        maxWidth: '720px',
         margin: '0 auto',
         textAlign: 'center',
         zIndex: 30,
@@ -112,19 +110,20 @@ const styles = {
         backgroundColor: '#FFF',
         padding: '4em 1.4em 6em',
         borderRadius: '0.5em',
-        position: 'absolute',
-        left: '0.3em',
-        right: '0.3em',
-        top: '40%',
-        bottom: '5%',
+        position: 'relative',
+        width: '50%',
+        margin: '0 auto 10em',
+        minWidth: '28em',
         overflow: 'hidden',
         zIndex: 60,
     },
     innerTop: {
         overflow: 'hidden',
-        display: 'table-cell',
+        display: 'flex',
         width: '100%',
-        verticalAlign: 'middle',
+        height: '40vh',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     h2: {
         fontSize: '1.7em',
@@ -138,8 +137,6 @@ const styles = {
     divInput: {
         overflow: 'hidden',
         position: 'relative',
-
-        // margin: '3.1em 1.8em 0',
         margin: '0.3em 1.8em 1em 1.8em',
     },
     inputMask: {
@@ -154,7 +151,6 @@ const styles = {
         color: '#000',
         textAlign: 'center',
         lineHeight: '1.8',
-        // minHeight: '20em'
     },
     spanInput: {
         zIndex: 20,
@@ -239,7 +235,7 @@ const styles = {
         top: '50%',
         transform: 'translate(0, -50%)',
         zIndex: 50,
-        opacity: .6,
+        opacity: .8,
     },
     customMenu:{
         position: 'absolute',
@@ -265,22 +261,8 @@ class AuthHeader extends Component {
     constructor(props){
         super(props);
         this.state = {
-            width: '0',
-            height: '0',
             msisdn: ''
         };
-    }
-
-    componentDidMount() {
-        this.updateWindowDimensions();
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
-    }
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
     }
 
     onChange = event => {
@@ -293,7 +275,7 @@ class AuthHeader extends Component {
 
     render() {
         return (
-            <div style={Object.assign({}, styles.header, {height: this.state.height+'px'})}>
+            <div style={styles.header}>
                 <div style={styles.mask}>
                     <div style={styles.bg} />
                     <div style={styles.colorOne} />
@@ -301,42 +283,37 @@ class AuthHeader extends Component {
                     <div style={styles.colorThree} />
                 </div>
                 <div style={styles.inner}>
-                    <div style={styles.top}>
-                        <div style={styles.innerTop}>
-                            <div style={styles.indexMenu}>
-                                <IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={this.props.data}/>
-                            </div>
-                            {/*<div style={styles.customMenu}>*/}
-                                {/*<CustomMenu data={this.props.data}/>*/}
-                            {/*</div>*/}
-                            <Link to="/" style={styles.h1}>
-                                киоск плюс<span style={styles.arrow} />
-                            </Link>
+                    <div style={styles.innerTop}>
+                        <div style={styles.indexMenu}>
+                            <IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={this.props.data}/>
                         </div>
+                        <Link to="/" style={styles.h1}>
+                            киоск плюс<span style={styles.arrow} />
+                        </Link>
                     </div>
-                    <div style={styles.content}>
-                        <div style={Object.assign({}, styles.mag, styles.magOne)} />
-                        <div style={Object.assign({}, styles.mag, styles.magTwo)} />
-                        <div style={Object.assign({}, styles.mag, styles.magThree)} />
-                        <div style={Object.assign({}, styles.mag, styles.magFour)} />
-                        <h2 style={styles.h2}>Вход и регистрация</h2>
-                        <div style={styles.divInput}>
-                            <span style={styles.spanInput}>Ваш номер телефона</span>
-                            <InputMask
-                                onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
-                                onChange={this.onChange}
-                                value={this.state.msisdn}
-                                style={styles.inputMask}
-                                type="tel"
-                                mask="+7 (999) 999-99-99"
-                                placeholder="+7 (   )    -  -  "
-                                maskChar=" " />
-                            <div style={styles.divButton}>
-                                <button onClick={this.buttonClicked} style={styles.button}>Продолжить</button>
-                                <div style={styles.shadowButton} />
-                            </div>
-                            <p style={styles.textFot}>Если у вас еще нет учетной записи, мы&nbsp;создадим ее автоматически</p>
+                </div>
+                <div style={styles.content}>
+                    <div style={Object.assign({}, styles.mag, styles.magOne)} />
+                    <div style={Object.assign({}, styles.mag, styles.magTwo)} />
+                    <div style={Object.assign({}, styles.mag, styles.magThree)} />
+                    <div style={Object.assign({}, styles.mag, styles.magFour)} />
+                    <h2 style={styles.h2}>Вход и регистрация</h2>
+                    <div style={styles.divInput}>
+                        <span style={styles.spanInput}>Ваш номер телефона</span>
+                        <InputMask
+                            onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
+                            onChange={this.onChange}
+                            value={this.state.msisdn}
+                            style={styles.inputMask}
+                            type="tel"
+                            mask="+7 (999) 999-99-99"
+                            placeholder="+7 (   )    -  -  "
+                            maskChar=" " />
+                        <div style={styles.divButton}>
+                            <button onClick={this.buttonClicked} style={styles.button}>Продолжить</button>
+                            <div style={styles.shadowButton} />
                         </div>
+                        <p style={styles.textFot}>Если у вас еще нет учетной записи, мы&nbsp;создадим ее автоматически</p>
                     </div>
                 </div>
             </div>

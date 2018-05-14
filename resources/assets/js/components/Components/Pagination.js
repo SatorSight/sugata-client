@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PaginationDot from './PaginationDot';
 
 const styles = {
@@ -12,19 +12,16 @@ const styles = {
     },
 };
 
-class Pagination extends Component {
-    handleClick = (event, index) => {
-        this.props.onChangeIndex(index);
-    };
+class Pagination extends PureComponent {
+    handleClick = (event, index) => this.props.onChangeIndex(index);
 
     render() {
         const { index, dots } = this.props;
-
         const children = [];
 
-        for (let i = 0; i < dots; i += 1) {
+        for (let i = 0; i < dots; i++) {
             children.push(
-                <PaginationDot key={i} index={i} active={i === index} onClick={this.handleClick} />,
+                <PaginationDot key={`pagination_dot_${i}`} index={i} active={i === index} onClick={this.handleClick} />,
             );
         }
 

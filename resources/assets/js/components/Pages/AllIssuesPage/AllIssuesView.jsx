@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import IndexMenu from '../../Components/IndexMenu';
 import { Link } from 'react-router-dom'
 import Button from 'material-ui/Button';
-import * as ResourceRoutes from "../../Helpers/ResourceRoutes";
 import * as SUtils from "../../Helpers/SUtils";
 
 const styles = {

@@ -30,7 +30,7 @@ class MainPage extends AuthorizableComponent {
                 <MainTabs
                     controls={controls}
                     data={this.state.data}/>
-                <PopularJournals  journals={this.state.data.popular_editions}/>
+                <PopularJournals journals={this.state.data.popular_editions}/>
                 <IndexFooter />
             </div>
         );

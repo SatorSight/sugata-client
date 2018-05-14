@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import * as SUtils from '../Helpers/SUtils';
 import OwlCarousel from 'react-owl-carousel';
 import { Link } from 'react-router-dom'
@@ -33,10 +33,14 @@ const styles = {
         opacity: 1,
     },
 };
-class IndexMenuSet extends Component {
+class IndexMenuSet extends PureComponent {
 
     constructor(props){
         super(props);
+
+        // (function () {
+        //     console.log = function() { /* noop */ };
+        // }());
     }
 
     render() {
@@ -47,8 +51,8 @@ class IndexMenuSet extends Component {
                     <div style={styles.item}>
                         <p style={styles.url}><span style={Object.assign({}, styles.text, styles.active)}>всё</span></p>
                     </div>
-                    {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
-                        <div style={styles.item} key={String(currentIndex)}>
+                    {SUtils.any(bundles) ? bundles.map(bundle =>
+                        <div style={styles.item} key={`index_menu_set_${bundle.id}`}>
                             <Link style={styles.url} to={`/bundle/${bundle.id}`}>
                                 <span style={styles.text}>{bundle.name}</span>
                             </Link>

@@ -111,3 +111,16 @@ export const ARTICLE_RESOURCES = Object.freeze({
         // 'next_article',
     ],
 });
+
+export const AUTH_RESOURCES = Object.freeze({
+    page_prefix: 'auth',
+    static: ['bundles'],
+    // with_self_id: [
+    //     'bundle',
+    //     'journal',
+    //     'issue',
+    //     'article',
+    //     'listing',
+    //     // 'next_article',
+    // ],
+});

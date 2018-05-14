@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom'
 
 const styles = {
@@ -108,12 +108,11 @@ const styles = {
         opacity: 0.6,
     },
 };
-class IndexFooter extends Component {
+class IndexFooter extends PureComponent {
     render() {
         return (
             <div style={styles.footer}>
                 <div style={styles.mask}>
-                    {/*<div style={Object.assign({}, styles.bg, {backgroundImage:'url(' + fixtures[0].cover_image + ')' })} />*/}
                     <div style={styles.bg} />
                     <div style={styles.colorOne} />
                     <div style={styles.colorTwo} />

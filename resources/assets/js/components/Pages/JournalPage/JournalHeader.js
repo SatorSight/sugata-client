@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import IndexMenu from '../../Components/IndexMenu';
-import CustomMenu from '../../Components/CustomMenu';
+// import CustomMenu from '../../Components/CustomMenu';
 import * as SUtils from "../../Helpers/SUtils";
 import { Link } from 'react-router-dom'
 
@@ -130,7 +130,7 @@ const styles = {
         color: '#fff'
     },
 };
-class JournalHeader extends Component {
+class JournalHeader extends PureComponent {
 
     constructor(props){
         super(props);

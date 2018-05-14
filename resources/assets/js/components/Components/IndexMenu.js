@@ -437,7 +437,6 @@ const balance_styles = {
     }
 };
 
-
 const theme = createMuiTheme({
     palette: {
         type: 'dark',
@@ -491,6 +490,14 @@ class IndexMenu extends Component {
 
    }
 
+   shouldComponentUpdate(nextProps){
+        return !SUtils.empty(nextProps.payment_trigger)
+            && !SUtils.empty(nextProps.data)
+            && !SUtils.empty(nextProps.data.bundles)
+            && !SUtils.empty(nextProps.classes)
+            && !SUtils.empty(nextProps.auth_data)
+   }
+
     lockBody = () => {
         document.querySelector('#root').style.overflow = 'hidden';
         document.querySelector('#root').style.position = 'fixed';
@@ -519,14 +526,10 @@ class IndexMenu extends Component {
     linkHandler = () => this.setState({left: false}, this.unlockBody());
 
     handleChange = (event, value) =>  this.setState({ index: value });
-    handleChangeOption = (event) =>  this.setState({ option: event.target.value });
+    // handleChangeOption = (event) =>  this.setState({ option: event.target.value });
     handleChangeIndex = index => this.setState({ index });
 
-    go_to_subscription = bundle_id => {
-        console.log('bundle_id--------');
-        console.log(bundle_id);
-        this.props.payment_trigger(bundle_id);
-    };
+    go_to_subscription = bundle_id => this.props.payment_trigger(bundle_id);
 
     subscribed_to_all_bundles = () => {
         const bundles = this.props.data.bundles;
@@ -535,11 +538,6 @@ class IndexMenu extends Component {
             return false;
         if(bundles.length < 1 && user_bundles.length < 1)
             return false;
-
-        // if(bundles && user_bundles)
-        //     console.log('aaa');
-        //     console.log(bundles);
-        //     console.log(user_bundles);
 
         if(bundles && user_bundles)
             return bundles.length === user_bundles.length;
@@ -560,10 +558,7 @@ class IndexMenu extends Component {
             .then(resp => window.location.reload())
     };
 
-
-
     renderTabs = () => {
-
         let tabs = [];
 
         let bundles = this.props.data.bundles;
@@ -573,21 +568,12 @@ class IndexMenu extends Component {
         const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
         const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
 
-        // console.log(']]]]]]]]]]]]]');
-        // console.log(this.props.auth_data);
-        // console.log(operator);
-        // console.log(operator_object);
-        // console.log(user_msisdn);
-        // console.log(user_bundles);
-        // console.log(this.subscribed_to_all_bundles());
-        // console.log(']]]]]]]]]]]]]');
-
         tabs.push(<div key={'menu-tab-links'} style={styles.mainBundle}>
             <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
                 На главную
             </Link>
-            {SUtils.any(bundles) ? bundles.map((bundle, currentIndex) =>
-                <Link draggable={false} onClick={this.linkHandler} key={String(currentIndex)} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
+            {SUtils.any(bundles) ? bundles.map(bundle =>
+                <Link draggable={false} onClick={this.linkHandler} key={`index_menu_bundles_${bundle.id}`} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
                     {bundle.name}
                 </Link>
             ) : null}

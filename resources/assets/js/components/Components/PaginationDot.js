@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 const styles = {
     root: {
@@ -23,7 +23,7 @@ const styles = {
     },
 };
 
-class PaginationDot extends Component {
+class PaginationDot extends PureComponent {
     handleClick = event => {
         this.props.onClick(event, this.props.index);
     };

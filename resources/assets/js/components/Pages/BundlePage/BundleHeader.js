@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import IndexMenu from '../../Components/IndexMenu';
-import CustomMenu from '../../Components/CustomMenu';
+// import CustomMenu from '../../Components/CustomMenu';
 import { Link } from 'react-router-dom'
 
 
@@ -187,7 +187,7 @@ const styles = {
         backgroundColor: 'rgba(0,0,0,0.4)',
     },
 };
-class BundleHeader extends Component {
+class BundleHeader extends PureComponent {
 
     constructor(props){
         super(props);

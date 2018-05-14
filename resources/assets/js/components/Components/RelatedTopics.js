@@ -64,7 +64,7 @@ export default class RelatedTopics extends Component {
                 {SUtils.any(journals) ?
                     <div style={styles.main}>
                         {journals.map((journal, currentIndex) =>
-                            <div key={String(currentIndex)} style={styles.item}>
+                            <div key={`related_topics_${journal.id}`} style={styles.item}>
                                 <Link to={`/tag/${journal.id}`} style={styles.link}>
                                     <img src={journal.image_path} style={styles.img} />
                                     <p style={styles.name}>{journal.name}</p>
