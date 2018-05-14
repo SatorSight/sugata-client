@@ -64,12 +64,14 @@ mix.webpackConfig({
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.jsx$/,
                 loaders: ['babel-loader'],
+                exclude: /node_modules/
             },
             {
-                test: /\.js?$/,
+                test: /\.js$/,
                 loaders: ['babel-loader'],
+                exclude: /node_modules/
             },
         ]
     },
