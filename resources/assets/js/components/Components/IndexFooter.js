@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom'
+import Licence from '../Components/Licence';
 
 const styles = {
     footer: {
@@ -123,6 +124,7 @@ class IndexFooter extends PureComponent {
                     <Link to="/" style={styles.h1}>
                         киоск плюс<span style={styles.arrow} />
                     </Link>
+                    <Licence/>
                     <p style={styles.span}>@Киоск плюс</p>
                 </div>
             </div>
