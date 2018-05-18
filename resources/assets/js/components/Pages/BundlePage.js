@@ -19,9 +19,7 @@ export default class BundlePage extends AuthorizableComponent {
 
         return (
             <div>
-                {this.state.loading
-                    ? <Waiter/>
-                    : null}
+                <Waiter loading={this.state.loading}/>
                 <BundleHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
                 <IssuesSwiper
                     parent_type={'bundle'}

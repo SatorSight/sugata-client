@@ -19,9 +19,7 @@ export default class AllIssuesBundlePage extends AuthorizableComponent {
     render() {
         return (
             <div>
-                {this.state.loading
-                    ? <Waiter/>
-                    : null}
+                <Waiter loading={this.state.loading}/>
                 <AllIssuesView payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data} self_id={this.self_id} load_more={this.loadMore} title={this.state.data.title} issues={this.state.data.issues} />
             </div>
         );

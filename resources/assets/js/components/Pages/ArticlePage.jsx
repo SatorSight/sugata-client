@@ -30,16 +30,15 @@ export default class ArticlePage extends AuthorizableComponent {
 
     render() {
         return <div style={styles.root}>
-                    {this.state.loading
-                        ? <Waiter/>
+                    <Waiter loading={this.state.loading}/>
+                    {this.state.loading ? null
                         : <Reader
-                            bundle={this.props.bundle}
-                            auth_data={this.state.auth_data}
-                            page_load_limit={4}
-                            payment_trigger={this.paymentTrigger}
-                            {...this.state.data}
-                            history={this.props.history} />}
-
+                        bundle={this.props.bundle}
+                        auth_data={this.state.auth_data}
+                        page_load_limit={4}
+                        payment_trigger={this.paymentTrigger}
+                        {...this.state.data}
+                        history={this.props.history} />}
                 </div>;
     }
 }

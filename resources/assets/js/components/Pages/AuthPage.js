@@ -14,9 +14,7 @@ export default class AuthPage extends AuthorizableComponent {
     render() {
         return (
             <div>
-                {this.state.loading
-                    ? <Waiter/>
-                    : null}
+                <Waiter loading={this.state.loading}/>
                 <AuthHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
                 <IndexFooter />
             </div>

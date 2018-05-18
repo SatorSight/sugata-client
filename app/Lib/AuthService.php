@@ -269,6 +269,8 @@ class AuthService extends GatewayService {
     private function askInfoByMsisdn(string $msisdn){
         $url = $this->getMsisdnInfoUrl($msisdn);
         $data = $this->read($url);
+        if(!$data)
+            $data = new \stdClass();
         if(empty($data->status))
             $data->status = 0;
         return $data;

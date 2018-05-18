@@ -21,9 +21,7 @@ class MainPage extends AuthorizableComponent {
 
         return (
             <div>
-                {this.state.loading
-                    ? <Waiter/>
-                    : null}
+                <Waiter loading={this.state.loading}/>
                 <IndexHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
                 <NewIssues data={this.state.data}/>
                 <MainTopics data={this.state.data}/>

@@ -36,9 +36,7 @@ class IssuePage extends AuthorizableComponent {
 
         return (
             <div>
-                {this.state.loading
-                    ? <Waiter/>
-                    : null}
+                <Waiter loading={this.state.loading}/>
                 <IssueHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} self_id={this.self_id} data={this.state.data}/>
                 <IssuesTheme data={this.state.data}/>
                 <MainTabs

@@ -8,8 +8,8 @@ const STYLES = {
         transform: 'translate(-50%, -50%)'
     },
     thing: {
-        height: '30px',
-        width: '6px',
+        height: '15px',
+        width: '3px',
         background: '#f2f2f2',
         position: 'absolute',
         animation: 'something_maybe_cool_idk 2s infinite ease'
@@ -18,7 +18,8 @@ const STYLES = {
         position: 'fixed',
         width: '100%',
         height: '100%',
-        background: '#292929',
+        // background: '#292929',
+        background: '#fff',
         zIndex: 10000
     }
 };
@@ -32,10 +33,48 @@ const keyframes = `
     }
 `;
 
+let timeout_id = null;
+
 export default class Waiter extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            opacity: 0
+        };
+
+        this.fadeIn();
     }
+
+    componentWillReceiveProps(nextProps){
+        if(this.props.loading && nextProps.loading === false)
+            this.fadeOut();
+        if(!this.props.loading && nextProps.loading === true)
+            this.fadeIn();
+    }
+
+    fadeIn = () => {
+        if(this.state.opacity <= 1){
+            timeout_id = setTimeout(() => {
+                this.setState({
+                    opacity: (this.state.opacity > 1 ? 1 : this.state.opacity + .1)
+                }, this.fadeIn);
+            }, 1);
+        }
+    };
+
+    fadeOut = () => {
+        clearTimeout(timeout_id);
+        if(this.state.opacity > 0){
+            setTimeout(() => {
+                this.setState({
+                    opacity: (this.state.opacity <= 0 ? 0 : this.state.opacity - .05)
+                }, this.fadeOut);
+            }, 1);
+        }else{
+            this.setState({opacity: 0});
+        }
+    };
 
     shouldComponentUpdate(nextProps){
         return this.props === nextProps;
@@ -59,14 +98,14 @@ export default class Waiter extends Component {
         return things;
     };
 
-    render() {
+    render(){
         this.renderKeyFrames();
-        return (
-            <div style={STYLES.superContainer}>
-                <div style={STYLES.container}>
-                    {this.renderThings()}
-                </div>
+        const { opacity } = this.state;
+
+        return opacity !== 0 ? <div style={Object.assign({}, STYLES.superContainer, {opacity: this.state.opacity})}>
+            <div style={STYLES.container}>
+                {this.renderThings()}
             </div>
-        )
+        </div> : null
     }
 }
