@@ -4,6 +4,7 @@ namespace App\Http\Traits\ApiTraits;
 
 use App\Bundle;
 use App\Lib\AuthService;
+use App\Lib\AuthService2;
 use App\Lib\SUtils;
 use App\User;
 use Illuminate\Http\Request;
@@ -25,22 +26,16 @@ trait AuthRoutes{
             $bundle = Bundle::find($bundle_id);
         }
 
-        $as = new AuthService($bundle);
-        $as->loadSubscriptionInfoByMsisdn($msisdn);
-
-        if($as->userSubscribed()){
-            if($as->userExists()){
-                $as->writeUserSessionAndCookies();
-                return response()->json(['result' => 'ok']);
-            }else{
-                $as->createUser();
-                $as->writeUserSessionAndCookies();
-                return response()->json(['result' => 'ok']);
-            }
+        $as2 = new AuthService2($bundle);
+        $user = $as2->getUser($msisdn);
+        if($user){
+            $as2->writeUserSessionAndCookies($user);
+            return response()->json(['result' => 'ok']);
         }else{
-            $operator = $as->getOperatorTech();
-            $as->setOperator($operator);
-            $actions = $as->askMasterForActions();
+            //todo rewrite this
+            $operator = $as2->getOperatorTech();
+            $as2->setOperator($operator);
+            $actions = $as2->askMasterForActions();
 
             if(!empty($actions)){
                 if(isset($actions->action_type) && $actions->action_type == 'redirect'){
@@ -55,6 +50,57 @@ trait AuthRoutes{
             //todo ip checkup and redirect
             return response()->json(['result' => 'fail', 'message' => 'not_subscribed']);
         }
+
+
+
+
+
+//
+//
+//        $as = new AuthService($bundle);
+//
+//        $user = AuthService::getUserByMsisdn($msisdn);
+//        if($user){
+//            return response()->json(['result' => 'ok']);
+//        }else{
+//
+//        }
+//
+//
+//
+//
+//
+//
+//
+//        $as->loadSubscriptionInfoByMsisdn($msisdn);
+//
+//        if($as->userSubscribed()){
+//            if($as->userExists()){
+//                $as->writeUserSessionAndCookies();
+//                return response()->json(['result' => 'ok']);
+//            }else{
+//                $as->createUser();
+//                $as->writeUserSessionAndCookies();
+//                return response()->json(['result' => 'ok']);
+//            }
+//        }else{
+//            $operator = $as->getOperatorTech();
+//            $as->setOperator($operator);
+//            $actions = $as->askMasterForActions();
+//
+//            if(!empty($actions)){
+//                if(isset($actions->action_type) && $actions->action_type == 'redirect'){
+//                    return response()->json([
+//                        'result' => $actions->action_type,
+//                        'to' => $actions->link,
+//                        'message' => 'redirect_required'
+//                    ]);
+//                }
+//            }
+
+//            //todo ip checkup and redirect
+//            return response()->json(['result' => 'fail', 'message' => 'not_subscribed']);
+//        }
     }
 
     public function userAuthorized(){
