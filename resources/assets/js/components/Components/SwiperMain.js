@@ -37,7 +37,7 @@ const styles = {
         borderRadius: '0.5em',
         height: '20em',
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: '50% 50%',
+        backgroundPosition: '50% 30%',
         backgroundSize: 'cover',
     },
     infoSwiper: {
