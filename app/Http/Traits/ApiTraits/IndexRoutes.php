@@ -139,7 +139,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetMoreNewArticles($from){
-        $articles = Cache::remember('index_more_new_articles', $this->expiration, function() use ($from) {
+        $articles = Cache::remember('index_more_new_articles' . '_' . $from, $this->expiration, function() use ($from) {
             $last_issues = Issue::getLastFromEachJournal(null);
             /** @var Collection $articles */
             $articles = Issue::getRandomBasicArticles($last_issues)
@@ -168,7 +168,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetMorePopularArticles($from){
-        $articles = Cache::remember('index_more_popular_articles', $this->expiration, function() use ($from) {
+        $articles = Cache::remember('index_more_popular_articles' . '_' . $from, $this->expiration, function() use ($from) {
             $last_issues = Issue::getLastFromEachJournal(null);
             /** @var Collection $articles */
             $articles = Issue::getNotFirstBasicArticles($last_issues)

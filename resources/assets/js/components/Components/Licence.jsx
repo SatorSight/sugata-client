@@ -11,12 +11,14 @@ import {withStyles} from 'material-ui/styles';
 const _styles = {
     li: {
         margin: '0.5em',
-        color: 'white',
+        // color: 'white',
         cursor: 'pointer',
         listStyle: 'none',
         fontWeight: 300,
         fontSize: '1.1em',
-        textDecoration: 'underline'
+        textDecoration: 'underline',
+        color: 'rgb(102, 102, 102)'
+
     },
     info: {
         fontWeight: 300,
@@ -230,7 +232,7 @@ class Licence extends PureComponent {
                 <li onClick={() => this.open('manage')} style={_styles.li}>Управление Услугой</li>
                 <li onClick={() => this.open('term')} style={_styles.li}>Правила предоставления услуги</li>
             </ul>
-            <div style={_styles.info}>Стоимость услуги составляет 20 рублей с НДС за 1 календарный день. С размером стоимости услуги и порядком ее списания можно ознакомиться на cайте: Абонентам ПАО «Билайн» — в личном кабинете на сайте my.beeline.ru или позвонив по номеру 88007000611.</div>
+            {/*<div style={_styles.info}>Стоимость услуги составляет 20 рублей с НДС за 1 календарный день. С размером стоимости услуги и порядком ее списания можно ознакомиться на cайте: Абонентам ПАО «Билайн» — в личном кабинете на сайте my.beeline.ru или позвонив по номеру 88007000611.</div>*/}
         </div>;
     }
 }

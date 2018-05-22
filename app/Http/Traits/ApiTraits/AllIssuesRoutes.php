@@ -110,7 +110,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesMoreJournalGetIssues($journal_id, $from){
-        $issues = Cache::remember('all_issues_journal_' . $journal_id, $this->expiration, function () use ($journal_id, $from) {
+        $issues = Cache::remember('all_issues_journal_' . $journal_id . '_' .$from, $this->expiration, function () use ($journal_id, $from) {
             $issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->slice($from)->take(20);
 
             Issue::injectWithImages($issues);
@@ -130,7 +130,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesMoreBundleGetIssues($bundle_id, $from){
-        $issues = Cache::remember('all_issues_bundle_' . $bundle_id, $this->expiration, function () use ($bundle_id, $from) {
+        $issues = Cache::remember('all_issues_bundle_' . $bundle_id . '_' .$from, $this->expiration, function () use ($bundle_id, $from) {
             $journals = Bundle::find($bundle_id)->journals;
             $journals_ids = $journals->map(function($journal){
                 return $journal->id;
