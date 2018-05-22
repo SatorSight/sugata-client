@@ -24,7 +24,7 @@ class ApiController extends Controller
 
     public function __construct(){
         //todo unleash power of redis on release
-        $this->expiration = now()->addMinutes(120);
+        $this->expiration = now()->addMinutes(0);
     }
 
 
