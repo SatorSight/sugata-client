@@ -103,7 +103,9 @@ class GetChangedData extends Command
                                 }
                             }
                         }
-                        $existing_object->save();
+                        try {
+                            $existing_object->save();
+                        }catch(\Exception $e){}
                     }else{
                         $arrayed_object = (array)$object;
                         $klass = MasterClassAdapter::masterToSlave($master_class);
@@ -129,7 +131,9 @@ class GetChangedData extends Command
                                 }
                             }
                         }
-                        $obj->save();
+                        try {
+                            $obj->save();
+                        }catch(\Exception $e){}
                     }
                 }
             }
