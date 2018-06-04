@@ -34,11 +34,12 @@ export default class AuthHelper{
     };
 
     static authorizeCheckCallback = data => {
+        const return_url = SUtils.getGetParameterByName('return_url') || SUtils.getIndexPageUrl();
         if(data.result === 'ok'){
-            window.location = SUtils.getGetParameterByName('return_url');
+            window.location = return_url;
         }else{
             if(data.result === 'redirect'){
-                window.location = data.to + '?returnurl=' + SUtils.getGetParameterByName('return_url');
+                window.location = data.to + '?returnurl=' + return_url;
             }else {
                 alert('Вы не подписаны!');
             }

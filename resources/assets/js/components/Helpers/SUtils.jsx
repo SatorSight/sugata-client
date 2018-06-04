@@ -271,6 +271,12 @@ export function getGetParameterByName(name){
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+export function getIndexPageUrl(){
+    const url = window.location.href;
+    const parts = url.split('/');
+    return parts[0] + '/' + parts[1] + '/' + parts[2];
+}
+
 export function getCookie(name) {
     const matches = document.cookie.match(new RegExp(
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
