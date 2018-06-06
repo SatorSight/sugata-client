@@ -75,7 +75,7 @@ trait JournalRoutes{
             Article::clearFromHtml($cover_articles);
             Article::injectDates($cover_articles);
             Article::injectJournalNames($cover_articles);
-            Article::injectWithImages($cover_articles);
+            Article::injectWithBigPreviews($cover_articles);
 
             ImageProxyService::resize($cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
 

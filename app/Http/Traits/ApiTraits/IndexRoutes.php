@@ -68,7 +68,7 @@ trait IndexRoutes{
 
             Article::clearFromHtml($cover_articles);
             Article::clearFromDesktopHtml($cover_articles);
-            Article::injectWithImages($cover_articles);
+            Article::injectWithBigPreviews($cover_articles);
             Article::injectDates($cover_articles);
             Article::injectJournalNames($cover_articles);
             Article::injectJournalCovers($cover_articles);

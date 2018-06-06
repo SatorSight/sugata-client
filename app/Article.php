@@ -18,13 +18,16 @@ class Article extends Model
         return $this->belongsTo('App\Issue');
     }
 
-//    public function image(){
-//        $t = new \stdClass();
-//        $t->path = '123';
-//        return $t;
-//    }
-
     public function getImage(){
+
+        $preview = SmallPreviewImage::where([
+            'parent_type' => 'Article',
+            'parent_id' => $this->id
+        ])->first();
+
+        if($preview && $preview->imageFileExists())
+            return $preview;
+
         $images = Image::where([
             'parent_type' => 'Article',
             'parent_id' => $this->id
@@ -43,69 +46,19 @@ class Article extends Model
         return $return;
     }
 
+    public function getBigPreviewImage(){
+        $image = BigPreviewImage::where([
+            'parent_type' => 'Article',
+            'parent_id' => $this->id
+        ])->first();
 
-
-//    public function getExistingImages(){
-//
-//    }
-
-//    public function getBigImage(){
-//        return Image::where([
-//            'parent_type' => 'Article',
-//            'parent_id' => $this->id
-//        ])->first();
-//    }
+        if(!$image || !$image->imageFileExists())
+            return null;
+        return $image;
+    }
 
     public static function getChosen() : Collection {
-
         $articles = Article::where('chosen', true)->orderBy('page_number', 'desc')->take(4)->get();
-
-//        $articles = collect([]);
-//        //todo rewrite
-//        $journals = Journal::where('id','>','0')->orderBy('order', 'desc')->take(4)->get();
-//        foreach ($journals as $key => $journal) {
-//            $issue = $journal->issues->sort()->reverse()->first();
-//            // $ar = Article::where('id','>','0')->orderBy('id', 'desc')->take(1)->get();
-//            $arr = $issue->articles;
-//            $counter = 0;
-//            $ar = null;
-//            foreach ($arr as $key => $a) {
-//                $counter++;
-//
-//                if(!empty($a->title) && $counter > 10){
-//                    $ar = $a;
-//                    break;
-//                }
-//            }
-//
-//
-//
-//            // SUtils::trace($ar->issue_id);
-//
-//            $ar->image_path = $ar->getImage()->path ?? '';
-//            $ar->title = strtoupper($ar->title);
-//            unset($ar->image);
-//            unset($ar->html);
-//
-//
-//            $articles->push($ar);
-//        }
-
-        // SUtils::trace(get_class($articles[0]));
-        
-
-        // $articles = self::where('id', 'in' '2,3,4,5')->get();
-
-        // $articles = self::getLatest(4);
-        // $articles = $articles->map(function($article){
-        //     $article->image_path = $article->getImage()->path ?? '';
-        //     unset($article->image);
-        //     return $article;
-        // });
-
-
-
-        // self::clearFromHtml($articles);
         return $articles;
     }
 
@@ -177,6 +130,26 @@ class Article extends Model
                     $image = $article->getImage();
                     if (isset($image->path))
                         $article->image_path = $image->path;
+                }
+            }
+            return $article;
+        });
+    }
+
+    public static function injectWithBigPreviews(Collection &$articles) : void {
+        //todo change to transform
+        $articles = $articles->map(function($article){
+            if(!empty($article)) {
+                if(!empty($article->getBigPreviewImage())){
+                    $image = $article->getBigPreviewImage();
+                    if (isset($image->path))
+                        $article->image_path = $image->path;
+                }else{
+                    if(!empty($article->getImage())){
+                        $image = $article->getImage();
+                        if (isset($image->path))
+                            $article->image_path = $image->path;
+                    }
                 }
             }
             return $article;

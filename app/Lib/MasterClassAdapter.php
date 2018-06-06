@@ -22,10 +22,12 @@ class MasterClassAdapter{
         'Logo' => 'Logo',
         'BundleAccess' => 'BundleAccess',
         'BundleAccessesBundle' => 'BundleAccessesBundle',
-        'AdditionalImage' => 'AdditionalImage'
+        'AdditionalImage' => 'AdditionalImage',
+        'BigPreviewImage' => 'BigPreviewImage',
+        'SmallPreviewImage' => 'SmallPreviewImage'
     ];
 
-    const IMAGE_CLASSES = ['Image', 'Logo'];
+    const IMAGE_CLASSES = ['Image', 'Logo', 'BigPreviewImage', 'SmallPreviewImage'];
 
     public static function masterToSlave(string $class) : string {
         return 'App\\' . self::ADAPTER[$class];

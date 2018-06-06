@@ -76,7 +76,7 @@ trait BundleRoutes{
                 ->reject(function($article){ return empty($article); })
             ;
 
-            Article::injectWithImages($last_cover_articles);
+            Article::injectWithBigPreviews($last_cover_articles);
             Article::injectDates($last_cover_articles);
             Article::clearFromHtml($last_cover_articles);
             Article::injectJournalNames($last_cover_articles);
