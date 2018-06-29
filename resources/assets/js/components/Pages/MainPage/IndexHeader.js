@@ -140,7 +140,7 @@ class IndexHeader extends PureComponent {
                         {/*<CustomMenu data={this.props.data} />*/}
                     {/*</div>*/}
                     <Link to="/" style={styles.h1}>
-                        киоск плюс<span style={styles.arrow} />
+                        Киоск Плюс<span style={styles.arrow} />
                     </Link>
                 </div>
                 <IndexMenuSet data={this.props.data} />

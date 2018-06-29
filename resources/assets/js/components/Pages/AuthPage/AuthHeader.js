@@ -6,6 +6,10 @@ import AuthHelper from '../../Helpers/AuthHelper';
 import { Link } from 'react-router-dom'
 
 
+import { connect } from 'react-redux';
+import { paymentTrigger } from '../../Helpers/paymentTrigger';
+
+
 const styles = {
     header: {
         width: '100%',
@@ -256,6 +260,14 @@ const styles = {
         margin: '0 auto',
     }
 };
+
+const mapStateToProps = state => {
+    return {
+        auth_data: state.server.auth_data,
+        bundles: state.server.bundles,
+    }
+};
+
 class AuthHeader extends Component {
 
     constructor(props){
@@ -276,22 +288,28 @@ class AuthHeader extends Component {
     render() {
         return (
             <div style={styles.header}>
-                <div style={styles.mask}>
-                    <div style={styles.bg} />
-                    <div style={styles.colorOne} />
-                    <div style={styles.colorTwo} />
-                    <div style={styles.colorThree} />
-                </div>
-                <div style={styles.inner}>
-                    <div style={styles.innerTop}>
-                        <div style={styles.indexMenu}>
-                            <IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={this.props.data}/>
-                        </div>
-                        <Link to="/" style={styles.h1}>
-                            киоск плюс<span style={styles.arrow} />
-                        </Link>
-                    </div>
-                </div>
+
+
+                {/*<div style={styles.mask}>*/}
+                    {/*<div style={styles.bg} />*/}
+                    {/*<div style={styles.colorOne} />*/}
+                    {/*<div style={styles.colorTwo} />*/}
+                    {/*<div style={styles.colorThree} />*/}
+                {/*</div>*/}
+                {/*<div style={styles.inner}>*/}
+                    {/*<div style={styles.innerTop}>*/}
+                        {/*<div style={styles.indexMenu}>*/}
+                            {/*<IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={this.props.data}/>*/}
+                        {/*</div>*/}
+                        {/*<Link to="/" style={styles.h1}>*/}
+                            {/*киоск плюс<span style={styles.arrow} />*/}
+                        {/*</Link>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
+
+
+
+
                 <div style={styles.content}>
                     <div style={Object.assign({}, styles.mag, styles.magOne)} />
                     <div style={Object.assign({}, styles.mag, styles.magTwo)} />
@@ -321,4 +339,7 @@ class AuthHeader extends Component {
     }
 }
 
-export default AuthHeader;
+export default connect(
+    mapStateToProps,
+    // mapDispatchToProps,
+)(AuthHeader);

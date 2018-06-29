@@ -1,70 +1,100 @@
 import React, { PureComponent } from "react";
-import OwlCarousel from 'react-owl-carousel';
-import * as SUtils from './../Helpers/SUtils';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { toRuMonthYearLocale } from '../Helpers/SUtils';
+import { withStyles } from 'material-ui/styles';
+import SectionTitle from './SectionTitle';
+
+import * as css from '../Helpers/cssConstants';
 
 const styles = {
-    item: {
-        margin: '0 1em 1em',
-        display: 'block',
+    issuesContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between'
     },
-    otherIssues: {
-        position: 'relative',
-        overflow: 'hidden',
-        height: '20em'
+    imageContainer: {
+        height: '15.5em',
+        minWidth: '8em',
     },
-    title: {
-        fontSize: '1.2em',
-        textTransform: 'uppercase',
-        fontFamily: 'HelveticaNeueCyr, sans-serif',
-        fontWeight: 400,
-        padding: '2.41em 0 1.3em',
-        letterSpacing: 3.2,
+    image: {
+        height: '12em',
+        boxShadow: '5px 5px 8px 0px rgba(0,0,0,0.21)',
+    },
+    titles: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '0 1em'
+    },
+    otherLink: {
+        fontWeight: 500,
+        textAlign: 'right',
+        display: 'flex',
+        height: '5rem',
+
+    },
+    arrow: {
+        borderRight: '0.15rem solid black',
+        borderBottom: '0.15rem solid black',
+        width: '0.6rem',
+        height: '0.6rem',
+        transform: 'rotate(-45deg)',
+        marginLeft: '0.5rem',
+        marginTop: '0.33rem',
+    },
+    border: {
+        borderBottom: '0.2rem solid black',
+        paddingTop: '1.5rem',
+        width: '100rem',
+        position: 'absolute',
+    },
+    labels: {
         textAlign: 'center',
+        color: 'black',
+        marginTop: '0.5em',
     },
-    imgOtherIssues: {
-        borderRadius: '0.2em',
-        boxShadow: '0.2em 0.2em 0.4em -0.2em rgba(0,0,0,0.2)',
-        overflow: 'hidden',
-        height: '14em',
-        width: 'auto',
+    journalName: {
+        fontWeight: 'bold',
+        fontSize: '1.2em',
+    },
+    journalDate: {
+        ...css.capsMediumText,
+        // fontFamily: 'Montserrat',
+        // fontSize: '0.8em',
+        // textTransform: 'uppercase',
     },
 };
 
-
-
-export default class NewIssues extends PureComponent {
-
+class NewIssues extends PureComponent {
     constructor(props){
         super(props);
     }
 
     render() {
-        let new_issues = this.props.data.new_issues;
-
+        const { classes } = this.props;
+        const issues = this.props.issues;
         return (
-            <div style={styles.otherIssues}>
-                <p style={styles.title}>новые выпуски</p>
-                {SUtils.any(new_issues) ?
-                    <OwlCarousel
-                        lazyLoad
-                        autoWidth
-                        dots={false}>
-                        {new_issues.map((issue, currentIndex) =>
-                            <Link key={`new_issues_${issue.id}`} to={`/issue/${issue.id}`} style={styles.item}>
-                                <div style={
-                                    Object.assign({}, styles.imgOtherIssues, {
-                                        background: `url(${issue.image_path})`,
-                                        backgroundSize: 'cover',
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundPosition: 'top center',
-                                        minWidth: '11em'
-                                    })
-                                }></div>
-                            </Link>
-                        )}
-                    </OwlCarousel> : null }
+            <div className={classes.sectionWrapper}>
+                <SectionTitle
+                    title={this.props.title || 'Новые выпуски'}
+                    link_label={this.props.label || 'Список всех последних выпусков'}
+                    link={'/'}
+                />
+                <div className={classes.issuesContainer}>
+                    {issues.map((issue, currentIndex) =>
+                        <Link key={`new_issues_${issue.id}`} to={`/issue/${issue.id}`} className={classes.item}>
+                            <div className={classes.imageContainer}>
+                                <img className={classes.image} src={issue.image_path} alt=""/>
+                                <div className={classes.labels}>
+                                    <div className={classes.journalName}>{issue.journal_name}</div>
+                                    <div className={classes.journalDate}>{toRuMonthYearLocale(issue.content_date)}</div>
+                                </div>
+                            </div>
+                        </Link>
+                    )}
+                </div>
             </div>
         );
     }
 }
+
+export default withStyles(Object.assign({}, styles, css))(NewIssues);

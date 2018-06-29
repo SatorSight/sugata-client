@@ -20,6 +20,8 @@ trait IssueRoutes{
         $bundles = Cache::remember('bundles', $this->expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
+            Bundle::injectIssuesCovers($bundles);
+            Bundle::injectWithImages($bundles);
             return $bundles;
         });
 
@@ -196,11 +198,12 @@ trait IssueRoutes{
             $issue = Issue::find($issue_id);
             $basic_articles = $issue->getBasicArticles(5);
 
-            Article::injectWithText($basic_articles);
+//            Article::injectWithText($basic_articles);
             Article::removeWithBlankText($basic_articles);
             Article::clearFromHtml($basic_articles);
             Article::injectDates($basic_articles);
             Article::injectJournalNames($basic_articles);
+            Article::injectJournalImages($basic_articles);
             Article::injectWithImages($basic_articles);
             Article::injectIssueContentDate($basic_articles);
 
@@ -235,63 +238,34 @@ trait IssueRoutes{
         return response()->json(array_values($basic_articles->toArray()));
     }
 
-    /**
-     * @desc more basic articles
-     * @param $issue_id
-     * @param $from
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function issueGetMoreNewArticles($issue_id, $from){
-        $basic_articles = Cache::remember('issue_more_new_articles_' . $issue_id . '_' . $from, $this->expiration, function() use($issue_id, $from) {
-            /** @var Issue $issue */
-            $issue = Issue::find($issue_id);
-            /** @var Collection $basic_articles */
-            $basic_articles = $issue->getBasicArticles(5, $from);
-
-            Article::injectWithText($basic_articles);
-            Article::removeWithBlankText($basic_articles);
-            Article::clearFromHtml($basic_articles);
-            Article::injectDates($basic_articles);
-            Article::injectJournalNames($basic_articles);
-            Article::injectWithImages($basic_articles);
-            Article::injectIssueContentDate($basic_articles);
-
-            ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
-
-            return $basic_articles;
-        });
-
-        return response()->json(array_values($basic_articles->toArray()));
+//    /**
+//     * @desc more basic articles
+//     * @param $issue_id
+//     * @param $from
+//     * @return \Illuminate\Http\JsonResponse
+//     */
+//    public function issueGetMoreNewArticles($issue_id, $from){
+//        $basic_articles = Cache::remember('issue_more_new_articles_' . $issue_id . '_' . $from, $this->expiration, function() use($issue_id, $from) {
+//            /** @var Issue $issue */
+//            $issue = Issue::find($issue_id);
+//            /** @var Collection $basic_articles */
+//            $basic_articles = $issue->getBasicArticles(5, $from);
 //
-//        $articles = Article::where('issue_id', $issue_id)
-//            ->where(function($query){
-//                $query->where('cover', false)
-//                    ->orWhereNull('cover');
-//            })
-//            ->where(function($query){
-//                $query->where('chosen', false)
-//                    ->orWhereNull('chosen');
-//            })
-//            ->orderBy('page_number', 'desc')
-//            ->get()
-//            ->slice($from)
-//            ->take(10);
-//        ;
+//            Article::injectWithText($basic_articles);
+//            Article::removeWithBlankText($basic_articles);
+//            Article::clearFromHtml($basic_articles);
+//            Article::injectDates($basic_articles);
+//            Article::injectJournalNames($basic_articles);
+//            Article::injectWithImages($basic_articles);
+//            Article::injectIssueContentDate($basic_articles);
 //
-//        Article::injectWithText($articles);
-//        Article::removeWithBlankText($articles);
-//        Article::clearFromHtml($articles);
-//        Article::injectDates($articles);
-//        Article::injectJournalNames($articles);
-//        Article::injectWithImages($articles);
+//            ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
 //
-//        return response()->json(array_values($articles->toArray()));
-
+//            return $basic_articles;
+//        });
 //
-//        $response = new \stdClass();
-//        $response->ids = $ids;
-//        $response->articles = $articles;
-    }
+//        return response()->json(array_values($basic_articles->toArray()));
+//    }
 
     /**
      * @desc other issues from journal

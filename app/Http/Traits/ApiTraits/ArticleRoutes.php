@@ -75,30 +75,6 @@ trait ArticleRoutes{
                     return null;
                 })
             ;
-//
-//
-//            $listing = $issue->articles
-//                ->map(function($article){
-//                    /** @var Article $article */
-//                    if(!empty($article->title)){
-//                        $l = new \stdClass();
-//                        $l->id = $article->id;
-//                        $l->page_number = $article->page_number;
-//                        $l->title = $article->title;
-//
-//                        $article_collection = new Collection();
-//                        $article_collection->push($article);
-//
-//                        Article::injectWithImages($article_collection);
-//                        ImageProxyService::resize($article_collection, 'image_path', ImageProxyService::LISTING_ARTICLE_200);
-//
-//                        $l->image = $article->image_path;
-//
-//                        return $l;
-//                    }
-//                    return null;
-//                })
-//                ->reject(function($article){ return empty($article); });
 
             $listing = array_values($listing->toArray());
             usort($listing, function($a, $b){

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 const STYLES = {
     container: {
@@ -35,7 +36,7 @@ const keyframes = `
 
 let timeout_id = null;
 
-export default class Waiter extends Component {
+class Waiter extends Component {
     constructor(props) {
         super(props);
 
@@ -102,10 +103,16 @@ export default class Waiter extends Component {
         this.renderKeyFrames();
         const { opacity } = this.state;
 
-        return opacity !== 0 ? <div style={Object.assign({}, STYLES.superContainer, {opacity: this.state.opacity})}>
+        return opacity !== 0 ? <div style={Object.assign({}, STYLES.superContainer, {opacity: opacity})}>
             <div style={STYLES.container}>
                 {this.renderThings()}
             </div>
         </div> : null
     }
 }
+
+const mapStateToProps = state => ({
+    loading: state.server.loading,
+});
+
+export default connect(mapStateToProps)(Waiter);

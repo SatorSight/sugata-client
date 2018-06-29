@@ -1,38 +1,38 @@
-import React from 'react'
-import JournalHeader from './JournalPage/JournalHeader';
-import IssuesSwiper from './../Components/IssuesSwiper';
-import MainTabs from './../Components/MainTabs';
-import OtherIssues from './../Components/OtherIssues';
-import PopularJournals from './../Components/PopularJournals';
-import IndexFooter from '../Components/IndexFooter';
-import Waiter from '../Helpers/Waiter2';
-import AuthorizableComponent from '../Helpers/AuthorizableComponent';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import Header from '../Components/Header';
+import NewIssues from '../../containers/NewIssues';
+import BundlesSwiper from '../../containers/BundlesSwiper';
+import BigArticles from '../../containers/BigArticles';
+import NewArticles from '../../containers/NewArticles';
+import PopularJournals from '../../containers/PopularJournals';
+import Footer from '../Components/Footer';
 
-export default class JournalPage extends AuthorizableComponent {
+
+const mapStateToProps = state => ({
+    loading: state.server.loading
+});
+
+class JournalPage extends Component {
     constructor(props){
         super(props);
     }
 
     render() {
-        const controls = {
-            'more_new_articles': this.loadMoreNew,
-            'more_popular_articles': this.loadMorePopular
-        };
-
         return (
-            <div>
-                <Waiter loading={this.state.loading}/>
-                <JournalHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
-                <IssuesSwiper
-                    parent_type={'journal'}
-                    issues={this.state.data.last_issues}
-                    articles={this.state.data.issues_cover_articles}/>
-                <MainTabs onlyFirst controls={controls} data={this.state.data}/>
-                <OtherIssues issues={this.state.data.rest_issues} data={this.state.data}/>
-                <MainTabs onlySecond controls={controls} data={this.state.data}/>
-                <PopularJournals journals={this.state.data.same_bundle_journals}/>
-                <IndexFooter />
+            !this.props.loading && <div>
+                <Header />
+                <BundlesSwiper />
+                <BigArticles resource={'issues_cover_articles'}/>
+                <NewArticles resource={'new_articles'}/>
+                {/*<PopularJournals resource={'popular_editions'}/>*/}
+                <NewIssues resource={'other_issues'}/>
+                <Footer />
             </div>
         );
     }
 }
+
+export default connect(
+    mapStateToProps,
+)(JournalPage);

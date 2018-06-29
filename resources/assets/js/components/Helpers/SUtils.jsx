@@ -284,6 +284,12 @@ export function getCookie(name) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+export function setCookie(name, value, timing){
+    let date = new Date;
+    date.setDate(date.getDate() + timing);
+    document.cookie = name+'='+value+'; path=/; expires='+date.toUTCString();
+}
+
 export function toRuMonthYearLocale(date_string){
     let date = new Date(date_string);
     const options = {
@@ -314,6 +320,14 @@ export function propOrNull(obj, prop){
     if(!obj.hasOwnProperty(prop))
         return null;
     return obj[prop];
+}
+
+export function idFromUrl(url){
+    return url.split('/')[1];
+}
+
+export function entityFromUrl(url){
+    return url.split('/')[0];
 }
 
 export class DateRange{

@@ -213,7 +213,7 @@ class BundleHeader extends PureComponent {
                             {/*<CustomMenu data={this.props.data}/>*/}
                         {/*</div>*/}
                         <Link to="/" style={styles.h2}>
-                            киоск плюс
+                            Киоск Плюс
                         </Link>
                         <h1 style={styles.h1}>{bundle_name}<span style={styles.arrow} /></h1>
                     </div>

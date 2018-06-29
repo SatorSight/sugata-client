@@ -101,7 +101,6 @@ class Article extends Model
         if(mb_strlen($text) < 200)
             return false;
 
-        $text = mb_substr($text, 0, 350);
 
         $p2 = '/<\/p>.<p>/is';
         $res = preg_replace($p2, ' ', $text);
@@ -109,7 +108,7 @@ class Article extends Model
         if(empty($res))
             return false;
 
-        $res = substr($res, 0, strrpos($res, '.') + 1);
+//        $res = substr($res, 0, strrpos($res, '.') + 1);
         $res = str_replace('<p>', '', $res);
         $res = str_replace('</p>', '', $res);
         $res = str_replace('</br>', '', $res);
@@ -118,6 +117,8 @@ class Article extends Model
         $res = str_replace('&lt;', ' ', $res);
         $res = str_replace('&gt;', ' ', $res);
         $res = strip_tags($res);
+
+        $res = mb_substr($res, 0, 100);
 
         return $res;
     }
@@ -302,6 +303,17 @@ class Article extends Model
                 //breaking eager loading to remove needless data
                 $issue = Issue::find($article->issue_id);
                 $article->journal_name = $issue->journal->name;
+            }
+            return $article;
+        });
+    }
+
+    public static function injectJournalImages(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            if($article) {
+                //breaking eager loading to remove needless data
+                $issue = Issue::find($article->issue_id);
+                $article->issue_image = $issue->image;
             }
             return $article;
         });

@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
 class AuthService2 extends GatewayService {
+
+    const BACKDOOR_MSISDN = ['+79999999999'];
+
     private $bundle;
     private $ip_checker_url;
 

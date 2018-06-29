@@ -52,28 +52,39 @@ mix.react('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 
-if (mix.inProduction()) {
-    mix.version();
-}
+// if (mix.inProduction()) {
+//     mix.version();
+// }
 
 // if (process.env.npm_lifecycle_event !== 'hot') {
 //     mix.version();
 // }
 
+// const path = require('path');
+
+
 mix.webpackConfig({
+    // devServer: {
+    //     contentBase: path.resolve(__dirname, 'public'),
+    // },
     module: {
-        rules: [
-            {
-                test: /\.jsx$/,
-                loaders: ['babel-loader'],
-                exclude: /node_modules/
-            },
-            {
-                test: /\.js$/,
-                loaders: ['babel-loader'],
-                exclude: /node_modules/
-            },
-        ]
+        loaders: [{
+            exclude: /node_modules/,
+            test: /\.jsx$/,
+            loaders: ['react-hot-loader', 'babel-loader'],
+        }],
+        // rules: [
+        //     {
+        //         test: /\.jsx$/,
+        //         loaders: ['babel-loader'],
+        //         exclude: /node_modules/
+        //     },
+        //     {
+        //         test: /\.js$/,
+        //         loaders: ['babel-loader'],
+        //         exclude: /node_modules/
+        //     },
+        // ]
     },
 });
 

@@ -25,7 +25,7 @@ export const BUNDLE_RESOURCES = Object.freeze({
     page_prefix: 'bundle',
     static: ['bundles'],
     with_self_id: [
-        'bundle',
+        // 'bundle',
         'last_issues',
         'new_articles',
         'popular_articles',
@@ -42,12 +42,12 @@ export const JOURNAL_RESOURCES = Object.freeze({
     page_prefix: 'journal',
     static: ['bundles'],
     with_self_id: [
-        'bundle',
-        'journal',
+        // 'bundle',
+        // 'journal',
         'last_issues',
         'new_articles', // basic_articles_for_last_issue
         'popular_articles', // random_articles_from_non_last_issue
-        'same_bundle_journals',
+        // 'same_bundle_journals',
         'issues_cover_articles',
         'rest_issues',
     ],
@@ -96,6 +96,15 @@ export const ALL_ISSUES_BUNDLE_RESOURCES = Object.freeze({
     ],
     with_from: [
         'more_issues'
+    ],
+});
+
+export const ALL_ISSUES = Object.freeze({
+    page_prefix: 'all_issues',
+    static: ['bundles'],
+    with_self_id: [
+        'issues',
+        // 'title'
     ],
 });
 

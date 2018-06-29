@@ -22,6 +22,8 @@ trait IndexRoutes{
         $bundles = Cache::remember('bundles', $this->expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
+            Bundle::injectIssuesCovers($bundles);
+            Bundle::injectWithImages($bundles);
             return $bundles;
         });
 
@@ -36,15 +38,9 @@ trait IndexRoutes{
         $last_issues = Cache::remember('index_new_issues', $this->expiration, function(){
             $journals = Journal::all();
 
-            $last_issues = new Collection();
-            $journals->map(function($journal) use (&$last_issues){
-                /** @var Journal $journal */
-                $last_issue = $journal->getLastIssue();
-                $last_issue->image;
-                $last_issues->push($last_issue);
-            });
-
+            $last_issues = Issue::getLastForJournals($journals);
             Issue::injectWithImages($last_issues);
+            Issue::injectWithJournalNames($last_issues);
 
             ImageProxyService::resize($last_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
 
@@ -66,6 +62,7 @@ trait IndexRoutes{
             $last_issues = Issue::getLastFromEachJournal();
             $cover_articles = Issue::getCoverArticles($last_issues);
 
+            Article::injectWithText($cover_articles);
             Article::clearFromHtml($cover_articles);
             Article::clearFromDesktopHtml($cover_articles);
             Article::injectWithBigPreviews($cover_articles);
@@ -91,10 +88,11 @@ trait IndexRoutes{
             /** @var Collection $articles */
             $articles = Issue::getFirstBasicArticles($last_issues)->take(5);
 
-            Article::injectWithText($articles);
+//            Article::injectWithText($articles);
             Article::removeWithBlankText($articles);
             Article::clearFromHtml($articles);
             Article::injectDates($articles);
+            Article::injectJournalImages($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
             Article::injectIssueContentDate($articles);
@@ -121,6 +119,7 @@ trait IndexRoutes{
             Article::removeWithBlankText($articles);
             Article::clearFromHtml($articles);
             Article::injectDates($articles);
+            Article::injectJournalImages($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
             Article::injectIssueContentDate($articles);
@@ -133,63 +132,63 @@ trait IndexRoutes{
         return response()->json(array_values($articles->toArray()));
     }
 
-    /**
-     * @desc more new articles
-     * @param $from
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function indexGetMoreNewArticles($from){
-        $articles = Cache::remember('index_more_new_articles' . '_' . $from, $this->expiration, function() use ($from) {
-            $last_issues = Issue::getLastFromEachJournal(null);
-            /** @var Collection $articles */
-            $articles = Issue::getRandomBasicArticles($last_issues)
-                ->slice($from)
-                ->take(5);
-
-            Article::injectWithText($articles);
-            Article::removeWithBlankText($articles);
-            Article::clearFromHtml($articles);
-            Article::injectDates($articles);
-            Article::injectJournalNames($articles);
-            Article::injectWithImages($articles);
-            Article::injectIssueContentDate($articles);
-
-            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
-
-            return $articles;
-        });
-
-        return response()->json(array_values($articles->toArray()));
-    }
-
-    /**
-     * @desc more popular articles
-     * @param $from
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function indexGetMorePopularArticles($from){
-        $articles = Cache::remember('index_more_popular_articles' . '_' . $from, $this->expiration, function() use ($from) {
-            $last_issues = Issue::getLastFromEachJournal(null);
-            /** @var Collection $articles */
-            $articles = Issue::getNotFirstBasicArticles($last_issues)
-                ->slice($from)
-                ->take(5);
-
-            Article::injectWithText($articles);
-            Article::removeWithBlankText($articles);
-            Article::clearFromHtml($articles);
-            Article::injectDates($articles);
-            Article::injectJournalNames($articles);
-            Article::injectWithImages($articles);
-            Article::injectIssueContentDate($articles);
-
-            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
-
-            return $articles;
-        });
-
-        return response()->json(array_values($articles->toArray()));
-    }
+//    /**
+//     * @desc more new articles
+//     * @param $from
+//     * @return \Illuminate\Http\JsonResponse
+//     */
+//    public function indexGetMoreNewArticles($from){
+//        $articles = Cache::remember('index_more_new_articles' . '_' . $from, $this->expiration, function() use ($from) {
+//            $last_issues = Issue::getLastFromEachJournal(null);
+//            /** @var Collection $articles */
+//            $articles = Issue::getRandomBasicArticles($last_issues)
+//                ->slice($from)
+//                ->take(5);
+//
+//            Article::injectWithText($articles);
+//            Article::removeWithBlankText($articles);
+//            Article::clearFromHtml($articles);
+//            Article::injectDates($articles);
+//            Article::injectJournalNames($articles);
+//            Article::injectWithImages($articles);
+//            Article::injectIssueContentDate($articles);
+//
+//            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
+//
+//            return $articles;
+//        });
+//
+//        return response()->json(array_values($articles->toArray()));
+//    }
+//
+//    /**
+//     * @desc more popular articles
+//     * @param $from
+//     * @return \Illuminate\Http\JsonResponse
+//     */
+//    public function indexGetMorePopularArticles($from){
+//        $articles = Cache::remember('index_more_popular_articles' . '_' . $from, $this->expiration, function() use ($from) {
+//            $last_issues = Issue::getLastFromEachJournal(null);
+//            /** @var Collection $articles */
+//            $articles = Issue::getNotFirstBasicArticles($last_issues)
+//                ->slice($from)
+//                ->take(5);
+//
+//            Article::injectWithText($articles);
+//            Article::removeWithBlankText($articles);
+//            Article::clearFromHtml($articles);
+//            Article::injectDates($articles);
+//            Article::injectJournalNames($articles);
+//            Article::injectWithImages($articles);
+//            Article::injectIssueContentDate($articles);
+//
+//            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
+//
+//            return $articles;
+//        });
+//
+//        return response()->json(array_values($articles->toArray()));
+//    }
 
     /**
      * @desc all random journals

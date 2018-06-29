@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TagHeader from './TagPage/TagHeader';
 import MainTabs from './../Components/MainTabs';
 import RelatedTopics from './../Components/RelatedTopics';
-import IndexFooter from '../Components/IndexFooter';
+import Footer from '../Components/Footer';
 import * as SUtils from './../Helpers/SUtils';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
 import Waiter from '../Helpers/Waiter2';
@@ -48,7 +48,7 @@ class TagPage extends Component {
                 <TagHeader data={this.state.data}/>
                 <MainTabs controls={controls} data={this.state.data}/>
                 <RelatedTopics controls={controls} data={this.state.data}/>
-                <IndexFooter />
+                <Footer />
             </div>
         );
     }

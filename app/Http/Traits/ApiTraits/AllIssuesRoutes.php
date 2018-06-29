@@ -80,6 +80,24 @@ trait AllIssuesRoutes
     }
 
     /**
+     * @desc  first 30 issues of all
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function allIssuesGetIssues(){
+        $issues = Cache::remember('all_issues', $this->expiration, function (){
+            $issues = Issue::all()->sortByDesc('content_date')->take(30);
+
+            Issue::injectWithImages($issues);
+            Issue::injectWithJournalNames($issues);
+            ImageProxyService::resize($issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
+
+            return $issues;
+        });
+
+        return response()->json(array_values($issues->toArray()));
+    }
+
+    /**
      * @desc first 20 issues for bundle
      * @param $bundle_id
      * @return \Illuminate\Http\JsonResponse
@@ -91,7 +109,9 @@ trait AllIssuesRoutes
                 return $journal->id;
             })->toArray();
 
-            $issues = Issue::whereIn('journal_id', $journals_ids)->orderByDesc('content_date')->limit(20)->get();
+            $issues = Issue::whereIn('journal_id', $journals_ids)->orderByDesc('content_date')
+//                ->limit(20)
+                ->get();
 
             Issue::injectWithImages($issues);
             Issue::injectWithJournalNames($issues);
@@ -111,7 +131,11 @@ trait AllIssuesRoutes
      */
     public function allIssuesMoreJournalGetIssues($journal_id, $from){
         $issues = Cache::remember('all_issues_journal_' . $journal_id . '_' .$from, $this->expiration, function () use ($journal_id, $from) {
-            $issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->slice($from)->take(20);
+            $issues = Journal::find($journal_id)->issues->sortByDesc('content_date')
+                ->slice($from)
+//                ->take(20)
+                ->take(999)
+            ;
 
             Issue::injectWithImages($issues);
             Issue::injectWithJournalNames($issues);
@@ -136,7 +160,9 @@ trait AllIssuesRoutes
                 return $journal->id;
             })->toArray();
 
-            $issues = Issue::whereIn('journal_id', $journals_ids)->orderByDesc('id')->offset($from)->limit(20)->get();
+            $issues = Issue::whereIn('journal_id', $journals_ids)->orderByDesc('id')->offset($from)
+//                ->limit(20)
+                ->get();
 
             Issue::injectWithImages($issues);
             Issue::injectWithJournalNames($issues);

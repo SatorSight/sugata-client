@@ -8,23 +8,23 @@ import Button from 'material-ui/Button';
 
 import {withStyles} from 'material-ui/styles';
 
-const _styles = {
-    li: {
-        margin: '0.5em',
-        // color: 'white',
-        cursor: 'pointer',
-        listStyle: 'none',
-        fontWeight: 300,
-        fontSize: '1.1em',
-        textDecoration: 'underline',
-        color: 'rgb(102, 102, 102)'
-
-    },
-    info: {
-        fontWeight: 300,
-        color: 'white',
-    }
-};
+// const _styles = {
+//     li: {
+//         margin: '0.5em',
+//         // color: 'white',
+//         cursor: 'pointer',
+//         listStyle: 'none',
+//         fontWeight: 300,
+//         fontSize: '1.1em',
+//         textDecoration: 'underline',
+//         color: 'rgb(102, 102, 102)'
+//
+//     },
+//     info: {
+//         fontWeight: 300,
+//         color: 'white',
+//     }
+// };
 
 const styles = theme => ({
     root: {
@@ -60,6 +60,26 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
+    },
+    ul: {
+        paddingLeft: '1rem',
+        paddingBottiom: '1rem',
+
+    },
+    li: {
+        margin: '0.5em',
+        // color: 'white',
+        cursor: 'pointer',
+        listStyle: 'none',
+        fontWeight: 300,
+        fontSize: '1.3em',
+        // textDecoration: 'underline',
+        color: 'rgb(200, 200, 200)'
+
+    },
+    info: {
+        fontWeight: 300,
+        color: 'white',
     }
 });
 
@@ -77,7 +97,7 @@ class Licence extends PureComponent {
     }
 
     get_info = () => <div>
-        <p><b>Киоск плюс</b> - это онлайн киоск в котором размещены электронные версии всех самых интересных и читаемых журналов. Чем бы Вы не интересовались: наукой, техникой, рукоделием, кулинарией, фантастикой или чем-то другим - Вы обязательно найдете здесь материалы интересные Вам!</p>
+        <p><b>Киоск Плюс</b> - это онлайн киоск в котором размещены электронные версии всех самых интересных и читаемых журналов. Чем бы Вы не интересовались: наукой, техникой, рукоделием, кулинарией, фантастикой или чем-то другим - Вы обязательно найдете здесь материалы интересные Вам!</p>
         <p>Стоимость подписки на все журналы составляет всего 20 рублей с НДС за 1 календарный день. С порядком её списания Вы можете ознакомиться на сайте Оператора my.beeline.ru в разделе «Мои информационно-развлекательные услуги» или позвонив по единому номеру 88007000611.</p>
         <p><strong>Приятного Вам чтения!</strong></p>
     </div>;
@@ -227,10 +247,10 @@ class Licence extends PureComponent {
                 </DialogActions>
             </Dialog>
 
-            <ul>
-                <li onClick={() => this.open('info')} style={_styles.li}>Информация для пользователей</li>
-                <li onClick={() => this.open('manage')} style={_styles.li}>Управление Услугой</li>
-                <li onClick={() => this.open('term')} style={_styles.li}>Правила предоставления услуги</li>
+            <ul className={classes.ul}>
+                <li onClick={() => this.open('info')} className={classes.li}>Информация для пользователей</li>
+                <li onClick={() => this.open('manage')} className={classes.li}>Управление Услугой</li>
+                <li onClick={() => this.open('term')} className={classes.li}>Правила предоставления услуги</li>
             </ul>
             {/*<div style={_styles.info}>Стоимость услуги составляет 20 рублей с НДС за 1 календарный день. С размером стоимости услуги и порядком ее списания можно ознакомиться на cайте: Абонентам ПАО «Билайн» — в личном кабинете на сайте my.beeline.ru или позвонив по номеру 88007000611.</div>*/}
         </div>;

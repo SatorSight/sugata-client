@@ -1,53 +1,37 @@
-import React from 'react'
-import IssueHeader from './IssuePage/IssueHeader';
-import IssuesTheme from "../Components/IssuesTheme";
-import MainTabs from './../Components/MainTabs';
-import OtherIssues from './../Components/OtherIssues';
-import PreviousIssue from "../Components/PreviousIssue";
-import * as SUtils from './../Helpers/SUtils';
-import Waiter from '../Helpers/Waiter2';
-import AuthorizableComponent from '../Helpers/AuthorizableComponent';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import Header from '../Components/Header';
+import NewIssues from '../../containers/NewIssues';
+import BundlesSwiper from '../../containers/BundlesSwiper';
+import BigArticles from '../../containers/BigArticles';
+import NewArticles from '../../containers/NewArticles';
+import PopularJournals from '../../containers/PopularJournals';
+import Footer from '../Components/Footer';
 
-class IssuePage extends AuthorizableComponent {
+const mapStateToProps = state => ({
+    loading: state.server.loading
+});
+
+class IssuePage extends Component {
     constructor(props){
         super(props);
     }
 
-    //todo refactor maybe
-    getPrevIssue = () => {
-        let prev_issue = null;
-        if(SUtils.any(this.state.data.all_issues) && !SUtils.empty(this.state.data.issue)){
-            const issue = this.state.data.issue;
-            this.state.data.all_issues.map((iss, i) => {
-                if(iss.id === issue.id) {
-                    if (!SUtils.empty(this.state.data.all_issues[i + 1]))
-                        prev_issue = this.state.data.all_issues[i + 1];
-                }
-            });
-        }
-        return prev_issue;
-    };
-
     render() {
-        const controls = {
-            'more_new_articles': this.loadMoreNew,
-            // 'more_popular_articles': this.loadMorePopularArticles
-        };
-
         return (
-            <div>
-                <Waiter loading={this.state.loading}/>
-                <IssueHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} self_id={this.self_id} data={this.state.data}/>
-                <IssuesTheme data={this.state.data}/>
-                <MainTabs
-                    onlyFirst
-                    controls={controls}
-                    data={this.state.data}/>
-                <OtherIssues issues={this.state.data.all_issues}/>
-                <PreviousIssue current_issue={this.state.data.issue} issue={this.getPrevIssue()}/>
+            !this.props.loading && <div>
+                <Header />
+                <BundlesSwiper />
+                <BigArticles resource={'main_topics'}/>
+                <NewArticles resource={'new_articles'}/>
+                {/*<PopularJournals resource={'popular_editions'}/>*/}
+                <NewIssues resource={'other_issues'}/>
+                <Footer />
             </div>
         );
     }
 }
 
-export default IssuePage;
+export default connect(
+    mapStateToProps,
+)(IssuePage);

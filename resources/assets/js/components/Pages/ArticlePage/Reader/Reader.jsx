@@ -6,6 +6,16 @@ import * as SUtils from '../../../Helpers/SUtils';
 import ListingMenu from './ListingMenu';
 import IndexMenu from '../../../Components/IndexMenu';
 
+import { getResource } from '../../../Helpers/dataComposer';
+import { paymentTrigger } from '../../../Helpers/paymentTrigger';
+
+import { pageVisit } from '../../../../actions/page_tracker';
+
+import { connect } from 'react-redux';
+
+import 'react-image-lightbox/style.css';
+import Lightbox from 'react-image-lightbox';
+
 const styles = {
     header: {
         width: '100%',
@@ -178,7 +188,7 @@ const styles = {
         minHeight: 'calc(100vh - 12.7rem)',
 
 
-        lineHeight: '1.7',
+        lineHeight: '1.4',
         fontFamily: 'serif',
         textAlign: 'left',
         fontSize: '1rem'
@@ -323,17 +333,46 @@ const styles = {
     },
 };
 
-export default class Reader extends Component {
+const mapStateToProps = (state, ownProps) => {
+    //
+    // console.log('reader state');
+    // console.log(state);
+
+    return {
+        article: getResource(state, 'article'),
+        journal: getResource(state, 'journal'),
+        issue: getResource(state, 'issue'),
+        bundle: getResource(state, 'bundle'),
+        auth_data: getResource(state, 'auth_data'),
+        pages_visited: state.pageTracker.pages_viewed,
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    pageVisit: () => dispatch(pageVisit()),
+});
+
+// const mapStateToProps = (state, ownProps) => ({
+//     article: state.server.article,
+//     bundle: state.server.bundle,
+//     auth_data: state.server.auth_data,
+//
+// });
+
+class Reader extends Component {
 
     constructor(props){
         super(props);
+
+        // console.log('article props');
+        // console.log(props);
 
         this.state = {
             current: new Article(),
             prev: new Article(),
             next: new Article(),
 
-            pages_loaded: 0,
+            // pages_loaded: 0,
 
 
             originalX: 0,
@@ -347,6 +386,9 @@ export default class Reader extends Component {
 
             all_articles: [],
             all_articles_ids: [],
+
+            // lightbox
+            isOpen: 'false',
         };
 
         this.minDistance = 100;
@@ -360,6 +402,7 @@ export default class Reader extends Component {
 
         this.add_to_articles_array(article);
 
+        console.log('setting state');
         this.setState({
             current: article,
             all_articles_ids: article_data.other_articles_ids
@@ -374,11 +417,31 @@ export default class Reader extends Component {
 
         this.add_to_articles_array(article);
 
-        const pages_loaded = this.state.pages_loaded + 1;
-        this.setState({ pages_loaded }, () => {
-            if(pages_loaded > this.props.page_load_limit && this.props.bundle)
-                this.props.payment_trigger(this.props.bundle.id);
-        });
+        console.log('page visited');
+        // console.log(this.props);
+        console.log(this.props.pages_visited);
+        console.log(this.props.page_load_limit);
+
+
+        // this.props.pageVisit();
+        // if(this.props.pages_visited >= this.props.page_load_limit) {
+        //     console.log('triggered');
+        //     console.log(this.props);
+        //     paymentTrigger(this.props.bundle.id, this.props.auth_data.user_bundles);
+        // }
+        //
+
+
+
+        // const pages_loaded = this.state.pages_loaded + 1;
+        // this.setState({ pages_loaded }, () => {
+        //     if(pages_loaded > this.props.page_load_limit && this.props.bundle) {
+        //         console.log('payment trigger');
+        //         console.log(this.props);
+        //         paymentTrigger(this.props.bundle, this.props.auth_data.user_bundles);
+        //     }
+        //         this.props.payment_trigger(this.props.bundle.id);
+        // });
 
         return article;
     };
@@ -390,6 +453,9 @@ export default class Reader extends Component {
     };
 
     get_id_of = position => {
+        if(!this.state.all_articles_ids)
+            return null;
+
         const current_id = this.state.current.get_id();
         const id_index = this.state.all_articles_ids.indexOf(current_id);
 
@@ -404,6 +470,16 @@ export default class Reader extends Component {
         const index = position === 'prev' ? parseInt(id_index) - 1 : parseInt(id_index) + 1;
 
         return this.state.all_articles_ids[index];
+    };
+
+    paymentRequired = () => this.props.pages_visited >= this.props.page_load_limit;
+    pageChanged = () => {
+        console.log('PAGE CHANGED');
+        console.log(this.props.pages_visited);
+        console.log(this.props.page_load_limit);
+        this.props.pageVisit();
+        if(this.paymentRequired())
+            paymentTrigger(this.props.bundle.id, this.props.auth_data.user_bundles);
     };
 
     get_prev_id = () => this.get_id_of('prev');
@@ -428,6 +504,8 @@ export default class Reader extends Component {
     prev_clicked = () => this.go_prev();
 
     go_next = () => {
+
+
         this.scrollToArticleTop();
         if(this.state.next)
             this.change_current(this.state.next);
@@ -436,6 +514,7 @@ export default class Reader extends Component {
     };
 
     go_prev = () => {
+
         this.scrollToArticleTop();
         if(this.state.prev)
             this.change_current(this.state.prev);
@@ -460,6 +539,7 @@ export default class Reader extends Component {
 
 
     change_current = new_current => this.setState({ current: new_current }, () => {
+        this.pageChanged();
         this.props.history.push('/article/' + new_current.get_id());
         this.load_side_articles();
     });
@@ -530,7 +610,7 @@ export default class Reader extends Component {
     };
 
     scrollToArticleTop = () => {
-        const header_height = document.querySelector('.article-header').clientHeight;
+        const header_height = document.querySelector('.header-container').clientHeight;
         scrollTo(0, header_height);
     };
 
@@ -542,6 +622,7 @@ export default class Reader extends Component {
 
         this.setState({ indent: 0 });
     };
+
 
     render() {
         const stylesImg = 'img {max-width: 100%;}';
@@ -562,46 +643,72 @@ export default class Reader extends Component {
             }
         }
 
+        // console.log('render article -----------');
+        // console.log(this.props.article);
+        // if(!this.props.article)
+        //     console.log('no article');
+        // if(!this.props.article.side_issues) {
+        //     console.log(this.props.article);
+        //     console.log(this.state.next);
+        //     console.log('no side issues');
+        // }
+        // if(!this.props.article.side_issues.next) {
+        //     console.log('no side issues next');
+        //     console.log(this.props.article.side_issues);
+        // }
+        // console.log('render article ++++++++++++++++');
+
+
         return (
             <div>
-                <div className={'article-header'} style={styles.header}>
-                    <div style={styles.item}>
-                        <div style={styles.inner_header}>
-                            <div style={styles.indexMenu}>
-                                <IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={{bundles: this.props.bundles}} />
-                            </div>
-                            <div>
-                                <ListingMenu navigate={this.navigate} listing={this.props.listing}/>
-                            </div>
-                            <div style={styles.left}>
-                                <Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url}>
-                                    <img style={styles.magLeft} src={SUtils.propOrNull(issue, 'image_path')} alt={SUtils.propOrNull(journal, 'name')} />
-                                </Link>
-                            </div>
-                            <div style={styles.right}>
-                                <div style={styles.url}>
-                                    <h3 style={styles.title}>
-                                        <Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url_title}>
-                                            &laquo;{SUtils.propOrNull(journal, 'name')}&raquo;
-                                        </Link>
-                                    </h3>
-                                    <div>
-                                        <p style={styles.captionColorSwiper}>
-                                            <span>{current_page_number}/</span>
-                                            <span>{SUtils.propOrNull(issue, 'pages_count')}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style={styles.bg}>
-                            <img style={styles.imgBg} src="/images/header.jpg" alt={SUtils.propOrNull(journal, 'name')} />
-                            <div style={styles.mask} />
-                            <div style={styles.shadow} />
-                        </div>
-                    </div>
-                </div>
+                {/*<div className={'article-header'} style={styles.header}>*/}
+                    {/*<div style={styles.item}>*/}
+                        {/*<div style={styles.inner_header}>*/}
+                            {/*<div style={styles.indexMenu}>*/}
+                                {/*<IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={{bundles: this.props.bundles}} />*/}
+                            {/*</div>*/}
+                            {/*<div>*/}
+                                {/*<ListingMenu navigate={this.navigate} listing={this.props.listing}/>*/}
+                            {/*</div>*/}
+                            {/*<div style={styles.left}>*/}
+                                {/*<Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url}>*/}
+                                    {/*<img style={styles.magLeft} src={SUtils.propOrNull(issue, 'image_path')} alt={SUtils.propOrNull(journal, 'name')} />*/}
+                                {/*</Link>*/}
+                            {/*</div>*/}
+                            {/*<div style={styles.right}>*/}
+                                {/*<div style={styles.url}>*/}
+                                    {/*<h3 style={styles.title}>*/}
+                                        {/*<Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url_title}>*/}
+                                            {/*&laquo;{SUtils.propOrNull(journal, 'name')}&raquo;*/}
+                                        {/*</Link>*/}
+                                    {/*</h3>*/}
+                                    {/*<div>*/}
+                                        {/*<p style={styles.captionColorSwiper}>*/}
+                                            {/*<span>{current_page_number}/</span>*/}
+                                            {/*<span>{SUtils.propOrNull(issue, 'pages_count')}</span>*/}
+                                        {/*</p>*/}
+                                    {/*</div>*/}
+                                {/*</div>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
+                        {/*<div style={styles.bg}>*/}
+                            {/*<img style={styles.imgBg} src="/images/header.jpg" alt={SUtils.propOrNull(journal, 'name')} />*/}
+                            {/*<div style={styles.mask} />*/}
+                            {/*<div style={styles.shadow} />*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
+
+
+
                 <div><style>{stylesImg}</style></div>
+
+
+
+
+
+
+
 
                 <div
                     onTouchStart={this._onTouchStart}
@@ -618,6 +725,12 @@ export default class Reader extends Component {
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
                 </div>
+
+
+
+
+
+
                 <div
                     className={'html-root'}
                     style={Object.assign({},
@@ -628,17 +741,25 @@ export default class Reader extends Component {
                     {this.state.prev ? this.state.prev.render() : null}
                     <div style={styles.pageMask} />
                 </div>
-                 <div
+                <div
                      className={'html-root'}
                      style={Object.assign({},
                      styles.background,
                      styles.container,
-
                      {zIndex: this.state.zIndexNext}
                 )}>
-                     {this.state.next ? this.state.next.render() : null}
+                     {(this.state && this.state.next) ? this.state.next.render() : null}
                     <div style={styles.pageMask} />
                 </div>
+
+
+
+
+
+
+
+
+
 
                 <div onClick={this.next_clicked} style={{display: 'block'}}>
                     <div style={styles.next_article_item}>
@@ -648,7 +769,7 @@ export default class Reader extends Component {
                                     {this.state.next
                                         // next article image
                                         ? <img style={styles.next_article_magLeft} src={current_next_article_image_path} alt={current_next_article_title} />
-                                        : this.props.article.side_issues.next
+                                        : (!SUtils.empty(this.props.article) && this.props.article.side_issues.next)
                                             // next issue cover
                                             ? <div>
                                                 <img style={styles.next_article_magLeft}
@@ -665,7 +786,7 @@ export default class Reader extends Component {
                                     <h3 style={styles.next_article_title}>
                                         {this.state.next
                                             ? 'Следующая статья'
-                                            : this.props.article.side_issues.next
+                                            : (!SUtils.empty(this.props.article) && this.props.article.side_issues.next)
                                                 ? <div>
                                                     <div>Предыдущий выпуск</div>
                                                     <img style={{height: '3em', margin: '0.5em 0 0.5em 0'}} src={this.props.article.side_issues.next.logo_path} alt=""/>
@@ -701,3 +822,8 @@ export default class Reader extends Component {
         );
     }
 }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Reader);

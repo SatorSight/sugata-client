@@ -55,6 +55,9 @@ Route::get('/journal/rest_issues/{journal_id}/', 'ApiController@journalGetRestIs
 Route::get('/journal/same_bundle_journals/{journal_id}/', 'ApiController@journalGetSameBundleJournals');
 
 
+Route::get('/all_issues/bundles/', 'ApiController@allIssuesGetAllBundles');
+Route::get('/all_issues/issues/', 'ApiController@allIssuesGetIssues');
+
 Route::get('/all_issues_journal/bundles/', 'ApiController@allIssuesGetAllBundles');
 Route::get('/all_issues_journal/issues/{journal_id}/', 'ApiController@allIssuesJournalGetIssues');
 Route::get('/all_issues_journal/title/{journal_id}/', 'ApiController@allIssuesGetJournalName');

@@ -122,10 +122,10 @@ class IndexFooter extends PureComponent {
                 </div>
                 <div style={styles.inner}>
                     <Link to="/" style={styles.h1}>
-                        киоск плюс<span style={styles.arrow} />
+                        Киоск Плюс<span style={styles.arrow} />
                     </Link>
                     <Licence/>
-                    <p style={styles.span}>@Киоск плюс</p>
+                    <p style={styles.span}>@Киоск Плюс</p>
                 </div>
             </div>
         );

@@ -1,36 +1,38 @@
-import React from 'react'
-import BundleHeader from './BundlePage/BundleHeader';
-import IssuesSwiper from './../Components/IssuesSwiper';
-import MainTabs from './../Components/MainTabs';
-import IndexFooter from '../Components/IndexFooter';
-import Waiter from '../Helpers/Waiter2';
-import AuthorizableComponent from '../Helpers/AuthorizableComponent';
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import Header from '../Components/Header';
+import NewIssues from '../../containers/NewIssues';
+import BundlesSwiper from '../../containers/BundlesSwiper';
+import BigArticles from '../../containers/BigArticles';
+import NewArticles from '../../containers/NewArticles';
+import PopularJournals from '../../containers/PopularJournals';
+import Footer from '../Components/Footer';
 
-export default class BundlePage extends AuthorizableComponent {
+const mapStateToProps = state => ({
+    loading: state.server.loading
+});
+
+class BundlePage extends Component {
     constructor(props){
         super(props);
     }
 
     render() {
-        const controls = {
-            'more_new_articles': this.loadMoreNew,
-            'more_popular_articles': this.loadMorePopular
-        };
-
         return (
-            <div>
-                <Waiter loading={this.state.loading}/>
-                <BundleHeader payment_trigger={this.paymentTrigger} auth_data={this.state.auth_data} data={this.state.data}/>
-                <IssuesSwiper
-                    parent_type={'bundle'}
-                    bundle_id={this.self_id}
-                    issues={this.state.data.last_issues}
-                    articles={this.state.data.last_cover_articles}/>
-                <MainTabs onlyFirst controls={controls} data={this.state.data}/>
-                {/*<ThematicSwiper  data={this.state.data}/>*/}
-                <MainTabs onlySecond controls={controls} data={this.state.data}/>
-                <IndexFooter />
+            !this.props.loading && <div>
+                <Header />
+                <BundlesSwiper />
+                <NewIssues resource={'last_issues'}/>
+                {/*<BigArticles resource={'main_topics'}/>*/}
+                <NewArticles resource={'new_articles'}/>
+                <PopularJournals resource={'popular_editions'}/>
+                <NewArticles resource={'popular_articles'}/>
+                <Footer />
             </div>
         );
     }
 }
+
+export default connect(
+    mapStateToProps,
+)(BundlePage);

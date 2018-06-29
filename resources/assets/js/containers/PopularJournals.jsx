@@ -1,0 +1,17 @@
+import { connect } from 'react-redux';
+import PopularJournals from '../components/Components/PopularJournals';
+import { getResources } from '../components/Helpers/dataComposer';
+
+const mapStateToProps = (state, ownProps) => ({
+    journals: getResources(state, ownProps),
+    title: ownProps.title,
+    link: ownProps.link,
+    label: ownProps.label,
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(PopularJournals);

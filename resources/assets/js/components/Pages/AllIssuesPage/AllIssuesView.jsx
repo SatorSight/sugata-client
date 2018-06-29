@@ -4,6 +4,18 @@ import { Link } from 'react-router-dom'
 import Button from 'material-ui/Button';
 import * as SUtils from "../../Helpers/SUtils";
 
+
+import { getResource } from '../../Helpers/dataComposer';
+
+
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => ({
+    bundles: getResource(state, 'bundles'),
+    issues: getResource(state, 'issues'),
+    title: getResource(state, 'title'),
+});
+
 const styles = {
     header: {
         width: '100%',
@@ -202,80 +214,110 @@ const styles = {
     },
 };
 
-export default class AllIssuesView extends Component {
+
+class AllIssuesView extends Component {
     constructor(props){
         super(props);
 
-        this.state = {
-            isLoading: false,
-            buttonOn: true,
-        };
+        // this.state = {
+        //     isLoading: false,
+        //     buttonOn: true,
+        // };
     }
-    addMore = () => {
-        this.setState({ isLoading: true });
-        const issues = this.props.data.issues;
-        const _this = this;
-        this.props.load_more().then(function() {
-            _this.setState({ isLoading: false });
-            const issuesAdd = _this.props.data.issues;
-            let state = issues.length!==issuesAdd.length;
-            _this.setState({ buttonOn: state });
-        });
-    };
+
+    // addMore = () => {
+    //     this.setState({ isLoading: true });
+    //     const issues = this.props.data.issues;
+    //     const _this = this;
+    //     this.props.load_more().then(function() {
+    //         _this.setState({ isLoading: false });
+    //         const issuesAdd = _this.props.data.issues;
+    //         let state = issues.length!==issuesAdd.length;
+    //         _this.setState({ buttonOn: state });
+    //     });
+    // };
+
+
     render() {
-        const item = this.props.issues ? this.props.data.issues : '';
-        let content= [];
-        if (item){
-            for(let i=0; i < item.length; i++){
-                content[i] = <div key={String(i)} style={styles.item}>
-                                <Link  to={`/issue/${item[i].id}`} style={styles.link}>
-                                    <div style={styles.image}>
-                                        <div style={styles.blur} />
-                                        {/*<img style={styles.img} src='/images/header.jpg' alt={item[i].journal_name} />*/}
-                                        <img style={styles.img} src={item[i].image_path} alt={item[i].journal_name} />
-                                    </div>
 
-                                    <div style={styles.inner}>
-                                        <p style={styles.name}>{item[i].journal_name}</p>
-                                        <p style={styles.date}>{SUtils.toRuMonthYearLocale(item[i].content_date)}</p>
-                                    </div>
-                                </Link>
-                            </div>;
-            }
 
-        }
+        // console.log('PROPS');
+        // console.log(this.props);
+
+
+        // const item = this.props.issues ? this.props.data.issues : '';
+        // let content = [];
+        // if(item){
+        //     for(let i=0; i < item.length; i++){
+        //         content[i] = <div key={String(i)} style={styles.item}>
+        //                         <Link  to={`/issue/${item[i].id}`} style={styles.link}>
+        //                             <div style={styles.image}>
+        //                                 <div style={styles.blur} />
+        //                                 {/*<img style={styles.img} src='/images/header.jpg' alt={item[i].journal_name} />*/}
+        //                                 <img style={styles.img} src={item[i].image_path} alt={item[i].journal_name} />
+        //                             </div>
+        //
+        //                             <div style={styles.inner}>
+        //                                 <p style={styles.name}>{item[i].journal_name}</p>
+        //                                 <p style={styles.date}>{SUtils.toRuMonthYearLocale(item[i].content_date)}</p>
+        //                             </div>
+        //                         </Link>
+        //                     </div>;
+        //     }
+        //
+        // }
 
         return (
 
             <div>
-                <div style={styles.header}>
-                    <div style={styles.header}>
-                        <div style={styles.mask}>
-                            <div style={styles.bg} />
-                            <div style={styles.colorOne} />
-                            <div style={styles.colorTwo} />
-                        </div>
-                        <div style={styles.inner}>
-                            <div style={styles.indexMenu}>
-                                <IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={this.props.data}/>
-                            </div>
-                            <Link to="/" style={styles.h2}>
-                                киоск плюс
-                            </Link>
-                            <h1 style={styles.h1}>{this.props.title ? this.props.title.name : null}</h1>
-                        </div>
-                    </div>
-                </div>
+                {/*<div style={styles.header}>*/}
+                    {/*<div style={styles.header}>*/}
+                        {/*<div style={styles.mask}>*/}
+                            {/*<div style={styles.bg} />*/}
+                            {/*<div style={styles.colorOne} />*/}
+                            {/*<div style={styles.colorTwo} />*/}
+                        {/*</div>*/}
+                        {/*<div style={styles.inner}>*/}
+                            {/*<div style={styles.indexMenu}>*/}
+                                {/*<IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={this.props.data}/>*/}
+                            {/*</div>*/}
+                            {/*<Link to="/" style={styles.h2}>*/}
+                                {/*киоск плюс*/}
+                            {/*</Link>*/}
+                            {/*<h1 style={styles.h1}>{this.props.title ? this.props.title.name : null}</h1>*/}
+                        {/*</div>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
                 <div style={styles.content}>
-                    <h3 style={styles.h3}>Последние выпуски</h3>
-                    {content}
+                    <h3 style={styles.h3}>{this.props.h3}</h3>
+                    {this.props.issues.map(issue =>
+                        <div key={`all_issues_${issue.id}`} style={styles.item}>
+                            <Link to={`/issue/${issue.id}`} style={styles.link}>
+                                <div style={styles.image}>
+                                    <div style={styles.blur}></div>
+                                    <img style={styles.img} src={issue.image_path} alt={issue.journal_name} />
+                                </div>
+                                <div style={styles.inner}>
+                                    <p style={styles.name}>{issue.journal_name}</p>
+                                    <p style={styles.date}>{SUtils.toRuMonthYearLocale(issue.content_date)}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    )}
+
+
+
                 </div>
-                <div style={this.state.buttonOn ? styles.buttonDisplay : styles.buttonHidden}>
-                    <Button classes={{}} color="primary" style={this.state.isLoading ? styles.offButton : styles.button} onClick={this.addMore}>
-                        {this.state.isLoading ? ' ' : <span style={styles.span}>Загрузить еще</span>}
-                    </Button>
-                </div>
+                {/*<div style={this.state.buttonOn ? styles.buttonDisplay : styles.buttonHidden}>*/}
+                    {/*<Button classes={{}} color="primary" style={this.state.isLoading ? styles.offButton : styles.button} onClick={this.addMore}>*/}
+                        {/*{this.state.isLoading ? ' ' : <span style={styles.span}>Загрузить еще</span>}*/}
+                    {/*</Button>*/}
+                {/*</div>*/}
             </div>
         );
     }
 }
+
+export default connect(
+    mapStateToProps,
+)(AllIssuesView);

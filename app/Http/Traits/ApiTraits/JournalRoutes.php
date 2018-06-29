@@ -21,6 +21,8 @@ trait JournalRoutes{
         $bundles = Cache::remember('bundles', $this->expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
+            Bundle::injectIssuesCovers($bundles);
+            Bundle::injectWithImages($bundles);
             return $bundles;
         });
 
@@ -71,11 +73,12 @@ trait JournalRoutes{
             });
 
             Article::injectWithText($cover_articles);
-            Article::removeWithBlankText($cover_articles);
             Article::clearFromHtml($cover_articles);
+            Article::clearFromDesktopHtml($cover_articles);
+            Article::injectWithBigPreviews($cover_articles);
             Article::injectDates($cover_articles);
             Article::injectJournalNames($cover_articles);
-            Article::injectWithBigPreviews($cover_articles);
+            Article::injectJournalCovers($cover_articles);
 
             ImageProxyService::resize($cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
 
@@ -99,10 +102,10 @@ trait JournalRoutes{
             $last_issue = $journal->getLastIssue();
             $basic_articles = $last_issue->getBasicArticles(5);
 
-            Article::injectWithText($basic_articles);
             Article::removeWithBlankText($basic_articles);
             Article::clearFromHtml($basic_articles);
             Article::injectDates($basic_articles);
+            Article::injectJournalImages($basic_articles);
             Article::injectJournalNames($basic_articles);
             Article::injectWithImages($basic_articles);
             Article::injectIssueContentDate($basic_articles);
@@ -133,10 +136,10 @@ trait JournalRoutes{
                 return $issue->getNotFirstRandomBasicArticle();
             });
 
-            Article::injectWithText($articles);
             Article::removeWithBlankText($articles);
             Article::clearFromHtml($articles);
             Article::injectDates($articles);
+            Article::injectJournalImages($articles);
             Article::injectJournalNames($articles);
             Article::injectWithImages($articles);
             Article::injectIssueContentDate($articles);
@@ -148,60 +151,60 @@ trait JournalRoutes{
 
         return response()->json(array_values($articles->toArray()));
     }
-
-    public function journalGetMoreMoreNewArticles($journal_id, $from){
-        $basic_articles = Cache::remember('journal_more_new_articles_' . $journal_id . '_' . $from, $this->expiration, function() use($journal_id, $from) {
-            /** @var Issue $last_issue */
-            $last_issue = Journal::find($journal_id)->getLastIssue();
-            /** @var Collection $basic_articles */
-            $basic_articles = $last_issue->getBasicArticles(5, $from);
-
-            Article::injectWithText($basic_articles);
-            Article::removeWithBlankText($basic_articles);
-            Article::clearFromHtml($basic_articles);
-            Article::injectDates($basic_articles);
-            Article::injectJournalNames($basic_articles);
-            Article::injectWithImages($basic_articles);
-            Article::injectIssueContentDate($basic_articles);
-
-            ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
-
-            return $basic_articles;
-        });
-
-        return response()->json(array_values($basic_articles->toArray()));
-    }
-
-    public function journalGetMorePopularArticles($journal_id, $from){
-        $articles = Cache::remember('journal_more_popular_articles_' . $journal_id . '_' . $from, $this->expiration, function() use($journal_id, $from) {
-            $non_last_issues = Journal::find($journal_id)->issues
-                ->sortByDesc('content_date')
-                ->slice(1)
-                ->slice($from)
-                ->take(5)
-            ;
-
-            $articles = $non_last_issues->map(function($issue){
-                /** @var Issue $issue */
-                return $issue->getNotFirstRandomBasicArticle();
-            });
-
-            Article::injectWithText($articles);
-            Article::removeWithBlankText($articles);
-            Article::clearFromHtml($articles);
-            Article::injectDates($articles);
-            Article::injectJournalNames($articles);
-            Article::injectIssueContentDate($articles);
-            Article::injectWithImages($articles);
-
-            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
-
-            return $articles;
-        });
-
-
-        return response()->json(array_values($articles->toArray()));
-    }
+//
+//    public function journalGetMoreMoreNewArticles($journal_id, $from){
+//        $basic_articles = Cache::remember('journal_more_new_articles_' . $journal_id . '_' . $from, $this->expiration, function() use($journal_id, $from) {
+//            /** @var Issue $last_issue */
+//            $last_issue = Journal::find($journal_id)->getLastIssue();
+//            /** @var Collection $basic_articles */
+//            $basic_articles = $last_issue->getBasicArticles(5, $from);
+//
+//            Article::injectWithText($basic_articles);
+//            Article::removeWithBlankText($basic_articles);
+//            Article::clearFromHtml($basic_articles);
+//            Article::injectDates($basic_articles);
+//            Article::injectJournalNames($basic_articles);
+//            Article::injectWithImages($basic_articles);
+//            Article::injectIssueContentDate($basic_articles);
+//
+//            ImageProxyService::resize($basic_articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
+//
+//            return $basic_articles;
+//        });
+//
+//        return response()->json(array_values($basic_articles->toArray()));
+//    }
+//
+//    public function journalGetMorePopularArticles($journal_id, $from){
+//        $articles = Cache::remember('journal_more_popular_articles_' . $journal_id . '_' . $from, $this->expiration, function() use($journal_id, $from) {
+//            $non_last_issues = Journal::find($journal_id)->issues
+//                ->sortByDesc('content_date')
+//                ->slice(1)
+//                ->slice($from)
+//                ->take(5)
+//            ;
+//
+//            $articles = $non_last_issues->map(function($issue){
+//                /** @var Issue $issue */
+//                return $issue->getNotFirstRandomBasicArticle();
+//            });
+//
+//            Article::injectWithText($articles);
+//            Article::removeWithBlankText($articles);
+//            Article::clearFromHtml($articles);
+//            Article::injectDates($articles);
+//            Article::injectJournalNames($articles);
+//            Article::injectIssueContentDate($articles);
+//            Article::injectWithImages($articles);
+//
+//            ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_150);
+//
+//            return $articles;
+//        });
+//
+//
+//        return response()->json(array_values($articles->toArray()));
+//    }
 
     /**
      * @desc journal info
@@ -243,6 +246,8 @@ trait JournalRoutes{
             ;
 
             Issue::injectWithImages($issues);
+            Issue::injectWithJournalNames($issues);
+
             ImageProxyService::resize($issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
 
             return $issues;
