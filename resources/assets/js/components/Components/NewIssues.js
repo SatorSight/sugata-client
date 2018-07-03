@@ -17,8 +17,13 @@ const styles = {
         minWidth: '8em',
     },
     image: {
-        height: '12em',
+        height: '11em',
         boxShadow: '5px 5px 8px 0px rgba(0,0,0,0.21)',
+    },
+    imageDiv: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginBottom: '0.8em',
     },
     titles: {
         display: 'flex',
@@ -70,8 +75,8 @@ class NewIssues extends PureComponent {
     }
 
     render() {
-        const { classes } = this.props;
-        const issues = this.props.issues;
+        const { classes, count } = this.props;
+        const issues = this.props.issues.slice(0, count);
         return (
             <div className={classes.sectionWrapper}>
                 <SectionTitle
@@ -83,7 +88,9 @@ class NewIssues extends PureComponent {
                     {issues.map((issue, currentIndex) =>
                         <Link key={`new_issues_${issue.id}`} to={`/issue/${issue.id}`} className={classes.item}>
                             <div className={classes.imageContainer}>
-                                <img className={classes.image} src={issue.image_path} alt=""/>
+                                <div className={classes.imageDiv}>
+                                    <img className={classes.image} src={issue.image_path} alt=""/>
+                                </div>
                                 <div className={classes.labels}>
                                     <div className={classes.journalName}>{issue.journal_name}</div>
                                     <div className={classes.journalDate}>{toRuMonthYearLocale(issue.content_date)}</div>

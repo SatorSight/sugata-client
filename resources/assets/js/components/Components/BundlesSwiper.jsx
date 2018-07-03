@@ -21,7 +21,7 @@ const styles = {
         justifyContent: 'center',
         borderRadius: '0.7em',
         overflow: 'hidden',
-        width: '30em',
+        width: '25em',
     },
     bundleImage: {
         width: '100%',

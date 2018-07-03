@@ -50,9 +50,10 @@ trait BundleRoutes{
     public function bundleGetLastIssues($bundle_id){
         $last_issues = Cache::remember('last_issues_' . $bundle_id, $this->issues_expiration, function() use($bundle_id) {
             $bundle = Bundle::find($bundle_id);
-            $journals = $bundle->journals;
+//            $journals = $bundle->journals;
 //            $last_issues = Issue::getLastFromEachJournal(4, $bundle);
-            $last_issues = Issue::getLastForJournals($journals);
+//            $last_issues = Issue::getLastForJournals($journals);
+            $last_issues = Issue::getLastIssuesDistinctJournal($bundle, 6);
 
             Issue::injectWithJournalNames($last_issues);
             Issue::injectWithImages($last_issues);

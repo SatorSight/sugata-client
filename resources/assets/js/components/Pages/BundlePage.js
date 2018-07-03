@@ -22,7 +22,7 @@ class BundlePage extends Component {
             !this.props.loading && <div>
                 <Header />
                 <BundlesSwiper />
-                <NewIssues resource={'last_issues'}/>
+                <NewIssues count={6} resource={'last_issues'}/>
                 {/*<BigArticles resource={'main_topics'}/>*/}
                 <NewArticles resource={'new_articles'}/>
                 <PopularJournals resource={'popular_editions'}/>

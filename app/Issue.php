@@ -73,8 +73,8 @@ class Issue extends Model
     private static function getMissingIssue($all_issues, $issues){
         $added_issue = $all_issues->reduce(function($carry, $issue) use ($issues) {
             if(!$carry){
-                if(!$issues->search(function($item) use ($issue) {
-                    return $issue->id === $item->id;
+                if(false === $issues->search(function($item) use ($issue) {
+                    return $issue->id == $item->id;
                 }))
                     $carry = $issue;
             }

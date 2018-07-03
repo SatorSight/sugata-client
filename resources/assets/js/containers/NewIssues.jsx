@@ -4,6 +4,7 @@ import { getResources } from '../components/Helpers/dataComposer';
 
 const mapStateToProps = (state, ownProps) => ({
     issues: getResources(state, ownProps),
+    count: ownProps.count,
     title: ownProps.title,
     link: ownProps.link,
     label: ownProps.label,
