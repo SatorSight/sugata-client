@@ -17,7 +17,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetBundles(){
-        $bundles = Cache::remember('bundles', $this->expiration, function(){
+        $bundles = Cache::remember('bundles', $this->bundle_expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
             Bundle::injectIssuesCovers($bundles);
@@ -34,7 +34,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetCurrentBundle($issue_id){
-        $bundle = Cache::remember('issue_current_bundle_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $bundle = Cache::remember('issue_current_bundle_' . $issue_id, $this->issues_expiration, function() use($issue_id) {
             return Issue::find($issue_id)->journal->bundle;
         });
 
@@ -47,7 +47,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetFirstArticleId($issue_id){
-        $id = Cache::remember('issue_first_article_id_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $id = Cache::remember('issue_first_article_id_' . $issue_id, $this->article_expiration, function() use($issue_id) {
             $id = Article::select('id')
                 ->where('issue_id', $issue_id)
                 ->orderBy('page_number')
@@ -72,7 +72,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetIssue($issue_id){
-        $issue = Cache::remember('issue_issue_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $issue = Cache::remember('issue_issue_' . $issue_id, $this->issues_expiration, function() use($issue_id) {
             $issue = Issue::find($issue_id);
 
             $issue_collection = new Collection();
@@ -98,7 +98,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetPreviousIssue($issue_id){
-        $issue = Cache::remember('issue_prev_issue_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $issue = Cache::remember('issue_prev_issue_' . $issue_id, $this->issues_expiration, function() use($issue_id) {
             $issue = Issue::find($issue_id);
 
             $issue_collection = new Collection();
@@ -124,7 +124,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetAllIssues($issue_id){
-        $journal_issues = Cache::remember('issue_all_issues_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $journal_issues = Cache::remember('issue_all_issues_' . $issue_id, $this->issues_expiration, function() use($issue_id) {
             /** @var Issue $issue */
             $issue = Issue::find($issue_id);
 
@@ -149,7 +149,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetMainTopics($issue_id){
-        $main_topics = Cache::remember('issue_main_topics_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $main_topics = Cache::remember('issue_main_topics_' . $issue_id, $this->articles_list_expiration, function() use($issue_id) {
             $cover_article = Article::where('issue_id', $issue_id)
                 ->where('cover', true)
                 ->get()
@@ -194,7 +194,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetNewArticles($issue_id){
-        $basic_articles = Cache::remember('issue_new_articles_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $basic_articles = Cache::remember('issue_new_articles_' . $issue_id, $this->articles_list_expiration, function() use($issue_id) {
             $issue = Issue::find($issue_id);
             $basic_articles = $issue->getBasicArticles(5);
 
@@ -273,7 +273,7 @@ trait IssueRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function issueGetOtherIssues($issue_id){
-        $issues = Cache::remember('issue_other_issues_' . $issue_id, $this->expiration, function() use($issue_id) {
+        $issues = Cache::remember('issue_other_issues_' . $issue_id, $this->issues_expiration, function() use($issue_id) {
             $issues = Issue::find($issue_id)->journal->issues
                 ->sortByDesc('content_date')
                 ->reject(function($i) use ($issue_id){

@@ -41,7 +41,7 @@ const styles = {
     },
     slideSwiper: {
         paddingRight: '1em',
-        minHeight: '31em',
+        minHeight: '32em',
     },
     imgSwiper: {
         width: 'auto',

@@ -3,8 +3,12 @@ import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { connect } from 'react-redux';
 
+import Button from 'material-ui/Button';
+
 import InputMask from 'react-input-mask';
 import AuthHelper from '../Helpers/AuthHelper';
+
+import { withStyles } from 'material-ui/styles';
 
 const mapStateToProps = state => ({
     loading: state.server.loading,
@@ -31,48 +35,6 @@ const styles = {
         boxShadow: 'inset 0 -5em 4em -4em rgba(0,0,0,1)',
         overflow: 'hidden',
     },
-    // bg: {
-    //     position: 'absolute',
-    //     left: 0,
-    //     right: 0,
-    //     bottom: 0,
-    //     top: 0,
-    //     zIndex: 10,
-    //     overflow: 'hidden',
-    //     // background:'url("/images/header.jpg") 50% 0 no-repeat',
-    //     backgroundSize: '100% auto',
-    // },
-    // colorOne: {
-    //     position: 'absolute',
-    //     left: '-50%',
-    //     top: 0,
-    //     width: '100%',
-    //     maxWidth: '70em',
-    //     height: '100%',
-    //     zIndex: 20,
-    //     background: 'radial-gradient(ellipse at center, rgba(0,124,192,1) 0%, rgba(57,0,174,0.4) 50%, rgba(57,0,174,0) 70%)',
-    //     opacity: 0.6,
-    // },
-    // colorTwo: {
-    //     position: 'absolute',
-    //     left: 0,
-    //     right: 0,
-    //     top: 0,
-    //     height: '2em',
-    //     zIndex: 20,
-    //     background: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
-    //     opacity: 0.6,
-    // },
-    // colorThree: {
-    //     position: 'absolute',
-    //     right: 0,
-    //     left: 0,
-    //     top: '22em',
-    //     bottom: 0,
-    //     background: '#000',
-    //     zIndex: 15,
-    //     boxShadow: '0 0 20em 10em #000',
-    // },
     inner: {
         position: 'relative',
         maxWidth: '720px',
@@ -186,13 +148,18 @@ const styles = {
         position: 'relative',
         zIndex: '20',
         width: '100%',
-        margin: '0.9em 0 1.5em',
+        // margin: '0.9em 0 1.5em',
         lineHeight: 3.7,
-        paddingBottom: '0.1em',
-        fontSize: '1.2em',
+        // paddingBottom: '0.1em',
+        fontSize: '1.3em',
+        padding: '1.3em 0px 1em 0',
+        textTransform: 'capitalize',
+
         fontWeight: 500,
         cursor: 'pointer',
         letterSpacing: '0.045em',
+
+
     },
     shadowButton: {
         position: 'absolute',
@@ -261,8 +228,32 @@ const styles = {
         textAlign: 'center',
         maxWidth: '80%',
         margin: '0 auto',
-    }
+    },
+    arrow2: {
+        textAlign: 'center',
+        margin: '2em 0',
+    },
+    subText: {
+        textAlign: 'center',
+        fontSize: '1rem',
+        margin: '0.5em 2em',
+    },
+    phoneLabel: {
+        textAlign: 'center',
+        fontSize: '0.8rem',
+    },
 };
+
+const arrow = <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="7px"  viewBox="0 0 13 34">
+    <g id="Оплата-флоу" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
+        <g id="14" transform="translate(-359.000000, -581.000000)" stroke="#979797" strokeWidth="2.39999986">
+            <g id="Group-10" transform="translate(363.089610, 598.270215) rotate(-9.000000) translate(-363.089610, -598.270215) translate(358.089610, 582.770215)">
+                <path d="M9.77634928,0.152576715 C1.1788174,9.85161948 1.1788174,20.0573573 9.77634928,30.76979" id="Path-5"></path>
+                <polyline id="Path-6" points="0.393106469 25.9807411 9.55617587 30.6536062 9.55617587 19.6813927"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>;
 
 
 class AuthPage extends Component {
@@ -282,34 +273,57 @@ class AuthPage extends Component {
     buttonClicked = () => AuthHelper.checkMsisdn(this.state.msisdn);
 
     render() {
+        const { classes } = this.props;
         return (
             !this.props.loading && <div>
                 <Header/>
 
-                <div style={styles.header}>
-                    <div style={styles.content}>
-                        {/*<div style={Object.assign({}, styles.mag, styles.magOne)} />*/}
-                        {/*<div style={Object.assign({}, styles.mag, styles.magTwo)} />*/}
-                        {/*<div style={Object.assign({}, styles.mag, styles.magThree)} />*/}
-                        {/*<div style={Object.assign({}, styles.mag, styles.magFour)} />*/}
-                        <h2 style={styles.h2}>Вход и регистрация</h2>
-                        <div style={styles.divInput}>
-                            <span style={styles.spanInput}>Ваш номер телефона</span>
+                <div className={classes.header}>
+                    <div className={classes.content}>
+                        <h2 className={classes.h2}>Вход и регистрация</h2>
+                        <div className={classes.subText}>Еще немного, и вы сможете читать Киоск Плюс</div>
+                        <div className={classes.arrow2}>{arrow}</div>
+                        <div className={classes.phoneLabel}>Ваш номер телефона:</div>
+                        <div className={classes.divInput}>
+                            <span className={classes.spanInput}>&nbsp;</span>
+                            {/*<span className={classes.spanInput}>Ваш номер телефона</span>*/}
                             <InputMask
                                 onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
                                 onChange={this.onChange}
                                 value={this.state.msisdn}
-                                style={styles.inputMask}
+                                className={classes.inputMask}
                                 type="tel"
                                 mask="+7 (999) 999-99-99"
                                 placeholder="+7 (   )    -  -  "
                                 maskChar=" " />
-                            <div style={styles.divButton}>
-                                <button onClick={this.buttonClicked} style={styles.button}>Продолжить</button>
-                                <div style={styles.shadowButton} />
-                            </div>
-                            <p style={styles.textFot}>Если у вас еще нет учетной записи, мы&nbsp;создадим ее автоматически</p>
+                            {/*<p className={classes.textFot}>*/}
+                            <p style={{color: 'black'}} className={classes.textFot}>
+                                Автоматически определим, если
+                                вы уже зарегистрированы и
+                                оплатили подписку
+                            </p>
                         </div>
+                        {/*<div className={classes.info}>*/}
+                            {/*Автоматически определим, если*/}
+                            {/*вы уже зарегистрированы и*/}
+                            {/*оплатили подписку*/}
+                        {/*</div>*/}
+                        <div style={{transform: 'scaleX(-1)'}} className={classes.arrow2}>{arrow}</div>
+
+
+
+
+                        {/*<div className={classes.divButton}>*/}
+                            {/*<button onClick={this.buttonClicked} className={classes.button}>Продолжить</button>*/}
+                            {/*<div className={classes.shadowButton} />*/}
+                        {/*</div>*/}
+
+
+                        <Button classes={{}} color="primary" className={classes.button} onClick={this.buttonClicked}>
+                            Продолжить
+                        </Button>
+
+
                     </div>
                 </div>
 
@@ -320,6 +334,7 @@ class AuthPage extends Component {
     }
 }
 
-export default connect(
-    mapStateToProps,
-)(AuthPage);
+
+export default withStyles(styles)(connect(mapStateToProps)(AuthPage));
+
+// export default connect(mapStateToProps)(AuthPage);

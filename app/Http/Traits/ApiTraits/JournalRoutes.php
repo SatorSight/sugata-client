@@ -18,7 +18,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetBundles(){
-        $bundles = Cache::remember('bundles', $this->expiration, function(){
+        $bundles = Cache::remember('bundles', $this->bundle_expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
             Bundle::injectIssuesCovers($bundles);
@@ -35,7 +35,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetCurrentBundle($journal_id){
-        $bundle = Cache::remember('journal_current_bundle_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $bundle = Cache::remember('journal_current_bundle_' . $journal_id, $this->bundle_expiration, function() use($journal_id) {
             return Journal::find($journal_id)->bundle;
         });
 
@@ -48,7 +48,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetLastIssues($journal_id){
-        $last_issues = Cache::remember('journal_last_issues_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $last_issues = Cache::remember('journal_last_issues_' . $journal_id, $this->issues_expiration, function() use($journal_id) {
             $last_issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(4);
 
             Issue::injectWithImages($last_issues);
@@ -66,7 +66,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetIssuesCoverArticles($journal_id){
-        $cover_articles = Cache::remember('journal_cover_articles_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $cover_articles = Cache::remember('journal_cover_articles_' . $journal_id, $this->articles_list_expiration, function() use($journal_id) {
             $last_issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(4);
             $cover_articles = $last_issues->map(function($issue){
                 return $issue->getCoverArticle();
@@ -94,7 +94,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetBasicArticlesForLastIssue($journal_id){
-        $basic_articles = Cache::remember('journal_basic_articles_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $basic_articles = Cache::remember('journal_basic_articles_' . $journal_id, $this->articles_list_expiration, function() use($journal_id) {
             /** @var Journal $journal */
             /** @var Issue $last_issue */
             /** @var Collection $basic_articles */
@@ -124,7 +124,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetRandomArticlesFromNonLastIssue($journal_id){
-        $articles = Cache::remember('journal_random_articles_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $articles = Cache::remember('journal_random_articles_' . $journal_id, $this->articles_list_expiration, function() use($journal_id) {
             $non_last_issues = Journal::find($journal_id)->issues
                 ->sortByDesc('content_date')
                 ->slice(1)
@@ -212,7 +212,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetJournal($journal_id){
-        $journal = Cache::remember('journal_journal_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $journal = Cache::remember('journal_journal_' . $journal_id, $this->journals_expiration, function() use($journal_id) {
             $journal = Journal::find($journal_id);
 
             $journal_collection = new Collection();
@@ -237,7 +237,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetRestIssues($journal_id){
-        $issues = Cache::remember('journal_rest_issues_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $issues = Cache::remember('journal_rest_issues_' . $journal_id, $this->issues_expiration, function() use($journal_id) {
             $issues = Journal::find($journal_id)
                 ->issues
                 ->sortByDesc('content_date')
@@ -262,7 +262,7 @@ trait JournalRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function journalGetSameBundleJournals($journal_id){
-        $journals = Cache::remember('journal_same_bundle_journals_' . $journal_id, $this->expiration, function() use($journal_id) {
+        $journals = Cache::remember('journal_same_bundle_journals_' . $journal_id, $this->journals_expiration, function() use($journal_id) {
             $bundle = Journal::find($journal_id)->bundle;
             $journals = $bundle
                 ->journals

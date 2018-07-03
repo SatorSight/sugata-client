@@ -19,7 +19,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetBundles(){
-        $bundles = Cache::remember('bundles', $this->expiration, function(){
+        $bundles = Cache::remember('bundles', $this->bundle_expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
             Bundle::injectIssuesCovers($bundles);
@@ -35,7 +35,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetNewIssues(){
-        $last_issues = Cache::remember('index_new_issues', $this->expiration, function(){
+        $last_issues = Cache::remember('index_new_issues', $this->issues_expiration, function(){
             $journals = Journal::all();
 
             $last_issues = Issue::getLastForJournals($journals);
@@ -57,7 +57,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetMainTopics(){
-        $cover_articles = Cache::remember('index_cover_articles', $this->expiration, function(){
+        $cover_articles = Cache::remember('index_cover_articles', $this->articles_list_expiration, function(){
             /** @var Collection $cover_articles */
             $last_issues = Issue::getLastFromEachJournal();
             $cover_articles = Issue::getCoverArticles($last_issues);
@@ -83,7 +83,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetNewArticles(){
-        $articles = Cache::remember('index_new_articles', $this->expiration, function() {
+        $articles = Cache::remember('index_new_articles', $this->articles_list_expiration, function() {
             $last_issues = Issue::getLastFromEachJournal(null);
             /** @var Collection $articles */
             $articles = Issue::getFirstBasicArticles($last_issues)->take(5);
@@ -110,7 +110,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetPopularArticles(){
-        $articles = Cache::remember('index_popular_articles', $this->expiration, function() {
+        $articles = Cache::remember('index_popular_articles', $this->articles_list_expiration, function() {
             $last_issues = Issue::getLastFromEachJournal(null);
             /** @var Collection $articles */
             $articles = Issue::getRandomBasicArticles($last_issues)->take(5);;
@@ -195,7 +195,7 @@ trait IndexRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function indexGetPopularEditions(){
-        $journals = Cache::remember('index_popular_editions', $this->expiration, function(){
+        $journals = Cache::remember('index_popular_editions', $this->journals_expiration, function(){
             $journals = Journal::where(function($query){
                 $query->where('archived', false)
                     ->orWhereNull('archived');

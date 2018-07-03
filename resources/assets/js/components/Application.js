@@ -12,6 +12,7 @@ import JournalPage from './Pages/JournalPage'
 // import TagPage from './Pages/TagPage'
 import AllIssuesJournal from './Pages/AllIssuesJournalPage'
 import AllIssuesBundle from './Pages/AllIssuesBundlePage'
+import JustSubscribedDialog from './Components/JustSubscribedDialog'
 
 import Waiter from '../components/Helpers/Waiter2';
 
@@ -27,6 +28,7 @@ export default class Application extends PureComponent {
                 <Waiter/>
                 <BrowserRouter>
                     <div>
+                        <Route path="/*" component={JustSubscribedDialog}/>
                         <Route path="/*" component={DataLoader}/>
                         <Route exact path="/" component={MainPage}/>
                         <Route path="/auth" component={AuthPage}/>

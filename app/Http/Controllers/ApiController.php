@@ -21,12 +21,25 @@ use Illuminate\Support\Facades\Session;
 class ApiController extends Controller
 {
     private $expiration;
+    private $bundle_expiration;
+    private $issues_expiration;
+    private $article_expiration;
+    private $articles_list_expiration;
+    private $journals_expiration;
+    private $listing_expiration;
 
     public function __construct(){
         //todo unleash power of redis on release
         $this->expiration = now()->addMinutes(120);
-    }
 
+
+        $this->bundle_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['year']);
+        $this->issues_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['day']);
+        $this->journals_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['month']);
+        $this->article_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['year']);
+        $this->articles_list_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['day']);
+        $this->listing_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['year']);
+    }
 
     use AuthRoutes;
     use IndexRoutes;

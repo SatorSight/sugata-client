@@ -11,6 +11,16 @@ class SUtils{
         'minute' => 60,
         'second' => 1,
     ];
+
+    const TIME_INTERVAL_ARRAY_MINUTES = [
+        'year' => 535680,
+        'month' => 44640,
+        'week' => 10080,
+        'day' => 1440,
+        'hour' => 60,
+        'minute' => 1,
+    ];
+
     const MAX_COOKIE_TIME = 2147483647;
 
     public static function dump($data) : void {

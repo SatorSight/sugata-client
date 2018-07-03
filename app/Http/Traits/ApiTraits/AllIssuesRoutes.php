@@ -19,7 +19,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesGetAllBundles(){
-        $bundles = Cache::remember('bundles', $this->expiration, function () {
+        $bundles = Cache::remember('bundles', $this->bundle_expiration, function () {
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
             return $bundles;
@@ -34,7 +34,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesGetBundleName($bundle_id){
-        $name = Cache::remember('bundle_name_' . $bundle_id, $this->expiration, function () use ($bundle_id) {
+        $name = Cache::remember('bundle_name_' . $bundle_id, $this->bundle_expiration, function () use ($bundle_id) {
             return Bundle::find($bundle_id)->name;
         });
 
@@ -50,7 +50,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesGetJournalName($journal_id){
-        $name = Cache::remember('journal_name_' . $journal_id, $this->expiration, function () use ($journal_id) {
+        $name = Cache::remember('journal_name_' . $journal_id, $this->journals_expiration, function () use ($journal_id) {
             return Journal::find($journal_id)->name;
         });
 
@@ -66,7 +66,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesJournalGetIssues($journal_id){
-        $issues = Cache::remember('all_issues_journal_' . $journal_id, $this->expiration, function () use ($journal_id) {
+        $issues = Cache::remember('all_issues_journal_' . $journal_id, $this->issues_expiration, function () use ($journal_id) {
             $issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(20);
 
             Issue::injectWithImages($issues);
@@ -84,7 +84,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesGetIssues(){
-        $issues = Cache::remember('all_issues', $this->expiration, function (){
+        $issues = Cache::remember('all_issues', $this->issues_expiration, function (){
             $issues = Issue::all()->sortByDesc('content_date')->take(30);
 
             Issue::injectWithImages($issues);
@@ -103,7 +103,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesBundleGetIssues($bundle_id){
-        $issues = Cache::remember('all_issues_bundle_' . $bundle_id, $this->expiration, function () use ($bundle_id) {
+        $issues = Cache::remember('all_issues_bundle_' . $bundle_id, $this->issues_expiration, function () use ($bundle_id) {
             $journals = Bundle::find($bundle_id)->journals;
             $journals_ids = $journals->map(function($journal){
                 return $journal->id;
@@ -130,7 +130,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesMoreJournalGetIssues($journal_id, $from){
-        $issues = Cache::remember('all_issues_journal_' . $journal_id . '_' .$from, $this->expiration, function () use ($journal_id, $from) {
+        $issues = Cache::remember('all_issues_journal_' . $journal_id . '_' .$from, $this->issues_expiration, function () use ($journal_id, $from) {
             $issues = Journal::find($journal_id)->issues->sortByDesc('content_date')
                 ->slice($from)
 //                ->take(20)
@@ -154,7 +154,7 @@ trait AllIssuesRoutes
      * @return \Illuminate\Http\JsonResponse
      */
     public function allIssuesMoreBundleGetIssues($bundle_id, $from){
-        $issues = Cache::remember('all_issues_bundle_' . $bundle_id . '_' .$from, $this->expiration, function () use ($bundle_id, $from) {
+        $issues = Cache::remember('all_issues_bundle_' . $bundle_id . '_' .$from, $this->issues_expiration, function () use ($bundle_id, $from) {
             $journals = Bundle::find($bundle_id)->journals;
             $journals_ids = $journals->map(function($journal){
                 return $journal->id;

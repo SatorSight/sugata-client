@@ -7,12 +7,6 @@ import Line from '../Helpers/Line';
 const menuButtonWidth = '2.5rem';
 
 const styles = {
-
-    
-    
-    
-    
-    
     header: {
         display: 'flex',
         alignItems: 'center',
@@ -36,7 +30,7 @@ const styles = {
         display: 'block',
     },
     title: {
-        fontSize: '2.3rem',
+        fontSize: '2rem',
         letterSpacing: '0.1rem',
         color: 'black',
         textTransform: 'uppercase',
@@ -49,11 +43,6 @@ const styles = {
         zIndex: 50,
         background: 'white',
     },
-    
-    
-    
-    
-    
 };
 
 class Header extends PureComponent {

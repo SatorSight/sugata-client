@@ -5,16 +5,16 @@ import Article from './Article';
 import * as SUtils from '../../../Helpers/SUtils';
 import ListingMenu from './ListingMenu';
 import IndexMenu from '../../../Components/IndexMenu';
+import Dialog, {
+    DialogContent,
+} from 'material-ui/Dialog';
 
 import { getResource } from '../../../Helpers/dataComposer';
-import { paymentTrigger } from '../../../Helpers/paymentTrigger';
+import { paymentTrigger, userHasAccess, redirectToAuth } from '../../../Helpers/paymentTrigger';
 
 import { pageVisit } from '../../../../actions/page_tracker';
 
 import { connect } from 'react-redux';
-
-import 'react-image-lightbox/style.css';
-import Lightbox from 'react-image-lightbox';
 
 const styles = {
     header: {
@@ -179,7 +179,7 @@ const styles = {
         background:'#FFF',
     },
 
-    root: {
+    _root: {
         backgroundColor: '#FFF',
         position: 'relative',
         overflow: 'hidden',
@@ -331,13 +331,40 @@ const styles = {
         color: '#fff',
         padding: '0.1em'
     },
+    dialog:{
+        minWidth: 240,
+    },
+    dialogTitle: {
+        fontSize: '1.6em',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        margin: '2em 0 1em 0px',
+    },
+    dialogText: {
+        fontSize: '1.1em',
+        textAlign: 'center',
+        margin: '0 1.5em 0',
+    },
+    dialogAccount: {
+        textAlign: 'center',
+        margin: '2em 0',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    dialogAccountInner: {
+        borderBottom: '1px dashed gray',
+    },
+    dialogClose: {
+        textAlign: 'center',
+        color: 'blue',
+        fontSize: '1.2em',
+        borderTop: '1px solid gray',
+        paddingTop: '2em',
+        paddingBottom: '2em',
+    },
 };
 
 const mapStateToProps = (state, ownProps) => {
-    //
-    // console.log('reader state');
-    // console.log(state);
-
     return {
         article: getResource(state, 'article'),
         journal: getResource(state, 'journal'),
@@ -352,21 +379,14 @@ const mapDispatchToProps = dispatch => ({
     pageVisit: () => dispatch(pageVisit()),
 });
 
-// const mapStateToProps = (state, ownProps) => ({
-//     article: state.server.article,
-//     bundle: state.server.bundle,
-//     auth_data: state.server.auth_data,
-//
-// });
+
+let originalX = 0;
+let originalY = 0;
 
 class Reader extends Component {
 
     constructor(props){
         super(props);
-
-        // console.log('article props');
-        // console.log(props);
-
         this.state = {
             current: new Article(),
             prev: new Article(),
@@ -375,20 +395,22 @@ class Reader extends Component {
             // pages_loaded: 0,
 
 
-            originalX: 0,
-            originalY: 0,
+            // originalX: 0,
+            // originalY: 0,
 
             zIndexNext: 0,
             zIndexPrev: 0,
 
             indent: 0,
 
+            // greetings dialog
+            open: false,
+
+            //expired dialog
+            expired_open: false,
 
             all_articles: [],
             all_articles_ids: [],
-
-            // lightbox
-            isOpen: 'false',
         };
 
         this.minDistance = 100;
@@ -401,8 +423,13 @@ class Reader extends Component {
         article.assemble(article_data);
 
         this.add_to_articles_array(article);
+        if(this.props.pages_visited === 0){
+            // First Visit
+            this.setState({open: true});
+        }
 
-        console.log('setting state');
+        this.pageChanged();
+
         this.setState({
             current: article,
             all_articles_ids: article_data.other_articles_ids
@@ -414,35 +441,7 @@ class Reader extends Component {
     load_article = id => {
         let article = new Article(id, this);
         article.load();
-
         this.add_to_articles_array(article);
-
-        console.log('page visited');
-        // console.log(this.props);
-        console.log(this.props.pages_visited);
-        console.log(this.props.page_load_limit);
-
-
-        // this.props.pageVisit();
-        // if(this.props.pages_visited >= this.props.page_load_limit) {
-        //     console.log('triggered');
-        //     console.log(this.props);
-        //     paymentTrigger(this.props.bundle.id, this.props.auth_data.user_bundles);
-        // }
-        //
-
-
-
-        // const pages_loaded = this.state.pages_loaded + 1;
-        // this.setState({ pages_loaded }, () => {
-        //     if(pages_loaded > this.props.page_load_limit && this.props.bundle) {
-        //         console.log('payment trigger');
-        //         console.log(this.props);
-        //         paymentTrigger(this.props.bundle, this.props.auth_data.user_bundles);
-        //     }
-        //         this.props.payment_trigger(this.props.bundle.id);
-        // });
-
         return article;
     };
 
@@ -472,15 +471,17 @@ class Reader extends Component {
         return this.state.all_articles_ids[index];
     };
 
+    userHasAccess = () => userHasAccess(this.props.bundle.id, this.props.auth_data.user_bundles);
     paymentRequired = () => this.props.pages_visited >= this.props.page_load_limit;
     pageChanged = () => {
-        console.log('PAGE CHANGED');
-        console.log(this.props.pages_visited);
-        console.log(this.props.page_load_limit);
         this.props.pageVisit();
-        if(this.paymentRequired())
-            paymentTrigger(this.props.bundle.id, this.props.auth_data.user_bundles);
+        if(this.paymentRequired() && !this.userHasAccess()){
+            this.show_expired();
+        }
     };
+
+    go_to_auth = () => redirectToAuth(this.props.bundle.id);
+    show_expired = () => this.setState({expired_open: true});
 
     get_prev_id = () => this.get_id_of('prev');
     get_next_id = () => this.get_id_of('next');
@@ -504,8 +505,6 @@ class Reader extends Component {
     prev_clicked = () => this.go_prev();
 
     go_next = () => {
-
-
         this.scrollToArticleTop();
         if(this.state.next)
             this.change_current(this.state.next);
@@ -514,7 +513,6 @@ class Reader extends Component {
     };
 
     go_prev = () => {
-
         this.scrollToArticleTop();
         if(this.state.prev)
             this.change_current(this.state.prev);
@@ -560,15 +558,21 @@ class Reader extends Component {
 
     _onTouchStart = (e) => {
         const touch = e.touches[0];
-        this.setState({ originalX: touch.clientX });
-        this.setState({ originalY: touch.clientY });
+        originalX = touch.clientX;
+        originalY = touch.clientY;
+        // this.setState({ originalX: touch.clientX });
+        // this.setState({ originalY: touch.clientY });
     };
 
     _onTouchMove = (e) => {
-        let deltaX = Math.abs(this.state.originalX - e.changedTouches[0].clientX);
-        let deltaY = Math.abs(this.state.originalY - e.changedTouches[0].clientY);
+        // let deltaX = Math.abs(this.state.originalX - e.changedTouches[0].clientX);
+        // let deltaY = Math.abs(this.state.originalY - e.changedTouches[0].clientY);
 
-        const direction = (this.state.originalX - e.changedTouches[0].clientX) > 0 ? 'next' : 'prev';
+        let deltaX = Math.abs(originalX - e.changedTouches[0].clientX);
+        let deltaY = Math.abs(originalY - e.changedTouches[0].clientY);
+
+        // const direction = (this.state.originalX - e.changedTouches[0].clientX) > 0 ? 'next' : 'prev';
+        const direction = (originalX - e.changedTouches[0].clientX) > 0 ? 'next' : 'prev';
 
         if(direction === 'next')
             this.setState({ zIndexNext: 10, zIndexPrev: 0 });
@@ -577,20 +581,29 @@ class Reader extends Component {
 
         if (deltaX > this.minDistance && deltaY < this.minDistance) {
             const touch = e.changedTouches[0];
-            let move = touch.clientX - this.state.originalX;
+            // let move = touch.clientX - this.state.originalX;
+            let move = touch.clientX - originalX;
 
             this.setState({ indent: move });
-            this.setState({ originalY: e.changedTouches[0].clientY});
+            // this.setState({ originalY: e.changedTouches[0].clientY});
+            // indent = move;
+            originalY = e.changedTouches[0].clientY;
+            // this.setState({ originalY: e.changedTouches[0].clientY});
         }
         else
+            // indent = 0;
             this.setState({ indent: 0 });
     };
 
     _onTouchEnd = (e) => {
-        let deltaX = Math.abs(this.state.originalX - e.changedTouches[0].clientX);
-        let deltaY = Math.abs(this.state.originalY - e.changedTouches[0].clientY);
+        // let deltaX = Math.abs(this.state.originalX - e.changedTouches[0].clientX);
+        // let deltaY = Math.abs(this.state.originalY - e.changedTouches[0].clientY);
 
-        const direction = e.changedTouches[0].clientX - this.state.originalX < 0 ? 'next' : 'prev';
+        let deltaX = Math.abs(originalX - e.changedTouches[0].clientX);
+        let deltaY = Math.abs(originalY - e.changedTouches[0].clientY);
+
+        // const direction = e.changedTouches[0].clientX - this.state.originalX < 0 ? 'next' : 'prev';
+        const direction = e.changedTouches[0].clientX - originalX < 0 ? 'next' : 'prev';
 
         if (deltaX > this.minDistance && deltaY < this.minDistance){
             if(this.current_page_is_last() && direction === 'next')
@@ -643,22 +656,6 @@ class Reader extends Component {
             }
         }
 
-        // console.log('render article -----------');
-        // console.log(this.props.article);
-        // if(!this.props.article)
-        //     console.log('no article');
-        // if(!this.props.article.side_issues) {
-        //     console.log(this.props.article);
-        //     console.log(this.state.next);
-        //     console.log('no side issues');
-        // }
-        // if(!this.props.article.side_issues.next) {
-        //     console.log('no side issues next');
-        //     console.log(this.props.article.side_issues);
-        // }
-        // console.log('render article ++++++++++++++++');
-
-
         return (
             <div>
                 {/*<div className={'article-header'} style={styles.header}>*/}
@@ -699,17 +696,7 @@ class Reader extends Component {
                     {/*</div>*/}
                 {/*</div>*/}
 
-
-
                 <div><style>{stylesImg}</style></div>
-
-
-
-
-
-
-
-
                 <div
                     onTouchStart={this._onTouchStart}
                     onTouchMove={this._onTouchMove}
@@ -717,7 +704,7 @@ class Reader extends Component {
                     className={'html-root'}
                     style={Object.assign({},
                         styles.container,
-                        styles.root,
+                        styles._root,
                         {zIndex: 30 },
                         {left: this.state.indent + 'px'}
                         )}
@@ -725,12 +712,6 @@ class Reader extends Component {
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
                 </div>
-
-
-
-
-
-
                 <div
                     className={'html-root'}
                     style={Object.assign({},
@@ -751,15 +732,6 @@ class Reader extends Component {
                      {(this.state && this.state.next) ? this.state.next.render() : null}
                     <div style={styles.pageMask} />
                 </div>
-
-
-
-
-
-
-
-
-
 
                 <div onClick={this.next_clicked} style={{display: 'block'}}>
                     <div style={styles.next_article_item}>
@@ -818,6 +790,82 @@ class Reader extends Component {
                         <div style={styles.arrowNext} onClick={this.next_clicked}> </div>
                         <div style={styles.arrowPrev} onClick={this.prev_clicked}> </div>
                     </div>}
+                {(this.props.pages_visited <= 1  && !this.userHasAccess())
+                    && <div>
+                        <Dialog classes={{}}
+                            maxWidth={'md'}
+                            fullWidth
+                            style={styles.dialog}
+                            open={this.state.open}>
+                            <div dangerouslySetInnerHTML={{ __html: `<style>.root{padding: 0;}</style>`}}></div>
+                            <DialogContent classes={{root: 'root'}}>
+                                <div style={{width: 'auto'}}>
+                                    <img src="/images/pay.jpg" alt=""/>
+                                    <div style={styles.dialogTitle}>
+                                        Добро пожаловать<br /> в новый Киоск Плюс!
+                                    </div>
+                                    <div style={styles.dialogText}>
+                                        <p>
+                                            Читайте журналы онлайн и офлайн
+                                            в новом формате в обновленном
+                                            сервисе "Коиск Плюс".
+                                        </p>
+                                        <br/>
+                                        <p>
+                                            В качестве пробного периода мы
+                                            дарим вам <b>3 любые статьи</b> из
+                                            любых журналов.
+                                        </p>
+                                    </div>
+                                    <div style={styles.dialogAccount}>
+                                        <div onClick={this.go_to_auth} style={styles.dialogAccountInner}>У меня уже есть аккаунт</div>
+                                    </div>
+                                    <div onClick={() => this.setState({open: false})} style={styles.dialogClose}>Начать пробный период</div>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
+                    </div>
+                }
+
+                {(this.props.pages_visited >= this.props.page_load_limit && !this.props.authorized)
+                    ? <div>
+                   <div dangerouslySetInnerHTML={{ __html: `<style>.paper{border-radius: 0.5em;}</style>`}}></div>
+                   <Dialog classes={{paper: 'paper'}}
+                            maxWidth={'md'}
+                            fullWidth
+                            style={styles.dialog}
+                            ignoreBackdropClick
+                            open={this.state.expired_open}>
+                        <div dangerouslySetInnerHTML={{ __html: `<style>.root{padding: 0;}</style>`}}></div>
+                        <DialogContent classes={{root: 'root'}}>
+                            <div style={{width: 'auto'}}>
+                                <img src="/images/auth.png" alt=""/>
+                                <div style={styles.dialogTitle}>
+                                    Пробный период<br /> закончился!
+                                </div>
+                                <div style={styles.dialogText}>
+                                    <p>
+                                        Чтобы продолжить чтение,
+                                        зарегистрируйтесь и выберите один
+                                        из вариантов тарифного плана
+                                    </p>
+                                </div>
+                                <div style={styles.dialogAccount}>
+                                    <div onClick={this.go_to_auth} style={styles.dialogAccountInner}>У меня уже есть аккаунт</div>
+                                </div>
+                                <div onClick={this.go_to_auth} style={
+                                    Object.assign({}, styles.dialogClose, {
+                                        background: 'rgb(98,163,234)',
+                                        color: 'white',
+                                    })
+                                }>
+                                    Зарегистрироваться и продолжить
+                                </div>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                </div> : null
+                }
             </div>
         );
     }

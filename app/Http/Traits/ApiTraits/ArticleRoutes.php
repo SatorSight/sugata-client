@@ -19,7 +19,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetAllBundles(){
-        $bundles = Cache::remember('bundles', $this->expiration, function(){
+        $bundles = Cache::remember('bundles', $this->bundle_expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
             return $bundles;
@@ -34,7 +34,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetCurrentBundle($article_id){
-        $bundle = Cache::remember('article_current_bundle_' . $article_id, $this->expiration, function() use($article_id) {
+        $bundle = Cache::remember('article_current_bundle_' . $article_id, $this->bundle_expiration, function() use($article_id) {
             return Article::find($article_id)->issue->journal->bundle;
         });
 
@@ -47,7 +47,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetListing($article_id){
-        $listing = Cache::remember('article_listing_' . $article_id, $this->expiration, function() use($article_id) {
+        $listing = Cache::remember('article_listing_' . $article_id, $this->listing_expiration, function() use($article_id) {
             $issue = Article::find($article_id)->issue;
 
             $listing = Article::where('issue_id', $issue->id)
@@ -93,7 +93,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetJournal($article_id){
-        $journal = Cache::remember('article_journal_' . $article_id, $this->expiration, function() use($article_id) {
+        $journal = Cache::remember('article_journal_' . $article_id, $this->journals_expiration, function() use($article_id) {
             return Article::find($article_id)->issue->journal;
         });
 
@@ -106,7 +106,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetIssue($article_id){
-        $issue = Cache::remember('article_issue_' . $article_id, $this->expiration, function() use($article_id) {
+        $issue = Cache::remember('article_issue_' . $article_id, $this->issues_expiration, function() use($article_id) {
             $article = Article::find($article_id);
             $issue = $article->issue;
 
@@ -130,7 +130,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetArticle($article_id){
-        $article = Cache::remember('article_article_' . $article_id, $this->expiration, function() use($article_id) {
+        $article = Cache::remember('article_article_' . $article_id, $this->article_expiration, function() use($article_id) {
             $article = Article::find($article_id);
 
             $article_collection = new Collection();
@@ -155,7 +155,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetNextArticle($article_id){
-        $next_article = Cache::remember('article_next_article_' . $article_id, $this->expiration, function() use($article_id) {
+        $next_article = Cache::remember('article_next_article_' . $article_id, $this->article_expiration, function() use($article_id) {
             $article = Article::find($article_id);
             $page_number = $article->page_number;
             $next_article = Article::where('issue_id', $article->issue_id)->where('page_number', $page_number + 1)->get();

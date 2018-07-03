@@ -19,7 +19,7 @@ const styles = {
     border: {
         borderBottom: '0.2rem solid black',
         paddingTop: '1.5rem',
-        width: '11.5rem',
+        width: '9.5rem',
         position: 'absolute',
         right: 0,
     },

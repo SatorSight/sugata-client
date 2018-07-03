@@ -3,9 +3,6 @@ import { getCookie, setCookie } from '../components/Helpers/SUtils';
 
 export function pageVisit(){
     const page_visits = parseInt(getCookie('pages_visited')) || 0;
-    console.log('page_visits');
-    console.log(page_visits);
-
     setCookie('pages_visited', page_visits + 1, 1000);
 
     return {

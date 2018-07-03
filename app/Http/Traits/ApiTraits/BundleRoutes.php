@@ -19,7 +19,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetAllBundles(){
-        $bundles = Cache::remember('bundles', $this->expiration, function(){
+        $bundles = Cache::remember('bundles', $this->bundle_expiration, function(){
             $bundles = Bundle::orderBy('order', 'ASC')->get();
             Bundle::injectJournalNames($bundles);
             Bundle::injectIssuesCovers($bundles);
@@ -36,7 +36,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetBundle($bundle_id){
-        $bundle = Cache::remember('bundle_' . $bundle_id, $this->expiration, function() use($bundle_id) {
+        $bundle = Cache::remember('bundle_' . $bundle_id, $this->bundle_expiration, function() use($bundle_id) {
             return Bundle::find($bundle_id);
         });
         return response()->json($bundle);
@@ -48,7 +48,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetLastIssues($bundle_id){
-        $last_issues = Cache::remember('last_issues_' . $bundle_id, $this->expiration, function() use($bundle_id) {
+        $last_issues = Cache::remember('last_issues_' . $bundle_id, $this->issues_expiration, function() use($bundle_id) {
             $bundle = Bundle::find($bundle_id);
             $journals = $bundle->journals;
 //            $last_issues = Issue::getLastFromEachJournal(4, $bundle);
@@ -71,7 +71,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetLastCoverArticles($bundle_id){
-        $last_cover_articles = Cache::remember('bundle_last_cover_articles_' . $bundle_id, $this->expiration, function() use($bundle_id) {
+        $last_cover_articles = Cache::remember('bundle_last_cover_articles_' . $bundle_id, $this->articles_list_expiration, function() use($bundle_id) {
             $bundle = Bundle::find($bundle_id);
             $last_issues = Issue::getLastFromEachJournal(4, $bundle);
 
@@ -101,7 +101,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetNewArticles($bundle_id){
-        $articles = Cache::remember('bundle_new_articles_' . $bundle_id, $this->expiration, function() use ($bundle_id) {
+        $articles = Cache::remember('bundle_new_articles_' . $bundle_id, $this->articles_list_expiration, function() use ($bundle_id) {
             $bundle = Bundle::find($bundle_id);
             $last_issues = Issue::getLastFromEachJournal(null, $bundle);
             /** @var Collection $articles */
@@ -140,7 +140,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetPopularArticles($bundle_id){
-        $articles = Cache::remember('bundle_popular_articles_' . $bundle_id, $this->expiration, function() use ($bundle_id) {
+        $articles = Cache::remember('bundle_popular_articles_' . $bundle_id, $this->articles_list_expiration, function() use ($bundle_id) {
             $bundle = Bundle::find($bundle_id);
             $last_issues = Issue::getLastFromEachJournal(null, $bundle);
             /** @var Collection $articles */
@@ -263,7 +263,7 @@ trait BundleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function bundleGetPopularEditions($bundle_id){
-        $journals = Cache::remember('bundle_journals' . $bundle_id, $this->expiration, function() use ($bundle_id) {
+        $journals = Cache::remember('bundle_journals' . $bundle_id, $this->journals_expiration, function() use ($bundle_id) {
             $journals = Journal::where('bundle_id', $bundle_id)
                 ->where(function($query){
                     $query->where('archived', false)

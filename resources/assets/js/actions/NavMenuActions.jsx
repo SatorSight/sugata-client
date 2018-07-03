@@ -1,13 +1,13 @@
 import * as action_types from '../constants/ActionTypes';
 
 function lockBody(){
-    document.querySelector('#root').style.overflow = 'hidden';
-    document.querySelector('#root').style.position = 'fixed';
+    // document.querySelector('#root').style.overflow = 'hidden';
+    // document.querySelector('#root').style.position = 'fixed';
 }
 
 function unlockBody(){
-    document.querySelector('#root').style.overflow = 'auto';
-    document.querySelector('#root').style.position = 'initial';
+    // document.querySelector('#root').style.overflow = 'auto';
+    // document.querySelector('#root').style.position = 'initial';
 }
 
 export function open(){
