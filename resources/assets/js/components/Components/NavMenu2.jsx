@@ -140,7 +140,7 @@ const styles = {
 
 
     bundlesContainer: {
-        padding: '1rem 2rem 2rem 2rem'
+        padding: '1rem 1rem 2rem 2rem'
     },
     bundleWrapper: {
         display: 'flex',
@@ -167,7 +167,7 @@ const styles = {
     },
     lockIcon: {
         position: 'relative',
-        left: '-0.7rem',
+        left: '-1.7rem',
         top: '0.3rem',
     },
 
@@ -232,35 +232,41 @@ class Menu extends Component {
                                 </div>
                                 <div className={classes.label}>Меню</div>
                             </div>
-                            <div className={classes.backToMain}>
-                                <div className={classes.arrow}>{arrow}</div>
-                                <div className={classes.backLabel}>На главную</div>
-                            </div>
+                            <Link style={{color: 'black'}} to={'/'}>
+                                <div className={classes.backToMain}>
+                                    <div className={classes.arrow}>{arrow}</div>
+                                    <div className={classes.backLabel}>На главную</div>
+                                </div>
+                            </Link>
                             <div className={classes.bundlesContainer}>
                                 {bundles.map(bundle => {
                                     const color = get_color();
                                     return (
                                         <div key={`menu_bundle_${bundle.id}`}>
                                             <div className={classes.bundleWrapper}>
-                                                <div
-                                                    className={classes.bundle}
-                                                    style={{
-                                                        borderBottom: `3px solid ${color}`,
-                                                    }}
-                                                >
-                                                    {bundle.name}
-                                                </div>
-                                                <div className={classes.lock}>
+
                                                     <div
-                                                        className={classes.circle}
+                                                        className={classes.bundle}
                                                         style={{
-                                                            border: '3px solid ' + color,
+                                                            borderBottom: `1px solid black`,
                                                         }}
-                                                    ></div>
-                                                    <div className={classes.lockIcon}>
-                                                        {this.bundleSubscribed(bundle.id) ? get_check() : get_lock()}
+                                                    >
+                                                        <Link style={{color: 'black'}} to={`/bundle/${bundle.id}`}>
+                                                            {bundle.name}
+                                                        </Link>
                                                     </div>
-                                                </div>
+                                                    <div className={classes.lock}>
+                                                        {/*<div*/}
+                                                            {/*className={classes.circle}*/}
+                                                            {/*style={{*/}
+                                                                {/*border: '3px solid ' + color,*/}
+                                                            {/*}}*/}
+                                                        {/*></div>*/}
+                                                        <div className={classes.lockIcon}>
+                                                            {this.bundleSubscribed(bundle.id) ? get_check() : get_lock()}
+                                                        </div>
+                                                    </div>
+
                                             </div>
                                         </div>
                                 )})}
