@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 import Article from './Article';
 import * as SUtils from '../../../Helpers/SUtils';
-import ListingMenu from './ListingMenu';
-import IndexMenu from '../../../Components/IndexMenu';
 import Dialog, {
     DialogContent,
 } from 'material-ui/Dialog';
+
+import ReaderInfo from '../../../Components/ReaderInfo';
 
 import { getResource } from '../../../Helpers/dataComposer';
 import { paymentTrigger, userHasAccess, redirectToAuth } from '../../../Helpers/paymentTrigger';
@@ -384,9 +384,12 @@ let originalX = 0;
 let originalY = 0;
 
 class Reader extends Component {
-
     constructor(props){
         super(props);
+
+        console.log('reader props');
+        console.log(props);
+
         this.state = {
             current: new Article(),
             prev: new Article(),
@@ -636,6 +639,24 @@ class Reader extends Component {
         this.setState({ indent: 0 });
     };
 
+    // DIRTY HACK INCOMING
+    // DIRTY HACK INCOMING
+    // DIRTY HACK INCOMING
+    // due to missing 4 page ( listing ) current_page thing is wrong
+    // so here's the fix
+    normalize_page_number = (number, pages) => {
+        if(!number)
+            return 0;
+
+
+        if(number < 4)
+            return number;
+        if(SUtils.sequenceBroken(pages)){
+            return parseInt(number) - 1;
+        }
+        return number;
+    };
+
 
     render() {
         const stylesImg = 'img {max-width: 100%;}';
@@ -658,44 +679,12 @@ class Reader extends Component {
 
         return (
             <div>
-                {/*<div className={'article-header'} style={styles.header}>*/}
-                    {/*<div style={styles.item}>*/}
-                        {/*<div style={styles.inner_header}>*/}
-                            {/*<div style={styles.indexMenu}>*/}
-                                {/*<IndexMenu payment_trigger={this.props.payment_trigger} auth_data={this.props.auth_data} data={{bundles: this.props.bundles}} />*/}
-                            {/*</div>*/}
-                            {/*<div>*/}
-                                {/*<ListingMenu navigate={this.navigate} listing={this.props.listing}/>*/}
-                            {/*</div>*/}
-                            {/*<div style={styles.left}>*/}
-                                {/*<Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url}>*/}
-                                    {/*<img style={styles.magLeft} src={SUtils.propOrNull(issue, 'image_path')} alt={SUtils.propOrNull(journal, 'name')} />*/}
-                                {/*</Link>*/}
-                            {/*</div>*/}
-                            {/*<div style={styles.right}>*/}
-                                {/*<div style={styles.url}>*/}
-                                    {/*<h3 style={styles.title}>*/}
-                                        {/*<Link  to={`/issue/${SUtils.propOrNull(article, 'issue_id')}`} style={styles.url_title}>*/}
-                                            {/*&laquo;{SUtils.propOrNull(journal, 'name')}&raquo;*/}
-                                        {/*</Link>*/}
-                                    {/*</h3>*/}
-                                    {/*<div>*/}
-                                        {/*<p style={styles.captionColorSwiper}>*/}
-                                            {/*<span>{current_page_number}/</span>*/}
-                                            {/*<span>{SUtils.propOrNull(issue, 'pages_count')}</span>*/}
-                                        {/*</p>*/}
-                                    {/*</div>*/}
-                                {/*</div>*/}
-                            {/*</div>*/}
-                        {/*</div>*/}
-                        {/*<div style={styles.bg}>*/}
-                            {/*<img style={styles.imgBg} src="/images/header.jpg" alt={SUtils.propOrNull(journal, 'name')} />*/}
-                            {/*<div style={styles.mask} />*/}
-                            {/*<div style={styles.shadow} />*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
-                {/*</div>*/}
-
+                <ReaderInfo
+                    journal_name={journal.name}
+                    issue_date={issue.content_date}
+                    pages_count={issue.pages_count}
+                    current_page={this.normalize_page_number(current_page_number, issue.page_numbers)}
+                />
                 <div><style>{stylesImg}</style></div>
                 <div
                     onTouchStart={this._onTouchStart}

@@ -22,10 +22,9 @@ class IssuePage extends Component {
             !this.props.loading && <div>
                 <Header />
                 <BundlesSwiper />
+                <NewIssues title={'Другие выпуски'} resource={'other_issues'}/>
                 <BigArticles resource={'main_topics'}/>
                 <NewArticles resource={'new_articles'}/>
-                {/*<PopularJournals resource={'popular_editions'}/>*/}
-                <NewIssues count={6} resource={'other_issues'}/>
                 <Footer />
             </div>
         );

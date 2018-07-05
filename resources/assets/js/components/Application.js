@@ -14,7 +14,7 @@ import AllIssuesJournal from './Pages/AllIssuesJournalPage'
 import AllIssuesBundle from './Pages/AllIssuesBundlePage'
 import JustSubscribedDialog from './Components/JustSubscribedDialog'
 
-import Waiter from '../components/Helpers/Waiter2';
+import Waiter from './Helpers/Waiter';
 
 
 export default class Application extends PureComponent {

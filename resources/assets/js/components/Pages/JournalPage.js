@@ -23,10 +23,9 @@ class JournalPage extends Component {
             !this.props.loading && <div>
                 <Header />
                 <BundlesSwiper />
+                <NewIssues resource={'last_issues'}/>
                 <BigArticles resource={'issues_cover_articles'}/>
                 <NewArticles resource={'new_articles'}/>
-                {/*<PopularJournals resource={'popular_editions'}/>*/}
-                <NewIssues count={6} resource={'other_issues'}/>
                 <Footer />
             </div>
         );

@@ -23,10 +23,10 @@ class BundlePage extends Component {
                 <Header />
                 <BundlesSwiper />
                 <NewIssues count={6} resource={'last_issues'}/>
-                {/*<BigArticles resource={'main_topics'}/>*/}
+                <BigArticles resource={'last_cover_articles'}/>
                 <NewArticles resource={'new_articles'}/>
                 <PopularJournals resource={'popular_editions'}/>
-                <NewArticles resource={'popular_articles'}/>
+                <NewArticles title={'Популярные статьи'} resource={'popular_articles'}/>
                 <Footer />
             </div>
         );

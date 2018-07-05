@@ -278,7 +278,9 @@ trait IssueRoutes{
                 ->sortByDesc('content_date')
                 ->reject(function($i) use ($issue_id){
                     return $issue_id == $i->id;
-                });
+                })
+                ->take(6)
+            ;
 
             Issue::injectWithImages($issues);
             Issue::injectWithJournalNames($issues);

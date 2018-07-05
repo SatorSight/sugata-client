@@ -33,6 +33,7 @@ class IndexPage extends Component {
                 <BigArticles link={'/all_issues'} resource={'main_topics'}/>
                 <NewArticles link={'/all_issues'} resource={'new_articles'}/>
                 <PopularJournals link={'/all_issues'} resource={'popular_editions'}/>
+                <NewArticles title={'Популярные статьи'} link={'/all_issues'} resource={'popular_articles'}/>
                 <Footer />
             </div>
         );

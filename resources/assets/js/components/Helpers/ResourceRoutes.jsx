@@ -49,7 +49,7 @@ export const JOURNAL_RESOURCES = Object.freeze({
         'popular_articles', // random_articles_from_non_last_issue
         // 'same_bundle_journals',
         'issues_cover_articles',
-        'rest_issues',
+        // 'rest_issues',
     ],
     with_from: [
         'more_new_articles',
@@ -63,7 +63,7 @@ export const ISSUE_RESOURCES = Object.freeze({
     with_self_id: [
         'bundle',
         'issue',
-        'all_issues',
+        // 'all_issues',
         'main_topics',
         'new_articles',
         'other_issues',

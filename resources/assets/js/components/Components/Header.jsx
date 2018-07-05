@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import NavMenu from '../../containers/NavMenu2';
+import NavMenu from '../../containers/NavMenu';
 import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles';
 import Line from '../Helpers/Line';
@@ -17,7 +17,7 @@ const styles = {
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'center',
-        height: '3rem',
+        height: '2rem',
         fontSize: '0.8rem',
         fontWeight: 400
     },

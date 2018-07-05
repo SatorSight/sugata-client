@@ -29,7 +29,7 @@ export default class Article{
         this.set_next_article(data.next_article);
         this.set_loading(false);
     };
-
+1
     set_id = id => this.id = id;
     get_id = () => this.id;
 

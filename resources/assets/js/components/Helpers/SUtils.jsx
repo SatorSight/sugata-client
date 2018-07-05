@@ -330,6 +330,17 @@ export function entityFromUrl(url){
     return url.split('/')[0];
 }
 
+export function sequenceBroken(array){
+    return undefined !== array.find((el, key, _array) => {
+        if(_array[key + 1]){
+            if(el + 1 !== _array[key + 1]){
+                return true;
+            }
+        }
+        return false;
+    });
+}
+
 export class DateRange{
     constructor(from = null, to = null){
         this.from = from || '';

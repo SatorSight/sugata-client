@@ -317,4 +317,25 @@ class Issue extends Model
         });
 
     }
+
+    public static function injectWithPageIds(Collection &$issues){
+        return $issues->map(function($issue){
+            $pages = Article::select('page_number')
+                ->where('issue_id', $issue->id)
+                ->get()
+                ->map(function($article){
+                    return $article->page_number;
+                })
+                ->sort()
+                ->values()
+                ->toArray()
+            ;
+//            $issue->page_numbers = array_values($pages);
+            $issue->page_numbers = $pages;
+            return $issue;
+        });
+
+    }
+
+
 }

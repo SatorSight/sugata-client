@@ -9,22 +9,102 @@ import { Link } from 'react-router-dom'
 
 const fontWeightMedium = 400;
 
+
+const theme = createMuiTheme({
+    // palette: {
+    //     type: 'dark',
+    //     background: {
+    //         default: 'rgba(0,0,0,0.8)',
+    //         paper: 'rgba(0,0,0,0.8)',
+    //         appBar: 'rgba(0,0,0,0.8)',
+    //         contentFrame: 'rgba(0,0,0,0.8)',
+    //         chip:'rgba(0,0,0,0.8)',
+    //     },
+    // },
+    // typography: {
+    //     fontFamily:'HelveticaNeueCyr, arial, serif',
+    //     fontWeightMedium,
+    //     fontSize: '1.2em',
+    //     body1: {
+    //         fontWeight: fontWeightMedium,
+    //     },
+    // },
+});
+
+const colors = [
+    'rgba(137,78,141, 1)',
+    'rgba(171,15,15, 1)',
+    'rgba(125,61,255, 1)',
+    'rgba(143,194,80, 1)'
+];
+
+let iterator = 0;
+const get_color = () => {
+    const color = colors[iterator];
+
+    iterator++;
+    if(!colors[iterator])
+        iterator = 0;
+
+    return color;
+};
+
+
+
+const close = <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 357 357"><g><g id="close">
+    <polygon points="357,35.7 321.3,0 178.5,142.8 35.7,0 0,35.7 142.8,178.5 0,321.3 35.7,357 178.5,214.2 321.3,357 357,321.3
+			214.2,178.5"/>
+</g></g>
+</svg>;
+
+
+const arrow = <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 492 492">
+    <g>
+        <path d="M464.344,207.418l0.768,0.168H135.888l103.496-103.724c5.068-5.064,7.848-11.924,7.848-19.124
+			c0-7.2-2.78-14.012-7.848-19.088L223.28,49.538c-5.064-5.064-11.812-7.864-19.008-7.864c-7.2,0-13.952,2.78-19.016,7.844
+			L7.844,226.914C2.76,231.998-0.02,238.77,0,245.974c-0.02,7.244,2.76,14.02,7.844,19.096l177.412,177.412
+			c5.064,5.06,11.812,7.844,19.016,7.844c7.196,0,13.944-2.788,19.008-7.844l16.104-16.112c5.068-5.056,7.848-11.808,7.848-19.008
+			c0-7.196-2.78-13.592-7.848-18.652L134.72,284.406h329.992c14.828,0,27.288-12.78,27.288-27.6v-22.788
+			C492,219.198,479.172,207.418,464.344,207.418z"/>
+    </g>
+</svg>;
+
+
+
+
+const get_lock = () => <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 47.002 47.002">
+    <g>
+        <path d="M33.603,17.388v-7.281C33.603,4.53,29.069,0,23.499,0c-5.57,0-10.103,4.53-10.103,10.106v7.281h-4.68V43.35h6.661
+			c-0.027-0.229-0.041-0.463-0.041-0.699c0-2.719,1.824-5.034,4.631-6.106v-2.382c-1.662-0.303-2.896-1.828-2.928-3.734
+			c-0.754-0.647-1.231-1.607-1.231-2.679c0-1.944,1.585-3.53,3.533-3.53h0.826c0.484-1.374,1.796-2.361,3.333-2.361
+			c1.948,0,3.533,1.585,3.533,3.535v11.151c2.807,1.072,4.632,3.388,4.632,6.106c0,0.236-0.014,0.471-0.041,0.699h6.662V17.388
+			H33.603z M28.543,17.388H18.452v-7.281c0-2.786,2.263-5.056,5.047-5.056c2.781,0,5.044,2.27,5.044,5.056V17.388z"/>
+        <path d="M24.617,38.386c0.004-0.028,0.019-0.051,0.019-0.083v-12.91c0-0.631-0.509-1.137-1.135-1.137
+			c-0.628,0-1.135,0.506-1.135,1.137v1.226h-3.025c-0.627,0-1.135,0.509-1.135,1.132c0,0.63,0.508,1.137,1.135,1.137h1.229
+			c-0.628,0-1.134,0.656-1.134,1.469s0.506,1.463,1.134,1.463h1.794v6.486c0,0.031,0.016,0.055,0.017,0.082
+			c-2.678,0.383-4.648,2.119-4.648,4.266c0,2.438,2.532,4.35,5.767,4.35c3.235,0,5.767-1.912,5.767-4.35
+			C29.269,40.505,27.299,38.77,24.617,38.386z M23.501,44.729c-2.061,0-3.497-1.096-3.497-2.076c0-0.983,1.437-2.077,3.497-2.077
+			c2.062,0,3.499,1.094,3.499,2.077C27,43.633,25.562,44.729,23.501,44.729z"/>
+    </g>
+</svg>;
+
+
+const get_check = () => <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 342.357 342.357">
+    <g>
+        <polygon points="290.04,33.286 118.861,204.427 52.32,137.907 0,190.226 118.862,309.071 342.357,85.606 "/>
+    </g>
+</svg>;
+
 const styles = {
+    menuWrapper: {
+        width: 'inherit',
+        minWidth: 'inherit'
+    },
     button: {
-        // width: '1em'
         display: 'block',
         width: 'inherit',
         minWidth: 'inherit',
-        padding: '0.5rem'
-        // minWidth: '2.8em',
-        // padding: '0.8em 0.7em',
-    },
-    list: {
-        color: '#FFF',
-        width: '100vw',
-    },
-    listFull: {
-        width: '100vw',
+        padding: '0.5rem',
     },
     line: {
         width: '100%',
@@ -34,695 +114,163 @@ const styles = {
         display: 'block',
         margin: '0.4em auto',
     },
-    top: {
-        textAlign: 'center',
-        position: 'relative',
+    drawerInner: {
+        width: '18rem',
     },
-    innerMain: {
-        maxWidth: '50em',
-        margin: '0 auto',
-        position: 'relative',
+
+
+
+    backToMain: {
+        display: 'flex',
+        padding: '0.6rem 2rem 0.5rem',
+        justifyContent: 'flex-start',
+        borderBottom: '1px solid black',
+    },
+    backLabel: {
+        fontWeight: 'bold',
+        fontSize: '1.2em',
+        display: 'flex',
+        alignItems: 'center',
+        marginLeft: '1rem',
+    },
+
+
+
+
+
+
+    bundlesContainer: {
+        padding: '1rem 1rem 2rem 2rem'
+    },
+    bundleWrapper: {
+        display: 'flex',
+        marginBottom: '1rem',
+    },
+    bundle: {
+        padding: '0.6rem 0rem 0.5rem',
+        fontWeight: '500',
+        textTransform: 'uppercase',
+        fontSize: '1.2em',
+        fontFamily: 'Montserrat',
+        textAlign: 'left',
         width: '100%',
     },
-    topText: {
-        fontSize: '1.55em',
-        letterSpacing: '0.25em',
-        textTransform: 'uppercase',
-        color: '#FFF',
-        fontWeight: 300,
-        display: 'inline-block',
-        lineHeight: 2.7,
-        marginTop: '0.8em'
-    },
-    closet: {
-        position: 'absolute',
-        left: 0,
-        top: '50%',
-        height: '1.8em',
-        width: '1.8em',
-        padding: '1em',
-        transform: 'translate(0px, -50%)',
-        cursor: 'pointer',
-        background: '#333',
-        boxShadow: '0 0 2em 2em #333, inset 0 0 1em 1em #333',
-        border: '0.1em solid #333',
+    circle: {
+        backgroundColor: 'white',
+        // border: '3px solid ' + get_color(),
+        height: '1.8rem',
         borderRadius: '50%',
-    },
-    closetLineOne: {
-        width: '2em',
-        height: '0.2em',
+        width: '1.8rem',
+        marginLeft: '-1rem',
         position: 'absolute',
-        top: '50%',
-        bottom: '50%',
-        margin: '-0.25em 0 0 -1em',
-        backgroundColor: '#FFF',
-        borderRadius: '0.1em',
-        transform: 'rotate(45deg)',
-        zIndex: 20,
+        zIndex: '-1'
     },
-    closetLineTwo: {
-        width: '2em',
-        height: '0.2em',
-        position: 'absolute',
-        top: '50%',
-        bottom: '50%',
-        margin: '-0.25em 0 0 -1em',
-        backgroundColor: '#FFF',
-        borderRadius: '0.1em',
-        transform: 'rotate(-45deg)',
-        zIndex: 20,
-    },
-    drawerPaper: {
+    lockIcon: {
         position: 'relative',
-        height: '100%',
-        width: '100vw',
-        boxShadow: 'inset 0 25em 4em -4em rgba(0,0,0,1)'
+        left: '-1.7rem',
+        top: '0.3rem',
     },
-    tabs: {
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIwAAAAECAMAAADbJFQ7AAAA3lBMVEVHcEyV0OKSz+GTz+GTz+GU0eSTz+GU0OKSz+GW0+STz+GTz+Gg5OyTzuGX1uWTz+Gf2O6Y0+OSz+GV0uOTz+GTz+GTz+CW0eOU0OOT0OGT0OKUz+GTz+GU0OOTz+GTz+GU0OKTz+GUz+KTz+KTz+GUz+KTz+GTz+HG//+r4v+Sz+CTz+Ga0+eY0uSTz+GU0eKTz+GT0OGTz+GTz+GU0OGTz+GT0OGTzuGSz+GSz+GUz+GSz+GUz+GTz+CY1eOV0eWc1eqSz+GTz+KU0OOTz+GTz+GT0OKTz+GTz+GSzuDJon4XAAAASXRSTlMAOsW84C7KQ+8g1qYJ9hiIDiTrMrXkripIbU+Eez7BqlOMWnGAaZboAwb50hUczlddZpmfTHWQ/LixY5x42REnDPOTNqLbYP7dBUf55QAAAn1JREFUWMPt111LG1EUheEnWtpEEtVQBTR+oUKuRFCB3oo/u/RWoArilaDiVxRQSawGTUW1wJzMZIzRFtK7bCCT4czmwOGsd+2V0auPq0wGp6xg2yKqOME09kGWRXaFRYMswQ8owQUYgRLO+QyGuMUgY6hzT53wM4AivnAEWdxDHUUwSh4V8sjRwAg24GtomGMP5vkJJlABn0AZT3DIMln6fYcRKHLJHfiGTSYpMNzn+Zrb+IQ2wACjVKEG655osMUs9GMXPIISzsAq+7DAAXK4gm+oIcs96pRQ5xJUkRcaGjDD77BwB3nIkyOPC25Q4Bd4YBwVqIExqMAabHMDRSizQwPM4xhTYXHHUnxCXtgFvXq3MmVkOMVKU2eqnMB0Wmd239SZUlpnSpzjMwzhlkGMUY9vUaIzxbTO4i8UYRR5KvEt0mAENvAV7pnDHubxEyakhVaGJxxiWVZTaC06S4QWblHBsL7eJelVV+rZtdvY02Jgp4i97gkNW5hFP+xCAmxnsIp9LOCAHFzhG9Riy6qjRB2XUIU8ctLErmoldvgizwVuKOAXPGCcCkiIXQFtxC5LE/sYpihqEnsTk7wEGGVeeX53WBR7fmBR4vlpFnX0/A4savP8wKJ2z1eBxPPTLOr3NosSz++xqFf/kUY2oJ1Gnmhop5FHSGj0an6MafRqfuxIo/fnx4RGYX6MaRTmx67RKKjthQx69S8pbdvbKS0rndIGsYQE2C4gBnaHlFaXTmktw6Oj1uHxg5QWD49dSmlF6ZQWHK3AsD7P4pyWsv1RVNHFnBZs/8OcpoEZUrbfktOC7XfMaWqQ5DRr2MZNOqdpQHtOC7bfy2l/XX8ACrYiZGZgGQ8AAAAASUVORK5CYII=") no-repeat 50% 100%',
-        backgroundSize: 'auto 0.1em',
-    },
-    tabsItem: {
-        fontWeight: 200,
-        fontSize: '1.2em',
-        color: '#FFF',
-        letterSpacing: '0.25em',
-        height: '4.9em',
-        padding: '0.3em 0 0 0',
-    },
-    activeItem: {
-        color: '#999',
-        fontWeight: '300 !important',
-    },
-    arrowTop:{
-        position: 'relative',
-        left: 0,
-        right: 0,
-        top: 0,
-        height: '0.1em',
-        background: 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABIwAAAAECAMAAADbJFQ7AAAA3lBMVEVHcEyV0OKSz+GTz+GTz+GU0eSTz+GU0OKSz+GW0+STz+GTz+Gg5OyTzuGX1uWTz+Gf2O6Y0+OSz+GV0uOTz+GTz+GTz+CW0eOU0OOT0OGT0OKUz+GTz+GU0OOTz+GTz+GU0OKTz+GUz+KTz+KTz+GUz+KTz+GTz+HG//+r4v+Sz+CTz+Ga0+eY0uSTz+GU0eKTz+GT0OGTz+GTz+GU0OGTz+GT0OGTzuGSz+GSz+GUz+GSz+GUz+GTz+CY1eOV0eWc1eqSz+GTz+KU0OOTz+GTz+GT0OKTz+GTz+GSzuDJon4XAAAASXRSTlMAOsW84C7KQ+8g1qYJ9hiIDiTrMrXkripIbU+Eez7BqlOMWnGAaZboAwb50hUczlddZpmfTHWQ/LixY5x42REnDPOTNqLbYP7dBUf55QAAAn1JREFUWMPt111LG1EUheEnWtpEEtVQBTR+oUKuRFCB3oo/u/RWoArilaDiVxRQSawGTUW1wJzMZIzRFtK7bCCT4czmwOGsd+2V0auPq0wGp6xg2yKqOME09kGWRXaFRYMswQ8owQUYgRLO+QyGuMUgY6hzT53wM4AivnAEWdxDHUUwSh4V8sjRwAg24GtomGMP5vkJJlABn0AZT3DIMln6fYcRKHLJHfiGTSYpMNzn+Zrb+IQ2wACjVKEG655osMUs9GMXPIISzsAq+7DAAXK4gm+oIcs96pRQ5xJUkRcaGjDD77BwB3nIkyOPC25Q4Bd4YBwVqIExqMAabHMDRSizQwPM4xhTYXHHUnxCXtgFvXq3MmVkOMVKU2eqnMB0Wmd239SZUlpnSpzjMwzhlkGMUY9vUaIzxbTO4i8UYRR5KvEt0mAENvAV7pnDHubxEyakhVaGJxxiWVZTaC06S4QWblHBsL7eJelVV+rZtdvY02Jgp4i97gkNW5hFP+xCAmxnsIp9LOCAHFzhG9Riy6qjRB2XUIU8ctLErmoldvgizwVuKOAXPGCcCkiIXQFtxC5LE/sYpihqEnsTk7wEGGVeeX53WBR7fmBR4vlpFnX0/A4savP8wKJ2z1eBxPPTLOr3NosSz++xqFf/kUY2oJ1Gnmhop5FHSGj0an6MafRqfuxIo/fnx4RGYX6MaRTmx67RKKjthQx69S8pbdvbKS0rndIGsYQE2C4gBnaHlFaXTmktw6Oj1uHxg5QWD49dSmlF6ZQWHK3AsD7P4pyWsv1RVNHFnBZs/8OcpoEZUrbfktOC7XfMaWqQ5DRr2MZNOqdpQHtOC7bfy2l/XX8ACrYiZGZgGQ8AAAAASUVORK5CYII=") no-repeat 50% 50%',
-        backgroundSize: 'contain',
-        opacity: 0.4,
-        display: 'block',
-    },
-    main: {
-        // padding: '1.5em',
-        padding: '0.5em 0 0 1.5em',
-        color: 'white',
-        height: '140px',
-        fontSize: '20px',
-    },
-    overMain: {
-        // padding: '0 1.5em 1.5em',
-    },
-    mainBundle: {
-        padding: '1em 0',
-    },
-    itemBundle: {
-        padding: '0 3.2em',
-        display: 'block',
-        color: '#999',
-        fontSize: '1.2em',
-        lineHeight: 4,
-        fontWeight: 300,
-        letterSpacing: '0.3em',
-        textTransform: 'uppercase',
-    },
-    item: {
-        padding: '0.5em 0 1.3em',
-        position: 'relative',
-        color: '#FFF',
-    },
-    ava: {
-        position: 'absolute',
-        left: 0,
-        top: '0.5em',
-        borderRadius: '0.2em',
-        width: '6.5em',
-        height: '8.5em',
-        overflow: 'hidden',
-        backgroundPosition: '50% 50%',
-        backgroundSize: 'cover',
-        boxShadow: '0.5em 0.5em 1em rgba(0,0,0,0.2)',
-    },
-    inner: {
-        marginLeft: '8em',
-    },
-    over: {
-        position: 'relative',
-        overflow: 'hidden',
-        height: '9em',
-    },
-    caption: {
-        display: 'inline',
-        background: 'linear-gradient(to right, rgba(104,216,181,1) 0%, rgba(113,133,238,1) 100%)',
-        color: '#FFF',
-        borderRadius: '1em',
-        padding: '0.4em 0.7em 0.2em',
-        fontSize: '0.9em',
-        lineHeight: 2,
-        textTransform: 'uppercase',
-        fontWeight: 300,
-    },
-    title: {
-        fontSize: '1.2em',
-        lineHeight: 1.2,
-        fontWeight: 500,
-        marginBottom: '0.3em',
-        maxHeight: '2.2em',
-        letterSpacing: 1,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        width: '75%',
-    },
-    text: {
-        fontSize: '1.1em',
-        lineHeight: 1.7,
-        maxHeight: '5.8em',
-        color: '#999',
-        overflow: 'hidden',
-        position: 'relative',
-        width: '90%',
-        background: 'linear-gradient(to bottom, rgba(153,153,153,1) 0%, rgba(153,153,153,0) 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-    },
-    settings: {
-        margin: '0 1rem',
-        position: 'relative',
-        paddingBottom: '1px',
-        minHeight: '60vh',
+
+
+
+
+    header: {
         display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        padding: '1.5rem 2rem 1rem',
+        borderBottom: '1px solid black',
     },
-    itemSettings: {
-        position: 'relative',
-        fontFamily: 'HelveticaNeueCyr, arial, serif',
-        display: 'block',
-        fontSize: '1.2em',
-        letterSpacing: 0.3,
-        padding: '1.6em 0 0',
-        color: '#FFF',
-        overflow: 'hidden',
-        fontWeight: 300,
-        ':hover': {
-            background: 'red',
-        }
-    },
-    leftSettings: {
-        display: 'block',
-        float: 'left',
-        lineHeight: 2.4,
-    },
-    rightSettings: {
-        display: 'block',
-        width: '50%',
-        float: 'right',
-        overflow: 'hidden',
-        textAlign: 'right',
-        lineHeight: 2.4,
-    },
-    arrowSettings: {
-        position: 'absolute',
-        right: 0,
-        bottom: 0,
-        left: 0,
-        height: 1,
-        backgroundColor: 'rgba(255,255,255,0.4)'
-    },
-    lineSettings: {
-        position: 'absolute',
-        maxWidth: '50%',
-        textAlign: 'right',
-        fontSize: '1em',
-        background: 'none',
-        border: 'none',
-        lineHeight: 2.4,
-        color: '#FFF',
-        right: 0,
-        bottom: 0,
-        borderBottom: '1px solid rgba(255,255,255,0.6)',
-        WebkitAppearance: 'none',
-        WebkitBorderRadius: 0,
-        ':hover': {
-            background: 'red',
-        },
-    },
-    optionSettings: {
-        textAlign: 'right',
-    },
-    menuWrapper: {
-        width: 'inherit',
-        minWidth: 'inherit'
-    }
-};
-
-const balance_styles = {
-    "container": {
-        "width": "100%"
-    },
-    "balance_bg": {
-        "width": "100%",
-        "position": "fixed",
-        "height": "100%",
-        "background": "url('/images/balance_bg.png')",
-        "backgroundPosition": "50% 220%",
-        "backgroundSize": "260%",
-        "opacity": "0.4",
-        "zIndex": "-1"
-    },
-    "bundle_bg": {
-        "width": "calc(100% - 20px)",
-        "height": "100%",
-        "background": "rgba(0,0,0,0.5)",
-        "position": "absolute",
-        "zIndex": "-1"
-    },
-    "bundle": {
-        "width": "calc(100% - 30px)",
-        "height": "5rem",
-        "display": "flex",
-        "justifyContent": "space-between",
-        "alignItems": "center",
-        "border": "1px solid rgba(255,255,255,0.4)",
-        "marginBottom": "10px",
-        "borderRadius": "5px",
-        "marginLeft": '5px',
-        "marginRight": '5px',
-        "padding": "10px",
-        // "background": "radial-gradient(circle at 100% 140%, rgba(86, 50, 81, 0.8) 30%, rgba(0, 0, 0, 0.5) 50%)",
-        "backgroundSize": "100%",
-        "backgroundRepeat": "no-repeat"
-    },
-    "bundle_container": {
-        "width": "100%",
-        "zIndex": "-2",
-        "backgroundImage": "linear-gradient(\n    60deg,\n    rgba(0, 0, 0, 0) 0%,\n    rgba(0, 0, 0, 0) 25%,\n\n    rgba(137,78,141,0.3) 33%,\n    rgba(103,137,210,0.3) 41%,\n    rgba(69,194,134,0.3) 49%,\n    rgba(255,171,61,0.3) 57%,\n\n    rgba(0, 0, 0, 0) 75%,\n    rgba(0, 0, 0, 0) 100%\n  )",
-        "backgroundSize": "170%",
-        "backgroundPosition": "0% 50%",
-        "backgroundRepeat": "no-repeat"
-    },
-    "left_container": {
-        // "marginLeft": "1rem"
-    },
-    "premium": {
-        "height": "60rem"
-    },
-    "label": {
-        "color": "white",
-        "fontSize": "1.2rem",
-        "textTransform": "uppercase",
-        "fontFamily": "Montserrat",
-        "letterSpacing": "2px",
-        'marginBottom': '5px'
-        // "lineHeight": "33px"
-    },
-    "journals_list": {
-        "color": "white",
-        "fontFamily": "HelveticaNeueCyr",
-        // "lineHeight": "32px",
-        "lineHeight": "1rem",
-        "fontWeight": "400",
-        "fontSize": "0.8rem",
-    },
-    "check_mark": {
-        "paddingTop": "4px"
-    },
-    "active_button": {
-        "backgroundColor": "rgba(0,0,0,0)",
-        "color": "white",
-        "padding": "0.3em 0.7em",
-        "textDecoration": "none",
-        "fontSize": "0.9rem",
-        "border": "2px solid white",
-        "borderRadius": "10px",
-        "fontWeight": "500",
-        "display": "flex",
-        "flexDirection": "row",
-        "alignItems": "center",
-        "justifyContent": "space-around"
-    },
-    "active_button_premium": {
-        "backgroundColor": "rgba(0,0,0,0)",
-        "color": "white",
-        "padding": "0.3em 0.7em",
-        "textDecoration": "none",
-        "fontSize": "0.9rem",
-        "border": "2px solid white",
-        "borderRadius": "10px",
-        "fontWeight": "500",
-        "display": "flex",
-        "flexDirection": "row",
-        "alignItems": "center",
-        "justifyContent": "space-around"
-    },
-    "inactive_button": {
-        "backgroundColor": "white",
-        "color": "black",
-        "padding": "0.5rem",
-        "textDecoration": "none",
-        "fontSize": "0.9rem",
-        "border": "2px solid white",
-        "borderRadius": "10px",
-        "fontFamily": "HelveticaNeueCyr",
-        "display": "flex",
-        "flexDirection": "row",
-        "alignItems": "center",
-        "justifyContent": "space-around",
-        "cursor": "pointer"
-    },
-    "mark_container": {
-        "marginRight": "1rem"
-    },
-    "bundle_premium": {
-        "width": "calc(100% - 20px)",
-        "height": "14rem",
-        "display": "flex",
-        "justifyContent": "space-between",
-        "alignItems": "center",
-        "marginBottom": "10px",
-        "borderRadius": "5px",
-        "padding": "10px",
-        "fontSize": "1.3rem"
-    },
-    button_label: {
-        marginTop: '4px'
-    },
-    premium_label: {
-        "color": "white",
-        "fontSize": "1.6rem",
-        "textTransform": "uppercase",
-        "fontFamily": "Montserrat",
-        "letterSpacing": "2px",
-        'marginBottom': '5px'
-    },
-    button_settings: {
-        fontSize: '1em',
-        padding: '1.2em 1em 1em',
-        letterSpacing: 1,
+    label: {
+        fontFamily: 'Montserrat',
+        fontSize: '1.1rem',
+        fontWeight: 700,
         textTransform: 'uppercase',
-        // color: '#000',
-        fontFamily: 'HelveticaNeueCyr, sans-serif',
-        fontWeight: 400,
-        width: '90%',
-        maxWidth: 400,
-        margin: '0 auto 2em',
-        borderRadius: '2em',
-        lineHeight: '3em',
-        border: '1px solid #E0E0E0',
-        cursor: 'pointer',
-        // display: 'block',
-        backgroundColor: '#FFF',
+        letterSpacing: '0.1rem',
+        textAlign: 'center',
+        // marginBottom: '0.5em',
 
-        display: 'flex'
-    },
-    span: {
-        color: 'black',
-        fontWeight: 500
+        margin: '0 auto',
     }
 };
 
-const theme = createMuiTheme({
-    palette: {
-        type: 'dark',
-        background: {
-            default: 'rgba(0,0,0,0.8)',
-            paper: 'rgba(0,0,0,0.8)',
-            appBar: 'rgba(0,0,0,0.8)',
-            contentFrame: 'rgba(0,0,0,0.8)',
-            chip:'rgba(0,0,0,0.8)',
-        },
-    },
-    typography: {
-        fontFamily:'HelveticaNeueCyr, arial, serif',
-        fontWeightMedium,
-        fontSize: '1.2em',
-        body1: {
-            fontWeight: fontWeightMedium,
-        },
-    },
-});
 
-const colors = [
-    'rgba(137,78,141, 0.8)',
-    'rgba(171,15,15, 0.8)',
-    'rgba(125,61,255, 0.8)',
-    'rgba(143,194,80, 0.8)'
-];
 
-let iterator = 0;
-const get_color_style = () => {
-    const style = {background: `radial-gradient(circle at 100% 140%, ${colors[iterator]} 30%, rgba(0, 0, 0, 0.5) 50%)`};
-    iterator++;
-    if(!colors[iterator])
-        iterator = 0;
-
-    return style;
-};
 
 class Menu extends Component {
     constructor(props){
         super(props);
 
-        // console.log('menu props');
-        // console.log(props);
-
-
+        // this.state = {
+        //     open: false,
+        // };
     }
+    //
+    // open = () => this.setState({ open: true });
+    // close = () => this.setState({ open: false });
 
-
-
-    paymentTrigger = bundle => {
-        if(!bundle) {
-            if (this.props.bundle)
-                bundle = this.props.bundle.id;
-        }
-
-        let has_bundle_access = false;
-        this.props.auth_data.user_bundles.map(b => {
-            if(bundle)
-                if(parseInt(b) === parseInt(bundle))
-                    has_bundle_access = true;
-        });
-
-        if(!has_bundle_access){
-            const current_url = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.location = '/auth?return_url=' + current_url + (bundle ? '&bundle_id=' + bundle : '');
-        }
-    };
-
-
-
-
-    unlockBody = () => {
-        document.querySelector('#root').style.overflow = 'auto';
-        document.querySelector('#root').style.position = 'initial';
-    };
-
-    componentWillUnmount(){
-        this.unlockBody();
-    };
-
-    linkHandler = () => this.unlockBody();
-    go_to_subscription = bundle_id => this.paymentTrigger(bundle_id);
-
-    subscribed_to_all_bundles = () => {
-        const bundles = this.props.bundles;
-        const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
-        if(!bundles || !user_bundles)
-            return false;
-        if(bundles.length < 1 && user_bundles.length < 1)
-            return false;
-
-        if(bundles && user_bundles)
-            return bundles.length === user_bundles.length;
-        return false;
-    };
-
-    resolveLoginLogout = () => {
-        if(SUtils.propOrNull(this.props.auth_data, 'msisdn')){
-            this.logout();
-        }else{
-            //login
-        }
-    };
-
-    login = () => {};
-    logout = () => {
-        fetch('/api/logout', {credentials: 'include'})
-            .then(resp => window.location.reload())
-    };
-
-    renderTabs = () => {
-        let tabs = [];
-
-        let bundles = this.props.bundles;
-
-        const operator_object = SUtils.propOrNull(this.props.auth_data, 'operator');
-        const operator = SUtils.propOrNull(operator_object, 'tech_name');
-        const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
-        const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
-
-        tabs.push(<div key={'menu-tab-links'} style={styles.mainBundle}>
-            <Link draggable={false} onClick={this.linkHandler} style={styles.itemBundle} to={'/'}>
-                На главную
-            </Link>
-            {SUtils.any(bundles) ? bundles.map(bundle =>
-                <Link draggable={false} onClick={this.linkHandler} key={`index_menu_bundles_${bundle.id}`} style={styles.itemBundle} to={`/bundle/${bundle.id}`}>
-                    {bundle.name}
-                </Link>
-            ) : null}
-        </div>);
-
-        tabs.push(<div key={'menu-tab-balance'} style={balance_styles.container}>
-            <div style={balance_styles.balance_bg}></div>
-            <div style={balance_styles.bundle_container}>
-                {(!operator || operator === 'unknown' || operator === 'beeline.ru') ?
-                    <div style={balance_styles.bundle_premium}>
-                        <div style={balance_styles.left_container}>
-                            <div style={balance_styles.premium_label}>Премиум</div>
-                            <div style={balance_styles.journals_list}>
-                                Включает все журналы
-                            </div>
-                        </div>
-                        {/*
-                         PREMIUM HARDCODE
-                         */}
-                        {this.subscribed_to_all_bundles()
-                            ? <div style={balance_styles.button_container}>
-                                <button style={balance_styles.active_button_premium} type="button" name="button">
-                                    <div style={balance_styles.mark_container}>
-                                        <div style={balance_styles.check_mark}>
-                                            <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
-                                        </div>
-                                    </div>
-                                    <div style={balance_styles.button_label}>Активна</div>
-                                </button>
-                            </div>
-                            : <button onClick={() => this.go_to_subscription()} style={balance_styles.inactive_button} type="button" name="button">
-                                <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
-                            </button>}
-                    </div>
-                    : null
-                }
-                {SUtils.any(bundles) ? bundles.map(bundle =>
-                    <div key={`balance_bundles_${bundle.id}`} style={
-                        Object.assign(
-                            {},
-                            balance_styles.bundle,
-                            get_color_style()
-                        )
-                    }>
-                        <div style={balance_styles.left_container}>
-                            <div style={balance_styles.label}>«{bundle.name}»</div>
-                            <div style={balance_styles.journals_list}>
-                                {bundle.journal_names.slice(0, 3).join(', ')}
-                            </div>
-                        </div>
-                        {SUtils.in_array(bundle.id, user_bundles)
-                            ? <div style={balance_styles.button_container}>
-                                <button style={balance_styles.active_button} type="button" name="button">
-                                    <div style={balance_styles.mark_container}>
-                                        <div style={balance_styles.check_mark}>
-                                            <svg viewBox="0 0 30 22" width="30" style={{fill: 'none', stroke: '#ffffff', strokeLinecap: 'round', strokeWidth: 3.2}} height="20"><path id="Path 2" d="M2.11,11.32l7.56,7.82l13.67,-16.9" /></svg>
-                                        </div>
-                                    </div>
-                                    <div style={balance_styles.button_label}>Активна</div>
-                                </button>
-                            </div>
-                            : <button onClick={() => this.go_to_subscription(bundle.id)} style={balance_styles.inactive_button} type="button" name="button">
-                                <div style={balance_styles.button_label}>Активировать&nbsp;&nbsp;<b>></b></div>
-                            </button>
-                        }
-                    </div>
-                ) : null}
-            </div>
-        </div>);
-
-        if(user_msisdn){
-            tabs.push(<div key={'menu-tab-settings'} style={styles.settings}>
-                <div style={styles.itemSettings}>
-                    <label style={styles.leftSettings}>Номер телефона
-                        <input style={styles.lineSettings} type="text"
-                               value={SUtils.beautifyTel(user_msisdn)}
-                            // placeholder="+7 (909) 999-99-99"
-                               disabled />
-                    </label>
-                    <span style={styles.arrowSettings} />
-                </div>
-                <Button classes={{}} color="primary" style={balance_styles.button_settings} onClick={this.resolveLoginLogout}>
-                    <svg style={{marginBottom: '0.2rem', marginRight: '1rem'}} fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-                    </svg>
-                    <span style={balance_styles.span}>
-                        {user_msisdn ? 'Выйти' : 'Войти'}
-                    </span>
-                </Button>
-            </div>);
-
-        }
-
-        return tabs;
-
-    };
-
-    activeTabSwiped = index => this.props.changeActiveTab(index);
-    changeActiveTab = (event, value) => this.props.changeActiveTab(value);
+    bundleSubscribed = bundle_id => SUtils.in_array(bundle_id, this.props.auth_data.user_bundles);
 
     render() {
-        const { classes } = this.props;
+        const { classes, bundles } = this.props;
 
-        const operator = SUtils.propOrNull(this.props.auth_data, 'operator');
-        const user_bundles = SUtils.propOrNull(this.props.auth_data, 'user_bundles');
-        const user_msisdn = SUtils.propOrNull(this.props.auth_data, 'msisdn');
-
-        console.log('rendered');
+        console.log('menu props');
         console.log(this.props);
 
         return (
             <MuiThemeProvider theme={theme}>
                 <div className={classes.menuWrapper}>
-                    <Button classes={{}} color="primary" className={classes.button} onClick={this.props.doOpen}>
+                    <Button color="primary" classes={{}} className={classes.button} onClick={this.props.doOpen}>
                         <span className={classes.line} />
                         <span className={classes.line} />
                         <span className={classes.line} />
                     </Button>
-                    <Drawer theme={theme} anchor="left" classes={{ paper: classes.drawerPaper, }} open={this.props.open}>
-                        <div className={classes.innerMain} >
-                            <div className={classes.colorTwo} />
-                            <div className={classes.top}>
-                                <div className={classes.closet} onClick={this.props.doClose}>
-                                    <span className={classes.closetLineOne} />
-                                    <span className={classes.closetLineTwo} />
+                    <Drawer classes={{}} theme={theme} open={this.props.open} onClose={this.props.doClose}>
+                        <div className={classes.drawerInner}>
+                            <div className={classes.header}>
+                                <div className={classes.close} onClick={this.props.doClose}>
+                                    {close}
                                 </div>
-                                <p className={classes.topText}>меню</p>
-                                <div>
-                                    <span />
-                                </div>
+                                <div className={classes.label}>Меню</div>
                             </div>
-                            <MuiThemeProvider theme={theme}>
-                                <div style={styles.overMain}>
-                                    <span style={styles.arrowTop} />
-                                    <Tabs indicatorColor="none" fullWidth value={this.props.active_tab} onChange={this.changeActiveTab} style={styles.tabs}>
-                                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="витрина" style={styles.tabsItem} className={classes.tabsItem} />
-                                        <Tab classes={{ rootInheritSelected: this.props.classes.activeItem}} label="баланс" style={styles.tabsItem} />
-                                        <Tab disabled={user_msisdn === null} classes={{ rootInheritSelected: this.props.classes.activeItem}} label="настройки" style={styles.tabsItem} />
-                                    </Tabs>
-                                    <SwipeableViews
-                                        animateHeight
-                                        enableMouseEvents
-                                        slideStyle={{overflowX: 'auto'}}
-                                        index={this.props.active_tab}
-                                        onChangeIndex={this.activeTabSwiped}
-                                    >
-                                        {this.renderTabs()}
-                                    </SwipeableViews>
+                            <Link style={{color: 'black'}} to={'/'}>
+                                <div className={classes.backToMain}>
+                                    <div className={classes.arrow}>{arrow}</div>
+                                    <div className={classes.backLabel}>На главную</div>
                                 </div>
-                            </MuiThemeProvider>
+                            </Link>
+                            <div className={classes.bundlesContainer}>
+                                {bundles.map(bundle => {
+                                    const color = get_color();
+                                    return (
+                                        <div key={`menu_bundle_${bundle.id}`}>
+                                            <div className={classes.bundleWrapper}>
+
+                                                    <div
+                                                        className={classes.bundle}
+                                                        style={{
+                                                            borderBottom: `1px solid black`,
+                                                        }}
+                                                    >
+                                                        <Link style={{color: 'black'}} to={`/bundle/${bundle.id}`}>
+                                                            {bundle.name}
+                                                        </Link>
+                                                    </div>
+                                                    <div className={classes.lock}>
+                                                        {/*<div*/}
+                                                            {/*className={classes.circle}*/}
+                                                            {/*style={{*/}
+                                                                {/*border: '3px solid ' + color,*/}
+                                                            {/*}}*/}
+                                                        {/*></div>*/}
+                                                        <div className={classes.lockIcon}>
+                                                            {this.bundleSubscribed(bundle.id) ? get_check() : get_lock()}
+                                                        </div>
+                                                    </div>
+
+                                            </div>
+                                        </div>
+                                )})}
+                            </div>
                         </div>
                     </Drawer>
                 </div>

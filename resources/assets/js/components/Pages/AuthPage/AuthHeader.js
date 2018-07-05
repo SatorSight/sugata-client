@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import InputMask from 'react-input-mask';
-import IndexMenu from '../../Components/IndexMenu';
 // import CustomMenu from '../../Components/CustomMenu';
 import AuthHelper from '../../Helpers/AuthHelper';
 import { Link } from 'react-router-dom'

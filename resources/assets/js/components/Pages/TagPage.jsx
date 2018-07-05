@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import TagHeader from './TagPage/TagHeader';
-import MainTabs from './../Components/MainTabs';
-import RelatedTopics from './../Components/RelatedTopics';
 import Footer from '../Components/Footer';
 import * as SUtils from './../Helpers/SUtils';
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
-import Waiter from '../Helpers/Waiter2';
-
 
 class TagPage extends Component {
 

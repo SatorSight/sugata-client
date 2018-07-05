@@ -115,6 +115,7 @@ trait ArticleRoutes{
             $issue_collection->push($issue);
             Issue::injectWithImages($issue_collection);
             Issue::injectWithPagesCount($issue_collection);
+            Issue::injectWithPageIds($issue_collection);
 
             $issue = $issue_collection->first();
 
