@@ -179,6 +179,8 @@ trait IssueRoutes{
             Article::injectDates($main_topics);
             Article::injectJournalNames($main_topics);
             Article::injectWithBigPreviews($main_topics);
+            Article::clearFromDesktopHtml($main_topics);
+            Article::injectJournalCovers($main_topics);
 
             ImageProxyService::resize($main_topics, 'image_path', ImageProxyService::COVER_ARTICLE_800);
 

@@ -85,8 +85,11 @@ trait BundleRoutes{
 
             Article::injectWithBigPreviews($last_cover_articles);
             Article::injectDates($last_cover_articles);
+            Article::injectWithText($last_cover_articles);
             Article::clearFromHtml($last_cover_articles);
             Article::injectJournalNames($last_cover_articles);
+            Article::clearFromDesktopHtml($last_cover_articles);
+            Article::injectJournalCovers($last_cover_articles);
 
             ImageProxyService::resize($last_cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
 

@@ -44,7 +44,7 @@ class PopularJournals extends PureComponent {
         slidesPerView: 'auto',
         spaceBetween: 10,
         width: 27,
-        slidesOffsetBefore: 32,
+        // slidesOffsetBefore: 32,
     });
 
     render() {
@@ -53,7 +53,7 @@ class PopularJournals extends PureComponent {
 
         return (
             <div className={classes.section}>
-                <SectionTitle link={'/'} title={'Популярнейшие издания'}/>
+                <SectionTitle link={this.props.link || '/'} title={'Популярнейшие издания'}/>
                 <Swiper {...params}>
                     {journals.map(journal =>
                         <div  key={`popular_editions_${journal.id}`} className={classes.item}>

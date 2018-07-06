@@ -10,26 +10,7 @@ import { Link } from 'react-router-dom'
 const fontWeightMedium = 400;
 
 
-const theme = createMuiTheme({
-    // palette: {
-    //     type: 'dark',
-    //     background: {
-    //         default: 'rgba(0,0,0,0.8)',
-    //         paper: 'rgba(0,0,0,0.8)',
-    //         appBar: 'rgba(0,0,0,0.8)',
-    //         contentFrame: 'rgba(0,0,0,0.8)',
-    //         chip:'rgba(0,0,0,0.8)',
-    //     },
-    // },
-    // typography: {
-    //     fontFamily:'HelveticaNeueCyr, arial, serif',
-    //     fontWeightMedium,
-    //     fontSize: '1.2em',
-    //     body1: {
-    //         fontWeight: fontWeightMedium,
-    //     },
-    // },
-});
+const theme = createMuiTheme({});
 
 const colors = [
     'rgba(137,78,141, 1)',
@@ -190,23 +171,13 @@ const styles = {
         // marginBottom: '0.5em',
 
         margin: '0 auto',
-    }
+    },
 };
-
-
-
 
 class Menu extends Component {
     constructor(props){
         super(props);
-
-        // this.state = {
-        //     open: false,
-        // };
     }
-    //
-    // open = () => this.setState({ open: true });
-    // close = () => this.setState({ open: false });
 
     bundleSubscribed = bundle_id => SUtils.in_array(bundle_id, this.props.auth_data.user_bundles);
 
@@ -232,7 +203,7 @@ class Menu extends Component {
                                 </div>
                                 <div className={classes.label}>Меню</div>
                             </div>
-                            <Link style={{color: 'black'}} to={'/'}>
+                            <Link onClick={this.props.doClose} style={{color: 'black'}} to={'/'}>
                                 <div className={classes.backToMain}>
                                     <div className={classes.arrow}>{arrow}</div>
                                     <div className={classes.backLabel}>На главную</div>
@@ -244,29 +215,27 @@ class Menu extends Component {
                                     return (
                                         <div key={`menu_bundle_${bundle.id}`}>
                                             <div className={classes.bundleWrapper}>
-
-                                                    <div
-                                                        className={classes.bundle}
-                                                        style={{
-                                                            borderBottom: `1px solid black`,
-                                                        }}
-                                                    >
-                                                        <Link style={{color: 'black'}} to={`/bundle/${bundle.id}`}>
-                                                            {bundle.name}
-                                                        </Link>
+                                                <div
+                                                    className={classes.bundle}
+                                                    style={{
+                                                        borderBottom: `1px solid black`,
+                                                    }}
+                                                >
+                                                    <Link onClick={this.props.doClose} style={{color: 'black'}} to={`/bundle/${bundle.id}`}>
+                                                        {bundle.name}
+                                                    </Link>
+                                                </div>
+                                                <div className={classes.lock}>
+                                                    {/*<div*/}
+                                                        {/*className={classes.circle}*/}
+                                                        {/*style={{*/}
+                                                            {/*border: '3px solid ' + color,*/}
+                                                        {/*}}*/}
+                                                    {/*></div>*/}
+                                                    <div className={classes.lockIcon}>
+                                                        {this.bundleSubscribed(bundle.id) ? get_check() : get_lock()}
                                                     </div>
-                                                    <div className={classes.lock}>
-                                                        {/*<div*/}
-                                                            {/*className={classes.circle}*/}
-                                                            {/*style={{*/}
-                                                                {/*border: '3px solid ' + color,*/}
-                                                            {/*}}*/}
-                                                        {/*></div>*/}
-                                                        <div className={classes.lockIcon}>
-                                                            {this.bundleSubscribed(bundle.id) ? get_check() : get_lock()}
-                                                        </div>
-                                                    </div>
-
+                                                </div>
                                             </div>
                                         </div>
                                 )})}

@@ -110,7 +110,7 @@ const styles = {
     articleText: {
         ...css.bigArticleText,
         fontSize: '0.8em',
-        lineHeight: 2,
+        lineHeight: '1.3',
     },
     articleSubtitle: {
         ...css.capsMediumText,

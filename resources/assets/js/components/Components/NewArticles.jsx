@@ -122,7 +122,7 @@ class NewArticles extends Component {
 
         return (
             <div className={classes.sectionWrapper}>
-                <SectionTitle title={'Новые статьи'} link_label={'Список последних выпусков'} link={'/'} />
+                <SectionTitle title={'Новые статьи'} link_label={'Список последних выпусков'} link={this.props.link || '/'} />
 
                 <div className={classes.main}>
                     {articles.map(article =>

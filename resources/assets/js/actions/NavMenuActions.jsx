@@ -20,6 +20,17 @@ export function close(){
     return { type: action_types.CLOSE_NAV_MENU }
 }
 
+export function openListing(){
+    lockBody();
+    return { type: action_types.OPEN_LISTING_MENU}
+}
+
+export function closeListing(){
+    unlockBody();
+    return { type: action_types.CLOSE_LISTING_MENU }
+}
+
+
 export function changeActiveTab(index){
     return {
         type: action_types.CHANGE_NAV_MENU_ACTIVE_TAB,

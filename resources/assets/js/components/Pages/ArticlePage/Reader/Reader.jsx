@@ -72,7 +72,7 @@ const styles = {
         fontSize: '1.2em',
         textTransform: 'uppercase',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
-        fontWeight: 200,
+        // fontWeight: 200,
         letterSpacing: 4,
         color: '#fff',
         marginBottom: '0.3em',
@@ -85,7 +85,7 @@ const styles = {
         borderRadius: '1em',
         padding: '0.4em 0.6em 0.2em 0.8em',
         fontSize: '0.9em',
-        fontWeight: 200,
+        // fontWeight: 200,
         letterSpacing: '0.2em',
         lineHeight: 1.6,
         textTransform: 'uppercase',
@@ -227,7 +227,8 @@ const styles = {
 
     next_article_item: {
         width: '100%',
-        backgroundColor: '#000',
+        // backgroundColor: '#000',
+        backgroundColor: 'rgb(51,51,51)',
         position: 'relative',
         minHeight: '8rem',
         zIndex: 50,
@@ -263,14 +264,14 @@ const styles = {
         overflow: 'hidden',
         borderRadius: '0.2em',
         marginLeft: '26%',
-        padding: '1.8em 0 0 0',
+        padding: '1em 0 0 0',
         maxWidth: '50%',
     },
     next_article_title: {
         fontSize: '1em',
         textTransform: 'uppercase',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
-        fontWeight: 200,
+        // fontWeight: 200,
         letterSpacing: 3.2,
         color: '#fff',
         lineHeight: 1.2,
@@ -297,7 +298,7 @@ const styles = {
         padding: '0.4em 0.6em 0.2em 0.8em',
         margin: 0,
         fontSize: '0.9em',
-        fontWeight: 200,
+        // fontWeight: 200,
         letterSpacing: '0.2em',
         lineHeight: 1.8,
         textTransform: 'uppercase',
@@ -759,17 +760,17 @@ class Reader extends Component {
                                     <p style={styles.next_article_text}>{current_next_article_title}</p>
                                     {this.state.next ? <div>
                                         <p style={styles.next_article_captionColorSwiper}>
-                                            <span>{current_next_article_page_number}/</span>
+                                            <span>{this.normalize_page_number(current_next_article_page_number, issue.page_numbers)}/</span>
                                             <span>{SUtils.propOrNull(issue, 'pages_count')}</span>
                                         </p>
                                     </div> : null}
                                 </div>
                             </div>
                         </div>
-                        <div style={styles.next_article_off}>
-                            <img style={styles.next_article_imgBg} src="/images/header.jpg" alt={current_next_article_title} />
-                            <div style={styles.next_article_mask} />
-                        </div>
+                        {/*<div style={styles.next_article_off}>*/}
+                            {/*<img style={styles.next_article_imgBg} src="/images/header.jpg" alt={current_next_article_title} />*/}
+                            {/*<div style={styles.next_article_mask} />*/}
+                        {/*</div>*/}
                     </div>
                 </div>
 

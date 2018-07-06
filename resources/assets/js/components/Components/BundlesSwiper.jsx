@@ -21,7 +21,7 @@ const styles = {
         justifyContent: 'center',
         borderRadius: '0.7em',
         overflow: 'hidden',
-        width: '25em',
+        width: '23em',
     },
     bundleImage: {
         width: '100%',
@@ -42,7 +42,8 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        marginTop: '0.5em',
+        // marginTop: '0.5em',
+        margin: '0.5em 1em 0',
     },
     journalName: {
         margin: '0.1rem 1em',

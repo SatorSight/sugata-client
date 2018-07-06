@@ -81,7 +81,7 @@ const styles = {
         borderRadius: '0.5em',
         position: 'relative',
         width: '50%',
-        margin: '0 auto 10em',
+        margin: '0 auto',
         minWidth: '28em',
         overflow: 'hidden',
         zIndex: 60,

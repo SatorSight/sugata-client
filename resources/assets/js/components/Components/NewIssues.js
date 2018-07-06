@@ -60,6 +60,8 @@ const styles = {
     journalName: {
         fontWeight: 'bold',
         fontSize: '1.2em',
+        width: '75%',
+        margin: '0 auto',
     },
     journalDate: {
         ...css.capsMediumText,
@@ -82,7 +84,7 @@ class NewIssues extends PureComponent {
                 <SectionTitle
                     title={this.props.title || 'Новые выпуски'}
                     link_label={this.props.label || 'Список всех последних выпусков'}
-                    link={'/'}
+                    link={this.props.link || '/'}
                 />
                 <div className={classes.issuesContainer}>
                     {issues.map((issue, currentIndex) =>

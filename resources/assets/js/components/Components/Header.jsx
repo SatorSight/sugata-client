@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import NavMenu from '../../containers/NavMenu';
 import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles';
-import Line from '../Helpers/Line';
+import ListingMenu from '../../containers/ListingMenu';
+// import Line from '../Helpers/Line';
 
 const menuButtonWidth = '2.5rem';
 
@@ -66,7 +67,8 @@ class Header extends PureComponent {
                             Киоск Плюс
                         </h1>
                     </Link>
-                    <div className={classes.customMenuButton}></div>
+                    <ListingMenu />
+                    {/*<div className={classes.customMenuButton}></div>*/}
                 </div>
                 {/*<Line color={'blue'} style={{opacity: '0.3'}} />*/}
             </div>
