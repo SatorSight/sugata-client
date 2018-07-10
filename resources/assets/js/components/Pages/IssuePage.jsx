@@ -9,7 +9,7 @@ import PopularJournals from '../../containers/PopularJournals';
 import Footer from '../Components/Footer';
 
 const mapStateToProps = state => ({
-    loading: state.server.loading
+    loading: state.server.loading,
 });
 
 class IssuePage extends Component {
@@ -21,10 +21,10 @@ class IssuePage extends Component {
         return (
             !this.props.loading && <div>
                 <Header />
-                <BundlesSwiper />
-                <BigArticles resource={'main_topics'}/>
-                <NewArticles resource={'new_articles'}/>
-                <NewIssues title={'Другие выпуски'} resource={'other_issues'}/>
+                {/*<BundlesSwiper />*/}
+                <BigArticles resource={'main_topics'} no_links/>
+                <NewArticles no_links resource={'new_articles'}/>
+                <NewIssues no_links resource={'other_issues'}/>
                 <Footer />
             </div>
         );

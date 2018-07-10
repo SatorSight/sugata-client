@@ -21,7 +21,7 @@ const styles = {
         width: '18rem',
     },
     bundlesContainer: {
-        padding: '1rem 1rem 2rem 2rem'
+        padding: '0rem 1rem 2rem 0rem'
     },
     bundleWrapper: {
         display: 'flex',
@@ -93,15 +93,18 @@ const styles = {
         display: 'none',
     },
     listing_item: {
-        padding: '0.5em 0 1.3em',
-        position: 'relative',
+        // padding: '0.5em 0 1.3em',
+        // position: 'relative',
+        marginBottom: '1em',
     },
-    listing_ava: {
-        position: 'absolute',
-        left: '1.3em',
-        top: '1.3em',
+    listing_image: {
+        // position: 'absolute',
+        marginRight: '1em',
+        // left: '1.3em',
+        // top: '1.3em',
         borderRadius: '0.5em',
         width: '6.5em',
+        minWidth: '6.5em',
         height: '6.5em',
         overflow: 'hidden',
         backgroundPosition: '50% 50%',
@@ -109,8 +112,8 @@ const styles = {
         boxShadow: '0.8em 0.8em 1em -0.6em rgba(0,0,0,0.2)',
     },
     listing_inner: {
-        margin: '1em 0 0 9em',
-        height: '5em',
+        // margin: '1em 0 0 9em',
+        height: '6.5em',
         display: 'flex',
         alignItems: 'center',
     },
@@ -131,16 +134,16 @@ const styles = {
     listing_text: {
         fontSize: '1.2em',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
-        lineHeight: 1.6,
-        margin: '0 0 0.2em',
-        padding: 0,
-        maxHeight: '3em',
+        // lineHeight: 1.6,
+        // margin: '0 0 0.2em',
+        // padding: 0,
+        // maxHeight: '3em',
         color: '#000',
-        overflow: 'hidden',
-        position: 'relative',
+        // overflow: 'hidden',
+        // position: 'relative',
         // width: '70%',
-        fontWeight: 300,
-        display: 'block',
+        fontWeight: 500,
+        // display: 'block',
     },
     listing_pageNumber: {
         color: '#999',
@@ -151,7 +154,7 @@ const styles = {
         margin: '0 1em 0 0',
     },
     listing_link: {
-        display: 'block',
+        display: 'flex',
         cursor: 'pointer',
     },
     listing_last: {
@@ -191,7 +194,7 @@ class ListingMenu extends Component {
                     <Button onClick={this.props.doOpenListing} classes={{}} className={classes.button}>
                         {arrow_down}
                     </Button>
-                    <Drawer anchor="right" classes={{}} theme={theme} open={this.props.open} onClose={this.props.doClose}>
+                    <Drawer anchor="right" classes={{}} theme={theme} open={this.props.open} onClose={this.props.doCloseListing}>
                         <div className={classes.drawerInner}>
                             <div className={classes.header}>
                                 <div className={classes.close} onClick={this.props.doCloseListing}>
@@ -202,11 +205,13 @@ class ListingMenu extends Component {
                             <div className={classes.bundlesContainer}>
                                 {listing.map(l =>
                                     <div onClick={() => this.navigate(l.id)} key={`listing_${l.page_number}`} className={classes.listing_item}>
-                                        <div
-                                            className={classes.listing_link}>
-                                            <div className={classes.listing_ava} style={{backgroundImage:'url(' + l.image + ')' }} />
+                                        <div className={classes.listing_link}>
+                                            <div className={classes.listing_image} style={{backgroundImage:'url(' + l.image + ')' }} />
                                             <div className={classes.listing_inner}>
-                                                <p className={classes.listing_text}><span className={classes.listing_pageNumber}>{l.page_number}</span>{l.title}</p>
+                                                <p className={classes.listing_text}>
+                                                    {/*<span className={classes.listing_pageNumber}>{l.page_number}</span>*/}
+                                                    {l.title}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

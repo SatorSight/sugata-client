@@ -33,10 +33,6 @@ class DataLoader extends Component {
         const self_id = this.getSelfIdFromProps(this.props);
         const entity = this.getEntityFromProps(this.props);
 
-        console.log('in mount');
-        console.log(self_id);
-        console.log(this.props.self_id);
-
         // if self id is not present reload component with it
         if(self_id && !this.props.self_id) {
             this.props.receiveSelfId(self_id);
@@ -51,29 +47,9 @@ class DataLoader extends Component {
         const self_id = this.getSelfIdFromProps(this.props);
         const entity = this.getEntityFromProps(this.props);
 
-        // console.log('did update');
-        // console.log(entity !== this.props.entity);
-        // console.log(self_id);
-        // console.log(this.props.self_id);
-        // console.log(entity);
-        // console.log(prevProps.entity);
-        // console.log(this.props.entity);
-
-        // if(this.getEntity() === 'article' && self_id)
-        //     return false;
-
-
-
-
         if(!self_id && !this.props.self_id
             && this.props.entity !== prevProps.entity
             && prevProps.entity !== null) {
-
-            // console.log('c');
-            // console.log(prevProps.entity);
-            // console.log(this.props.entity);
-            //
-            // c = c + 1;
 
             if(c > 3){
                 console.log('RECURSION');
@@ -90,33 +66,13 @@ class DataLoader extends Component {
             this.props.receiveEntity(entity);
         }
 
-
-
         if(self_id !== this.props.self_id) {
-            // console.log('QQQQQQQQQQ');
-            // console.log(self_id);
-            // console.log(this.props.self_id);
-            // console.log(this.props.entity);
-            // console.log(prevProps.entity);
-            // console.log(this.getEntity());
             if(this.getEntity() !== 'article' || prevProps.entity !== this.getEntity()) {
                 this.props.receiveSelfId(self_id);
             }
             this.props.receiveEntity(entity);
         }else{
-            if(this.props.self_id !== prevProps.self_id) {
-
-                // console.log(this.getEntity());
-                // console.log('prevProps:');
-                // console.log(prevProps);
-                // console.log(entity);
-                // console.log(this.getEntityFromProps(prevProps));
-                // console.log(prevProps.self_id);
-                // console.log(this.entityChanged(this.getEntity(), prevProps));
-                // console.log(prevProps);
-                // console.log(self_id);
-
-
+            if(this.props.self_id !== prevProps.self_id || entity !== prevProps.entity) {
                 // article swiping hardcode
                 if(!this.entityChanged(this.getEntity(), prevProps)
                     && this.getEntity() === 'article'
@@ -125,26 +81,16 @@ class DataLoader extends Component {
 
                 console.log('load from update');
 
-                // console.log(this.props.self_id);
-                // console.log(prevProps.self_id);
-
-
                 this.loadEverything(true);
             }
         }
     }
 
     componentWillReceiveProps(nextProps){
-        //
-        // console.log('props received');
-        // console.log(nextProps);
-
         const self_id = this.getSelfIdFromProps(nextProps);
         const entity = this.getEntityFromProps(this.props);
 
         if(self_id && this.getEntity() !== 'article') {
-            // console.log('changed');
-            // console.log(this.getEntity());
             this.props.receiveSelfId(self_id);
             this.props.receiveEntity(entity);
         }
@@ -203,17 +149,9 @@ class DataLoader extends Component {
         if (entity === '')
             return '';
 
-
         return SUtils.empty(entity) ? null : entity;
     };
     entityChanged = (entity, oldProps) => {
-
-        // console.log('changed?');
-        // console.log(entity);
-        // console.log(oldProps.entity);
-        // console.log(oldProps);
-        // console.log(this.getEntityFromProps(oldProps));
-        // console.log(entity !== this.getEntityFromProps(oldProps));
         return entity !== oldProps.entity;
     };
 
@@ -250,8 +188,6 @@ class DataLoader extends Component {
     scroll_top = () => scrollTo(0, 0);
 
     render(){
-        // console.log('DataLoader rendered');
-        // console.log(this.props.self_id);
         return null;
     }
 }

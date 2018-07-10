@@ -7,6 +7,7 @@ const mapStateToProps = (state, ownProps) => ({
     title: ownProps.title,
     link: ownProps.link,
     label: ownProps.label,
+    no_links: ownProps.no_links,
 });
 
 const mapDispatchToProps = dispatch => ({});

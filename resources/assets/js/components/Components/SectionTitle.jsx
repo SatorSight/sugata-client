@@ -7,24 +7,51 @@ const styles = {
     titles: {
         display: 'flex',
         justifyContent: 'space-between',
-        margin: '0 1em'
+        // margin: '2em 1em',
+        // margin: '2em 0',
+        margin: '0 0 2em 0',
+        width: '100%',
+        paddingRight: '1em',
+
     },
     otherLink: {
         fontWeight: 500,
         textAlign: 'right',
-        display: 'flex',
-        height: '5rem',
 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        // height: '5rem',
+
+    },
+    otherLinkInner: {
+        marginRight: '1em',
+
+
+
+        // borderBottom: '0.2rem solid black',
+        // paddingTop: '1.5rem',
+        // width: '9.5rem',
+        // width: '100%',
+
+        // position: 'absolute',
+        // right: 0,
     },
     border: {
         borderBottom: '0.2rem solid black',
-        paddingTop: '1.5rem',
-        width: '9.5rem',
+        paddingTop: '1rem',
+        // width: '9.5rem',
+        width: '50%',
+
         position: 'absolute',
         right: 0,
+
+
     },
     arrowContainer: {
-        margin: '0.3rem -1rem 0 1rem',
+        marginTop: '5px',
+        // margin: '0.3rem -1rem 0 1rem',
     },
 };
 
@@ -34,20 +61,20 @@ class SectionTitle extends PureComponent {
     }
 
     render() {
-        const {title, link_label, link, classes} = this.props;
+        const {title, link_label, link, no_links, classes} = this.props;
 
         return (
             <div className={classes.titles}>
                 <div className={classes.sectionTitle}>
                     {title}
                 </div>
-                { link &&
+                { !no_links && link &&
                     <div className={classes.otherLink}>
-                        <div>
+                        <div className={classes.otherLinkInner}>
                             <Link className={classes.link} to={link}>
                                 {link_label || <div><br/><br/></div>}
-                                <div className={classes.border}></div>
                             </Link>
+                            <div className={classes.border}></div>
                         </div>
                         <div className={classes.arrowContainer}>
                             <svg x="0px" y="0px" viewBox="0 0 1000 1000" width="12" xmlns="http://www.w3.org/2000/svg">

@@ -122,8 +122,12 @@ class NewArticles extends Component {
 
         return (
             <div className={classes.sectionWrapper}>
-                <SectionTitle title={'Новые статьи'} link_label={'Список последних выпусков'} link={this.props.link || '/'} />
-
+                <SectionTitle
+                    no_links={this.props.no_links}
+                    title={this.props.title || 'Новые статьи'}
+                    link_label={'Список последних выпусков'}
+                    link={this.props.link || '/'}
+                />
                 <div className={classes.main}>
                     {articles.map(article =>
                        <div className={classes.item} key={`new_articles_${article.id}`}>

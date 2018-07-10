@@ -37,7 +37,8 @@ class PopularJournals extends PureComponent {
         super(props);
     }
 
-    get_initial_slide_index = () => Math.round(this.props.journals.length / 2);
+    // get_initial_slide_index = () => Math.round(this.props.journals.length / 2);
+    get_initial_slide_index = () => 0;
     get_swiper_params = () => ({
         initialSlide: this.get_initial_slide_index(),
         // centeredSlides: true,

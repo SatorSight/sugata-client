@@ -52,9 +52,9 @@ mix.react('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 
-// if (mix.inProduction()) {
-//     mix.version();
-// }
+if (mix.inProduction()) {
+    mix.version();
+}
 
 // if (process.env.npm_lifecycle_event !== 'hot') {
 //     mix.version();

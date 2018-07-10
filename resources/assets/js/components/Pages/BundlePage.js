@@ -9,7 +9,8 @@ import PopularJournals from '../../containers/PopularJournals';
 import Footer from '../Components/Footer';
 
 const mapStateToProps = state => ({
-    loading: state.server.loading
+    loading: state.server.loading,
+    self_id: state.router.self_id,
 });
 
 class BundlePage extends Component {
@@ -21,12 +22,12 @@ class BundlePage extends Component {
         return (
             !this.props.loading && <div>
                 <Header />
-                <BundlesSwiper />
-                <NewIssues count={6} resource={'last_issues'}/>
-                <BigArticles resource={'last_cover_articles'}/>
-                <NewArticles resource={'new_articles'}/>
-                <PopularJournals resource={'popular_editions'}/>
-                <NewArticles title={'Популярные статьи'} resource={'popular_articles'}/>
+                {/*<BundlesSwiper />*/}
+                <NewIssues count={6} resource={'last_issues'} label={'Последние выпуски набора'} link={`/all_issues_bundle/${this.props.self_id}`}/>
+                <BigArticles resource={'last_cover_articles'} link={`/all_issues_bundle/${this.props.self_id}`}/>
+                <NewArticles resource={'new_articles'} label={'Последние выпуски набора'} link={`/all_issues_bundle/${this.props.self_id}`}/>
+                <PopularJournals resource={'popular_editions'} link={`/all_issues_bundle/${this.props.self_id}`}/>
+                <NewArticles title={'Популярные статьи'} resource={'popular_articles'} label={'Последние выпуски набора'} link={`/all_issues_bundle/${this.props.self_id}`}/>
                 <Footer />
             </div>
         );

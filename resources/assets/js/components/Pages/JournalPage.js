@@ -10,7 +10,8 @@ import Footer from '../Components/Footer';
 
 
 const mapStateToProps = state => ({
-    loading: state.server.loading
+    loading: state.server.loading,
+    self_id: state.router.self_id,
 });
 
 class JournalPage extends Component {
@@ -22,10 +23,10 @@ class JournalPage extends Component {
         return (
             !this.props.loading && <div>
                 <Header />
-                <BundlesSwiper />
-                <NewIssues resource={'last_issues'}/>
+                {/*<BundlesSwiper />*/}
+                <NewIssues label={'Последние выпуски журнала'} link={`/all_issues_journal/${this.props.self_id}`} resource={'last_issues'}/>
                 <BigArticles resource={'issues_cover_articles'}/>
-                <NewArticles resource={'new_articles'}/>
+                <NewArticles label={'Последние выпуски журнала'} link={`/all_issues_journal/${this.props.self_id}`} resource={'new_articles'}/>
                 <Footer />
             </div>
         );

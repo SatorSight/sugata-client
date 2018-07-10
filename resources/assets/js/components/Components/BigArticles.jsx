@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom';
 
 import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
+import SectionTitle from './SectionTitle';
 
-import { toRuMonthYearLocale, capitalize } from '../Helpers/SUtils';
-
+import { toRuMonthYearLocale, capitalize, empty } from '../Helpers/SUtils';
 
 import 'react-id-swiper/src/styles/css/swiper.css';
 import { withStyles } from 'material-ui/styles';
 
 import * as css from '../Helpers/cssConstants';
-
 
 const styles = {
     root: {
@@ -145,59 +144,65 @@ class BigArticles extends PureComponent {
     handleChangeIndex = index => this.setState({ index });
 
     render() {
-        const { articles, classes } = this.props;
+        const { articles, issue, classes } = this.props;
         const index = this.state.index;
         const dots_count = articles.length;
 
         return (
             <div className={classes.sectionWrapper}>
                 <div className={classes.root}>
-                    <h1 className={classes.sectionTitle}>Темы номера</h1>
-                        <SwipeableViews
-                            className={classes.swiper}
-                            index={index}
-                            enableMouseEvents
-                            onChangeIndex={this.proxyChanger}
-                            onTransitionEnd={this.restoreClicking}
-                        >
-                            {articles.map(article =>
-                                <div className={classes.slideSwiper} key={`main_topics_articles_${article.id}`}>
+                    <SectionTitle
+                        title={this.props.title || 'Темы номера'}
+                        link_label={this.props.label || 'Список всех последних выпусков'}
+                        link={this.props.link || '/'}
+                        no_links={this.props.no_links}
+                    />
+                    {/*<h1 className={classes.sectionTitle}>Темы номера</h1>*/}
+                    <SwipeableViews
+                        className={classes.swiper}
+                        index={index}
+                        enableMouseEvents
+                        onChangeIndex={this.proxyChanger}
+                        onTransitionEnd={this.restoreClicking}
+                    >
+                        {articles.map(article =>
+                            <div className={classes.slideSwiper} key={`main_topics_articles_${article.id}`}>
+                                <Link
+                                    onClick={this.linkClickHandler}
+                                    draggable={false}
+                                    to={`/article/${article.id}`}
+                                    className={classes.imgSwiper}
+                                    style={{backgroundImage:`url('${article.image_path}')`}}
+                                />
+                                <div className={classes.infoSwiper}>
                                     <Link
                                         onClick={this.linkClickHandler}
                                         draggable={false}
-                                        to={`/article/${article.id}`}
-                                        className={classes.imgSwiper}
-                                        style={{backgroundImage:`url('${article.image_path}')`}}
-                                    />
-                                    <div className={classes.infoSwiper}>
+                                        to={`/issue/${article.issue_id}`}
+                                        className={classes.imageLink}
+                                    >
+                                        <img className={classes.magSwiper} src={article.issue_cover} alt={article.title} />
+                                    </Link>
+                                    <div className={classes.articleTitle}>
                                         <Link
                                             onClick={this.linkClickHandler}
                                             draggable={false}
-                                            to={`/issue/${article.issue_id}`}
-                                            className={classes.imageLink}
+                                            to={`/article/${article.id}`}
+                                            className={classes.link}
                                         >
-                                            <img className={classes.magSwiper} src={article.issue_cover} alt={article.title} />
+                                            {capitalize(article.title.toLowerCase())}
                                         </Link>
-                                        <div className={classes.articleTitle}>
-                                            <Link
-                                                onClick={this.linkClickHandler}
-                                                draggable={false}
-                                                to={`/article/${article.id}`}
-                                                className={classes.link}
-                                            >
-                                                {capitalize(article.title.toLowerCase())}
-                                            </Link>
-                                        </div>
-                                        <div className={classes.articleSubtitle}>
-                                            {article.journal_name}, {toRuMonthYearLocale(article.date)}
-                                        </div>
-                                        <div className={classes.articleText}>
-                                            {article.text}...
-                                        </div>
+                                    </div>
+                                    <div className={classes.articleSubtitle}>
+                                        {article.journal_name}, {!empty(issue) ? toRuMonthYearLocale(issue.content_date) :  article.date}
+                                    </div>
+                                    <div className={classes.articleText}>
+                                        {article.text}...
                                     </div>
                                 </div>
-                            )}
-                        </SwipeableViews>
+                            </div>
+                        )}
+                    </SwipeableViews>
                     <Pagination dots={dots_count} index={index} onChangeIndex={this.handleChangeIndex} />
                 </div>
             </div>

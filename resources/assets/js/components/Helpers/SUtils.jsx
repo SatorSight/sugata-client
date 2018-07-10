@@ -6,6 +6,7 @@ export function in_array(needle, haystack) {
 
 export const OK_RESULT = 'ok';
 
+//to remove
 export function merge_data(data1, data2) {
     let dates_array = [];
     let result_array = [];
@@ -32,6 +33,7 @@ export function merge_data(data1, data2) {
     return result_array;
 }
 
+// +79999999999 => +7 (999) 999-99-99
 export function beautifyTel(tel){
     if(empty(tel))
         return tel;
@@ -105,9 +107,11 @@ export function inclineRuWordByNumber(word_stem, number){
         return word_stem + 'ов';
 }
 
+// PHP-like empty
 export function empty(haystack){
     if(!haystack)
         return true;
+    // ???
     if(Number.isInteger(haystack) && isNaN(haystack))
         return true;
     if(haystack === null)
@@ -122,9 +126,7 @@ export function empty(haystack){
         return true;
     if(haystack.constructor === Object && Object.keys(haystack).length === 0)
         return true;
-    if((haystack instanceof DateRange) && empty(haystack.from) && empty(haystack.to))
-        return true;
-    return false;
+    return haystack instanceof DateRange && empty(haystack.from) && empty(haystack.to);
 }
 
 export function first(haystack) {
@@ -135,6 +137,7 @@ export function clone_array(haystack) {
     return haystack.slice(0);
 }
 
+// universal GET-POST api fetch call
 export function makeQuery(payload, method, query, callback) {
     if(method === 'GET' || method === 'get'){
         const query_string = `/${query}/${JSON.stringify({data: payload})}/`;
@@ -156,7 +159,7 @@ export function makeQuery(payload, method, query, callback) {
     }
 }
 
-
+// build GET param string from obj properties
 export function buildParamStringFromObject(object){
     let params_array = [];
     Object.keys(object).map(key => params_array.push(`${key}=${object}`));
@@ -165,7 +168,7 @@ export function buildParamStringFromObject(object){
         param_string = `/?${param_string}`;
     return param_string;
 }
-
+// to remove
 export function loadAuthorizationToState(_this){
     fetch('/api/auth/user_authorized', {credentials: 'include'})
         .then(data => data.json())
@@ -176,7 +179,7 @@ export function loadAuthorizationToState(_this){
         })
 }
 
-
+// to remove
 export function updateStateWithApiRequestFor(entity, page_prefix, _this, params = {}, self_id = null) {
     const params_string = buildParamStringFromObject(params);
     return fetch('/api/' + page_prefix + '/' + entity + (self_id ? `/${self_id}` : '') + params_string + '')
@@ -188,7 +191,7 @@ export function updateStateWithApiRequestFor(entity, page_prefix, _this, params 
         })
 }
 
-
+// to remove
 export function appendStateWithApiRequestFor(entity, page_prefix, api_route, _this, self_id = null, additional_params = []) {
     const current_data = _this.state.data[entity];
     const count = current_data.length;
@@ -200,11 +203,8 @@ export function appendStateWithApiRequestFor(entity, page_prefix, api_route, _th
             _this.setState({ data });
         })
 }
-//
-// export function load(resource, page_prefix, self_id) {
-//     updateStateWithApiRequestFor(resource, this.page_prefix, this.state._this);
-// }
 
+// to remove
 //loads all given routes from ResourceRoutes
 export function loadAll(routes, callback, _this, self_id = null){
 
@@ -224,6 +224,7 @@ export function loadAll(routes, callback, _this, self_id = null){
     Promise.all(promises).then(() => callback());
 }
 
+// to remove
 export function loadAuthDataToState(_this){
     fetch('/api/auth/load_auth_data', {credentials: 'include'})
         .then(r => r.json())
@@ -234,22 +235,24 @@ export function loadAuthDataToState(_this){
         });
 }
 
+// to remove
 export function load(route, _this){
     _this.setState({loading: true}, () => {
         loadAll(route, () => _this.setState({loading: false}), _this, _this.self_id);
     });
 }
 
+// array with url parts
 export function getUrlPath(){
     const path = window.location.pathname;
     return path.split('/');
 }
 
-export function orNull(obj){
-    if(!empty(obj))
-        return obj;
-    return null;
-}
+// export function orNull(obj){
+//     if(!empty(obj))
+//         return obj;
+//     return null;
+// }
 
 export function capitalize(string){
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -261,6 +264,7 @@ export function isMobile() {
     return check;
 }
 
+// ???
 export function getGetParameterByName(name){
     const url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -271,6 +275,7 @@ export function getGetParameterByName(name){
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+// ???
 export function getIndexPageUrl(){
     const url = window.location.href;
     const parts = url.split('/');
@@ -290,6 +295,7 @@ export function setCookie(name, value, timing){
     document.cookie = name+'='+value+'; path=/; expires='+date.toUTCString();
 }
 
+// Y-m-d => Март 2018
 export function toRuMonthYearLocale(date_string){
     let date = new Date(date_string);
     const options = {
@@ -312,9 +318,6 @@ export function last(haystack) {
 }
 
 export function propOrNull(obj, prop){
-    // if(empty(obj))
-    //     return null;
-    // return (!obj) ? null : obj[prop];
     if(!obj)
         return null;
     if(!obj.hasOwnProperty(prop))
@@ -322,14 +325,17 @@ export function propOrNull(obj, prop){
     return obj[prop];
 }
 
+//second url part after slash
 export function idFromUrl(url){
     return url.split('/')[1];
 }
 
+//first url part after slash
 export function entityFromUrl(url){
     return url.split('/')[0];
 }
 
+// [1,2,3] => false, [1,2,4] => true
 export function sequenceBroken(array){
     return undefined !== array.find((el, key, _array) => {
         if(_array[key + 1]){

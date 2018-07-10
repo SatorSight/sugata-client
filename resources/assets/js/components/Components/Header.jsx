@@ -31,7 +31,8 @@ const styles = {
         display: 'block',
     },
     title: {
-        fontSize: '2rem',
+        // fontSize: '2rem',
+        fontSize: '8vw',
         letterSpacing: '0.1rem',
         color: 'black',
         textTransform: 'uppercase',
@@ -43,6 +44,7 @@ const styles = {
         position: 'relative',
         zIndex: 50,
         background: 'white',
+        height: '8em',
     },
 };
 

@@ -5,12 +5,15 @@ export const sectionTitle = {
     color: baseTextColor,
     fontWeight: 900,
     fontFamily: 'Montserrat',
-    height: '3rem',
+    // height: '3rem',
     lineHeight: '.9',
+
+    display: 'flex',
+    alignItems: 'center',
 };
 
 export const sectionWrapper = {
-    margin: '2em 1em',
+    margin: '0em 1em',
 };
 
 export const articleBigTitle = {

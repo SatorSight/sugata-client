@@ -14,7 +14,7 @@ const styles = {
     },
     imageContainer: {
         height: '15.5em',
-        minWidth: '8em',
+        minWidth: '30%',
     },
     image: {
         height: '11em',
@@ -85,11 +85,12 @@ class NewIssues extends PureComponent {
                     title={this.props.title || 'Новые выпуски'}
                     link_label={this.props.label || 'Список всех последних выпусков'}
                     link={this.props.link || '/'}
+                    no_links={this.props.no_links}
                 />
                 <div className={classes.issuesContainer}>
                     {issues.map((issue, currentIndex) =>
-                        <Link key={`new_issues_${issue.id}`} to={`/issue/${issue.id}`} className={classes.item}>
-                            <div className={classes.imageContainer}>
+                        <div key={`new_issues_${issue.id}`} className={classes.imageContainer}>
+                            <Link to={`/issue/${issue.id}`} className={classes.item}>
                                 <div className={classes.imageDiv}>
                                     <img className={classes.image} src={issue.image_path} alt=""/>
                                 </div>
@@ -97,8 +98,8 @@ class NewIssues extends PureComponent {
                                     <div className={classes.journalName}>{issue.journal_name}</div>
                                     <div className={classes.journalDate}>{toRuMonthYearLocale(issue.content_date)}</div>
                                 </div>
-                            </div>
-                        </Link>
+                            </Link>
+                        </div>
                     )}
                 </div>
             </div>
