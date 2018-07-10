@@ -21,7 +21,7 @@ const styles = {
         width: '18rem',
     },
     bundlesContainer: {
-        padding: '0rem 1rem 2rem 0rem'
+        padding: '0.5rem 1rem 2rem 0.5rem'
     },
     bundleWrapper: {
         display: 'flex',
