@@ -20,13 +20,17 @@ class JournalPage extends Component {
     }
 
     render() {
+        const links_labels = {
+            label: 'Последние выпуски журнала',
+            link: `/all_issues_journal/${this.props.self_id}`,
+        };
         return (
             !this.props.loading && <div>
                 <Header />
                 {/*<BundlesSwiper />*/}
-                <NewIssues label={'Последние выпуски журнала'} link={`/all_issues_journal/${this.props.self_id}`} resource={'last_issues'}/>
-                <BigArticles resource={'issues_cover_articles'}/>
-                <NewArticles label={'Последние выпуски журнала'} link={`/all_issues_journal/${this.props.self_id}`} resource={'new_articles'}/>
+                <NewIssues {...links_labels} resource={'last_issues'}/>
+                <BigArticles {...links_labels} resource={'issues_cover_articles'}/>
+                <NewArticles {...links_labels} resource={'new_articles'}/>
                 <Footer />
             </div>
         );

@@ -125,7 +125,7 @@ class NewArticles extends Component {
                 <SectionTitle
                     no_links={this.props.no_links}
                     title={this.props.title || 'Новые статьи'}
-                    link_label={'Список последних выпусков'}
+                    link_label={this.props.label || 'Список последних выпусков'}
                     link={this.props.link || '/'}
                 />
                 <div className={classes.main}>
