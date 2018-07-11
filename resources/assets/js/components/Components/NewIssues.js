@@ -16,6 +16,7 @@ const styles = {
     imageContainer: {
         height: '15.5em',
         minWidth: '30%',
+        width: '33%',
     },
     image: {
         height: '11em',
