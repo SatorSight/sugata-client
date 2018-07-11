@@ -71,6 +71,7 @@ trait IndexRoutes{
             Article::injectJournalCovers($cover_articles);
 
             ImageProxyService::resize($cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
+            ImageProxyService::resize($cover_articles, 'issue_cover', ImageProxyService::ISSUE_STANDARD_500);
 
             return $cover_articles;
         });

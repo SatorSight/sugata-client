@@ -72,7 +72,7 @@ class DataLoader extends Component {
             }
             this.props.receiveEntity(entity);
         }else{
-            if(this.props.self_id !== prevProps.self_id || entity !== prevProps.entity) {
+            if(this.props.self_id !== prevProps.self_id || (!SUtils.empty(entity) && entity !== prevProps.entity)) {
                 // article swiping hardcode
                 if(!this.entityChanged(this.getEntity(), prevProps)
                     && this.getEntity() === 'article'
@@ -118,6 +118,9 @@ class DataLoader extends Component {
         this.scroll_top();
 
         const routes = this.getRoutesObject();
+        if(!routes){
+            return false;
+        }
         const page_prefix = routes.page_prefix;
 
         let promises = [];
@@ -183,6 +186,7 @@ class DataLoader extends Component {
             return ResourceRoutes.ALL_ISSUES_JOURNAL_RESOURCES;
         if(entity === 'all_issues_bundle')
             return ResourceRoutes.ALL_ISSUES_BUNDLE_RESOURCES;
+        return null;
     };
 
     scroll_top = () => scrollTo(0, 0);

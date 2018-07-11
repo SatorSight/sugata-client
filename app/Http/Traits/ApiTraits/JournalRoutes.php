@@ -50,7 +50,7 @@ trait JournalRoutes{
     public function journalGetLastIssues($journal_id){
         $last_issues = Cache::remember('journal_last_issues_' . $journal_id, $this->issues_expiration, function() use($journal_id) {
             $last_issues = Journal::find($journal_id)->issues->sortByDesc('content_date')->take(6);
-            
+
             // to fill the row of 3 issues
             if($last_issues->count() < 6)
                 $last_issues = $last_issues->take(3);
@@ -86,6 +86,7 @@ trait JournalRoutes{
             Article::injectJournalCovers($cover_articles);
 
             ImageProxyService::resize($cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
+            ImageProxyService::resize($cover_articles, 'issue_cover', ImageProxyService::ISSUE_STANDARD_500);
 
             return $cover_articles;
         });

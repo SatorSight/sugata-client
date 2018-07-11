@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { toRuMonthYearLocale, capitalize } from './../Helpers/SUtils';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../Components/SectionTitle';
+import ProgressiveImage from '../Helpers/ProgressiveImage';
 
 import { withStyles } from 'material-ui/styles';
 import * as css from '../Helpers/cssConstants';
@@ -10,9 +11,6 @@ import * as css from '../Helpers/cssConstants';
 const styles = {
     main: {
         padding: '0 1.6em',
-    },
-    tabs: {
-        background: '#fff',
     },
     item: {
         padding: '0.5em 0 1.3em',
@@ -39,46 +37,13 @@ const styles = {
 
     },
     over: {
-        // position: 'relative',
-        // overflow: 'hidden',
-        // height: '6.2em',
-        // marginBottom: '0.8em'
     },
-    // caption: {
-    //     display: 'inline',
-    //     background: 'linear-gradient(to right, rgba(104,216,181,1) 0%, rgba(113,133,238,1) 100%)',
-    //     color: '#FFF',
-    //     borderRadius: '1em',
-    //     padding: '0.3em 1em 0.1em',
-    //     fontSize: '0.9em',
-    //     textTransform: 'uppercase',
-    //     fontWeight: 300,
-    // },
     title: {
-        // fontSize: '1.2em',
-        // lineHeight: 1.4,
-        // marginBottom: '0.2em',
         ...css.articleBigTitle,
-        // maxHeight: '2.7em',
-        // color: '#333',
-        // overflow: 'hidden',
-        // position: 'relative',
         width: '70%',
-        // fontWeight: 600,
-        // display: 'block',
     },
-    // shadow: {
-    //     position: 'absolute',
-    //     left: 0,
-    //     right: 0,
-    //     bottom: 0,
-    //     height: '50%',
-    //     background: 'linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 100%)',
-    //     zIndex: 20,
-    // },
     coverImage: {
         width: '5em',
-
     },
     cover: {
         height: '2em',
@@ -131,15 +96,19 @@ class NewArticles extends Component {
                 <div className={classes.main}>
                     {articles.map(article =>
                        <div className={classes.item} key={`new_articles_${article.id}`}>
-                            <Link to={`/article/${article.id}`}
-                                  style={{backgroundImage:'url(' + article.image_path + ')' }}
-                                  className={classes.preview} />
-                            <div className={classes.inner}>
+                           <Link to={`/article/${article.id}`}>
+                               <ProgressiveImage
+                                   src={article.image_path}
+                                   preview={article.image_path_resized}
+                                   className={classes.preview}
+                                   alt={article.title}
+                               />
+                           </Link>
+                           <div className={classes.inner}>
                                 <div className={classes.over}>
                                     <Link to={`/article/${article.id}`} className={classes.title}>
                                         {capitalize(article.title.toLowerCase())}
                                     </Link>
-                                    {/*<div className={classes.shadow} />*/}
                                 </div>
                                 <div className={classes.detailsContainer}>
                                     <div className={classes.cover}>
@@ -152,8 +121,8 @@ class NewArticles extends Component {
                                         {article.journal_name}, <br/> {toRuMonthYearLocale(article.content_date)}
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                           </div>
+                       </div>
                     )}
                 </div>
             </div>

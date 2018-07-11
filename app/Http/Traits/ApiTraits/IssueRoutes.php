@@ -183,6 +183,8 @@ trait IssueRoutes{
             Article::injectJournalCovers($main_topics);
 
             ImageProxyService::resize($main_topics, 'image_path', ImageProxyService::COVER_ARTICLE_800);
+            ImageProxyService::resize($main_topics, 'issue_cover', ImageProxyService::ISSUE_STANDARD_500);
+
 
             return $main_topics;
         });

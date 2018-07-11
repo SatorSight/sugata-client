@@ -42,20 +42,20 @@ class test extends Command
      */
     public function handle()
     {
-        $articles = Article::find([39595, 39548]);
 
-        Article::injectWithImages($articles);
+        $image_path = 'public/images/test/o.jpg';
+        $new_image_path = 'public/images/test/o2.jpg';
 
-        ImageProxyService::resize($articles, 'image_path', ImageProxyService::ARTICLE_PREVIEW_200);
+        $img = new \imagick($image_path);
 
-//        foreach ($articles as $article){
-//            SUtils::dump_console($article->image_path);
-//        }
+//        $img->scaleImage(20, 0);
 
-        foreach ($articles as $article){
-            SUtils::dump($article->image_path);
-        }
+        $img->setImageCompression(\imagick::COMPRESSION_JPEG);
+        $img->setImageCompressionQuality(20);
 
+        $img->writeImage($new_image_path);
+
+//        SUtils::dump_console(file_exists($image_path));
 
 
 

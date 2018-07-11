@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { toRuMonthYearLocale } from '../Helpers/SUtils';
 import { withStyles } from 'material-ui/styles';
 import SectionTitle from './SectionTitle';
+import ProgressiveImage from './../Helpers/ProgressiveImage';
 
 import * as css from '../Helpers/cssConstants';
 
@@ -25,33 +26,6 @@ const styles = {
         justifyContent: 'center',
         marginBottom: '0.8em',
     },
-    titles: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        margin: '0 1em'
-    },
-    otherLink: {
-        fontWeight: 500,
-        textAlign: 'right',
-        display: 'flex',
-        height: '5rem',
-
-    },
-    arrow: {
-        borderRight: '0.15rem solid black',
-        borderBottom: '0.15rem solid black',
-        width: '0.6rem',
-        height: '0.6rem',
-        transform: 'rotate(-45deg)',
-        marginLeft: '0.5rem',
-        marginTop: '0.33rem',
-    },
-    border: {
-        borderBottom: '0.2rem solid black',
-        paddingTop: '1.5rem',
-        width: '100rem',
-        position: 'absolute',
-    },
     labels: {
         textAlign: 'center',
         color: 'black',
@@ -65,9 +39,6 @@ const styles = {
     },
     journalDate: {
         ...css.capsMediumText,
-        // fontFamily: 'Montserrat',
-        // fontSize: '0.8em',
-        // textTransform: 'uppercase',
     },
 };
 
@@ -92,7 +63,12 @@ class NewIssues extends PureComponent {
                         <div key={`new_issues_${issue.id}`} className={classes.imageContainer}>
                             <Link to={`/issue/${issue.id}`} className={classes.item}>
                                 <div className={classes.imageDiv}>
-                                    <img className={classes.image} src={issue.image_path} alt=""/>
+                                    <ProgressiveImage
+                                        src={issue.image_path}
+                                        preview={issue.image_path_resized}
+                                        className={classes.image}
+                                        alt={issue.name}
+                                    />
                                 </div>
                                 <div className={classes.labels}>
                                     <div className={classes.journalName}>{issue.journal_name}</div>

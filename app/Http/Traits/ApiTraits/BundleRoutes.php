@@ -92,6 +92,8 @@ trait BundleRoutes{
             Article::injectJournalCovers($last_cover_articles);
 
             ImageProxyService::resize($last_cover_articles, 'image_path', ImageProxyService::COVER_ARTICLE_800);
+            ImageProxyService::resize($last_cover_articles, 'issue_cover', ImageProxyService::ISSUE_STANDARD_500);
+
 
             return $last_cover_articles;
         });

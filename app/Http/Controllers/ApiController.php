@@ -48,4 +48,21 @@ class ApiController extends Controller
     use BundleRoutes;
     use ArticleRoutes;
     use AllIssuesRoutes;
+
+
+    public function test(){
+
+
+        $image_path = public_path() . '/images/test/o.jpg';
+        $new_image_path = public_path() . '/images/test/o2.jpg';
+
+        $img = new \imagick($image_path);
+        $img->setImageCompression(\imagick::COMPRESSION_JPEG);
+        $img->setImageCompressionQuality(2);
+
+        $img->writeImage($new_image_path);
+
+        return 'done';
+    }
+
 }

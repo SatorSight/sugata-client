@@ -80,3 +80,6 @@ Route::get('/issue/more_new_articles/{issue_id}/{from}/', 'ApiController@issueGe
 Route::get('/issue/other_issues/{issue_id}/', 'ApiController@issueGetOtherIssues');
 
 Route::get('/auth/bundles/', 'ApiController@indexGetBundles');
+
+
+//Route::get('/test/', 'ApiController@test');

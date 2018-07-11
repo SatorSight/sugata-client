@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
 import SectionTitle from './SectionTitle';
+import ProgressiveImage from '../Helpers/ProgressiveImage';
 
 import { toRuMonthYearLocale, capitalize, empty } from '../Helpers/SUtils';
 
@@ -19,14 +20,6 @@ const styles = {
         width: '100%',
         overflowX: 'hidden'
     },
-    title: {
-        fontSize: '1.2em',
-        textTransform: 'uppercase',
-        fontWeight: 400,
-        padding: '2.41em 0 1.3em',
-        letterSpacing: '0.15em',
-        textAlign: 'center',
-    },
     swiper: {
         padding: '0 2.5em 0 1em',
         overflowX: 'none',
@@ -35,15 +28,12 @@ const styles = {
     mainSwiper: {
         position: 'relative',
     },
-    IssuesSwiper: {
-        padding: 10,
-    },
     slideSwiper: {
         paddingRight: '1em',
         minHeight: '32em',
     },
     imgSwiper: {
-        width: 'auto',
+        // width: 'auto',
         borderRadius: '0.5em',
         height: '20em',
         backgroundRepeat: 'no-repeat',
@@ -59,38 +49,6 @@ const styles = {
         position: 'relative',
         padding: '1.5em 1em 1.1em 10em',
         height: '7em',
-    },
-    // textSwiper: {
-    //     fontSize: '1.2em',
-    //     marginBottom: '1em',
-    // },
-    ulSwiper: {
-        overflowX: 'hidden'
-    },
-    captionSwiper: {
-        overflow: 'hidden',
-        width: '100%',
-        margin: '1em 0',
-        opacity: 0,
-    },
-    captionColorSwiper: {
-        // display: 'block',
-        // fontWeight: 300,
-        // letterSpacing: '0.1em',
-        // background: 'linear-gradient(to right, rgba(104,216,181,1) 0%, rgba(113,133,238,1) 100%)',
-        // color: '#FFF',
-        // borderRadius: '1em',
-        // padding: '0.3em 1em 0.1em',
-        // fontSize: '0.9em',
-        // textTransform: 'uppercase',
-        // whiteSpace: 'nowrap',
-        // textOverflow: 'ellipsis',
-        // overflow: 'hidden',
-        // float: 'left',
-        // maxWidth: '98%',
-    },
-    captionLinkSwiper: {
-        color: '#FFF',
     },
     imageLink: {
         display: 'block',
@@ -157,7 +115,6 @@ class BigArticles extends PureComponent {
                         link={this.props.link || '/'}
                         no_links={this.props.no_links}
                     />
-                    {/*<h1 className={classes.sectionTitle}>Темы номера</h1>*/}
                     <SwipeableViews
                         className={classes.swiper}
                         index={index}
@@ -171,9 +128,22 @@ class BigArticles extends PureComponent {
                                     onClick={this.linkClickHandler}
                                     draggable={false}
                                     to={`/article/${article.id}`}
-                                    className={classes.imgSwiper}
-                                    style={{backgroundImage:`url('${article.image_path}')`}}
-                                />
+                                    style={{
+                                        width: 'auto',
+                                        // height: '20em',
+                                        display: 'block',
+                                    }}
+                                    // className={classes.imgSwiper}
+                                    // style={{backgroundImage:`url('${article.image_path}')`}}
+                                >
+                                    <ProgressiveImage
+                                        src={article.image_path}
+                                        preview={article.image_path_resized}
+                                        style={styles.imgSwiper}
+                                        alt={article.title}
+                                        type={'div'}
+                                    />
+                                </Link>
                                 <div className={classes.infoSwiper}>
                                     <Link
                                         onClick={this.linkClickHandler}
@@ -181,7 +151,12 @@ class BigArticles extends PureComponent {
                                         to={`/issue/${article.issue_id}`}
                                         className={classes.imageLink}
                                     >
-                                        <img className={classes.magSwiper} src={article.issue_cover} alt={article.title} />
+                                        <ProgressiveImage
+                                            src={article.issue_cover}
+                                            preview={article.issue_cover_resized}
+                                            style={styles.magSwiper}
+                                            alt={article.title}
+                                        />
                                     </Link>
                                     <div className={classes.articleTitle}>
                                         <Link
