@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import AllIssuesView from '../Pages/AllIssuesPage/AllIssuesView';
+import AllIssuesView from './AllIssuesPageComponents/AllIssuesView';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const mapStateToProps = state => ({
     loading: state.server.loading,
@@ -17,15 +18,15 @@ class AllIssuesJournalPage extends Component {
         return (
             !this.props.loading && <div>
                 <Header />
-                <AllIssuesView
-                    h3={'Все выпуски'}
-                />
+                <AllIssuesView h3={'Все выпуски'}/>
                 <Footer />
             </div>
         );
     }
 }
 
-export default connect(
-    mapStateToProps,
-)(AllIssuesJournalPage);
+AllIssuesJournalPage.propTypes = {
+    loading: PropTypes.bool.isRequired,
+};
+
+export default connect(mapStateToProps)(AllIssuesJournalPage);

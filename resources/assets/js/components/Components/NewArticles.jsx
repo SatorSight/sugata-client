@@ -3,10 +3,9 @@ import { toRuMonthYearLocale, capitalize } from './../Helpers/SUtils';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../Components/SectionTitle';
 import ProgressiveImage from '../Helpers/ProgressiveImage';
-
+import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import * as css from '../Helpers/cssConstants';
-
 
 const styles = {
     main: {
@@ -78,13 +77,7 @@ class NewArticles extends Component {
     }
 
     render() {
-
-        // console.log('articles  ---');
-        // console.log(this.props.articles);
-
-        const articles =  this.props.articles;
-        const { classes } = this.props;
-
+        const { classes, articles } = this.props;
         return (
             <div className={classes.sectionWrapper}>
                 <SectionTitle
@@ -130,5 +123,14 @@ class NewArticles extends Component {
         );
     }
 }
+
+NewArticles.propTypes = {
+    articles: PropTypes.arrayOf(PropTypes.object),
+    title: PropTypes.string,
+    link: PropTypes.string,
+    label: PropTypes.string,
+    no_links: PropTypes.bool,
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(Object.assign({}, styles, css))(NewArticles);

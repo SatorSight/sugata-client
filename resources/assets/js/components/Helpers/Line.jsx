@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import PropTypes from 'prop-types';
 
 const styles = {
     line: {
@@ -15,7 +16,7 @@ const styles = {
     },
 };
 
-export default class Line extends PureComponent {
+class Line extends PureComponent {
     constructor(props){
         super(props);
     }
@@ -31,3 +32,10 @@ export default class Line extends PureComponent {
         </div>
     }
 }
+
+Line.propTypes = {
+    color: PropTypes.string,
+    style: PropTypes.object,
+};
+
+export default Line;

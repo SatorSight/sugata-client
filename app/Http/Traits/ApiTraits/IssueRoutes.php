@@ -290,6 +290,8 @@ trait IssueRoutes{
             Issue::injectWithJournalNames($issues);
             Issue::injectWithJournalLogo($issues);
 
+            ImageProxyService::resize($issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
+
             return $issues;
         });
 

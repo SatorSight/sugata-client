@@ -7,6 +7,7 @@ import BigArticles from '../../containers/BigArticles';
 import NewArticles from '../../containers/NewArticles';
 import PopularJournals from '../../containers/PopularJournals';
 import Footer from '../Components/Footer';
+import PropTypes from 'prop-types';
 
 const mapStateToProps = state => ({
     loading: state.server.loading,
@@ -31,6 +32,8 @@ class IssuePage extends Component {
     }
 }
 
-export default connect(
-    mapStateToProps,
-)(IssuePage);
+IssuePage.propTypes = {
+    loading: PropTypes.bool.isRequired,
+};
+
+export default connect(mapStateToProps)(IssuePage);

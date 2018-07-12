@@ -1,13 +1,14 @@
 import React, { PureComponent } from "react";
 import _ProgressiveImage from 'react-progressive-image';
+import PropTypes from 'prop-types';
 
 const styles = {
     imageStyle: {
-        transition: 'filter 1s ease',
+        transition: 'filter 0.5s ease',
     },
 };
 
-export default class ProgressiveImage extends PureComponent {
+class ProgressiveImage extends PureComponent {
     constructor(props){
         super(props);
 
@@ -54,3 +55,14 @@ export default class ProgressiveImage extends PureComponent {
         );
     }
 }
+
+ProgressiveImage.propTypes = {
+    src: PropTypes.string.isRequired,
+    preview: PropTypes.string,
+    className: PropTypes.string,
+    alt: PropTypes.string,
+    style: PropTypes.object,
+    type: PropTypes.string, //default is <img>, set div for <div style="background: '...'">
+};
+
+export default ProgressiveImage;

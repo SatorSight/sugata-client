@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { open, close } from '../actions/NavMenuActions';
+import { open, close } from '../actions/nav_menu';
 import Menu from '../components/Components/NavMenu';
 
 const mapStateToProps = state => ({

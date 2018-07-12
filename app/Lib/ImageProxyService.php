@@ -33,6 +33,7 @@ class ImageProxyService{
             $image_resized_path = $resized_dir_path . '/' . $file_name;
             $image_preview_path = $preview_dir_path . '/' . $file_name;
             $image_public_path = '/' . self::BASE_DIR . '/' . $size . '/' . $file_name;
+            $image_public_resized_path = '/' . self::PREVIEW_DIR . '/' . $size . '/' . $file_name;
 
             if(!file_exists($image_resized_path) && file_exists($image_absolute_path)){
                 $img = new \imagick($image_absolute_path);
@@ -57,7 +58,7 @@ class ImageProxyService{
 
             $resized_key = $key.'_resized';
             $entity->$key = $image_public_path;
-            $entity->$resized_key = $image_public_path;
+            $entity->$resized_key = $image_public_resized_path;
             return $entity;
         });
     }

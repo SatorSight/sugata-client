@@ -4,6 +4,7 @@ import { toRuMonthYearLocale } from '../Helpers/SUtils';
 import { withStyles } from 'material-ui/styles';
 import SectionTitle from './SectionTitle';
 import ProgressiveImage from './../Helpers/ProgressiveImage';
+import PropTypes from 'prop-types';
 
 import * as css from '../Helpers/cssConstants';
 
@@ -83,5 +84,14 @@ class NewIssues extends PureComponent {
         );
     }
 }
+
+NewIssues.propTypes = {
+    issues: PropTypes.arrayOf(PropTypes.object),
+    title: PropTypes.string,
+    link: PropTypes.string,
+    label: PropTypes.string,
+    no_links: PropTypes.bool,
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(Object.assign({}, styles, css))(NewIssues);

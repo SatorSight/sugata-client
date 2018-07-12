@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const STYLES = {
     container: {
@@ -114,5 +115,9 @@ class Waiter extends Component {
 const mapStateToProps = state => ({
     loading: state.server.loading,
 });
+
+Waiter.propTypes = {
+    loading: PropTypes.bool.isRequired,
+};
 
 export default connect(mapStateToProps)(Waiter);

@@ -1,17 +1,14 @@
 import React, { PureComponent } from "react";
 import { Link } from 'react-router-dom';
-
 import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
 import SectionTitle from './SectionTitle';
 import ProgressiveImage from '../Helpers/ProgressiveImage';
-
 import { toRuMonthYearLocale, capitalize, empty } from '../Helpers/SUtils';
-
 import 'react-id-swiper/src/styles/css/swiper.css';
 import { withStyles } from 'material-ui/styles';
-
 import * as css from '../Helpers/cssConstants';
+import PropTypes from 'prop-types';
 
 const styles = {
     root: {
@@ -33,7 +30,6 @@ const styles = {
         minHeight: '32em',
     },
     imgSwiper: {
-        // width: 'auto',
         borderRadius: '0.5em',
         height: '20em',
         backgroundRepeat: 'no-repeat',
@@ -130,11 +126,8 @@ class BigArticles extends PureComponent {
                                     to={`/article/${article.id}`}
                                     style={{
                                         width: 'auto',
-                                        // height: '20em',
                                         display: 'block',
                                     }}
-                                    // className={classes.imgSwiper}
-                                    // style={{backgroundImage:`url('${article.image_path}')`}}
                                 >
                                     <ProgressiveImage
                                         src={article.image_path}
@@ -184,5 +177,14 @@ class BigArticles extends PureComponent {
         );
     }
 }
+
+BigArticles.propTypes = {
+    articles: PropTypes.arrayOf(PropTypes.object),
+    //todo fix this, remove blank array instead of null presence
+    issue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    link: PropTypes.string,
+    label: PropTypes.string,
+    no_links: PropTypes.bool,
+};
 
 export default withStyles(Object.assign({}, styles, css))(BigArticles);

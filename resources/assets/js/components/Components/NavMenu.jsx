@@ -1,43 +1,18 @@
 import React, {Component} from 'react';
-import Tabs, { Tab } from 'material-ui/Tabs';
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles';
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
-import SwipeableViews from 'react-swipeable-views';
 import * as SUtils from "../Helpers/SUtils";
-import { Link } from 'react-router-dom'
-
-const fontWeightMedium = 400;
-
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 const theme = createMuiTheme({});
-
-const colors = [
-    'rgba(137,78,141, 1)',
-    'rgba(171,15,15, 1)',
-    'rgba(125,61,255, 1)',
-    'rgba(143,194,80, 1)'
-];
-
-let iterator = 0;
-const get_color = () => {
-    const color = colors[iterator];
-
-    iterator++;
-    if(!colors[iterator])
-        iterator = 0;
-
-    return color;
-};
-
-
 
 const close = <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 357 357"><g><g id="close">
     <polygon points="357,35.7 321.3,0 178.5,142.8 35.7,0 0,35.7 142.8,178.5 0,321.3 35.7,357 178.5,214.2 321.3,357 357,321.3
 			214.2,178.5"/>
 </g></g>
 </svg>;
-
 
 const arrow = <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 492 492">
     <g>
@@ -49,9 +24,6 @@ const arrow = <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25
 			C492,219.198,479.172,207.418,464.344,207.418z"/>
     </g>
 </svg>;
-
-
-
 
 const get_lock = () => <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 47.002 47.002">
     <g>
@@ -68,7 +40,6 @@ const get_lock = () => <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" 
 			c2.062,0,3.499,1.094,3.499,2.077C27,43.633,25.562,44.729,23.501,44.729z"/>
     </g>
 </svg>;
-
 
 const get_check = () => <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px"  viewBox="0 0 342.357 342.357">
     <g>
@@ -98,9 +69,6 @@ const styles = {
     drawerInner: {
         width: '18rem',
     },
-
-
-
     backToMain: {
         display: 'flex',
         padding: '0.6rem 2rem 0.5rem',
@@ -114,12 +82,6 @@ const styles = {
         alignItems: 'center',
         marginLeft: '1rem',
     },
-
-
-
-
-
-
     bundlesContainer: {
         padding: '1rem 1rem 2rem 2rem'
     },
@@ -138,7 +100,6 @@ const styles = {
     },
     circle: {
         backgroundColor: 'white',
-        // border: '3px solid ' + get_color(),
         height: '1.8rem',
         borderRadius: '50%',
         width: '1.8rem',
@@ -151,10 +112,6 @@ const styles = {
         left: '-1.7rem',
         top: '0.3rem',
     },
-
-
-
-
     header: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -168,8 +125,6 @@ const styles = {
         textTransform: 'uppercase',
         letterSpacing: '0.1rem',
         textAlign: 'center',
-        // marginBottom: '0.5em',
-
         margin: '0 auto',
     },
 };
@@ -183,10 +138,6 @@ class Menu extends Component {
 
     render() {
         const { classes, bundles } = this.props;
-
-        console.log('menu props');
-        console.log(this.props);
-
         return (
             <MuiThemeProvider theme={theme}>
                 <div className={classes.menuWrapper}>
@@ -211,27 +162,18 @@ class Menu extends Component {
                             </Link>
                             <div className={classes.bundlesContainer}>
                                 {bundles.map(bundle => {
-                                    const color = get_color();
                                     return (
                                         <div key={`menu_bundle_${bundle.id}`}>
                                             <div className={classes.bundleWrapper}>
                                                 <div
                                                     className={classes.bundle}
-                                                    style={{
-                                                        borderBottom: `1px solid black`,
-                                                    }}
+                                                    style={{borderBottom: `1px solid black`}}
                                                 >
                                                     <Link onClick={this.props.doClose} style={{color: 'black'}} to={`/bundle/${bundle.id}`}>
                                                         {bundle.name}
                                                     </Link>
                                                 </div>
                                                 <div className={classes.lock}>
-                                                    {/*<div*/}
-                                                        {/*className={classes.circle}*/}
-                                                        {/*style={{*/}
-                                                            {/*border: '3px solid ' + color,*/}
-                                                        {/*}}*/}
-                                                    {/*></div>*/}
                                                     <div className={classes.lockIcon}>
                                                         {this.bundleSubscribed(bundle.id) ? get_check() : get_lock()}
                                                     </div>
@@ -247,5 +189,14 @@ class Menu extends Component {
         );
     }
 }
+
+Menu.propTypes = {
+    bundles: PropTypes.arrayOf(PropTypes.object),
+    auth_data: PropTypes.object,
+    doOpen: PropTypes.func.isRequired,
+    doClose: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(styles)(Menu);

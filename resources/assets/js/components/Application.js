@@ -9,16 +9,12 @@ import BundlePage from './Pages/BundlePage'
 import IssuePage from './Pages/IssuePage'
 import ArticlePage from './Pages/ArticlePage'
 import JournalPage from './Pages/JournalPage'
-// import TagPage from './Pages/TagPage'
 import AllIssuesJournal from './Pages/AllIssuesJournalPage'
 import AllIssuesBundle from './Pages/AllIssuesBundlePage'
 import JustSubscribedDialog from './Components/JustSubscribedDialog'
 
 import NotFound404 from './Components/NotFound404'
-// import TestComponent from './Components/TestComponent'
-
 import Waiter from './Helpers/Waiter';
-
 
 export default class Application extends PureComponent {
     constructor(props){
@@ -33,7 +29,6 @@ export default class Application extends PureComponent {
                     <div>
                         <Route path="/*" component={JustSubscribedDialog}/>
                         <Route path="/*" component={DataLoader}/>
-
                         <Switch>
                             <Route exact path="/" component={MainPage}/>
                             <Route path="/auth" component={AuthPage}/>

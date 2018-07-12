@@ -1,17 +1,14 @@
 import React, { PureComponent } from "react";
 import { Link } from 'react-router-dom';
 import Swiper from 'react-id-swiper';
-
+import PropTypes from 'prop-types';
 import 'react-id-swiper/src/styles/css/swiper.css';
 import { withStyles } from 'material-ui/styles';
-
 import * as css from '../Helpers/cssConstants';
 import Line from '../Helpers/Line';
 
 const cover_style = {
     width: '4em',
-    // position: 'absolute',
-    // display: 'flex',
 };
 
 const styles = {
@@ -42,12 +39,10 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        // marginTop: '0.5em',
         margin: '0.5em 1em 0',
     },
     journalName: {
         margin: '0.1rem 1em',
-
     },
     textContainer: {
         position: 'absolute',
@@ -74,8 +69,6 @@ const styles = {
         color: 'white',
         opacity: '0.5',
     },
-
-
     //default + height
     swiperContainer: {
         margin: '0 auto',
@@ -86,7 +79,6 @@ const styles = {
         zIndex: 1,
         height: '14.5em',
     },
-
     coversContainer: {
         width: '100%',
         height: '100%',
@@ -95,7 +87,6 @@ const styles = {
         alignItems: 'center',
 
     },
-
     cover_wrapper1:{
         display: 'flex',
         height: '100%',
@@ -126,32 +117,21 @@ const styles = {
         position: 'absolute',
         right: '-2em',
     },
-
-
     cover1: {
         ...cover_style,
-        // left: 0,
-        // top: 0,
     },
     cover2: {
         ...cover_style,
-        // left: 0,
-        // bottom: 0,
     },
     cover3: {
         ...cover_style,
-        // right: 0,
-        // top: 0,
     },
     cover4: {
         ...cover_style,
-        // right: 0,
-        // bottom: 0,
     },
     sectionWrapper: {
         ...css.sectionWrapper,
     },
-
 };
 
 class BundlesSwiper extends PureComponent {
@@ -173,16 +153,10 @@ class BundlesSwiper extends PureComponent {
     });
 
     render() {
-        const bundles = this.props.bundles;
-        const { classes } = this.props;
-
+        const { classes, bundles } = this.props;
         const params = this.get_swiper_params(classes);
-
         return (
             <div className={classes.sectionWrapper}>
-                {/*<div className={classes.d}>*/}
-                    {/*<div className={classes.d1}></div>*/}
-                {/*</div>*/}
                 <div className={classes.swiperContainerOuter}>
                     <Swiper {...params}>
                         {bundles.map(bundle =>
@@ -213,17 +187,17 @@ class BundlesSwiper extends PureComponent {
                                     </div>
                                 </div>
                                 <img className={classes.bundleImage} src={bundle.image_path} alt={bundle.name}/>
-                                <div className={classes.coversContainer}>
-                                    {bundle.issue_covers.map((cover, index) =>
-                                        <div key={`bundle_issue_covers_${bundle.id}_${index}`}
-                                             className={classes[`cover_wrapper${index + 1}`]}>
-                                            <img
-                                                src={cover}
-                                                className={classes[`cover${index + 1}`]}
-                                            ></img>
-                                        </div>
-                                    )}
-                                </div>
+                                {/*<div className={classes.coversContainer}>*/}
+                                    {/*{bundle.issue_covers.map((cover, index) =>*/}
+                                        {/*<div key={`bundle_issue_covers_${bundle.id}_${index}`}*/}
+                                             {/*className={classes[`cover_wrapper${index + 1}`]}>*/}
+                                            {/*<img*/}
+                                                {/*src={cover}*/}
+                                                {/*className={classes[`cover${index + 1}`]}*/}
+                                            {/*></img>*/}
+                                        {/*</div>*/}
+                                    {/*)}*/}
+                                {/*</div>*/}
                             </div>
                         )}
                     </Swiper>
@@ -232,5 +206,9 @@ class BundlesSwiper extends PureComponent {
         );
     }
 }
+
+BundlesSwiper.propTypes = {
+    bundles: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default withStyles(styles)(BundlesSwiper);

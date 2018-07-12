@@ -1,136 +1,17 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
-
 import Article from './Article';
 import * as SUtils from '../../../Helpers/SUtils';
 import Dialog, {
     DialogContent,
 } from 'material-ui/Dialog';
-
 import ReaderInfo from '../../../Components/ReaderInfo';
-
 import { getResource } from '../../../Helpers/dataComposer';
-import { paymentTrigger, userHasAccess, redirectToAuth } from '../../../Helpers/paymentTrigger';
-
+import { redirectToAuth, userHasAccess } from '../../../Helpers/paymentTrigger';
 import { pageVisit } from '../../../../actions/page_tracker';
-
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const styles = {
-    header: {
-        width: '100%',
-        // height: '100%',
-        height: '4.7rem',
-        position: 'relative',
-        background: '#000',
-        zIndex: 50,
-    },
-    item: {
-        width: '100%',
-        backgroundColor: '#000',
-        position: 'relative',
-    },
-    indexMenu:{
-        position: 'absolute',
-        left: '1em',
-        top: '50%',
-        transform: 'translate(0, -50%)',
-        zIndex: 50,
-    },
-    inner_header: {
-        width: '100%',
-        position: 'relative',
-        zIndex: 20,
-    },
-    left: {
-        overflow: 'hidden',
-        boxShadow: 'rgba(0, 0, 0, 0.3) 0.1em -0.1em 0.3em',
-        borderRadius: '0.2em',
-        float: 'left',
-        width: '5.6em',
-        maxHeight: '6em',
-        margin: '1em 1.2em -1em 4.6em',
-    },
-    magLeft: {
-        width: '100%',
-        float: 'left',
-    },
-    url: {
-        display: 'block',
-        overflow: 'hidden',
-        textDecoration: 'none',
-        maxHeight: '5em',
-    },
-    right: {
-        overflow: 'hidden',
-        borderRadius: '0.2em',
-        marginLeft: '7.4em',
-        padding: '1.8em 0 1.3em',
-        maxWidth: '50%',
-    },
-    title: {
-        fontSize: '1.2em',
-        textTransform: 'uppercase',
-        fontFamily: 'HelveticaNeueCyr, sans-serif',
-        // fontWeight: 200,
-        letterSpacing: 4,
-        color: '#fff',
-        marginBottom: '0.3em',
-        lineHeight: 1.2,
-    },
-    captionColorSwiper: {
-        display: 'inline',
-        fontFamily: 'HelveticaNeueCyr, sans-serif',
-        color: '#FFF',
-        borderRadius: '1em',
-        padding: '0.4em 0.6em 0.2em 0.8em',
-        fontSize: '0.9em',
-        // fontWeight: 200,
-        letterSpacing: '0.2em',
-        lineHeight: 1.6,
-        textTransform: 'uppercase',
-        border: '1px solid #FFF',
-    },
-    bg: {
-        zIndex: 10,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-        overflow: 'hidden',
-    },
-    imgBg: {
-        zIndex: 10,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        width: '100%',
-        opacity: '0.3'
-    },
-    mask: {
-        zIndex: 20,
-        position: 'absolute',
-        top: '-10%',
-        left: 0,
-        width: '80%',
-        height: '200%',
-        overflow: 'hidden',
-        background: 'radial-gradient(ellipse at center, rgba(0,125,192,1) 0%, rgba(19,83,186,1) 20%, rgba(58,0,174,0.2) 60%, rgba(58,0,174,0) 70%)',
-        opacity: 0.6,
-        maxWidth:'30em',
-    },
-    shadow: {
-        zIndex: 20,
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: '15%',
-        overflow: 'hidden',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%)',
-        opacity: 0.6,
-    },
     arrowNext: {
         position: 'fixed',
         right: 0,
@@ -166,7 +47,6 @@ const styles = {
         top: 0,
         bottom: 0,
     },
-
     background: {
         position: 'fixed',
         overflow: 'hidden',
@@ -178,16 +58,12 @@ const styles = {
         minHeight: '100vh',
         background:'#FFF',
     },
-
     _root: {
         backgroundColor: '#FFF',
         position: 'relative',
         overflow: 'hidden',
         zIndex: 20,
-        // minHeight: '100vh',
         minHeight: 'calc(100vh - 12.7rem)',
-
-
         lineHeight: '1.4',
         fontFamily: 'serif',
         textAlign: 'left',
@@ -210,7 +86,6 @@ const styles = {
         background:'url("data:image/gif;base64,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") no-repeat 50% 20% #FFF',
         zIndex: 25,
     },
-
     pageMask: {
         position: 'fixed',
         overflow: 'hidden',
@@ -222,9 +97,7 @@ const styles = {
         minHeight: '100vh',
         background:'rgba(0,0,0,0.5)',
     },
-
     //next article
-
     next_article_item: {
         width: '100%',
         // backgroundColor: '#000',
@@ -233,9 +106,6 @@ const styles = {
         minHeight: '8rem',
         zIndex: 50,
         cursor: 'pointer',
-    },
-    next_article_itemEnd: {
-        display: 'none',
     },
     next_article_inner: {
         width: '100%',
@@ -254,7 +124,6 @@ const styles = {
     },
     next_article_url: {
         display: 'block',
-        // overflow: 'hidden',
     },
     next_article_magLeft: {
         width: '100%',
@@ -305,33 +174,6 @@ const styles = {
         border: '1px solid #FFF',
         opacity: 0.8,
     },
-    next_article_off: {
-        zIndex: 30,
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        bottom: 0,
-        overflow: 'hidden',
-        backgroundColor: "#000",
-    },
-    next_article_imgBg: {
-        zIndex: 10,
-        position: 'absolute',
-        top: '50%',
-        transform: 'translate(0, -50%)',
-        right: 0,
-        width: '100%',
-        opacity: '0.3'
-    },
-    url_title: {
-        display: 'block',
-        overflow: 'hidden',
-        textDecoration: 'none',
-        maxHeight: '5em',
-        color: '#fff',
-        padding: '0.1em'
-    },
     dialog:{
         minWidth: 240,
     },
@@ -365,21 +207,18 @@ const styles = {
     },
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        article: getResource(state, 'article'),
-        journal: getResource(state, 'journal'),
-        issue: getResource(state, 'issue'),
-        bundle: getResource(state, 'bundle'),
-        auth_data: getResource(state, 'auth_data'),
-        pages_visited: state.pageTracker.pages_viewed,
-    }
-};
+const mapStateToProps = state => ({
+    article: getResource(state, 'article'),
+    journal: getResource(state, 'journal'),
+    issue: getResource(state, 'issue'),
+    bundle: getResource(state, 'bundle'),
+    auth_data: getResource(state, 'auth_data'),
+    pages_visited: state.pageTracker.pages_viewed,
+});
 
 const mapDispatchToProps = dispatch => ({
     pageVisit: () => dispatch(pageVisit()),
 });
-
 
 let originalX = 0;
 let originalY = 0;
@@ -388,19 +227,10 @@ class Reader extends Component {
     constructor(props){
         super(props);
 
-        console.log('reader props');
-        console.log(props);
-
         this.state = {
             current: new Article(),
             prev: new Article(),
             next: new Article(),
-
-            // pages_loaded: 0,
-
-
-            // originalX: 0,
-            // originalY: 0,
 
             zIndexNext: 0,
             zIndexPrev: 0,
@@ -564,18 +394,12 @@ class Reader extends Component {
         const touch = e.touches[0];
         originalX = touch.clientX;
         originalY = touch.clientY;
-        // this.setState({ originalX: touch.clientX });
-        // this.setState({ originalY: touch.clientY });
     };
 
     _onTouchMove = (e) => {
-        // let deltaX = Math.abs(this.state.originalX - e.changedTouches[0].clientX);
-        // let deltaY = Math.abs(this.state.originalY - e.changedTouches[0].clientY);
-
         let deltaX = Math.abs(originalX - e.changedTouches[0].clientX);
         let deltaY = Math.abs(originalY - e.changedTouches[0].clientY);
 
-        // const direction = (this.state.originalX - e.changedTouches[0].clientX) > 0 ? 'next' : 'prev';
         const direction = (originalX - e.changedTouches[0].clientX) > 0 ? 'next' : 'prev';
 
         if(direction === 'next')
@@ -585,28 +409,18 @@ class Reader extends Component {
 
         if (deltaX > this.minDistance && deltaY < this.minDistance) {
             const touch = e.changedTouches[0];
-            // let move = touch.clientX - this.state.originalX;
             let move = touch.clientX - originalX;
 
             this.setState({ indent: move });
-            // this.setState({ originalY: e.changedTouches[0].clientY});
-            // indent = move;
             originalY = e.changedTouches[0].clientY;
-            // this.setState({ originalY: e.changedTouches[0].clientY});
         }
         else
-            // indent = 0;
             this.setState({ indent: 0 });
     };
 
     _onTouchEnd = (e) => {
-        // let deltaX = Math.abs(this.state.originalX - e.changedTouches[0].clientX);
-        // let deltaY = Math.abs(this.state.originalY - e.changedTouches[0].clientY);
-
         let deltaX = Math.abs(originalX - e.changedTouches[0].clientX);
         let deltaY = Math.abs(originalY - e.changedTouches[0].clientY);
-
-        // const direction = e.changedTouches[0].clientX - this.state.originalX < 0 ? 'next' : 'prev';
         const direction = e.changedTouches[0].clientX - originalX < 0 ? 'next' : 'prev';
 
         if (deltaX > this.minDistance && deltaY < this.minDistance){
@@ -649,19 +463,18 @@ class Reader extends Component {
         if(!number)
             return 0;
 
-
         if(number < 4)
             return number;
+
         if(SUtils.sequenceBroken(pages)){
             return parseInt(number) - 1;
         }
         return number;
     };
 
-
     render() {
         const stylesImg = 'img {max-width: 100%;}';
-        const { journal, issue, article } = this.props;
+        const { journal, issue } = this.props;
 
         let current_page_number = null;
         let current_next_article_image_path = null;
@@ -767,10 +580,6 @@ class Reader extends Component {
                                 </div>
                             </div>
                         </div>
-                        {/*<div style={styles.next_article_off}>*/}
-                            {/*<img style={styles.next_article_imgBg} src="/images/header.jpg" alt={current_next_article_title} />*/}
-                            {/*<div style={styles.next_article_mask} />*/}
-                        {/*</div>*/}
                     </div>
                 </div>
 
@@ -860,6 +669,22 @@ class Reader extends Component {
         );
     }
 }
+
+Reader.propTypes = {
+    //todo remove array
+    journal: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    issue: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    article: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+    bundle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+
+    pages_visited: PropTypes.number,
+    authorized: PropTypes.bool,
+    page_load_limit: PropTypes.number,
+    history: PropTypes.object,
+    auth_data: PropTypes.object,
+
+    pageVisit: PropTypes.func.isRequired,
+};
 
 export default connect(
     mapStateToProps,

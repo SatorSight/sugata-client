@@ -2,56 +2,35 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles';
 import * as css from '../Helpers/cssConstants';
+import PropTypes from 'prop-types';
 
 const styles = {
     titles: {
         display: 'flex',
         justifyContent: 'space-between',
-        // margin: '2em 1em',
-        // margin: '2em 0',
         margin: '0 0 2em 0',
         width: '100%',
         paddingRight: '1em',
-
     },
     otherLink: {
         fontWeight: 500,
         textAlign: 'right',
-
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-
-        // height: '5rem',
-
     },
     otherLinkInner: {
         marginRight: '1em',
-
-
-
-        // borderBottom: '0.2rem solid black',
-        // paddingTop: '1.5rem',
-        // width: '9.5rem',
-        // width: '100%',
-
-        // position: 'absolute',
-        // right: 0,
     },
     border: {
         borderBottom: '0.2rem solid black',
         paddingTop: '1rem',
-        // width: '9.5rem',
         width: '50%',
-
         position: 'absolute',
         right: 0,
-
-
     },
     arrowContainer: {
         marginTop: '5px',
-        // margin: '0.3rem -1rem 0 1rem',
     },
 };
 
@@ -62,7 +41,6 @@ class SectionTitle extends PureComponent {
 
     render() {
         const {title, link_label, link, no_links, classes} = this.props;
-
         return (
             <div className={classes.titles}>
                 <div className={classes.sectionTitle}>
@@ -88,5 +66,13 @@ class SectionTitle extends PureComponent {
         );
     }
 }
+
+SectionTitle.propTypes = {
+    title: PropTypes.string.isRequired,
+    link_label: PropTypes.string,
+    link: PropTypes.string,
+    no_links: PropTypes.bool,
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(Object.assign({}, styles, css))(SectionTitle);

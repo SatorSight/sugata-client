@@ -5,26 +5,9 @@ import Dialog, {
     DialogTitle,
 } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
+import PropTypes from 'prop-types';
 
 import {withStyles} from 'material-ui/styles';
-
-// const _styles = {
-//     li: {
-//         margin: '0.5em',
-//         // color: 'white',
-//         cursor: 'pointer',
-//         listStyle: 'none',
-//         fontWeight: 300,
-//         fontSize: '1.1em',
-//         textDecoration: 'underline',
-//         color: 'rgb(102, 102, 102)'
-//
-//     },
-//     info: {
-//         fontWeight: 300,
-//         color: 'white',
-//     }
-// };
 
 const styles = theme => ({
     root: {
@@ -63,27 +46,21 @@ const styles = theme => ({
     },
     ul: {
         paddingLeft: '1rem',
-        paddingBottiom: '1rem',
-
+        paddingBottom: '1rem',
     },
     li: {
         margin: '0.5em',
-        // color: 'white',
         cursor: 'pointer',
         listStyle: 'none',
         fontWeight: 300,
         fontSize: '1.3em',
-        // textDecoration: 'underline',
         color: 'rgb(200, 200, 200)'
-
     },
     info: {
         fontWeight: 300,
         color: 'white',
     }
 });
-
-
 
 class Licence extends PureComponent {
     constructor(props){
@@ -198,8 +175,6 @@ class Licence extends PureComponent {
         <p>8.3. В случае отказа Абонента от предоставления Контентной услуги предоставление Подписки на Контент производится только после повторного выполнения Абонентом Заказа.</p>
     </div>;
 
-
-
     open = type => {
         if(type === 'info'){
             this.setState({
@@ -225,14 +200,11 @@ class Licence extends PureComponent {
 
     render() {
         const {classes} = this.props;
-
         return <div>
-
             <Dialog
                 maxWidth={'md'}
                 fullWidth={true}
                 className={classes.dialog}
-                // ignoreBackdropClick={true}
                 open={this.state.open}>
                 <DialogTitle>{this.state.dialog_title}</DialogTitle>
                 <DialogContent>
@@ -252,9 +224,12 @@ class Licence extends PureComponent {
                 <li onClick={() => this.open('manage')} className={classes.li}>Управление Услугой</li>
                 <li onClick={() => this.open('term')} className={classes.li}>Правила предоставления услуги</li>
             </ul>
-            {/*<div style={_styles.info}>Стоимость услуги составляет 20 рублей с НДС за 1 календарный день. С размером стоимости услуги и порядком ее списания можно ознакомиться на cайте: Абонентам ПАО «Билайн» — в личном кабинете на сайте my.beeline.ru или позвонив по номеру 88007000611.</div>*/}
         </div>;
     }
 }
+
+Licence.propTypes = {
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(styles, {withTheme: true})(Licence)

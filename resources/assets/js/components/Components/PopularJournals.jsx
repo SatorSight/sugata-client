@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
-
 import SectionTitle from './SectionTitle';
 import { Link } from 'react-router-dom';
 import Swiper from 'react-id-swiper';
 import { withStyles } from 'material-ui/styles';
 import * as css from '../Helpers/cssConstants';
+import PropTypes from 'prop-types';
 
 const styles = {
     item: {
@@ -51,10 +51,9 @@ class PopularJournals extends PureComponent {
     render() {
         const params = this.get_swiper_params();
         const { journals, classes } = this.props;
-
         return (
             <div className={classes.section}>
-                <SectionTitle link={this.props.link || '/'} title={'Популярнейшие издания'}/>
+                <SectionTitle link={this.props.link || '/'} title={this.props.title || 'Популярнейшие издания'}/>
                 <Swiper {...params}>
                     {journals.map(journal =>
                         <div  key={`popular_editions_${journal.id}`} className={classes.item}>
@@ -69,5 +68,14 @@ class PopularJournals extends PureComponent {
         );
     }
 }
+
+PopularJournals.propTypes = {
+    journals: PropTypes.arrayOf(PropTypes.object),
+    title: PropTypes.string,
+    link: PropTypes.string,
+    label: PropTypes.string,
+    no_links: PropTypes.bool,
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(Object.assign({}, styles, css))(PopularJournals);

@@ -4,6 +4,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import { connect } from 'react-redux';
 import { beautifyTel, getGetParameterByName, empty } from '../Helpers/SUtils';
+import PropTypes from 'prop-types';
 
 const styles = {
     dialog:{
@@ -70,15 +71,12 @@ const styles = {
         position: 'relative',
         top: '-1em',
         background: 'white',
-
     },
 };
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        auth_data: state.server.auth_data,
-    }
-};
+const mapStateToProps = state => ({
+    auth_data: state.server.auth_data,
+});
 
 class JustSubscribedDialog extends PureComponent {
     constructor(props){
@@ -118,12 +116,8 @@ class JustSubscribedDialog extends PureComponent {
                             <p>
                                 По данному номеру была
                                 осуществленна подписка на сервис
-                                {/*с тарификацией 7 руб. в день.*/}
                             </p>
                         </div>
-                        {/*<div style={styles.dialogAccount}>*/}
-                            {/*<div onClick={this.go_to_auth} style={styles.dialogAccountInner}>Управление подпиской</div>*/}
-                        {/*</div>*/}
                         <div onClick={() => this.setState({open: false})} style={
                             Object.assign({}, styles.dialogClose, {
                                 background: 'rgb(98,163,234)',
@@ -139,9 +133,8 @@ class JustSubscribedDialog extends PureComponent {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    // mapDispatchToProps,
-)(JustSubscribedDialog);
+JustSubscribedDialog.propTypes = {
+    auth_data: PropTypes.object,
+};
 
-// export default withStyles(styles, {withTheme: true})(Licence)
+export default connect(mapStateToProps)(JustSubscribedDialog);

@@ -12,7 +12,6 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        // marginBottom: '2em',
     },
     subHeader: {
         display: 'flex',
@@ -31,7 +30,6 @@ const styles = {
         display: 'block',
     },
     title: {
-        // fontSize: '2rem',
         fontSize: '8vw',
         letterSpacing: '0.1rem',
         color: 'black',
@@ -40,7 +38,6 @@ const styles = {
         fontFamily: 'Montserrat',
     },
     container: {
-        // marginBottom: '1em',
         position: 'relative',
         zIndex: 50,
         background: 'white',
@@ -77,5 +74,7 @@ class Header extends PureComponent {
         );
     }
 }
+
+Header.propTypes = {};
 
 export default withStyles(styles)(Header);

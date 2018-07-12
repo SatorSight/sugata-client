@@ -3,6 +3,7 @@ import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles
 import Drawer from 'material-ui/Drawer';
 import Button from 'material-ui/Button';
 import * as SUtils from "../Helpers/SUtils";
+import PropTypes from 'prop-types';
 
 const theme = createMuiTheme({});
 
@@ -23,19 +24,6 @@ const styles = {
     bundlesContainer: {
         padding: '0.5rem 1rem 2rem 0.5rem'
     },
-    bundleWrapper: {
-        display: 'flex',
-        marginBottom: '1rem',
-    },
-    bundle: {
-        padding: '0.6rem 0rem 0.5rem',
-        fontWeight: '500',
-        textTransform: 'uppercase',
-        fontSize: '1.2em',
-        fontFamily: 'Montserrat',
-        textAlign: 'left',
-        width: '100%',
-    },
     header: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -49,59 +37,13 @@ const styles = {
         textTransform: 'uppercase',
         letterSpacing: '0.1rem',
         textAlign: 'center',
-        // marginBottom: '0.5em',
-
         margin: '0 auto',
     },
-    
-    
-    listing_root: {
-        display: 'block',
-    },
-    listing_button: {
-        color: '#000',
-        background: 'rgba(0,0,0,0)',
-        cursor: 'pointer',
-        position: 'absolute',
-        right: '2em',
-        top: '50%',
-        transform: 'translate(0, -50%)',
-        border: 0,
-        padding: '1em',
-    },
-    listing_onLoading: {
-        display: 'block',
-    },
-    listing_offLoading: {
-        display: 'none',
-    },
-    listing_onOpen: {
-        display: 'block',
-        position: 'absolute',
-        overflowX: 'hidden',
-        overflowY: 'scroll',
-        left: 0,
-        right: 0,
-        top: '6.2em',
-        bottom: 0,
-        minHeight: '100vh',
-        zIndex: 100,
-        background: 'url(/images/header.jpg) no-repeat 50% -6.2em #000',
-        backgroundSize: '100% auto',
-    },
-    listing_offOpen: {
-        display: 'none',
-    },
-    listing_item: {
-        // padding: '0.5em 0 1.3em',
-        // position: 'relative',
+    listingItem: {
         marginBottom: '1em',
     },
-    listing_image: {
-        // position: 'absolute',
+    listingImage: {
         marginRight: '1em',
-        // left: '1.3em',
-        // top: '1.3em',
         borderRadius: '0.5em',
         width: '6.5em',
         minWidth: '6.5em',
@@ -111,58 +53,22 @@ const styles = {
         backgroundSize: 'cover',
         boxShadow: '0.8em 0.8em 1em -0.6em rgba(0,0,0,0.2)',
     },
-    listing_inner: {
-        // margin: '1em 0 0 9em',
+    listingInner: {
         height: '6.5em',
         display: 'flex',
         alignItems: 'center',
     },
-    listing_content: {
-        position: 'relative',
-        zIndex: 20,
-    },
-    listing_shadow: {
-        zIndex: 10,
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        top: '6.2em',
-        background: '#000',
-        opacity: 0.8,
-    },
-    listing_text: {
+    listingText: {
         fontSize: '1.2em',
         fontFamily: 'HelveticaNeueCyr, sans-serif',
-        // lineHeight: 1.6,
-        // margin: '0 0 0.2em',
-        // padding: 0,
-        // maxHeight: '3em',
         color: '#000',
-        // overflow: 'hidden',
-        // position: 'relative',
-        // width: '70%',
         fontWeight: 500,
-        // display: 'block',
     },
-    listing_pageNumber: {
-        color: '#999',
-        border: '1px solid #999',
-        borderRadius: '1em',
-        padding: '0 0.4em',
-        lineHeight: 1.6,
-        margin: '0 1em 0 0',
-    },
-    listing_link: {
+    listingLink: {
         display: 'flex',
         cursor: 'pointer',
     },
-    listing_last: {
-        height: '8em',
-    },
 };
-
-
 
 const arrow_down = <svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="18px"  viewBox="0 0 292.362 292.362">
     <g>
@@ -184,12 +90,9 @@ class ListingMenu extends Component {
     }
 
     navigate = id => window.location = `/article/${id}`;
-
     render() {
         const { classes, listing } = this.props;
-
-        return (
-        !SUtils.empty(listing) ? <MuiThemeProvider theme={theme}>
+        return (!SUtils.empty(listing) ? <MuiThemeProvider theme={theme}>
                 <div className={classes.menuWrapper}>
                     <Button onClick={this.props.doOpenListing} classes={{}} className={classes.button}>
                         {arrow_down}
@@ -204,12 +107,11 @@ class ListingMenu extends Component {
                             </div>
                             <div className={classes.bundlesContainer}>
                                 {listing.map(l =>
-                                    <div onClick={() => this.navigate(l.id)} key={`listing_${l.page_number}`} className={classes.listing_item}>
-                                        <div className={classes.listing_link}>
-                                            <div className={classes.listing_image} style={{backgroundImage:'url(' + l.image + ')' }} />
-                                            <div className={classes.listing_inner}>
-                                                <p className={classes.listing_text}>
-                                                    {/*<span className={classes.listing_pageNumber}>{l.page_number}</span>*/}
+                                    <div onClick={() => this.navigate(l.id)} key={`listing_${l.page_number}`} className={classes.listingItem}>
+                                        <div className={classes.listingLink}>
+                                            <div className={classes.listingImage} style={{backgroundImage:'url(' + l.image + ')' }} />
+                                            <div className={classes.listingInner}>
+                                                <p className={classes.listingText}>
                                                     {l.title}
                                                 </p>
                                             </div>
@@ -224,5 +126,13 @@ class ListingMenu extends Component {
         );
     }
 }
+
+ListingMenu.propTypes = {
+    listing: PropTypes.arrayOf(PropTypes.object),
+    doOpenListing: PropTypes.func.isRequired,
+    doCloseListing: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default withStyles(styles)(ListingMenu);

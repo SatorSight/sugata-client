@@ -7,6 +7,7 @@ import BigArticles from '../../containers/BigArticles';
 import NewArticles from '../../containers/NewArticles';
 import PopularJournals from '../../containers/PopularJournals';
 import Footer from '../Components/Footer';
+import PropTypes from 'prop-types';
 
 const mapStateToProps = state => ({
     loading: state.server.loading,
@@ -34,6 +35,9 @@ class BundlePage extends Component {
     }
 }
 
-export default connect(
-    mapStateToProps,
-)(BundlePage);
+BundlePage.propTypes = {
+    loading: PropTypes.bool.isRequired,
+    self_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+};
+
+export default connect(mapStateToProps)(BundlePage);

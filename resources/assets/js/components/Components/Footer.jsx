@@ -2,11 +2,11 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom'
 import Licence from '../Components/Licence';
 import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
 
 const styles = {
     footer: {
         background: 'rgb(51,51,51)',
-        // display: 'flex',
     },
     title: {
         padding: '2em',
@@ -52,5 +52,7 @@ class IndexFooter extends PureComponent {
         );
     }
 }
+
+IndexFooter.propTypes = {};
 
 export default withStyles(styles)(IndexFooter);

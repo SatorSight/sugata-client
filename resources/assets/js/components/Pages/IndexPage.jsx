@@ -7,17 +7,11 @@ import BigArticles from '../../containers/BigArticles';
 import NewArticles from '../../containers/NewArticles';
 import PopularJournals from '../../containers/PopularJournals';
 import Footer from '../Components/Footer';
+import PropTypes from 'prop-types';
 
-// import { withRouter } from 'react-router-dom';
-
-
-const mapStateToProps = (state, ownProps) => {
-    // console.log('ownProps');
-    // console.log(ownProps);
-    return {
-        loading: state.server.loading
-    };
-};
+const mapStateToProps = state => ({
+    loading: state.server.loading
+});
 
 class IndexPage extends Component {
     constructor(props){
@@ -40,10 +34,8 @@ class IndexPage extends Component {
     }
 }
 
-// export default withRouter(connect(
-//     mapStateToProps,
-// )(IndexPage));
+IndexPage.propTypes = {
+    loading: PropTypes.bool.isRequired,
+};
 
-export default connect(
-    mapStateToProps,
-)(IndexPage);
+export default connect(mapStateToProps)(IndexPage);

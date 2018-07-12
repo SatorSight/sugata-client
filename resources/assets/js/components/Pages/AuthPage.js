@@ -7,6 +7,7 @@ import Button from 'material-ui/Button';
 
 import InputMask from 'react-input-mask';
 import AuthHelper from '../Helpers/AuthHelper';
+import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 
@@ -277,7 +278,6 @@ class AuthPage extends Component {
         return (
             !this.props.loading && <div>
                 <Header/>
-
                 <div className={classes.header}>
                     <div className={classes.content}>
                         <h2 className={classes.h2}>Вход и регистрация</h2>
@@ -286,7 +286,6 @@ class AuthPage extends Component {
                         <div className={classes.phoneLabel}>Ваш номер телефона:</div>
                         <div className={classes.divInput}>
                             <span className={classes.spanInput}>&nbsp;</span>
-                            {/*<span className={classes.spanInput}>Ваш номер телефона</span>*/}
                             <InputMask
                                 onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
                                 onChange={this.onChange}
@@ -296,45 +295,26 @@ class AuthPage extends Component {
                                 mask="+7 (999) 999-99-99"
                                 placeholder="+7 (   )    -  -  "
                                 maskChar=" " />
-                            {/*<p className={classes.textFot}>*/}
                             <p style={{color: 'black'}} className={classes.textFot}>
                                 Автоматически определим, если
                                 вы уже зарегистрированы и
                                 оплатили подписку
                             </p>
                         </div>
-                        {/*<div className={classes.info}>*/}
-                            {/*Автоматически определим, если*/}
-                            {/*вы уже зарегистрированы и*/}
-                            {/*оплатили подписку*/}
-                        {/*</div>*/}
                         <div style={{transform: 'scaleX(-1)'}} className={classes.arrow2}>{arrow}</div>
-
-
-
-
-                        {/*<div className={classes.divButton}>*/}
-                            {/*<button onClick={this.buttonClicked} className={classes.button}>Продолжить</button>*/}
-                            {/*<div className={classes.shadowButton} />*/}
-                        {/*</div>*/}
-
-
                         <Button classes={{}} color="primary" className={classes.button} onClick={this.buttonClicked}>
                             Продолжить
                         </Button>
-
-
                     </div>
                 </div>
-
-
                 <Footer />
             </div>
         );
     }
 }
 
+AuthPage.propTypes = {
+    loading: PropTypes.bool.isRequired,
+};
 
 export default withStyles(styles)(connect(mapStateToProps)(AuthPage));
-
-// export default connect(mapStateToProps)(AuthPage);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as SUtils from "../Helpers/SUtils";
 import * as ResourceRoutes from "../Helpers/ResourceRoutes";
+import PropTypes from 'prop-types';
 
 import { startLoading, stopLoading, loadAuthData, loadResource } from '../../actions/server';
 import { receiveSelfId, receiveEntity } from '../../actions/router';
@@ -195,6 +196,19 @@ class DataLoader extends Component {
         return null;
     }
 }
+
+DataLoader.propTypes = {
+    //todo fix this, why string?
+    self_id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    entity: PropTypes.string,
+    state: PropTypes.object,
+    startLoading: PropTypes.func.isRequired,
+    stopLoading: PropTypes.func.isRequired,
+    loadResource: PropTypes.func.isRequired,
+    loadAuthData: PropTypes.func.isRequired,
+    receiveSelfId: PropTypes.func.isRequired,
+    receiveEntity: PropTypes.func.isRequired,
+};
 
 export default connect(
     mapStateToProps,

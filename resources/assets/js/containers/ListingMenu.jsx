@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { openListing, closeListing } from '../actions/NavMenuActions';
+import { openListing, closeListing } from '../actions/nav_menu';
 import Menu from '../components/Components/ListingMenu';
 import { getResource } from '../components/Helpers/dataComposer';
 

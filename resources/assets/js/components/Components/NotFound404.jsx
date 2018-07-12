@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const styles = {
     notFound: {
@@ -44,6 +45,10 @@ class NotFound404 extends PureComponent {
         );
     }
 }
+
+NotFound404.propTypes = {
+    classes: PropTypes.objectOf(PropTypes.string),
+};
 
 export default connect(
     mapStateToProps,
