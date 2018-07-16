@@ -8,6 +8,9 @@ use App\Lib\AuthService;
 use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
 use Illuminate\Console\Command;
+use GuzzleHttp\Client;
+use GuzzleHttp\Promise;
+
 
 class test extends Command
 {
@@ -43,22 +46,81 @@ class test extends Command
     public function handle()
     {
 
-        $image_path = 'public/images/test/o.jpg';
-        $new_image_path = 'public/images/test/o2.jpg';
+        $time1 = microtime(true);
 
-        $img = new \imagick($image_path);
+        $urls = [];
+        for($i = 0; $i < 100; $i++){
+            $urls[] = 'http://sugata.client/';
+        }
 
-//        $img->scaleImage(20, 0);
+//        $url1 = 'http://sugata.client/';
+//        $url2 = 'http://sugata.client/';
+//        $url3 = 'http://sugata.client/';
 
-        $img->setImageCompression(\imagick::COMPRESSION_JPEG);
-        $img->setImageCompressionQuality(20);
+        $client = new Client();
 
-        $img->writeImage($new_image_path);
+
+        foreach ($urls as $url){
+            $promises[] = $client->getAsync($url);
+        }
+
+
+
+//        $response1 = $client->get($url1);
+//        $response2 = $client->get($url2);
+//        $response3 = $client->get($url3);
+//        SUtils::dump_console($response1->getStatusCode());
+//        SUtils::dump_console($response2->getStatusCode());
+//        SUtils::dump_console($response3->getStatusCode());
+
+
+        foreach ($urls as $url){
+            $promises[] = $client->getAsync($url);
+        }
+
+
+        $results = Promise\settle($promises)->wait();
+//
+//        $promises[] = $client->getAsync($url1);
+//        $promises[] = $client->getAsync($url2);
+//        $promises[] = $client->getAsync($url3);
+//        $results = Promise\settle($promises)->wait();
+
+
+
+
+
+//        $promises[] = $client->get($url);
+//
+
+
+
+
+
+
+//        $image_path = 'public/images/test/o.jpg';
+//        $new_image_path = 'public/images/test/o2.jpg';
+//
+//        $img = new \imagick($image_path);
+//
+////        $img->scaleImage(20, 0);
+//
+//        $img->setImageCompression(\imagick::COMPRESSION_JPEG);
+//        $img->setImageCompressionQuality(20);
+//
+//        $img->writeImage($new_image_path);
 
 //        SUtils::dump_console(file_exists($image_path));
 
+        $time2 = microtime(true);
+        $duration = $time2 - $time1;
+
+        $hours = (int)($duration/60/60);
+        $minutes = (int)($duration/60)-$hours*60;
+        $seconds = (int)$duration-$hours*60*60-$minutes*60;
 
 
+        SUtils::dump_console($seconds);
         SUtils::dump_console('Done');
         return 1;
     }

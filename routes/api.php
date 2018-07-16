@@ -18,8 +18,8 @@ Route::get('/index/new_issues/', 'ApiController@indexGetNewIssues');
 Route::get('/index/main_topics/', 'ApiController@indexGetMainTopics');
 Route::get('/index/new_articles/', 'ApiController@indexGetNewArticles');
 Route::get('/index/popular_articles/', 'ApiController@indexGetPopularArticles');
-Route::get('/index/more_new_articles/{from}/', 'ApiController@indexGetMoreNewArticles')->where(['id' => '[0-9]+']);
-Route::get('/index/more_popular_articles/{from}/', 'ApiController@indexGetMorePopularArticles')->where(['id' => '[0-9]+']);
+//Route::get('/index/more_new_articles/{from}/', 'ApiController@indexGetMoreNewArticles')->where(['id' => '[0-9]+']);
+//Route::get('/index/more_popular_articles/{from}/', 'ApiController@indexGetMorePopularArticles')->where(['id' => '[0-9]+']);
 Route::get('/index/popular_editions/', 'ApiController@indexGetPopularEditions');
 
 Route::get('/bundle/bundles/', 'ApiController@bundleGetAllBundles');
@@ -28,8 +28,8 @@ Route::get('/bundle/last_issues/{bundle_id}/', 'ApiController@bundleGetLastIssue
 Route::get('/bundle/last_cover_articles/{bundle_id}/', 'ApiController@bundleGetLastCoverArticles');
 Route::get('/bundle/new_articles/{bundle_id}/', 'ApiController@bundleGetNewArticles');
 Route::get('/bundle/popular_articles/{bundle_id}/', 'ApiController@bundleGetPopularArticles');
-Route::get('/bundle/more_new_articles/{bundle_id}/{from}/', 'ApiController@bundleGetMoreMoreNewArticles')->where(['id' => '[0-9]+']);
-Route::get('/bundle/more_popular_articles/{bundle_id}/{from}/', 'ApiController@bundleGetMorePopularArticles')->where(['id' => '[0-9]+']);
+//Route::get('/bundle/more_new_articles/{bundle_id}/{from}/', 'ApiController@bundleGetMoreMoreNewArticles')->where(['id' => '[0-9]+']);
+//Route::get('/bundle/more_popular_articles/{bundle_id}/{from}/', 'ApiController@bundleGetMorePopularArticles')->where(['id' => '[0-9]+']);
 Route::get('/bundle/popular_editions/{bundle_id}/', 'ApiController@bundleGetPopularEditions');
 
 Route::get('/article/bundles/', 'ApiController@articleGetAllBundles');
@@ -48,8 +48,8 @@ Route::get('/journal/issues_cover_articles/{journal_id}/', 'ApiController@journa
 Route::get('/journal/new_articles/{journal_id}/', 'ApiController@journalGetBasicArticlesForLastIssue');
 Route::get('/journal/popular_articles/{journal_id}/', 'ApiController@journalGetRandomArticlesFromNonLastIssue');
 
-Route::get('/journal/more_new_articles/{journal_id}/{from}/', 'ApiController@journalGetMoreMoreNewArticles')->where(['id' => '[0-9]+']);
-Route::get('/journal/more_popular_articles/{journal_id}/{from}/', 'ApiController@journalGetMorePopularArticles')->where(['id' => '[0-9]+']);
+//Route::get('/journal/more_new_articles/{journal_id}/{from}/', 'ApiController@journalGetMoreMoreNewArticles')->where(['id' => '[0-9]+']);
+//Route::get('/journal/more_popular_articles/{journal_id}/{from}/', 'ApiController@journalGetMorePopularArticles')->where(['id' => '[0-9]+']);
 
 Route::get('/journal/rest_issues/{journal_id}/', 'ApiController@journalGetRestIssues');
 Route::get('/journal/same_bundle_journals/{journal_id}/', 'ApiController@journalGetSameBundleJournals');
@@ -61,12 +61,12 @@ Route::get('/all_issues/issues/', 'ApiController@allIssuesGetIssues');
 Route::get('/all_issues_journal/bundles/', 'ApiController@allIssuesGetAllBundles');
 Route::get('/all_issues_journal/issues/{journal_id}/', 'ApiController@allIssuesJournalGetIssues');
 Route::get('/all_issues_journal/title/{journal_id}/', 'ApiController@allIssuesGetJournalName');
-Route::get('/all_issues_journal/more_issues/{journal_id}/{from}/', 'ApiController@allIssuesMoreJournalGetIssues');
+//Route::get('/all_issues_journal/more_issues/{journal_id}/{from}/', 'ApiController@allIssuesMoreJournalGetIssues');
 
 Route::get('/all_issues_bundle/bundles/', 'ApiController@allIssuesGetAllBundles');
 Route::get('/all_issues_bundle/issues/{bundle_id}/', 'ApiController@allIssuesBundleGetIssues');
 Route::get('/all_issues_bundle/title/{bundle_id}/', 'ApiController@allIssuesGetBundleName');
-Route::get('/all_issues_bundle/more_issues/{bundle_id}/{from}/', 'ApiController@allIssuesMoreBundleGetIssues');
+//Route::get('/all_issues_bundle/more_issues/{bundle_id}/{from}/', 'ApiController@allIssuesMoreBundleGetIssues');
 
 
 Route::get('/issue/bundles/', 'ApiController@issueGetBundles');
@@ -76,7 +76,7 @@ Route::get('/issue/issue/{issue_id}/', 'ApiController@issueGetIssue');
 Route::get('/issue/all_issues/{issue_id}/', 'ApiController@issueGetAllIssues');
 Route::get('/issue/main_topics/{issue_id}/', 'ApiController@issueGetMainTopics');
 Route::get('/issue/new_articles/{issue_id}/', 'ApiController@issueGetNewArticles');
-Route::get('/issue/more_new_articles/{issue_id}/{from}/', 'ApiController@issueGetMoreNewArticles')->where(['id' => '[0-9]+']);
+//Route::get('/issue/more_new_articles/{issue_id}/{from}/', 'ApiController@issueGetMoreNewArticles')->where(['id' => '[0-9]+']);
 Route::get('/issue/other_issues/{issue_id}/', 'ApiController@issueGetOtherIssues');
 
 Route::get('/auth/bundles/', 'ApiController@indexGetBundles');

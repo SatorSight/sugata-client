@@ -323,7 +323,8 @@ class Article extends Model
         $articles = $articles->map(function($article){
             //breaking eager loading to remove needless data
             $issue = Issue::find($article->issue_id);
-            $article->issue_cover = $issue->image->path;
+            if($issue && $issue->image)
+                $article->issue_cover = $issue->image->path;
             return $article;
         });
     }
