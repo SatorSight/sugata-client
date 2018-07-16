@@ -67,6 +67,8 @@ class Issue extends Model
             }
         }
 
+        $last_issues = $last_issues->sortByDesc('content_date');
+
         return $last_issues;
     }
 

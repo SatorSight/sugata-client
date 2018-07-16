@@ -63,6 +63,7 @@ trait BundleRoutes{
             return $last_issues;
         });
 
+        $last_issues = array_values($last_issues->toArray());
         return response()->json($last_issues);
     }
 

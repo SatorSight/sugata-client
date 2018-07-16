@@ -162,7 +162,8 @@ class BigArticles extends PureComponent {
                                         </Link>
                                     </div>
                                     <div className={classes.articleSubtitle}>
-                                        {article.journal_name}, {!empty(issue) ? toRuMonthYearLocale(issue.content_date) :  article.date}
+                                        {article.journal_name}, {article.date}
+                                        {/*{article.journal_name}, {!empty(issue) ? toRuMonthYearLocale(issue.content_date) :  article.date}*/}
                                     </div>
                                     <div className={classes.articleText}>
                                         {article.text}...

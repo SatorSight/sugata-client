@@ -331,13 +331,14 @@ class Article extends Model
 
     public static function injectDates(Collection &$articles) : void {
         $articles = $articles->map(function($article){
-            if(!empty($article->created_at)){
-                /** @var Carbon $date */
-                $date = new $article->created_at;
+            $issue = Issue::find($article->issue_id);
+            if(!empty($issue->content_date)) {
+                $date = Carbon::parse($issue->content_date);
                 $date_str = SUtils::getRuMonth($date->getTimestamp()) . ' ' . $date->format('Y');
                 $article->date = $date_str;
                 return $article;
             }
+            return $article;
         });
     }
 

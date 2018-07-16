@@ -48,16 +48,18 @@ class SectionTitle extends PureComponent {
                 </div>
                 { !no_links && link &&
                     <div className={classes.otherLink}>
-                        <div className={classes.otherLinkInner}>
-                            <Link className={classes.link} to={link}>
+                        <Link className={classes.link} to={link}>
+                            <div className={classes.otherLinkInner}>
                                 {link_label || <div><br/><br/></div>}
-                            </Link>
-                            <div className={classes.border}></div>
-                        </div>
+                                <div className={classes.border}></div>
+                            </div>
+                        </Link>
                         <div className={classes.arrowContainer}>
-                            <svg x="0px" y="0px" viewBox="0 0 1000 1000" width="12" xmlns="http://www.w3.org/2000/svg">
-                            <g><g><g id="keyboard-arrow-right"><polygon points="197.8,867.5 573.5,500 197.8,124.3 312.2,10 802.2,500 312.2,990 "/></g></g></g>
-                            </svg>
+                            <Link className={classes.link} to={link}>
+                                <svg x="0px" y="0px" viewBox="0 0 1000 1000" width="12" xmlns="http://www.w3.org/2000/svg">
+                                <g><g><g id="keyboard-arrow-right"><polygon points="197.8,867.5 573.5,500 197.8,124.3 312.2,10 802.2,500 312.2,990 "/></g></g></g>
+                                </svg>
+                            </Link>
                         </div>
                     </div>
                 }
