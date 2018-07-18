@@ -22,15 +22,17 @@ class ProgressiveImage extends PureComponent {
             <_ProgressiveImage src={src} placeholder={preview}>
                 {(image, loading) => (
                     type !== 'div'
-                        ? <img style={Object.assign({},
-                                style,
-                                styles.imageStyle,
-                                {filter: loading ? 'blur(10px)' : 'blur(0.3px)'}
-                            )}
-                            src={image}
-                            alt={alt}
-                            className={className}
-                        />
+                        ? <div style={styles.imageContainer}>
+                            <img style={Object.assign({},
+                                    style,
+                                    styles.imageStyle,
+                                    {filter: loading ? 'blur(10px)' : 'blur(0.3px)'}
+                                )}
+                                src={image}
+                                alt={alt}
+                                className={className}
+                            />
+                        </div>
                         : <div style={Object.assign({},
                                     style,
                                     styles.imageStyle,

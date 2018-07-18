@@ -4,7 +4,7 @@
  * includes React and other helpers. It's a great starting point while
  * building robust, powerful web applications using React + Laravel.
  */
-
+import 'babel-polyfill';
 require('./bootstrap');
 
 /**

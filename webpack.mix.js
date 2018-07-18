@@ -52,9 +52,9 @@ mix.react('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 
-if (mix.inProduction()) {
+// if (mix.inProduction()) {
     mix.version();
-}
+// }
 
 // if (process.env.npm_lifecycle_event !== 'hot') {
 //     mix.version();
@@ -68,11 +68,19 @@ mix.webpackConfig({
     //     contentBase: path.resolve(__dirname, 'public'),
     // },
     module: {
+
+
         loaders: [{
             exclude: /node_modules/,
-            test: /\.jsx$/,
-            loaders: ['react-hot-loader', 'babel-loader'],
+            test: /\.js[x]{0,1}$/,
+            // loaders: ['react-hot-loader', 'babel-loader'],
+            loaders: ['babel-loader'],
+            query: {
+                presets: ['env', 'es2015', 'stage-0', 'react'],
+            }
         }],
+
+
         // rules: [
         //     {
         //         test: /\.jsx$/,
