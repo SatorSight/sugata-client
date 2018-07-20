@@ -83,8 +83,14 @@ class Waiter extends Component {
     }
 
     renderKeyFrames = () => {
-        let styleSheet = document.styleSheets[0];
-        styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        //webkit dies here
+        try{
+            let styleSheet = document.styleSheets[0];
+            styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+        }catch(e){
+            console.log('renderKeyFrames error');
+            console.log(e);
+        }
     };
 
     renderThings = () => {
