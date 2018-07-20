@@ -53,12 +53,12 @@ mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 
 // if (mix.inProduction()) {
-    mix.version();
-// }
-
-// if (process.env.npm_lifecycle_event !== 'hot') {
 //     mix.version();
 // }
+
+if (process.env.npm_lifecycle_event !== 'hot') {
+    mix.version();
+}
 
 // const path = require('path');
 
@@ -74,7 +74,7 @@ mix.webpackConfig({
             exclude: /node_modules/,
             test: /\.js[x]{0,1}$/,
             // loaders: ['react-hot-loader', 'babel-loader'],
-            loaders: ['babel-loader'],
+            loaders: ['react-hot-loader', 'babel-loader'],
             query: {
                 presets: ['env', 'es2015', 'stage-0', 'react'],
             }

@@ -4,10 +4,15 @@ import PropTypes from 'prop-types';
 
 const styles = {
     imageStyle: {
-        transition: 'filter 0.5s ease',
+        transition: 'filter 1s cubic-bezier(0.25, 0.1, 0.59, 2.06)',
+        // transformStyle: 'preserve-3d',
+        // '-webkit-transition': 'filter 0.5s ease',
     },
     imageContainer: {
+        // backfaceVisibility: 'hidden',
         overflow: 'hidden',
+        // transformStyle: 'preserve-3d',
+        // transform: 'translate3d(0,0,0)',
     },
 };
 
@@ -26,7 +31,8 @@ class ProgressiveImage extends PureComponent {
                             <img style={Object.assign({},
                                     style,
                                     styles.imageStyle,
-                                    {filter: loading ? 'blur(10px)' : 'blur(0.3px)'}
+                                    // {filter: loading ? 'blur(10px)' : 'blur(0.3px)'}
+                                    {filter: loading ? 'blur(1rem)' : 'blur(0)'}
                                 )}
                                 src={image}
                                 alt={alt}
@@ -36,7 +42,8 @@ class ProgressiveImage extends PureComponent {
                         : <div style={Object.assign({},
                                     style,
                                     styles.imageStyle,
-                                    {filter: loading ? 'blur(10px)' : 'blur(0.3px)'},
+                                    // {filter: loading ? 'blur(10px)' : 'blur(0.3px)'},
+                                    {filter: loading ? 'blur(1rem)' : 'blur(0)'},
                                     {backgroundImage:`url('${src}')`},
                                 )}
                             className={className}
