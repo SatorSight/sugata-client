@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+import 'whatwg-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Application from './Application';
@@ -14,8 +16,6 @@ const store = createStore(
         thunkMiddleware,
     )
 );
-
-import 'whatwg-fetch';
 
 ReactDOM.render(
     <Provider store={store}>
