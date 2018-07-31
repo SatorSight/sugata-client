@@ -41,7 +41,8 @@ const styles = {
         position: 'relative',
         zIndex: 50,
         background: 'white',
-        height: '8em',
+        // height: '8em',
+        paddingBottom: '2em',
     },
 };
 
