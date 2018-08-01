@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 const styles = {
     footer: {
         background: 'rgb(51,51,51)',
+        clear: 'both'
     },
     title: {
         padding: '2em',

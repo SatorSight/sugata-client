@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { toRuMonthYearLocale, capitalize } from './../Helpers/SUtils';
+import { toRuMonthYearLocale, capitalize, isMobile } from './../Helpers/SUtils';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../Components/SectionTitle';
 import ProgressiveImage from '../Helpers/ProgressiveImage';
@@ -10,6 +10,13 @@ import * as css from '../Helpers/cssConstants';
 const styles = {
     main: {
         padding: '0 1.6em',
+    },
+    issuesDesktop: {
+        margin:'0 2%',
+        float: 'left',
+        overflow: 'hidden',
+        width: '46%',
+        position: 'relative'
     },
     item: {
         padding: '0.5em 0 1.3em',
@@ -79,7 +86,7 @@ class NewArticles extends Component {
     render() {
         const { classes, articles } = this.props;
         return (
-            <div className={classes.sectionWrapper}>
+            <div className={isMobile() ? classes.sectionWrapper : classes.issuesDesktop}>
                 <SectionTitle
                     no_links={this.props.no_links}
                     title={this.props.title || 'Новые статьи'}

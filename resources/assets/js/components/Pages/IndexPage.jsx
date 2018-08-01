@@ -8,6 +8,7 @@ import NewArticles from '../../containers/NewArticles';
 import PopularJournals from '../../containers/PopularJournals';
 import Footer from '../Components/Footer';
 import PropTypes from 'prop-types';
+import { isMobile } from '../Helpers/SUtils';
 
 const mapStateToProps = state => ({
     loading: state.server.loading
@@ -25,8 +26,8 @@ class IndexPage extends Component {
                 <BundlesSwiper />
                 <NewIssues count={6} link={'/all_issues'} resource={'new_issues'}/>
                 <BigArticles link={'/all_issues'} resource={'main_topics'}/>
-                <NewArticles link={'/all_issues'} resource={'new_articles'}/>
-                <PopularJournals link={'/all_issues'} resource={'popular_editions'}/>
+                {isMobile() ? <NewArticles link={'/all_issues'} resource={'new_articles'}/> : <PopularJournals link={'/all_issues'} resource={'popular_editions'}/>}
+                {isMobile() ? <PopularJournals link={'/all_issues'} resource={'popular_editions'}/> : <NewArticles link={'/all_issues'} resource={'new_articles'}/>}
                 <NewArticles title={'Популярные статьи'} link={'/all_issues'} resource={'popular_articles'}/>
                 <Footer />
             </div>
