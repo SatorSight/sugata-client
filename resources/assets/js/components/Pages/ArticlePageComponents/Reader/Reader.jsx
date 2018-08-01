@@ -10,6 +10,8 @@ import { redirectToAuth, userHasAccess } from '../../../Helpers/paymentTrigger';
 import { pageVisit } from '../../../../actions/page_tracker';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Blocker from './Blocker';
+import { setPageHeight } from '../../../../actions/page_height';
 
 const styles = {
     arrowNext: {
@@ -218,6 +220,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     pageVisit: () => dispatch(pageVisit()),
+    setPageHeight: height => dispatch(setPageHeight(height)),
 });
 
 let originalX = 0;
@@ -268,7 +271,18 @@ class Reader extends Component {
             current: article,
             all_articles_ids: article_data.other_articles_ids
         }, this.load_side_articles);
+
+        this.recalculate_page_height();
     }
+
+    componentDidUpdate(){
+        this.recalculate_page_height();
+    }
+
+    recalculate_page_height = () => {
+        const page_height = document.getElementById('html-current').offsetHeight;
+        this.props.setPageHeight(page_height);
+    };
 
     update = () => this.forceUpdate();
 
@@ -472,6 +486,8 @@ class Reader extends Component {
         return number;
     };
 
+    show_blocker = () => this.props.auth_data && this.props.auth_data.first_flow;
+
     render() {
         const stylesImg = 'img {max-width: 100%;}';
         const { journal, issue } = this.props;
@@ -505,6 +521,7 @@ class Reader extends Component {
                     onTouchMove={this._onTouchMove}
                     onTouchEnd={this._onTouchEnd}
                     className={'html-root'}
+                    id="html-current"
                     style={Object.assign({},
                         styles.container,
                         styles._root,
@@ -512,6 +529,7 @@ class Reader extends Component {
                         {left: this.state.indent + 'px'}
                         )}
                 >
+                    {this.show_blocker() && <Blocker/>}
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
                 </div>

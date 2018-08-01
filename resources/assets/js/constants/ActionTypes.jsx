@@ -19,3 +19,4 @@ export const RECEIVE_ENTITY = 'RECEIVE_ENTITY';
 
 
 export const PAGE_VISITED = 'PAGE_VISITED';
+export const SET_PAGE_HEIGHT = 'SET_PAGE_HEIGHT';

@@ -8,12 +8,15 @@ use App\Lib\BundleProvider;
 use App\Lib\SUtils;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class AppController extends Controller
 {
-    public function index(Route $route)
+    public function index(Route $route, Request $request)
     {
         $this->tryToAuthorizeByBridge($route);
+        $this->processFirstFlow($request);
         return view('spa');
     }
 
@@ -53,4 +56,12 @@ class AppController extends Controller
         return true;
     }
 
+    public function processFirstFlow(Request $request){
+        $flow = $request->get('flow');
+        $sub_url = $request->get('sub_url');
+        if($flow == 1 && !empty($sub_url)){
+            Session::put('first_flow', true);
+            Session::put('sub_url', $sub_url);
+        }
+    }
 }

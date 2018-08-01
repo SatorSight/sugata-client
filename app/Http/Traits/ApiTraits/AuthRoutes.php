@@ -141,6 +141,11 @@ trait AuthRoutes{
         $resp->user_bundles = $user_bundles_ids;
         $resp->msisdn = $user_msisdn;
 
+        if(Session::get('first_flow') && Session::get('sub_url')){
+            $resp->first_flow = true;
+            $resp->sub_url = Session::get('sub_url');
+        }
+
         return response()->json($resp);
     }
 
