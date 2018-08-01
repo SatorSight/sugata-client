@@ -28,6 +28,7 @@ const styles = {
         backgroundSize: 'contain',
     },
     section: {
+        marginBottom: '2em',
         ...css.sectionWrapper
     },
 };

@@ -4,7 +4,7 @@ import SwipeableViews from 'react-swipeable-views';
 import Pagination from './Pagination' ;
 import SectionTitle from './SectionTitle';
 import ProgressiveImage from '../Helpers/ProgressiveImage';
-import { toRuMonthYearLocale, capitalize, empty } from '../Helpers/SUtils';
+import { toRuMonthYearLocale, capitalize, empty, isMobile } from '../Helpers/SUtils';
 import 'react-id-swiper/src/styles/css/swiper.css';
 import { withStyles } from 'material-ui/styles';
 import * as css from '../Helpers/cssConstants';
@@ -16,6 +16,13 @@ const styles = {
         backgroundColor: '#FFF',
         width: '100%',
         overflowX: 'hidden'
+    },
+    issuesDesktop: {
+        margin:'0 2%',
+        float: 'left',
+        overflow: 'hidden',
+        width: '46%',
+        position: 'relative'
     },
     swiper: {
         padding: '0 2.5em 0 1em',
@@ -103,7 +110,7 @@ class BigArticles extends PureComponent {
         const dots_count = articles.length;
 
         return (
-            <div className={classes.sectionWrapper}>
+            <div className={isMobile() ? classes.sectionWrapper : classes.issuesDesktop}>
                 <div className={classes.root}>
                     <SectionTitle
                         title={this.props.title || 'Темы номера'}

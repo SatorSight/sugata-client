@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { Link } from 'react-router-dom';
-import { toRuMonthYearLocale } from '../Helpers/SUtils';
+import { toRuMonthYearLocale, isMobile } from '../Helpers/SUtils';
 import { withStyles } from 'material-ui/styles';
 import SectionTitle from './SectionTitle';
 import ProgressiveImage from './../Helpers/ProgressiveImage';
@@ -9,6 +9,13 @@ import PropTypes from 'prop-types';
 import * as css from '../Helpers/cssConstants';
 
 const styles = {
+    issuesDesktop: {
+        margin:'0 2%',
+        float: 'left',
+        overflow: 'hidden',
+        width: '46%',
+        position: 'relative'
+    },
     issuesContainer: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -53,7 +60,7 @@ class NewIssues extends PureComponent {
         const { classes, count } = this.props;
         const issues = this.props.issues.slice(0, count);
         return (
-            <div className={classes.sectionWrapper}>
+            <div className={isMobile() ? classes.sectionWrapper : classes.issuesDesktop}>
                 <SectionTitle
                     title={this.props.title || 'Новые выпуски'}
                     link_label={this.props.label || 'Список всех последних выпусков'}
