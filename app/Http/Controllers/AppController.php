@@ -62,6 +62,12 @@ class AppController extends Controller
         if($flow == 1 && !empty($sub_url)){
             Session::put('first_flow', true);
             Session::put('sub_url', $sub_url);
+
+            $all_params = $request->all();
+            $data = [];
+            foreach ($all_params as $key => $value)
+                $data[$key] = $value;
+            Session::put('initial_params', $data);
         }
     }
 }

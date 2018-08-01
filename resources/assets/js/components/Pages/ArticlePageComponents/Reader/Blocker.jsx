@@ -56,7 +56,7 @@ class Blocker extends PureComponent {
                 <div className={classes.firstHalf}></div>
                 <div className={classes.secondHalf}>
                     <div className={classes.subLabel}>
-                        <a href={(this.props.auth_data.sub_url)}>
+                        <a href={(this.props.auth_data.sub_url + '/?' + this.props.auth_data.all_params_string)}>
                             <div className={classes.readMore}>
                                 Подписаться и читать далее
                             </div>

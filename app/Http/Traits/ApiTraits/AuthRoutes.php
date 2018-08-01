@@ -7,6 +7,7 @@ use App\Lib\AuthService;
 use App\Lib\AuthService2;
 use App\Lib\SUtils;
 use App\User;
+use function GuzzleHttp\Psr7\build_query;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cookie;
@@ -117,14 +118,34 @@ trait AuthRoutes{
     }
 
     public function loadAuthData(){
+        $resp = new \stdClass();
         $user_msisdn = Cookie::get('COOKIE_USER_MSISDN');
 
-        if(empty($user_msisdn))
-            return response()->json(self::getNoUserMessage());
+        $no_user = false;
+        if(empty($user_msisdn)) {
+            $resp = self::getNoUserMessage();
+            $no_user = true;
+        }
 
         $user = User::where('msisdn', $user_msisdn)->first();
-        if(!$user)
-            return response()->json(self::getNoUserMessage());
+
+        if(!$no_user) {
+            if (!$user){
+                $resp = self::getNoUserMessage();
+                $no_user = true;
+            }
+        }
+
+        if(Session::get('first_flow') && Session::get('sub_url')){
+            $resp->first_flow = true;
+            $resp->sub_url = Session::get('sub_url');
+            $resp->all_params = Session::get('initial_params');
+            $resp->all_params_string = build_query($resp->all_params);
+        }
+
+        if($no_user){
+            return response()->json($resp);
+        }
 
         $user_bundle_accesses = $user->bundle_accesses()->get();
 
@@ -141,10 +162,6 @@ trait AuthRoutes{
         $resp->user_bundles = $user_bundles_ids;
         $resp->msisdn = $user_msisdn;
 
-        if(Session::get('first_flow') && Session::get('sub_url')){
-            $resp->first_flow = true;
-            $resp->sub_url = Session::get('sub_url');
-        }
 
         return response()->json($resp);
     }
