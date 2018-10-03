@@ -19,6 +19,7 @@ const styles = {
         borderRadius: '0.7em',
         overflow: 'hidden',
         width: '23em',
+        maxHeight: '3.4em',
     },
     bundleImage: {
         width: '100%',
