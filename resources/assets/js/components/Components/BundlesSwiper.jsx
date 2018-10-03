@@ -19,7 +19,6 @@ const styles = {
         borderRadius: '0.7em',
         overflow: 'hidden',
         width: '23em',
-        maxHeight: '3.4em',
     },
     bundleImage: {
         width: '100%',
@@ -41,6 +40,8 @@ const styles = {
         alignItems: 'center',
         flexWrap: 'wrap',
         margin: '0.5em 1em 0',
+        maxHeight: '3.4em',
+        overflow: 'hidden',
     },
     journalName: {
         margin: '0.1rem 1em',
