@@ -108,7 +108,7 @@ class NewArticles extends Component {
                                 <div className={classes.over}>
                                     <Link to={`/article/${article.id}`} className={classes.title}>
                                         {/*{capitalize(article.title.toLowerCase())}*/}
-                                        {article.title}
+                                        <p dangerouslySetInnerHTML={{__html: article.title}} />
                                     </Link>
                                 </div>
                                 <div className={classes.detailsContainer}>
