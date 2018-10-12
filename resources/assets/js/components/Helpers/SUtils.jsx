@@ -255,6 +255,11 @@ export function getUrlPath(){
 // }
 
 export function capitalize(string){
+    if(string.charAt(0) === '"')
+        string = string.slice(1);
+    if(string.charAt(string.length - 1) === '"')
+        string = string.slice(0, string.length - 1);
+
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
