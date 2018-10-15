@@ -248,13 +248,15 @@ export function getUrlPath(){
     return path.split('/');
 }
 
-// export function orNull(obj){
-//     if(!empty(obj))
-//         return obj;
-//     return null;
-// }
-
 export function capitalize(string){
+    console.log('WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
+    const dummy = 1;
+
+    if(string.charAt(0) === '"')
+        string = string.slice(1);
+    if(string.charAt(string.length - 1) === '"')
+        string = string.slice(0, string.length - 1);
+
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 

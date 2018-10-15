@@ -165,8 +165,7 @@ class BigArticles extends PureComponent {
                                             to={`/article/${article.id}`}
                                             className={classes.link}
                                         >
-                                            {/*capitalize(article.title.toLowerCase())*/}
-                                            {article.title}
+                                            {capitalize(article.title)}
                                         </Link>
                                     </div>
                                     <div className={classes.articleSubtitle}>
