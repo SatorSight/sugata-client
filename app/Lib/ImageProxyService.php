@@ -71,7 +71,6 @@ class ImageProxyService{
 
     private static function getResizeDirPath($size){
         $basic_dir = public_path() . '/' . self::BASE_DIR;
-
         if(!is_dir($basic_dir))
             mkdir($basic_dir);
 
