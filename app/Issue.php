@@ -30,8 +30,11 @@ class Issue extends Model
         });
     }
 
-    public static function getLastIssuesDistinctJournal(Bundle $bundle, $limit = 4){
-        $journals = $bundle->journals;
+    public static function getLastIssuesDistinctJournal(Bundle $bundle = null, $limit = 4){
+        if($bundle)
+            $journals = $bundle->journals;
+        else
+            $journals = Journal::all();
         $journals = $journals->filter(function ($journal) { return !$journal->archived; });
         $last_issues_packs = $journals->reduce(function($carry, $journal) use ($journals, $limit) {
             $last_issues = Issue::where('journal_id', $journal->id)

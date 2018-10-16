@@ -36,16 +36,11 @@ trait IndexRoutes{
      */
     public function indexGetNewIssues(){
         $last_issues = Cache::remember('index_new_issues', $this->issues_expiration, function(){
-            $journals = Journal::all();
-
-            $last_issues = Issue::getLastForJournals($journals);
+            $last_issues = Issue::getLastIssuesDistinctJournal(null, 6);
             Issue::injectWithImages($last_issues);
             Issue::injectWithJournalNames($last_issues);
 
             ImageProxyService::resize($last_issues, 'image_path', ImageProxyService::ISSUE_STANDARD_500);
-
-            $last_issues = $last_issues->sortByDesc('content_date');
-
             return $last_issues;
         });
 
