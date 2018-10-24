@@ -9,6 +9,7 @@ use App\Issue;
 use App\Journal;
 use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
+use App\Tag;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,20 @@ trait IndexRoutes{
         });
 
         return response()->json($bundles);
+    }
+
+    /**
+     * @desc all hubs
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function indexGetHubs(){
+        $hubs = Cache::remember('hubs', $this->hubs_expiration, function(){
+            $hubs = Tag::where('is_hub', true)->orderBy('created_at', 'DESC')->get();
+            Tag::injectWithImages($hubs);
+            return $hubs;
+        });
+
+        return response()->json($hubs);
     }
 
     /**

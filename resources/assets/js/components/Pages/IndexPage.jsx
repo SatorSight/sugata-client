@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Header from '../Components/Header';
 import NewIssues from '../../containers/NewIssues';
 import BundlesSwiper from '../../containers/BundlesSwiper';
+import Hubs from '../../containers/Hubs';
 import BigArticles from '../../containers/BigArticles';
 import NewArticles from '../../containers/NewArticles';
 import PopularJournals from '../../containers/PopularJournals';
@@ -29,6 +30,7 @@ class IndexPage extends Component {
                 {isMobile() ? <NewArticles link={'/all_issues'} resource={'new_articles'}/> : <PopularJournals link={'/all_issues'} resource={'popular_editions'}/>}
                 {isMobile() ? <PopularJournals link={'/all_issues'} resource={'popular_editions'}/> : <NewArticles link={'/all_issues'} resource={'new_articles'}/>}
                 <NewArticles title={'Популярные статьи'} link={'/all_issues'} resource={'popular_articles'}/>
+                <Hubs/>
                 <Footer />
             </div>
         );

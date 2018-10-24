@@ -133,7 +133,9 @@ class GetChangedData extends Command
                         }
                         try {
                             $obj->save();
-                        }catch(\Exception $e){}
+                        }catch(\Exception $e){
+                            dump($e->getMessage());
+                        }
                     }
                 }
             }

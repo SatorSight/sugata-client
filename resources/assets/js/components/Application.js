@@ -5,6 +5,7 @@ import DataLoader from '../components/Helpers/DataLoader';
 
 import MainPage from './Pages/IndexPage'
 import AuthPage from './Pages/AuthPage'
+import TagPage from './Pages/TagPage'
 import BundlePage from './Pages/BundlePage'
 import IssuePage from './Pages/IssuePage'
 import ArticlePage from './Pages/ArticlePage'
@@ -40,6 +41,7 @@ export default class Application extends PureComponent {
                             <Route exact path="/all_issues" component={AllIssuesJournal}/>
                             <Route path="/all_issues_journal/:id" component={AllIssuesJournal}/>
                             <Route path="/all_issues_bundle/:id" component={AllIssuesBundle}/>
+                            <Route path="/tag/:id" component={TagPage}/>
                             {/*<Route path="/test" exact component={TestComponent}/>*/}
 
                             <Route path="*" component={NotFound404}/>

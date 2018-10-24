@@ -174,6 +174,8 @@ class DataLoader extends Component {
             return ResourceRoutes.JOURNAL_RESOURCES;
         if(entity === 'issue')
             return ResourceRoutes.ISSUE_RESOURCES;
+        if(entity === 'tag')
+            return ResourceRoutes.TAG_RESOURCES;
         if(entity === 'article')
             return ResourceRoutes.ARTICLE_RESOURCES;
         if(entity === 'index')

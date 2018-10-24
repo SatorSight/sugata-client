@@ -14,6 +14,7 @@ export const MAIN_RESOURCES = Object.freeze({
         'new_articles',
         'popular_articles',
         'popular_editions',
+        'hubs',
     ],
     with_from: [
         'more_new_articles',
@@ -84,6 +85,15 @@ export const ALL_ISSUES_JOURNAL_RESOURCES = Object.freeze({
     ],
     with_from: [
         'more_issues'
+    ],
+});
+
+export const TAG_RESOURCES = Object.freeze({
+    page_prefix: 'tag',
+    static: ['bundles'],
+    with_self_id: [
+        'articles',
+        'tag',
     ],
 });
 
