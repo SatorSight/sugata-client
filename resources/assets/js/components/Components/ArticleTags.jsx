@@ -68,7 +68,7 @@ class ArticleTags extends Component {
         let { tags, classes } = this.props;
 
         return (
-            tags.length > 0 && <div className={classes.root}>
+            tags && tags.length > 0 && <div className={classes.root}>
                 <span className={classes.title}>
                     {tags ? <Link className={classes.link} to={`/tag_search/`}>{tags && tags.length}</Link> : ''} ТЕМЫ
                 </span>
