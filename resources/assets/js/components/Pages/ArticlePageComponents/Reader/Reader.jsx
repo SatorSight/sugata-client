@@ -5,6 +5,7 @@ import Dialog, {
     DialogContent,
 } from 'material-ui/Dialog';
 import ReaderInfo from '../../../Components/ReaderInfo';
+import ArticleTags from '../../../Components/ArticleTags';
 import { getResource } from '../../../Helpers/dataComposer';
 import { redirectToAuth, userHasAccess } from '../../../Helpers/paymentTrigger';
 import { pageVisit } from '../../../../actions/page_tracker';
@@ -532,6 +533,7 @@ class Reader extends Component {
                     {this.show_blocker() && <Blocker/>}
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
+                    <ArticleTags tags={this.state.current.get_tags()} />
                 </div>
                 <div
                     className={'html-root'}
@@ -681,8 +683,7 @@ class Reader extends Component {
                             </div>
                         </DialogContent>
                     </Dialog>
-                </div> : null
-                }
+                </div> : null}
             </div>
         );
     }

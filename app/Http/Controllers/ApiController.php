@@ -12,6 +12,7 @@ use App\Http\Traits\ApiTraits\IndexRoutes;
 use App\Http\Traits\ApiTraits\IssueRoutes;
 use App\Http\Traits\ApiTraits\JournalRoutes;
 use App\Http\Traits\ApiTraits\TagRoutes;
+use App\Http\Traits\ApiTraits\TagSearchRoutes;
 use App\Issue;
 use App\Journal;
 use App\Lib\AuthService;
@@ -54,6 +55,7 @@ class ApiController extends Controller
     use ArticleRoutes;
     use AllIssuesRoutes;
     use TagRoutes;
+    use TagSearchRoutes;
 
 //    public function test(){
 //

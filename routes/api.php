@@ -53,6 +53,12 @@ Route::get('/journal/popular_articles/{journal_id}/', 'ApiController@journalGetR
 Route::get('/tag/tag/{tag_id}/', 'ApiController@tagGetTag');
 Route::get('/tag/bundles/', 'ApiController@tagGetBundles');
 Route::get('/tag/articles/{tag_id}/', 'ApiController@tagGetArticles');
+
+
+Route::get('/tag_search/tags/', 'ApiController@tagSearchGetTags');
+Route::get('/tag_search/bundles/', 'ApiController@tagSearchGetBundles');
+Route::get('/tag_search/journals/', 'ApiController@tagSearchGetJournals');
+
 //Route::get('/tag/journal/{journal_id}/', 'ApiController@journalGetJournal');
 //Route::get('/tag/last_issues/{journal_id}/', 'ApiController@journalGetLastIssues');
 //Route::get('/tag/issues_cover_articles/{journal_id}/', 'ApiController@journalGetIssuesCoverArticles');

@@ -244,6 +244,19 @@ class Article extends Model
         });
     }
 
+    public static function injectTags(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            $ar_tags = ArticlesTag::where('article_id', $article->id)->get();
+            $tags = $ar_tags->map(function($ar_tag){
+                return Tag::find($ar_tag->tag_id);
+            });
+
+            $article->tags = $tags;
+
+            return $article;
+        });
+    }
+
     public static function injectNextArticle(Collection &$articles) : void {
         $articles = $articles->map(function($article){
             $next_article = Article::where('issue_id', $article->issue_id)->where('page_number', $article->page_number + 1)->first();

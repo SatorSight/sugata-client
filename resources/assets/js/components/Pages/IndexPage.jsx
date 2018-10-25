@@ -30,7 +30,6 @@ class IndexPage extends Component {
                 {isMobile() ? <NewArticles link={'/all_issues'} resource={'new_articles'}/> : <PopularJournals link={'/all_issues'} resource={'popular_editions'}/>}
                 {isMobile() ? <PopularJournals link={'/all_issues'} resource={'popular_editions'}/> : <NewArticles link={'/all_issues'} resource={'new_articles'}/>}
                 <NewArticles title={'Популярные статьи'} link={'/all_issues'} resource={'popular_articles'}/>
-                <Hubs/>
                 <Footer />
             </div>
         );

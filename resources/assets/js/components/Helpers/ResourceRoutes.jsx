@@ -97,6 +97,11 @@ export const TAG_RESOURCES = Object.freeze({
     ],
 });
 
+export const TAG_SEARCH_RESOURCES = Object.freeze({
+    page_prefix: 'tag_search',
+    static: ['bundles', 'tags', 'journals'],
+});
+
 export const ALL_ISSUES_BUNDLE_RESOURCES = Object.freeze({
     page_prefix: 'all_issues_bundle',
     static: ['bundles'],

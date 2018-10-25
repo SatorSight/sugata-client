@@ -142,6 +142,7 @@ trait ArticleRoutes{
             Article::injectOtherArticlesIdList($article_collection);
             Article::injectNextArticle($article_collection);
             Article::injectNextAndPrevIssue($article_collection);
+            Article::injectTags($article_collection);
 
             $article = $article_collection->first();
 
