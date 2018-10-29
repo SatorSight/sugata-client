@@ -19,7 +19,7 @@ export default class Article{
 
     update = () => this.reader.update();
 
-    fetch_data = () => fetch(`/api/article/article/${this.id}`);
+    fetch_data = () => fetch(`/api/article/article/${this.id}`, {credentials: 'include'});
 
     assemble = data => {
         this.set_id(data.id);

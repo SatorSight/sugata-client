@@ -37,7 +37,7 @@ Route::get('/article/bundles/', 'ApiController@articleGetAllBundles');
 Route::get('/article/bundle/{article_id}/', 'ApiController@articleGetCurrentBundle');
 Route::get('/article/journal/{article_id}/', 'ApiController@articleGetJournal');
 Route::get('/article/issue/{article_id}/', 'ApiController@articleGetIssue');
-Route::get('/article/article/{article_id}/', 'ApiController@articleGetArticle');
+Route::get('/article/article/{article_id}/', 'ApiController@articleGetArticle')->middleware('web');
 Route::get('/article/next_article/{article_id}/', 'ApiController@articleGetNextArticle');
 Route::get('/article/listing/{article_id}/', 'ApiController@articleGetListing');
 

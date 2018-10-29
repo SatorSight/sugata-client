@@ -30,17 +30,20 @@ class MakeStat
             return $acc;
         }, []);
 
-        if(empty($params) || $params[0] == 'api')
+        if(empty($params))
             return $next($request);
 
-        if(!empty($params[0]) && !empty($params[1]) && $params[0] == 'article'){
-            $encrypter = app(\Illuminate\Contracts\Encryption\Encrypter::class);
-            $msisdn = $encrypter->decrypt($msisdn);
+        if(!empty($params[0]) && !empty($params[1]) && !empty($params[2]) && !empty($params[3])
+            && $params[0] == 'api' && $params[1] == 'article' && $params[2] == 'article'){
+//            $encrypter = app(\Illuminate\Contracts\Encryption\Encrypter::class);
+//            $msisdn = $encrypter->decrypt($msisdn);
 
             $user = User::where('msisdn', $msisdn)->first();
-            $operator = $user->operator->id;
+            if($user) {
+                $operator = $user->operator->id;
 
-            self::sendStat($msisdn, $params[1], $operator);
+                self::sendStat($msisdn, $params[3], $operator);
+            }
         }
 
         return $next($request);
