@@ -44,7 +44,7 @@ class HubHeader extends PureComponent {
                 }}>
                     <div className={classes.inner}>
                         <div className={classes.tag}>
-                        123 {tag.name}
+                            {tag.name}
                         </div>
                     </div>
                 </div>
