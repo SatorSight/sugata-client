@@ -34,6 +34,12 @@ trait TagRoutes{
     public function tagGetTag($tag_id){
 //        $tag = Cache::remember('tag_' . $tag_id, $this->tag_expiration, function() use($tag_id) {
             $tag = Tag::find($tag_id);
+
+            $tag_collection = new Collection();
+            $tag_collection->push($tag);
+
+            Tag::injectWithImages($tag_collection);
+
 //            return $tag;
 //        });
 

@@ -45,6 +45,7 @@ $app->singleton(
 \Illuminate\Database\Eloquent\Relations\Relation::morphMap([
     'Bundle' => \App\Bundle::class,
     'Journal' => \App\Journal::class,
+    'Tag' => \App\Tag::class,
     'Issue' => \App\Issue::class
 ]);
 
