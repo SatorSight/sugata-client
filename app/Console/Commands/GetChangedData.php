@@ -90,7 +90,8 @@ class GetChangedData extends Command
                                         $value = new \DateTime($value);
                                     }
                                     if ($existing_object->$field != $value) {
-                                        $existing_object->$field = $value;
+                                        if($field != 'user_id')
+                                            $existing_object->$field = $value;
                                         if (new $klass instanceof ImageBasedClass) {
                                             if (!empty($arrayed_object['parent_id'])) {
                                                 if ($field == 'id')
@@ -105,7 +106,9 @@ class GetChangedData extends Command
                         }
                         try {
                             $existing_object->save();
-                        }catch(\Exception $e){}
+                        }catch(\Exception $e){
+                            dump($e->getMessage());
+                        }
                     }else{
                         $arrayed_object = (array)$object;
                         $klass = MasterClassAdapter::masterToSlave($master_class);
