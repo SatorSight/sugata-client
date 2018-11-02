@@ -38,6 +38,9 @@ Route::get('/article/bundle/{article_id}/', 'ApiController@articleGetCurrentBund
 Route::get('/article/journal/{article_id}/', 'ApiController@articleGetJournal');
 Route::get('/article/issue/{article_id}/', 'ApiController@articleGetIssue');
 Route::get('/article/article/{article_id}/', 'ApiController@articleGetArticle')->middleware('web');
+
+Route::post('/article/add_comment/', 'ApiController@articleAddComment')->middleware('web_no_csrf');
+
 Route::get('/article/next_article/{article_id}/', 'ApiController@articleGetNextArticle');
 Route::get('/article/listing/{article_id}/', 'ApiController@articleGetListing');
 

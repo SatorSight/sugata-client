@@ -6,6 +6,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import ReaderInfo from '../../../Components/ReaderInfo';
 import ArticleTags from '../../../Components/ArticleTags';
+import Comments from '../../../Components/Comments';
 import { getResource } from '../../../Helpers/dataComposer';
 import { redirectToAuth, userHasAccess } from '../../../Helpers/paymentTrigger';
 import { pageVisit } from '../../../../actions/page_tracker';
@@ -217,6 +218,7 @@ const mapStateToProps = state => ({
     bundle: getResource(state, 'bundle'),
     auth_data: getResource(state, 'auth_data'),
     pages_visited: state.pageTracker.pages_viewed,
+    authorized: state.server.authorized,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -534,6 +536,11 @@ class Reader extends Component {
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
                     <ArticleTags tags={this.state.current.get_tags()} />
+                    <Comments
+                        authorized={this.props.authorized}
+                        article_id={this.state.current.get_id()}
+                        comments={this.state.current.get_comments()}
+                    />
                 </div>
                 <div
                     className={'html-root'}

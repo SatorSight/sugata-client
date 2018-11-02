@@ -4,12 +4,16 @@ namespace App\Http\Traits\ApiTraits;
 
 use App\Article;
 use App\Bundle;
+use App\Comment;
 use App\Http\Controllers\Helper;
 use App\Issue;
 use App\Journal;
+use App\Lib\AuthService2;
 use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
@@ -132,7 +136,7 @@ trait ArticleRoutes{
      * @return \Illuminate\Http\JsonResponse
      */
     public function articleGetArticle($article_id){
-        $article = Cache::remember('article_article_' . $article_id, $this->article_expiration, function() use($article_id) {
+//        $article = Cache::remember('article_article_' . $article_id, $this->article_expiration, function() use($article_id) {
             $article = Article::find($article_id);
 
             $article_collection = new Collection();
@@ -143,13 +147,46 @@ trait ArticleRoutes{
             Article::injectNextArticle($article_collection);
             Article::injectNextAndPrevIssue($article_collection);
             Article::injectTags($article_collection);
+            Article::injectComments($article_collection);
 
             $article = $article_collection->first();
 
-            return $article;
-        });
+//            return $article;
+//        });
 
         return response()->json($article);
+    }
+
+    /**
+     * @desc article data
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function articleAddComment(Request $request){
+        $json = $request->request->get('json');
+        $data = json_decode($json);
+
+        $msisdn = $request->cookies->get('COOKIE_USER_MSISDN');
+
+        try {
+            $article_id = $data->article_id;
+            $content = $data->content;
+        }catch(\Exception $e){
+            $article_id = null;
+            $content = null;
+        }
+
+        Comment::send($msisdn, $article_id, $content);
+        $user = User::where('msisdn', $msisdn)->first();
+
+        $comment = new Comment();
+        $comment->user_id = $user->id;
+        $comment->article_id = Article::find($article_id)->id;
+        $comment->content = $content;
+        $comment->approved = false;
+        $comment->save();
+
+        return response()->json(null);
     }
 
     /**

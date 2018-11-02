@@ -6,6 +6,7 @@ export default class Article{
         this.reader = reader;
         this.loading = true;
         this.tags = [];
+        this.comments = [];
     }
 
     load = () => {
@@ -28,6 +29,7 @@ export default class Article{
         this.set_desktop_html(data.desktop_html);
         this.set_next_article(data.next_article);
         this.set_tags(data.tags);
+        this.set_comments(data.comments);
         this.set_loading(false);
     };
 
@@ -36,6 +38,9 @@ export default class Article{
 
     set_tags = tags => this.tags = tags;
     get_tags = () => this.tags;
+
+    set_comments = comments => this.comments = comments;
+    get_comments = () => this.comments;
 
     set_next_article = next_article => this.next_article = next_article;
     get_next_article = () => this.next_article;

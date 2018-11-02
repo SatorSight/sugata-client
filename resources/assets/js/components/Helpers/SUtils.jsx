@@ -148,7 +148,7 @@ export function makeQuery(payload, method, query, callback) {
         let data = new FormData();
         data.append("json", JSON.stringify(payload));
 
-        fetch(`/${query}/`,
+        fetch(`/${query}`,
             {
                 method: method,
                 body: data,

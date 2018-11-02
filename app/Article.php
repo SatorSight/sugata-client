@@ -257,6 +257,20 @@ class Article extends Model
         });
     }
 
+    public static function injectComments(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            $comments = Comment::where('article_id', $article->id)
+                ->where('approved', true)
+                ->orderByDesc('created_at')
+                ->with(['user'])
+                ->get();
+
+            $article->comments = $comments;
+
+            return $article;
+        });
+    }
+
     public static function injectNextArticle(Collection &$articles) : void {
         $articles = $articles->map(function($article){
             $next_article = Article::where('issue_id', $article->issue_id)->where('page_number', $article->page_number + 1)->first();

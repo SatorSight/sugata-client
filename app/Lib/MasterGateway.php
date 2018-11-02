@@ -56,6 +56,11 @@ class MasterGateway{
         return self::getSchemaDomainUrlPart() . '/' . $base . '/' . $msisdn . '/' . $article_id . '/' . $operator . '/' . self::getAuthUrlPostfix();
     }
 
+    public static function addComment() : string {
+        $base = config('client.add_comment');
+        return self::getSchemaDomainUrlPart() . '/' . $base . '/';
+    }
+
     public static function getChangedDataUrl() : string {
         return self::assemble(config('client.changed_data_url'));
     }
