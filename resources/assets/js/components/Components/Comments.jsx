@@ -133,7 +133,7 @@ class Comments extends Component {
                 </div>}
                 {this.state.alert_visible && <div className={classes.alert}>Комментарий будет добавлен после модерации</div>}
                 <div className={classes.main}>
-                    {comments.map(c =>
+                    {comments && comments.map(c =>
                         <div key={`comment_${c.id}`} className={classes.comment}>
                             <div className={classes.image}>{avatar}</div>
                             <div>
