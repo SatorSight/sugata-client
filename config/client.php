@@ -8,6 +8,7 @@ return [
     'json_data_load_route' => 'get_json_data',
     'images_archive_load_route' => 'get_zipped_images',
     'user_hit' => 'user_hit',
+    'add_comment' => 'add_comment',
     'changed_data_url' => 'get_changed_data',
     'all_ids_url' => 'get_all_ids',
     'images_sync_url' => 'get_changed_images',
