@@ -93,11 +93,11 @@ class GetChangedData extends Command
 
                                         if($field != 'user_id')
                                             $existing_object->$field = $value;
-                                        else{
-                                            $user = User::where('msisdn', '+' . $value)->first();
-                                            if($user)
-                                                $existing_object->$field = $user->id;
-                                        }
+//                                        else{
+//                                            $user = User::where('msisdn', '+' . $value)->first();
+//                                            if($user)
+//                                                $existing_object->$field = $user->id;
+//                                        }
 
                                         if (new $klass instanceof ImageBasedClass) {
                                             if (!empty($arrayed_object['parent_id'])) {
