@@ -90,8 +90,15 @@ class GetChangedData extends Command
                                         $value = new \DateTime($value);
                                     }
                                     if ($existing_object->$field != $value) {
+
                                         if($field != 'user_id')
                                             $existing_object->$field = $value;
+                                        else{
+                                            $user = User::where('msisdn', '+' . $value)->first();
+                                            if($user)
+                                                $existing_object->$field = $user->id;
+                                        }
+
                                         if (new $klass instanceof ImageBasedClass) {
                                             if (!empty($arrayed_object['parent_id'])) {
                                                 if ($field == 'id')
@@ -126,7 +133,15 @@ class GetChangedData extends Command
                                 if($field != 'updated_at' && $field != 'created_at') {
                                     if(strpos($field, 'date') !== false)
                                         $value = new \DateTime($value);
-                                    $obj->$field = $value;
+
+                                    if($field != 'user_id')
+                                        $obj->$field = $value;
+                                    else{
+                                        $user = User::where('msisdn', '+' . $value)->first();
+                                        if($user)
+                                            $obj->$field = $user->id;
+                                    }
+
                                     if ($obj instanceof ImageBasedClass) {
                                         if ($field == 'id')
                                             $image_ids[] = $value;
