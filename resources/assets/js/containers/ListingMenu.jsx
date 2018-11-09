@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { openListing, closeListing } from '../actions/nav_menu';
-import Menu from '../components/Components/ListingMenu';
+import ListingMenu from '../components/Components/ListingMenu';
 import { getResource } from '../components/Helpers/dataComposer';
 
 const mapStateToProps = state => ({
@@ -16,4 +16,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Menu);
+)(ListingMenu);

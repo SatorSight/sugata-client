@@ -62,6 +62,8 @@ Route::get('/tag_search/tags/', 'ApiController@tagSearchGetTags');
 Route::get('/tag_search/bundles/', 'ApiController@tagSearchGetBundles');
 Route::get('/tag_search/journals/', 'ApiController@tagSearchGetJournals');
 
+Route::get('/search/{query}/', 'SearchController@search');
+
 //Route::get('/tag/journal/{journal_id}/', 'ApiController@journalGetJournal');
 //Route::get('/tag/last_issues/{journal_id}/', 'ApiController@journalGetLastIssues');
 //Route::get('/tag/issues_cover_articles/{journal_id}/', 'ApiController@journalGetIssuesCoverArticles');

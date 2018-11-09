@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { withStyles } from 'material-ui/styles';
 
-const style = {
+const styles = {
     input: {
         backgroundColor: '#FFFFFF',
         border: 'solid 1px #8C8C8C',
@@ -17,7 +18,7 @@ const style = {
     },
 };
 
-export default class TagSearch extends Component {
+class TagSearch extends Component {
     constructor(props){
         super(props);
     }
@@ -25,16 +26,22 @@ export default class TagSearch extends Component {
     change = e => this.props.set_phrase(e.target.value);
 
     render() {
+        const { classes } = this.props;
+
         return (
-            <div style={style.container}>
-                <input
-                    placeholder="Начните, а мы подскажем"
-                    style={style.input}
-                    onChange={this.change}
-                    type="text"
-                    value={this.props.phrase}
-                />
+            <div>
+                <div className={classes.container}>
+                    <input
+                        placeholder="Начните, а мы подскажем"
+                        className={classes.input}
+                        onChange={this.change}
+                        type="text"
+                        value={this.props.phrase}
+                    />
+                </div>
             </div>
         );
     }
 }
+
+export default withStyles(styles)(TagSearch);

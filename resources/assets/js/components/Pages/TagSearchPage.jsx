@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import Header from '../Components/Header';
 import AllTags from '../../containers/AllTags';
+import SearchResults from '../../containers/SearchResults';
 import TagSearch from '../../containers/TagSearch';
 import Footer from '../Components/Footer';
 import PropTypes from 'prop-types';
@@ -21,6 +22,7 @@ class TagSearchPage extends Component {
                 <Header />
                 <TagSearch/>
                 <AllTags resource={'tags'} />
+                <SearchResults />
                 <Footer />
             </div>
         );
