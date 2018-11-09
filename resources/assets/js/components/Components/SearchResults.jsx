@@ -40,7 +40,7 @@ class SearchResults extends Component {
 
     doSearch = val => {
         if(val.length > 3)
-            fetch(`api/search/${val}`)
+            fetch(`/api/search/${val}`)
                 .then(r => r.json())
                 .then(r => this.setState({results: r}));
     };
