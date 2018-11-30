@@ -7,6 +7,7 @@ import MainPage from './Pages/IndexPage'
 import AuthPage from './Pages/AuthPage'
 import TagPage from './Pages/TagPage'
 import BundlePage from './Pages/BundlePage'
+import PayPage from './Pages/PayPage'
 import IssuePage from './Pages/IssuePage'
 import ArticlePage from './Pages/ArticlePage'
 import JournalPage from './Pages/JournalPage'
@@ -34,6 +35,7 @@ export default class Application extends PureComponent {
                         <Switch>
                             <Route exact path="/" component={MainPage}/>
                             <Route path="/auth" component={AuthPage}/>
+                            {/*<Route path="/pay" component={PayPage}/>*/}
                             <Route path="/bundle/:id" component={BundlePage}/>
                             <Route path="/issue/:id" component={IssuePage}/>
                             <Route path="/article/:id" component={ArticlePage}/>

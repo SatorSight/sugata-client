@@ -123,6 +123,12 @@ export const ALL_ISSUES = Object.freeze({
     ],
 });
 
+export const PAY = Object.freeze({
+    page_prefix: 'pay',
+    static: ['bundles'],
+    with_self_id: [],
+});
+
 export const ARTICLE_RESOURCES = Object.freeze({
     page_prefix: 'article',
     static: ['bundles'],

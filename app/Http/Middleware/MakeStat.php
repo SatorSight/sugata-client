@@ -18,7 +18,7 @@ class MakeStat
     public function handle($request, Closure $next)
     {
         $uri = $request->getRequestUri();
-        $msisdn = $request->cookies->get('COOKIE_USER_MSISDN');
+        $msisdn = $request->cookies->get('COOKIE_USER_FIELD');
         $params = explode('/', $uri);
         if(empty($params) || empty($msisdn))
             return $next($request);

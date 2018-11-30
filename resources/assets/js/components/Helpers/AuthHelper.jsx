@@ -19,15 +19,15 @@ export default class AuthHelper{
             })
     };
 
-    static checkMsisdn = msisdn => {
-        if(msisdn.length === 0){
-            alert('Введите номер!');
+    static checkCredentials = field => {
+        if(field.length === 0){
+            alert('Введите номер или email!');
             return false;
         }
         const bundle_id = SUtils.getGetParameterByName('bundle_id');
         const payload = {
             bundle_id: bundle_id,
-            msisdn: msisdn
+            field: field
         };
         //writes session if its ok
         SUtils.makeQuery(payload, 'GET', 'api/auth/check_msisdn', AuthHelper.authorizeCheckCallback);

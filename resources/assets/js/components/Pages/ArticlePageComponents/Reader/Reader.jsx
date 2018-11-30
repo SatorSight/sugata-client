@@ -491,6 +491,16 @@ class Reader extends Component {
 
     show_blocker = () => this.props.auth_data && this.props.auth_data.first_flow;
 
+    allowed_to_see = () => {
+        return !(
+               !this.props.bundle
+            || !this.props.authorized
+            || !this.props.auth_data
+            || !this.props.auth_data.user_bundles
+            || !this.props.auth_data.user_bundles.includes(this.props.bundle)
+        ) || this.props.pages_visited < this.props.page_load_limit
+    };
+
     render() {
         const stylesImg = 'img {max-width: 100%;}';
         const { journal, issue } = this.props;
@@ -652,15 +662,15 @@ class Reader extends Component {
                         </Dialog>
                     </div>
                 }
-
-                {(this.props.pages_visited >= this.props.page_load_limit && !this.props.authorized)
+                {/*(this.props.pages_visited >= this.props.page_load_limit && !this.props.authorized)*/}
+                {!this.allowed_to_see()
                     ? <div>
                    <div dangerouslySetInnerHTML={{ __html: `<style>.paper{border-radius: 0.5em;}</style>`}}></div>
                    <Dialog classes={{paper: 'paper'}}
                             maxWidth={'md'}
                             fullWidth
                             style={styles.dialog}
-                            ignoreBackdropClick
+                            // ignoreBackdropClick={true}
                             open={this.state.expired_open}>
                         <div dangerouslySetInnerHTML={{ __html: `<style>.root{padding: 0;}</style>`}}></div>
                         <DialogContent classes={{root: 'root'}}>

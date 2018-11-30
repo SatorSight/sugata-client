@@ -10,35 +10,50 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
 class AuthService extends GatewayService {
-    private $subscriptionInfo;
+
+    const BACKDOOR_MSISDN = ['+79999999999'];
+
     private $bundle;
+    private $ip_checker_url;
 
     private const SESSION_USER_ID = 'SESSION_USER_ID';
-    private const SESSION_USER_MSISDN = 'SESSION_USER_MSISDN';
+    private const SESSION_USER_FIELD = 'SESSION_USER_FIELD';
 
     private const COOKIE_USER_ID = 'COOKIE_USER_ID';
-    private const COOKIE_USER_MSISDN = 'COOKIE_USER_MSISDN';
-
-    private $ip_checker_url;
-    private $operator;
-
-    private $msisdn;
+    private const COOKIE_USER_FIELD = 'COOKIE_USER_FIELD';
 
     public function __construct(Bundle $bundle = null){
         parent::__construct();
-        $this->ip_checker_url = config('client.ip_checker_url');
         $this->bundle = $bundle;
+        $this->ip_checker_url = config('client.ip_checker_url');
     }
 
-    public function loadSubscriptionInfoByMsisdn(string $msisdn) : void{
-        $this->subscriptionInfo = $this->askInfoByMsisdn($msisdn);
+    public function getUser(string $field) : ?User {
+        $user = null;
+
+        /*
+         $user_object = {
+            field: '123',
+            operator: 1,
+            bundle_accesses: [1,2,3]
+         }
+         */
+
+        //getting user data by msisdn from bridge, return [ null || stdClass ]
+        $user_object = $this->getUserObjectFromMaster($field);
+
+        if($user_object){
+            $user = $this->getRegisteredUser($user_object->field);
+            if(!$user)
+                $user = $this->createUserWithObject($user_object);
+            AuthService::syncUserBundleAccesses($user, $user_object->bundle_accesses);
+        }
+        return $user;
     }
 
-    public function loadSubscriptionInfoByBridgeToken(string $bridge_token) : void{
-        $this->subscriptionInfo = $this->askInfoByBridgeToken($bridge_token);
+    public function getUserObjectFromMaster(string $field) : ?\stdClass {
+        return $this->askInfoByField($field);
     }
-
-
 
     public function getMsisdn(){
         return $this->msisdn;
@@ -47,10 +62,6 @@ class AuthService extends GatewayService {
     public function setMsisdn($msisdn){
         $this->msisdn = $msisdn;
     }
-
-
-
-
 
     public function getBundleAccessesByBridgeToken(string $bridge_token) : array {
         $resp = $this->askMasterForBundleAccessesWithBridge($bridge_token);
@@ -67,16 +78,10 @@ class AuthService extends GatewayService {
         return $response;
     }
 
-
-
     public function askMasterForActions(){
         $url = $this->getAuthActionsUrl();
         $data = $this->read($url);
         return $data;
-    }
-
-    public function userSubscribed() : bool {
-        return !!$this->subscriptionInfo->status;
     }
 
     public function getOperatorTech() : string {
@@ -93,88 +98,40 @@ class AuthService extends GatewayService {
         return $operator;
     }
 
-    public function createUser() : void {
-        $msisdn = $this->userMsisdn();
-        $operator_name = $this->subscriptionInfo->operator;
-        $operator = Operator::where('tech_name', $operator_name)->first();
+    public function writeUserSessionAndCookies($user){
+        $field = $user->msisdn ? $user->msisdn : $user->email;
 
-        $user = new User;
-        $user->msisdn = $msisdn;
-//        $user->email = '';
-//        $user->login = '';
-        $user->active = true;
-        $user->operator_id = $operator->id;
-
-        $bundle = $this->bundle ? $this->bundle->id : null;
-        if($bundle)
-            $bundle = Bundle::find($bundle);
-        $bundle_access = self::findBundleAccess($operator, $bundle);
-
-        if($bundle_access) {
-            $user->save();
-            $user->bundle_accesses()->attach($bundle_access->id);
-        }
-    }
-
-    public static function findBundleAccess($operator, $bundle){
-        $bundle_accesses = BundleAccess::all();
-
-        $bundle_access_key = $bundle_accesses->search(function($b_a) use ($bundle, $operator){
-            if($b_a->operator->id == $operator->id) {
-                if (!$bundle || $b_a->bundles()->get()->contains($bundle))
-                    return $b_a;
-                else
-                    return false;
-            }else
-                return false;
-        });
-
-        if($bundle_access_key !== false)
-            $bundle_access = $bundle_accesses->get($bundle_access_key);
-        else
-            $bundle_access = null;
-
-        return $bundle_access;
-    }
-
-
-    public function writeUserSessionAndCookies($user = null){
-        if(!$user)
-            $user = $this->getUser();
         Session::put(self::SESSION_USER_ID, $user->id);
-        Session::put(self::SESSION_USER_MSISDN, $user->msisdn);
+        Session::put(self::SESSION_USER_FIELD, $field);
 
         Cookie::queue(Cookie::make(self::COOKIE_USER_ID, $user->id, SUtils::MAX_COOKIE_TIME));
-        Cookie::queue(Cookie::make(self::COOKIE_USER_MSISDN, $user->msisdn, SUtils::MAX_COOKIE_TIME));
+        Cookie::queue(Cookie::make(self::COOKIE_USER_FIELD, $field, SUtils::MAX_COOKIE_TIME));
     }
 
     public static function destroyUserSessionAndCookies(){
         Session::put(self::SESSION_USER_ID, null);
-        Session::put(self::SESSION_USER_MSISDN, null);
+        Session::put(self::SESSION_USER_FIELD, null);
 
         Cookie::queue(Cookie::make(self::COOKIE_USER_ID, null, SUtils::MAX_COOKIE_TIME));
-        Cookie::queue(Cookie::make(self::COOKIE_USER_MSISDN, null, SUtils::MAX_COOKIE_TIME));
+        Cookie::queue(Cookie::make(self::COOKIE_USER_FIELD, null, SUtils::MAX_COOKIE_TIME));
     }
 
 
     public static function userAuthorized(){
         $session_user_id = Session::get(self::SESSION_USER_ID);
-        $session_user_msisdn = Session::get(self::SESSION_USER_MSISDN);
+        $SESSION_USER_FIELD = Session::get(self::SESSION_USER_FIELD);
 
         $cookie_user_id = Cookie::get(self::COOKIE_USER_ID);
-        $cookie_user_msisdn = Cookie::get(self::COOKIE_USER_MSISDN);
+        $COOKIE_USER_FIELD = Cookie::get(self::COOKIE_USER_FIELD);
 
-        if(!empty($session_user_id) && !empty($session_user_msisdn))
+        if(!empty($session_user_id) && !empty($SESSION_USER_FIELD))
             return true;
-        if(!empty($cookie_user_id) && !empty($cookie_user_msisdn))
+        if(!empty($cookie_user_id) && !empty($COOKIE_USER_FIELD))
             return true;
         return false;
     }
 
-
-
-
-    public function getUserByMsisdn($msisdn){
+    public static function getUserByMsisdn($msisdn){
         return User::where('msisdn', $msisdn)->first();
     }
 
@@ -204,6 +161,25 @@ class AuthService extends GatewayService {
             self::attachBundleAccesses($user, $b_a);
     }
 
+    public function createUserWithObject(\stdClass $user_object) {
+        $operator = $user_object->operator;
+        $field = $user_object->field;
+
+        $user = new User;
+
+        $f = SUtils::isPhone($field) ? 'msisdn' : 'email';
+
+        $user->$f = $field;
+        $user->active = true;
+        if($operator)
+            $user->operator_id = $operator->id;
+        else
+            $user->operator_id = Operator::getUnknown()->id;
+
+        $user->save();
+        return $user;
+    }
+
     public function createUserWith($msisdn) {
         $operator = $this->getOperator();
 
@@ -220,60 +196,21 @@ class AuthService extends GatewayService {
         $user->bundle_accesses()->attach($bundle_access->id);
     }
 
-
-
-
-
-
-    private function getUser(): User {
-        $msisdn = $this->userMsisdn();
-        return  User::where('msisdn', $msisdn)->first();
+    private function getRegisteredUser(string $field): ?User {
+        $f = SUtils::isPhone($field) ? 'msisdn' : 'email';
+        return User::where($f, $field)->first();
     }
 
     public function setOperator(string $operator){
         $this->operator = $operator;
     }
 
-    private function userMsisdn() : string {
-        return $this->subscriptionInfo->userId;
-    }
+    private function askInfoByField(string $field){
+        $url = $this->getFieldInfoUrl(urlencode($field));
+        $url = str_replace('.', '%2E', $url);
+        $url = str_replace('-', '%2D', $url);
 
-    public function userExists() : bool {
-        $msisdn = $this->subscriptionInfo->userId;
-        $user = User::where('msisdn', $msisdn)->first();
-        return !!$user;
-    }
-//
-//    private function getMsisdnFromInfo(\stdClass $info) : string {
-//        return $info->userId;
-//    }
-//
-//    private function userExistsInSession(Session $session){
-////        $session->get('');
-//    }
-
-//    public function setSession($msisdn)
-
-
-    private function askInfoByBridgeToken(string $bridge_token){
-        $url = $this->getBridgeTokenInfoUrl($bridge_token);
-        $data = $this->read($url);
-        if(empty($data->status)) {
-            if(empty($data))
-                $data = new \stdClass();
-            $data->status = 0;
-        }
-        return $data;
-    }
-
-    private function askInfoByMsisdn(string $msisdn){
-        $url = $this->getMsisdnInfoUrl($msisdn);
-        $data = $this->read($url);
-        if(!$data)
-            $data = new \stdClass();
-        if(empty($data->status))
-            $data->status = 0;
-        return $data;
+        return $this->read($url);
     }
 
     private function getAuthActionsUrl() : string {
@@ -300,12 +237,12 @@ class AuthService extends GatewayService {
         ]);
     }
 
-    private function getMsisdnInfoUrl(string $msisdn) : string {
-        $url = config('client.msisdn_info_url');
+    private function getFieldInfoUrl(string $field) : string {
+        $url = config('client.field_info_url');
         return join('/', [
             $this->getSchemaDomainUrlPart(), //http://
             $url, // /something
-            $msisdn,
+            $field,
             ($this->bundle ? $this->bundle->id : 'null'),
             $this->getOperator()->id,
             $this->getAuthUrlPostfix() // realm_id + secret

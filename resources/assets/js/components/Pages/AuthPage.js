@@ -261,17 +261,15 @@ class AuthPage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            msisdn: ''
+            msisdn: '',
+            email: '',
         };
     }
 
-    onChange = event => {
-        this.setState({
-            msisdn: event.target.value
-        });
-    };
+    onChangeMsisdn = event => this.setState({msisdn: event.target.value});
+    onChangeEmail = event => this.setState({email: event.target.value});
 
-    buttonClicked = () => AuthHelper.checkMsisdn(this.state.msisdn);
+    buttonClicked = () => AuthHelper.checkCredentials(this.state.msisdn || this.state.email);
 
     render() {
         const { classes } = this.props;
@@ -288,12 +286,25 @@ class AuthPage extends Component {
                             <span className={classes.spanInput}>&nbsp;</span>
                             <InputMask
                                 onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
-                                onChange={this.onChange}
+                                onChange={this.onChangeMsisdn}
                                 value={this.state.msisdn}
                                 className={classes.inputMask}
                                 type="tel"
                                 mask="+7 (999) 999-99-99"
                                 placeholder="+7 (   )    -  -  "
+                                maskChar=" " />
+
+                        </div>
+                        <div className={classes.phoneLabel}>Или email:</div>
+                        <div className={classes.divInput}>
+                            <span className={classes.spanInput}>&nbsp;</span>
+                            <InputMask
+                                onKeyPress={(e) => e.charCode === 13 ? this.buttonClicked() : null}
+                                onChange={this.onChangeEmail}
+                                value={this.state.email}
+                                className={classes.inputMask}
+                                type="email"
+                                placeholder="some@mail.com"
                                 maskChar=" " />
                             <p style={{color: 'black'}} className={classes.textFot}>
                                 Автоматически определим, если

@@ -8,7 +8,7 @@ use App\Comment;
 use App\Http\Controllers\Helper;
 use App\Issue;
 use App\Journal;
-use App\Lib\AuthService2;
+use App\Lib\AuthService;
 use App\Lib\ImageProxyService;
 use App\Lib\SUtils;
 use App\User;
@@ -166,7 +166,7 @@ trait ArticleRoutes{
         $json = $request->request->get('json');
         $data = json_decode($json);
 
-        $msisdn = $request->cookies->get('COOKIE_USER_MSISDN');
+        $msisdn = $request->cookies->get('COOKIE_USER_FIELD');
 
         try {
             $article_id = $data->article_id;
