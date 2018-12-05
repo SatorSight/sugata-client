@@ -206,9 +206,11 @@ class AuthService extends GatewayService {
     }
 
     private function askInfoByField(string $field){
-        $url = $this->getFieldInfoUrl(urlencode($field));
-        $url = str_replace('.', '%2E', $url);
-        $url = str_replace('-', '%2D', $url);
+        $field = urlencode($field);
+        $field = str_replace('.', '%2E', $field);
+        $field = str_replace('-', '%2D', $field);
+
+        $url = $this->getFieldInfoUrl($field);
 
         return $this->read($url);
     }
