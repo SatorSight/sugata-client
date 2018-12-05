@@ -20,7 +20,7 @@ class MakeStat
         $uri = $request->getRequestUri();
         $msisdn = $request->cookies->get('COOKIE_USER_FIELD');
         $params = explode('/', $uri);
-        if(empty($params) || empty($msisdn))
+        if(empty($params))
             return $next($request);
 
         //remove empty
@@ -35,15 +35,17 @@ class MakeStat
 
         if(!empty($params[0]) && !empty($params[1]) && !empty($params[2]) && !empty($params[3])
             && $params[0] == 'api' && $params[1] == 'article' && $params[2] == 'article'){
-//            $encrypter = app(\Illuminate\Contracts\Encryption\Encrypter::class);
-//            $msisdn = $encrypter->decrypt($msisdn);
+
+            $operator = null;
 
             $user = User::where('msisdn', $msisdn)->first();
-            if($user) {
+            if($user)
                 $operator = $user->operator->id;
 
-                self::sendStat($msisdn, $params[3], $operator);
-            }
+            if(!$msisdn)
+                $msisdn = 'null';
+
+            self::sendStat($msisdn, $params[3], $operator);
         }
 
         return $next($request);
