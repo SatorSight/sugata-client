@@ -39,7 +39,11 @@ export default class AuthHelper{
             window.location = return_url;
         }else{
             if(data.result === 'redirect'){
-                window.location = data.to + '?returnurl=' + return_url;
+                //not redirect to url anymore, redirect to pay page if bundle provided
+                if(data.bundle)
+                    window.location = '/pay/' + data.bundle.id;
+                else
+                    window.location = data.to + '?returnurl=' + return_url;
             }else {
                 alert('Вы не подписаны!');
             }

@@ -125,7 +125,9 @@ export const ALL_ISSUES = Object.freeze({
 
 export const PAY = Object.freeze({
     page_prefix: 'pay',
-    static: ['bundles'],
+    static: [
+        'bundles'
+    ],
     with_self_id: [],
 });
 

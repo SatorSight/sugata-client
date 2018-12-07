@@ -45,6 +45,7 @@ export default class Application extends PureComponent {
                             <Route path="/all_issues_bundle/:id" component={AllIssuesBundle}/>
                             <Route path="/tag/:id" component={TagPage}/>
                             <Route path="/tag_search/" component={TagSearchPage}/>
+                            <Route path="/pay/:bundle_id" component={PayPage}/>
                             {/*<Route path="/test" exact component={TestComponent}/>*/}
 
                             <Route path="*" component={NotFound404}/>

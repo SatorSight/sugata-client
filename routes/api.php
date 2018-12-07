@@ -104,5 +104,7 @@ Route::get('/issue/other_issues/{issue_id}/', 'ApiController@issueGetOtherIssues
 
 Route::get('/auth/bundles/', 'ApiController@indexGetBundles');
 
+Route::get('/pay/bundles/', 'ApiController@paymentGetBundles');
+Route::get('/pay/get/{bundle_id}/', 'ApiController@payment');
 
 //Route::get('/test/', 'ApiController@test');

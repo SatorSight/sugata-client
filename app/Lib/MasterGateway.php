@@ -43,6 +43,11 @@ class MasterGateway{
         return $realm_id . '/' . $secret . '/';
     }
 
+    public static function getProductsUrl($bundle_id) : string {
+        $base = config('client.products');
+        return self::getSchemaDomainUrlPart() . '/' . $base . '/' . $bundle_id . '/' . self::getAuthUrlPostfix();
+    }
+
     public static function getMasterJsonDataUrl() : string {
         return self::assemble(config('client.json_data_load_route'));
     }

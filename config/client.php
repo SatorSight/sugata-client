@@ -16,6 +16,7 @@ return [
     'auth_actions_url' => 'auth_actions',
     'bridge_token_info_url' => 'bridge_token_info',
     'field_info_url' => 'field_info',
+    'products' => 'products',
 
     'ip_checker_url' => 'http://ip.blinko.ru/api/get_op'
 ];

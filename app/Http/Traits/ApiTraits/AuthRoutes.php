@@ -53,7 +53,8 @@ trait AuthRoutes{
                     return response()->json([
                         'result' => $actions->action_type,
                         'to' => $actions->link,
-                        'message' => 'redirect_required'
+                        'message' => 'redirect_required',
+                        'bundle' => $bundle,
                     ]);
                 }
             }

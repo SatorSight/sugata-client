@@ -11,6 +11,7 @@ use App\Http\Traits\ApiTraits\BundleRoutes;
 use App\Http\Traits\ApiTraits\IndexRoutes;
 use App\Http\Traits\ApiTraits\IssueRoutes;
 use App\Http\Traits\ApiTraits\JournalRoutes;
+use App\Http\Traits\ApiTraits\PaymentRoutes;
 use App\Http\Traits\ApiTraits\TagRoutes;
 use App\Http\Traits\ApiTraits\TagSearchRoutes;
 use App\Issue;
@@ -36,7 +37,6 @@ class ApiController extends Controller
         //todo unleash power of redis on release
         $this->expiration = now()->addMinutes(120);
 
-
         $this->bundle_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['year']);
         $this->hubs_expiration = now();
         $this->issues_expiration = now()->addMinutes(SUtils::TIME_INTERVAL_ARRAY_MINUTES['day']);
@@ -56,19 +56,5 @@ class ApiController extends Controller
     use AllIssuesRoutes;
     use TagRoutes;
     use TagSearchRoutes;
-
-//    public function test(){
-//
-//        $image_path = public_path() . '/images/test/o.jpg';
-//        $new_image_path = public_path() . '/images/test/o2.jpg';
-//
-//        $img = new \imagick($image_path);
-//        $img->setImageCompression(\imagick::COMPRESSION_JPEG);
-//        $img->setImageCompressionQuality(2);
-//
-//        $img->writeImage($new_image_path);
-//
-//        return 'done';
-//    }
-
+    use PaymentRoutes;
 }
