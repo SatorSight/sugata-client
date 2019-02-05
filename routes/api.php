@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/index/bundles/', 'ApiController@indexGetBundles');
+Route::get('/index/hubs/', 'ApiController@indexGetHubs');
 Route::get('/index/new_issues/', 'ApiController@indexGetNewIssues');
 Route::get('/index/main_topics/', 'ApiController@indexGetMainTopics');
 Route::get('/index/new_articles/', 'ApiController@indexGetNewArticles');
@@ -36,7 +37,10 @@ Route::get('/article/bundles/', 'ApiController@articleGetAllBundles');
 Route::get('/article/bundle/{article_id}/', 'ApiController@articleGetCurrentBundle');
 Route::get('/article/journal/{article_id}/', 'ApiController@articleGetJournal');
 Route::get('/article/issue/{article_id}/', 'ApiController@articleGetIssue');
-Route::get('/article/article/{article_id}/', 'ApiController@articleGetArticle');
+Route::get('/article/article/{article_id}/', 'ApiController@articleGetArticle')->middleware('web');
+
+Route::post('/article/add_comment/', 'ApiController@articleAddComment')->middleware('web_no_csrf');
+
 Route::get('/article/next_article/{article_id}/', 'ApiController@articleGetNextArticle');
 Route::get('/article/listing/{article_id}/', 'ApiController@articleGetListing');
 
@@ -47,6 +51,25 @@ Route::get('/journal/last_issues/{journal_id}/', 'ApiController@journalGetLastIs
 Route::get('/journal/issues_cover_articles/{journal_id}/', 'ApiController@journalGetIssuesCoverArticles');
 Route::get('/journal/new_articles/{journal_id}/', 'ApiController@journalGetBasicArticlesForLastIssue');
 Route::get('/journal/popular_articles/{journal_id}/', 'ApiController@journalGetRandomArticlesFromNonLastIssue');
+
+
+Route::get('/tag/tag/{tag_id}/', 'ApiController@tagGetTag');
+Route::get('/tag/bundles/', 'ApiController@tagGetBundles');
+Route::get('/tag/articles/{tag_id}/', 'ApiController@tagGetArticles');
+
+
+Route::get('/tag_search/tags/', 'ApiController@tagSearchGetTags');
+Route::get('/tag_search/bundles/', 'ApiController@tagSearchGetBundles');
+Route::get('/tag_search/journals/', 'ApiController@tagSearchGetJournals');
+
+Route::get('/search/{query}/', 'SearchController@search');
+
+//Route::get('/tag/journal/{journal_id}/', 'ApiController@journalGetJournal');
+//Route::get('/tag/last_issues/{journal_id}/', 'ApiController@journalGetLastIssues');
+//Route::get('/tag/issues_cover_articles/{journal_id}/', 'ApiController@journalGetIssuesCoverArticles');
+//Route::get('/tag/new_articles/{journal_id}/', 'ApiController@journalGetBasicArticlesForLastIssue');
+//Route::get('/tag/popular_articles/{journal_id}/', 'ApiController@journalGetRandomArticlesFromNonLastIssue');
+
 
 //Route::get('/journal/more_new_articles/{journal_id}/{from}/', 'ApiController@journalGetMoreMoreNewArticles')->where(['id' => '[0-9]+']);
 //Route::get('/journal/more_popular_articles/{journal_id}/{from}/', 'ApiController@journalGetMorePopularArticles')->where(['id' => '[0-9]+']);
@@ -81,5 +104,7 @@ Route::get('/issue/other_issues/{issue_id}/', 'ApiController@issueGetOtherIssues
 
 Route::get('/auth/bundles/', 'ApiController@indexGetBundles');
 
+Route::get('/pay/bundles/', 'ApiController@paymentGetBundles');
+Route::get('/pay/get/{bundle_id}/', 'ApiController@payment');
 
 //Route::get('/test/', 'ApiController@test');

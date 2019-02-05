@@ -24,7 +24,9 @@ class MasterClassAdapter{
         'BundleAccessesBundle' => 'BundleAccessesBundle',
         'AdditionalImage' => 'AdditionalImage',
         'BigPreviewImage' => 'BigPreviewImage',
-        'SmallPreviewImage' => 'SmallPreviewImage'
+        'SmallPreviewImage' => 'SmallPreviewImage',
+        'Tag' => 'Tag',
+        'ArticlesTags' => 'ArticlesTag',
     ];
 
     const IMAGE_CLASSES = ['Image', 'Logo', 'BigPreviewImage', 'SmallPreviewImage'];

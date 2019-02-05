@@ -46,23 +46,28 @@ class test extends Command
     public function handle()
     {
 
-        $time1 = microtime(true);
 
-        $urls = [];
-        for($i = 0; $i < 100; $i++){
-            $urls[] = 'http://sugata.client/';
-        }
+        $items = Article::search('Suzuki');
+        dd($items);
+//        dd(get_class($items->first()));
 
-//        $url1 = 'http://sugata.client/';
-//        $url2 = 'http://sugata.client/';
-//        $url3 = 'http://sugata.client/';
-
-        $client = new Client();
-
-
-        foreach ($urls as $url){
-            $promises[] = $client->getAsync($url);
-        }
+//        $time1 = microtime(true);
+//
+//        $urls = [];
+//        for($i = 0; $i < 100; $i++){
+//            $urls[] = 'http://sugata.client/';
+//        }
+//
+////        $url1 = 'http://sugata.client/';
+////        $url2 = 'http://sugata.client/';
+////        $url3 = 'http://sugata.client/';
+//
+//        $client = new Client();
+//
+//
+//        foreach ($urls as $url){
+//            $promises[] = $client->getAsync($url);
+//        }
 
 
 
@@ -74,12 +79,12 @@ class test extends Command
 //        SUtils::dump_console($response3->getStatusCode());
 
 
-        foreach ($urls as $url){
-            $promises[] = $client->getAsync($url);
-        }
-
-
-        $results = Promise\settle($promises)->wait();
+//        foreach ($urls as $url){
+//            $promises[] = $client->getAsync($url);
+//        }
+//
+//
+//        $results = Promise\settle($promises)->wait();
 //
 //        $promises[] = $client->getAsync($url1);
 //        $promises[] = $client->getAsync($url2);
@@ -112,15 +117,15 @@ class test extends Command
 
 //        SUtils::dump_console(file_exists($image_path));
 
-        $time2 = microtime(true);
-        $duration = $time2 - $time1;
-
-        $hours = (int)($duration/60/60);
-        $minutes = (int)($duration/60)-$hours*60;
-        $seconds = (int)$duration-$hours*60*60-$minutes*60;
-
-
-        SUtils::dump_console($seconds);
+//        $time2 = microtime(true);
+//        $duration = $time2 - $time1;
+//
+//        $hours = (int)($duration/60/60);
+//        $minutes = (int)($duration/60)-$hours*60;
+//        $seconds = (int)$duration-$hours*60*60-$minutes*60;
+//
+//
+//        SUtils::dump_console($seconds);
         SUtils::dump_console('Done');
         return 1;
     }

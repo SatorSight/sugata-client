@@ -4,7 +4,6 @@ namespace App\Http\Traits\ApiTraits;
 
 use App\Bundle;
 use App\Lib\AuthService;
-use App\Lib\AuthService2;
 use App\Lib\SUtils;
 use App\User;
 use function GuzzleHttp\Psr7\build_query;
@@ -18,8 +17,10 @@ trait AuthRoutes{
     public function checkMsisdn($data){
         $decoded = json_decode($data);
 
-        $msisdn = $decoded->data->msisdn;
-        $msisdn = SUtils::normalizeTel($msisdn);
+        $field = $decoded->data->field;
+
+        if(SUtils::isPhone($field))
+            $field = SUtils::normalizeTel($field);
 
         $bundle = null;
         if(isset($decoded->data->bundle_id)) {
@@ -27,31 +28,33 @@ trait AuthRoutes{
             $bundle = Bundle::find($bundle_id);
         }
 
-        $as2 = new AuthService2($bundle);
+        $as = new AuthService($bundle);
 
         // backdoor
-        if(in_array($msisdn, AuthService2::BACKDOOR_MSISDN)){
+        if(in_array($field, AuthService::BACKDOOR_MSISDN)){
             $user = User::find(21);
-            $as2->writeUserSessionAndCookies($user);
+            $as->writeUserSessionAndCookies($user);
             return response()->json(['result' => 'ok']);
         }
 
-        $user = $as2->getUser($msisdn);
+        $user = $as->getUser($field);
+
         if($user){
-            $as2->writeUserSessionAndCookies($user);
+            $as->writeUserSessionAndCookies($user);
             return response()->json(['result' => 'ok']);
         }else{
             //todo rewrite this
-            $operator = $as2->getOperatorTech();
-            $as2->setOperator($operator);
-            $actions = $as2->askMasterForActions();
+            $operator = $as->getOperatorTech();
+            $as->setOperator($operator);
+            $actions = $as->askMasterForActions();
 
             if(!empty($actions)){
                 if(isset($actions->action_type) && $actions->action_type == 'redirect'){
                     return response()->json([
                         'result' => $actions->action_type,
                         'to' => $actions->link,
-                        'message' => 'redirect_required'
+                        'message' => 'redirect_required',
+                        'bundle' => $bundle,
                     ]);
                 }
             }
@@ -59,57 +62,6 @@ trait AuthRoutes{
             //todo ip checkup and redirect
             return response()->json(['result' => 'fail', 'message' => 'not_subscribed']);
         }
-
-
-
-
-
-//
-//
-//        $as = new AuthService($bundle);
-//
-//        $user = AuthService::getUserByMsisdn($msisdn);
-//        if($user){
-//            return response()->json(['result' => 'ok']);
-//        }else{
-//
-//        }
-//
-//
-//
-//
-//
-//
-//
-//        $as->loadSubscriptionInfoByMsisdn($msisdn);
-//
-//        if($as->userSubscribed()){
-//            if($as->userExists()){
-//                $as->writeUserSessionAndCookies();
-//                return response()->json(['result' => 'ok']);
-//            }else{
-//                $as->createUser();
-//                $as->writeUserSessionAndCookies();
-//                return response()->json(['result' => 'ok']);
-//            }
-//        }else{
-//            $operator = $as->getOperatorTech();
-//            $as->setOperator($operator);
-//            $actions = $as->askMasterForActions();
-//
-//            if(!empty($actions)){
-//                if(isset($actions->action_type) && $actions->action_type == 'redirect'){
-//                    return response()->json([
-//                        'result' => $actions->action_type,
-//                        'to' => $actions->link,
-//                        'message' => 'redirect_required'
-//                    ]);
-//                }
-//            }
-
-//            //todo ip checkup and redirect
-//            return response()->json(['result' => 'fail', 'message' => 'not_subscribed']);
-//        }
     }
 
     public function userAuthorized(){
@@ -119,15 +71,16 @@ trait AuthRoutes{
 
     public function loadAuthData(){
         $resp = new \stdClass();
-        $user_msisdn = Cookie::get('COOKIE_USER_MSISDN');
+        $user_field = Cookie::get('COOKIE_USER_FIELD');
 
         $no_user = false;
-        if(empty($user_msisdn)) {
+        if(empty($user_field)) {
             $resp = self::getNoUserMessage();
             $no_user = true;
         }
 
-        $user = User::where('msisdn', $user_msisdn)->first();
+        $f = SUtils::isPhone($user_field) ? 'msisdn' : 'email';
+        $user = User::where($f, $user_field)->first();
 
         if(!$no_user) {
             if (!$user){
@@ -160,7 +113,7 @@ trait AuthRoutes{
         $resp = new \stdClass();
         $resp->operator = $operator;
         $resp->user_bundles = $user_bundles_ids;
-        $resp->msisdn = $user_msisdn;
+        $resp->$f = $user_field;
 
 
         return response()->json($resp);
@@ -183,19 +136,4 @@ trait AuthRoutes{
         return response()->json('ok');
     }
 
-//    public function getSubLink($bundle_id){
-//        $bundle = Bundle::find($bundle_id);
-//        $auth_service = new AuthService($bundle);
-//        $operator = $auth_service->getOperator();
-
-//        if($operator->tech_name === 'unknown')
-//            return false;
-//
-//        $bundle_accesses = $operator->get
-
-//        $operator = AuthService::getOperator();
-
-
-
-//    }
 }

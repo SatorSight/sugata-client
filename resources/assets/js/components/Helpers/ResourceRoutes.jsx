@@ -14,6 +14,7 @@ export const MAIN_RESOURCES = Object.freeze({
         'new_articles',
         'popular_articles',
         'popular_editions',
+        'hubs',
     ],
     with_from: [
         'more_new_articles',
@@ -87,6 +88,20 @@ export const ALL_ISSUES_JOURNAL_RESOURCES = Object.freeze({
     ],
 });
 
+export const TAG_RESOURCES = Object.freeze({
+    page_prefix: 'tag',
+    static: ['bundles'],
+    with_self_id: [
+        'articles',
+        'tag',
+    ],
+});
+
+export const TAG_SEARCH_RESOURCES = Object.freeze({
+    page_prefix: 'tag_search',
+    static: ['bundles', 'tags', 'journals'],
+});
+
 export const ALL_ISSUES_BUNDLE_RESOURCES = Object.freeze({
     page_prefix: 'all_issues_bundle',
     static: ['bundles'],
@@ -106,6 +121,14 @@ export const ALL_ISSUES = Object.freeze({
         'issues',
         // 'title'
     ],
+});
+
+export const PAY = Object.freeze({
+    page_prefix: 'pay',
+    static: [
+        'bundles'
+    ],
+    with_self_id: [],
 });
 
 export const ARTICLE_RESOURCES = Object.freeze({

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Header from '../Components/Header';
 import NewIssues from '../../containers/NewIssues';
 import BundlesSwiper from '../../containers/BundlesSwiper';
+import Hubs from '../../containers/Hubs';
 import BigArticles from '../../containers/BigArticles';
 import NewArticles from '../../containers/NewArticles';
 import PopularJournals from '../../containers/PopularJournals';

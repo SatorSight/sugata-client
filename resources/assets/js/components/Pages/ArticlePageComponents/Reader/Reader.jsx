@@ -5,6 +5,8 @@ import Dialog, {
     DialogContent,
 } from 'material-ui/Dialog';
 import ReaderInfo from '../../../Components/ReaderInfo';
+import ArticleTags from '../../../Components/ArticleTags';
+import Comments from '../../../Components/Comments';
 import { getResource } from '../../../Helpers/dataComposer';
 import { redirectToAuth, userHasAccess } from '../../../Helpers/paymentTrigger';
 import { pageVisit } from '../../../../actions/page_tracker';
@@ -216,6 +218,7 @@ const mapStateToProps = state => ({
     bundle: getResource(state, 'bundle'),
     auth_data: getResource(state, 'auth_data'),
     pages_visited: state.pageTracker.pages_viewed,
+    authorized: state.server.authorized,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -488,6 +491,16 @@ class Reader extends Component {
 
     show_blocker = () => this.props.auth_data && this.props.auth_data.first_flow;
 
+    allowed_to_see = () => {
+        return !(
+               !this.props.bundle
+            || !this.props.authorized
+            || !this.props.auth_data
+            || !this.props.auth_data.user_bundles
+            || !this.props.auth_data.user_bundles.includes(this.props.bundle)
+        ) || this.props.pages_visited < this.props.page_load_limit
+    };
+
     render() {
         const stylesImg = 'img {max-width: 100%;}';
         const { journal, issue } = this.props;
@@ -532,6 +545,12 @@ class Reader extends Component {
                     {this.show_blocker() && <Blocker/>}
                     <div style={this.state.current.get_loading() ? styles.isLoading : styles.notLoading} />
                     {this.state.current ? this.state.current.render() : null}
+                    <ArticleTags tags={this.state.current.get_tags()} />
+                    <Comments
+                        authorized={this.props.authorized}
+                        article_id={this.state.current.get_id()}
+                        comments={this.state.current.get_comments()}
+                    />
                 </div>
                 <div
                     className={'html-root'}
@@ -643,15 +662,15 @@ class Reader extends Component {
                         </Dialog>
                     </div>
                 }
-
-                {(this.props.pages_visited >= this.props.page_load_limit && !this.props.authorized)
+                {/*(this.props.pages_visited >= this.props.page_load_limit && !this.props.authorized)*/}
+                {!this.allowed_to_see()
                     ? <div>
                    <div dangerouslySetInnerHTML={{ __html: `<style>.paper{border-radius: 0.5em;}</style>`}}></div>
                    <Dialog classes={{paper: 'paper'}}
                             maxWidth={'md'}
                             fullWidth
                             style={styles.dialog}
-                            ignoreBackdropClick
+                            // ignoreBackdropClick={true}
                             open={this.state.expired_open}>
                         <div dangerouslySetInnerHTML={{ __html: `<style>.root{padding: 0;}</style>`}}></div>
                         <DialogContent classes={{root: 'root'}}>
@@ -681,8 +700,7 @@ class Reader extends Component {
                             </div>
                         </DialogContent>
                     </Dialog>
-                </div> : null
-                }
+                </div> : null}
             </div>
         );
     }

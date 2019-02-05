@@ -104,7 +104,6 @@ class DataLoader extends Component {
         this.props.startLoading();
 
         const res_promise = this.loadResources(reload);
-        // const auth_promise = reload ? null : this.loadAuthData();
         const auth_promise = this.props.state.auth_data ? null : this.loadAuthData();
 
         //only initial load
@@ -174,8 +173,14 @@ class DataLoader extends Component {
             return ResourceRoutes.JOURNAL_RESOURCES;
         if(entity === 'issue')
             return ResourceRoutes.ISSUE_RESOURCES;
+        if(entity === 'tag')
+            return ResourceRoutes.TAG_RESOURCES;
+        if(entity === 'tag_search')
+            return ResourceRoutes.TAG_SEARCH_RESOURCES;
         if(entity === 'article')
             return ResourceRoutes.ARTICLE_RESOURCES;
+        if(entity === 'pay')
+            return ResourceRoutes.PAY;
         if(entity === 'index')
             return ResourceRoutes.MAIN_RESOURCES;
         if(entity === 'auth')

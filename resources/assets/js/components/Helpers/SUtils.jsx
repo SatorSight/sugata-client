@@ -148,7 +148,7 @@ export function makeQuery(payload, method, query, callback) {
         let data = new FormData();
         data.append("json", JSON.stringify(payload));
 
-        fetch(`/${query}/`,
+        fetch(`/${query}`,
             {
                 method: method,
                 body: data,
@@ -249,9 +249,6 @@ export function getUrlPath(){
 }
 
 export function capitalize(string){
-    console.log('WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
-    const dummy = 1;
-
     if(string.charAt(0) === '"')
         string = string.slice(1);
     if(string.charAt(string.length - 1) === '"')

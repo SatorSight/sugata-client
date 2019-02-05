@@ -19,15 +19,15 @@ export default class AuthHelper{
             })
     };
 
-    static checkMsisdn = msisdn => {
-        if(msisdn.length === 0){
-            alert('Введите номер!');
+    static checkCredentials = field => {
+        if(field.length === 0){
+            alert('Введите номер или email!');
             return false;
         }
         const bundle_id = SUtils.getGetParameterByName('bundle_id');
         const payload = {
             bundle_id: bundle_id,
-            msisdn: msisdn
+            field: field
         };
         //writes session if its ok
         SUtils.makeQuery(payload, 'GET', 'api/auth/check_msisdn', AuthHelper.authorizeCheckCallback);
@@ -39,7 +39,11 @@ export default class AuthHelper{
             window.location = return_url;
         }else{
             if(data.result === 'redirect'){
-                window.location = data.to + '?returnurl=' + return_url;
+                //not redirect to url anymore, redirect to pay page if bundle provided
+                if(data.bundle)
+                    window.location = '/pay/' + data.bundle.id;
+                else
+                    window.location = data.to + '?returnurl=' + return_url;
             }else {
                 alert('Вы не подписаны!');
             }

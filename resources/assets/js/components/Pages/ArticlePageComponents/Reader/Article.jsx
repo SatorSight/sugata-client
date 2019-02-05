@@ -5,6 +5,8 @@ export default class Article{
         this.id = id;
         this.reader = reader;
         this.loading = true;
+        this.tags = [];
+        this.comments = [];
     }
 
     load = () => {
@@ -18,20 +20,27 @@ export default class Article{
 
     update = () => this.reader.update();
 
-    fetch_data = () => fetch(`/api/article/article/${this.id}`);
+    fetch_data = () => fetch(`/api/article/article/${this.id}`, {credentials: 'include'});
 
     assemble = data => {
         this.set_id(data.id);
         this.set_page_number(data.page_number);
         this.set_html(data.html);
         this.set_desktop_html(data.desktop_html);
-        this.set_desktop_html(data.desktop_html);
         this.set_next_article(data.next_article);
+        this.set_tags(data.tags);
+        this.set_comments(data.comments);
         this.set_loading(false);
     };
-1
+
     set_id = id => this.id = id;
     get_id = () => this.id;
+
+    set_tags = tags => this.tags = tags;
+    get_tags = () => this.tags;
+
+    set_comments = comments => this.comments = comments;
+    get_comments = () => this.comments;
 
     set_next_article = next_article => this.next_article = next_article;
     get_next_article = () => this.next_article;

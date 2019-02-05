@@ -38,6 +38,13 @@ a, a:active, a:hover { outline: none; text-decoration: none; }
   line-height: 2;
   cursor: pointer;
 }
+
+em{
+  color: #ffd800;
+  font-style: normal;
+  font-weight: bold;
+}
+
 .content li:nth-child(odd) {background: #BEBBE2;}
 .content li:nth-child(even) {background: white;}
 

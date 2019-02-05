@@ -4,8 +4,11 @@ namespace App;
 
 use App\Http\Controllers\Helper;
 use App\Http\Traits\HasLatest;
+use App\Lib\ElasticsearchArticlesRepository;
 use App\Lib\SUtils;
+use App\Http\Traits\Searchable;
 use Carbon\Carbon;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Database\Eloquent\Model;
 //use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection;
@@ -13,6 +16,7 @@ use Illuminate\Support\Collection;
 class Article extends Model
 {
     use HasLatest;
+    use Searchable;
 
     public function issue() {
         return $this->belongsTo('App\Issue');
@@ -81,8 +85,45 @@ class Article extends Model
         });
     }
 
+    public static function removeTags($text){
+        $pattern = '/<p>.*?<\/p>/is';
+        preg_match_all($pattern, $text, $matches);
 
-    public function getClearText(){
+        if(empty($matches))
+            return false;
+
+        $matches = array_shift($matches);
+
+        if(empty($matches))
+            return false;
+
+        $text = implode(' ', $matches);
+
+        $p2 = '/<\/p>.<p>/is';
+        $res = preg_replace($p2, ' ', $text);
+
+        if(empty($res))
+            return false;
+
+        $res = str_replace('<p>', '', $res);
+        $res = str_replace('</p>', '', $res);
+        $res = str_replace('</br>', '', $res);
+        $res = str_replace('<br/>', '', $res);
+        $res = str_replace('<br>', '', $res);
+        $res = str_replace('<strong>', '', $res);
+        $res = str_replace('</strong>', '', $res);
+        $res = preg_replace("/<img[^>]+\>/i", "", $res);
+//        $res = preg_replace("/<strong[^>]>/i", "", $res);
+        $res = str_replace('&nbsp;', ' ', $res);
+        $res = str_replace('&lt;', ' ', $res);
+        $res = str_replace('&gt;', ' ', $res);
+//        $res = strip_tags($res);
+
+        return $res;
+    }
+
+
+    public function getClearText($limit = 100){
         $s = $this->html;
 
         $pattern = '/<p>.*?<\/p>/is';
@@ -98,7 +139,7 @@ class Article extends Model
 
         $text = implode(' ', $matches);
 
-        if(mb_strlen($text) < 200)
+        if(mb_strlen($text) < $limit * 2)
             return false;
 
 
@@ -108,7 +149,6 @@ class Article extends Model
         if(empty($res))
             return false;
 
-//        $res = substr($res, 0, strrpos($res, '.') + 1);
         $res = str_replace('<p>', '', $res);
         $res = str_replace('</p>', '', $res);
         $res = str_replace('</br>', '', $res);
@@ -118,7 +158,8 @@ class Article extends Model
         $res = str_replace('&gt;', ' ', $res);
         $res = strip_tags($res);
 
-        $res = mb_substr($res, 0, 100);
+        if($limit !== 0)
+            $res = mb_substr($res, 0, $limit);
 
         return $res;
     }
@@ -240,6 +281,33 @@ class Article extends Model
                 $article->content_date = $article->issue->content_date;
                 unset($article->issue);
             }
+            return $article;
+        });
+    }
+
+    public static function injectTags(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            $ar_tags = ArticlesTag::where('article_id', $article->id)->get();
+            $tags = $ar_tags->map(function($ar_tag){
+                return Tag::find($ar_tag->tag_id);
+            });
+
+            $article->tags = $tags;
+
+            return $article;
+        });
+    }
+
+    public static function injectComments(Collection &$articles) : void {
+        $articles = $articles->map(function($article){
+            $comments = Comment::where('article_id', $article->id)
+                ->where('approved', true)
+                ->orderByDesc('created_at')
+                ->with(['user'])
+                ->get();
+
+            $article->comments = $comments;
+
             return $article;
         });
     }
@@ -382,4 +450,10 @@ class Article extends Model
         return true;
     }
 
+    public static function search($query){
+        $cb = ClientBuilder::create()->setHosts(['localhost:9200'])->build();
+        $rep = new ElasticsearchArticlesRepository($cb);
+
+        return $rep->search($query);
+    }
 }

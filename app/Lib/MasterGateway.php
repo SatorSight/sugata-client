@@ -32,6 +32,10 @@ class MasterGateway{
         $this->image_ids = [];
     }
 
+    public static function assemble($url){
+        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+    }
+
     public static function getAuthUrlPostfix() : string {
         $realm_id = config('client.realm_id');
         $secret = config('client.secret');
@@ -39,24 +43,35 @@ class MasterGateway{
         return $realm_id . '/' . $secret . '/';
     }
 
+    public static function getProductsUrl($bundle_id) : string {
+        $base = config('client.products');
+        return self::getSchemaDomainUrlPart() . '/' . $base . '/' . $bundle_id . '/' . self::getAuthUrlPostfix();
+    }
+
     public static function getMasterJsonDataUrl() : string {
-        $url = config('client.json_data_load_route');
-        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+        return self::assemble(config('client.json_data_load_route'));
     }
 
     public static function getMasterImagesDataUrl() : string {
-        $url = config('client.images_archive_load_route');
-        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+        return self::assemble(config('client.images_archive_load_route'));
+    }
+
+    public static function getUserHitUrl($msisdn, $article_id, $operator) : string {
+        $base = config('client.user_hit');
+        return self::getSchemaDomainUrlPart() . '/' . $base . '/' . $msisdn . '/' . $article_id . '/' . $operator . '/' . self::getAuthUrlPostfix();
+    }
+
+    public static function addComment() : string {
+        $base = config('client.add_comment');
+        return self::getSchemaDomainUrlPart() . '/' . $base . '/';
     }
 
     public static function getChangedDataUrl() : string {
-        $url = config('client.changed_data_url');
-        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+        return self::assemble(config('client.changed_data_url'));
     }
 
     public static function getAllIdsUrl() : string {
-        $url = config('client.all_ids_url');
-        return self::getSchemaDomainUrlPart() . '/' . $url . '/' . self::getAuthUrlPostfix();
+        return self::assemble(config('client.all_ids_url'));
     }
 
     public static function getImagesSyncUrl(array $ids) : string {

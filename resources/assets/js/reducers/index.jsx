@@ -4,6 +4,7 @@ import server from './server';
 import router from './router';
 import pageTracker from './pageTracker';
 import pageHeight from './pageHeight';
+import tagSearch from './tagSearch';
 
 export default combineReducers({
     navMenu,
@@ -11,4 +12,5 @@ export default combineReducers({
     router,
     pageTracker,
     pageHeight,
+    tagSearch,
 });

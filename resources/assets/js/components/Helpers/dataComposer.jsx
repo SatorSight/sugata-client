@@ -22,6 +22,14 @@ export function getResource(state, resource){
     let data = [];
     const self_id = state.router.self_id;
 
+    // if(self_id && state.server && state.server[self_id]) {
+    //     console.log(self_id);
+    //     console.log(state.server);
+    //     console.log(state.server[self_id]);
+    //     console.log(state.server[self_id][resource]);
+    //     console.log('self_id');
+    // }
+
     if(self_id){
         if(state.server[self_id])
             data = state.server[self_id][resource];

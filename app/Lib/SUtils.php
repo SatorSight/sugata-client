@@ -279,4 +279,8 @@ class SUtils{
         return $string;
     }
 
+    public static function isPhone($phone){
+        return !!preg_match('/^((\+7|7|8)+([0-9\(\)\s\-]){10,16})$/', $phone);
+    }
+
 }
