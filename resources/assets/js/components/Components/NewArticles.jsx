@@ -100,7 +100,8 @@ class NewArticles extends Component {
                            <div className={classes.inner}>
                                 <div className={classes.over}>
                                     <Link to={`/article/${article.id}`} className={classes.title}>
-                                        {capitalize(article.title.toLowerCase())}
+                                        {article.title.toLowerCase()}
+                                        {/*{capitalize(article.title.toLowerCase())}*/}
                                     </Link>
                                 </div>
                                 <div className={classes.detailsContainer}>
